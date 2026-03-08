@@ -78,29 +78,29 @@ Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ONBRD-01 | — | Pending |
-| ONBRD-02 | — | Pending |
-| ONBRD-03 | — | Pending |
-| DISC-01 | — | Pending |
-| DISC-02 | — | Pending |
-| DISC-03 | — | Pending |
-| DISC-04 | — | Pending |
-| DISC-05 | — | Pending |
-| COOK-01 | — | Pending |
-| COOK-02 | — | Pending |
-| COOK-03 | — | Pending |
-| COOK-04 | — | Pending |
-| CONT-01 | — | Pending |
-| CONT-02 | — | Pending |
-| AUTH-01 | — | Pending |
-| AUTH-02 | — | Pending |
-| AUTH-03 | — | Pending |
+| CONT-02 | Phase 1 | Pending |
+| ONBRD-01 | Phase 2 | Pending |
+| ONBRD-02 | Phase 2 | Pending |
+| ONBRD-03 | Phase 2 | Pending |
+| AUTH-01 | Phase 2 | Pending |
+| AUTH-02 | Phase 2 | Pending |
+| AUTH-03 | Phase 2 | Pending |
+| CONT-01 | Phase 3 | Pending |
+| DISC-01 | Phase 4 | Pending |
+| DISC-02 | Phase 4 | Pending |
+| DISC-03 | Phase 4 | Pending |
+| DISC-04 | Phase 4 | Pending |
+| DISC-05 | Phase 4 | Pending |
+| COOK-01 | Phase 5 | Pending |
+| COOK-02 | Phase 5 | Pending |
+| COOK-03 | Phase 5 | Pending |
+| COOK-04 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 17 ⚠️
+- Mapped to phases: 17
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-08*
-*Last updated: 2026-03-08 after initial definition*
+*Last updated: 2026-03-08 after roadmap creation — all 17 requirements mapped*
