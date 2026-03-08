@@ -29,7 +29,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The TypeScript recipe schema is written, documented, and validated against 2–3 hand-authored test recipes without requiring any field changes
   3. A content authoring guide exists so Hira can write recipes that conform to the schema without developer involvement
   4. The local SQLite database initializes on first launch and seeds from a bundled JSON file containing the test recipes
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Bootstrap Expo project, configure TypeScript strict mode, create test scaffolds (Wave 0)
+- [ ] 01-02-PLAN.md — Define Zod recipe schema with all locked enums and types (TDD)
+- [ ] 01-03-PLAN.md — SQLite migration + seed logic + SQLiteProvider root layout wiring (TDD)
+- [ ] 01-04-PLAN.md — Validator CLI, build script, and 3 real test YAML recipes (TDD)
+- [ ] 01-05-PLAN.md — Content authoring guide for Hira + device verification checkpoint
 
 ### Phase 2: Profile and Auth
 **Goal**: Users can complete onboarding, declare their preferences, and optionally create an account — their profile is stored locally from the start and synced to the cloud when they sign in
@@ -87,7 +94,7 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/5 | Not started | - |
 | 2. Profile and Auth | 0/TBD | Not started | - |
 | 3. Content Library | 0/TBD | Not started | - |
 | 4. Recipe Discovery | 0/TBD | Not started | - |
