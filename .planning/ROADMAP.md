@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [ ] 01-01-PLAN.md — Bootstrap Expo project, configure TypeScript strict mode, create test scaffolds (Wave 0)
 - [ ] 01-02-PLAN.md — Define Zod recipe schema with all locked enums and types (TDD)
-- [ ] 01-03-PLAN.md — SQLite migration + seed logic + SQLiteProvider root layout wiring (TDD)
+- [x] 01-03-PLAN.md — SQLite migration + seed logic + SQLiteProvider root layout wiring (TDD)
 - [ ] 01-04-PLAN.md — Validator CLI, build script, and 3 real test YAML recipes (TDD)
 - [ ] 01-05-PLAN.md — Content authoring guide for Hira + device verification checkpoint
 
@@ -94,7 +94,7 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/5 | In Progress|  |
+| 1. Foundation | 3/5 | In Progress|  |
 | 2. Profile and Auth | 0/TBD | Not started | - |
 | 3. Content Library | 0/TBD | Not started | - |
 | 4. Recipe Discovery | 0/TBD | Not started | - |

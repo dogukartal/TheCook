@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation 01-02-PLAN.md
-last_updated: "2026-03-08T21:31:56.227Z"
-last_activity: 2026-03-08 — Roadmap created; all 17 v1 requirements mapped across 5 phases
+stopped_at: Completed 01-foundation 01-03-PLAN.md
+last_updated: "2026-03-09T00:00:00.000Z"
+last_activity: 2026-03-09 — SQLite migration, seeding, and SQLiteProvider root layout implemented; 4 seed tests passing
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 Phase: 1 of 5 (Foundation)
 Plan: 0 of TBD in current phase
 Status: Ready to plan
-Last activity: 2026-03-08 — Roadmap created; all 17 v1 requirements mapped across 5 phases
+Last activity: 2026-03-09 — SQLite migration, seeding, and SQLiteProvider root layout implemented; 4 seed tests passing
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 7 | 2 tasks | 13 files |
 | Phase 01-foundation P02 | 27 | 2 tasks | 4 files |
+| Phase 01-foundation P03 | 10 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,10 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: TypeScript types derived via z.infer<typeof Schema> — no duplicate interface definitions in recipe.ts
 - [Phase 01-foundation]: totalTime omitted from RecipeSchema — derived at runtime as prepTime + cookTime, never stored
 - [Phase 01-foundation]: jest/setup.ts added to fix jest 30 + jest-expo 55 lazy global teardown incompatibility
+- [Phase 01-foundation]: expo-sqlite v2 API used exclusively — SQLiteProvider + useSQLiteContext, never deprecated openDatabase()
+- [Phase 01-foundation]: PRAGMA user_version used for DB migration versioning (DB_VERSION=1) — idiomatic SQLite approach
+- [Phase 01-foundation]: seed_version sentinel row (id=1) checked before every app launch — prevents data loss on restart
+- [Phase 01-foundation]: All seed INSERTs wrapped in withTransactionAsync — single transaction for atomicity and performance
 
 ### Pending Todos
 
@@ -84,5 +89,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-08T21:31:56.225Z
-Stopped at: Completed 01-foundation 01-02-PLAN.md
+Stopped at: Completed 01-foundation 01-03-PLAN.md
 Resume file: None
