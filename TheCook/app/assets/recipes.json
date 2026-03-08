@@ -1,1 +1,417 @@
-[]
+[
+  {
+    "id": "borek",
+    "title": "Su Böreği",
+    "cuisine": "türk",
+    "category": "aperatif",
+    "mealType": "lunch",
+    "skillLevel": "intermediate",
+    "prepTime": 45,
+    "cookTime": 40,
+    "servings": 6,
+    "coverImage": null,
+    "allergens": [
+      "gluten",
+      "egg",
+      "dairy"
+    ],
+    "equipment": [
+      "fırın"
+    ],
+    "ingredientGroups": [
+      {
+        "label": "Hamur için",
+        "items": [
+          {
+            "name": "Hazır yufka",
+            "amount": 6,
+            "unit": "dilim",
+            "optional": false
+          },
+          {
+            "name": "Yumurta",
+            "amount": 2,
+            "unit": "adet",
+            "optional": false
+          },
+          {
+            "name": "Süt",
+            "amount": 200,
+            "unit": "ml",
+            "optional": false
+          },
+          {
+            "name": "Zeytinyağı",
+            "amount": 4,
+            "unit": "yemek kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Tuz",
+            "amount": 1,
+            "unit": "tatlı kaşığı",
+            "optional": false
+          }
+        ]
+      },
+      {
+        "label": "İç için",
+        "items": [
+          {
+            "name": "Beyaz peynir (feta veya lor)",
+            "amount": 400,
+            "unit": "gr",
+            "optional": false
+          },
+          {
+            "name": "Taze maydanoz",
+            "amount": 1,
+            "unit": "demet",
+            "optional": false
+          },
+          {
+            "name": "Karabiber",
+            "amount": 1,
+            "unit": "tutam",
+            "optional": false
+          },
+          {
+            "name": "Yumurta",
+            "amount": 1,
+            "unit": "adet",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "instruction": "Fırını 180 dereceye ısıtın. Yaklaşık 30x40 cm büyüklüğünde derin bir fırın tepsisini yağlayın. İç harcı önceden hazırlayın; peyniri elinizle ufalayın, maydanozu ince doğrayın, karabiber ve isteğe bağlı yumurtayla karıştırın.",
+        "why": "Fırının önceden ısınması böreğin eşit pişmesini sağlar. İç harcı önceden hazırlamak montaj sırasında zaman kaybetmemenizi sağlar.",
+        "looksLikeWhenDone": "İç harç toplu, eşit karışmış görünüyor. Tepsinin içi ince bir yağ tabakasıyla kaplanmış.",
+        "commonMistake": "Peyniri çok ince ezmiş olmak — pürüzsüz bir macun hâline getirmek iç harcın içini sıkıştırır ve havadar bir kıvam vermez.",
+        "recovery": "Peyniri parmaklarınızla iri tutarak ufalayın; ufak topaklar kalması normaldir.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "Sosu hazırlamak için yumurtaları derin bir kaseye kırın, sütü, zeytinyağını ve tuzu ekleyip çırpın. Sos homojen görününce hazır.",
+        "why": "Bu sos yufkaların nemli ve yumuşak kalmasını sağlar; böreğin sert ve kuru olmamasının sırrıdır. Yağ ve yumurta da renk ve lezzet katar.",
+        "looksLikeWhenDone": "Sos homojen, açık sarı renkte ve hafif köpüklü görünüyor. Yağ ve süt ayrılmamış.",
+        "commonMistake": "Sosu hazırlamadan yufkaları ıslatmaya çalışmak — kuru yufka nem dağıtmaz.",
+        "recovery": "Karışım ayrışmış ise tekrar çırpın; iyi karışmış olması yeterli.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "İlk iki yufkayı tepsiye serin. Her birini, hazırladığınız sostan 2-3 yemek kaşığı dökerek ıslatın. Yufkalar üst üste binebilir, tepsi kenarlarından taşabilir.",
+        "why": "İlk katman taban görevi görür ve nem tutması için bol sos ister. Kenarlardan taşan yufkalar sonradan içe kıvrılarak böreği kapatır.",
+        "looksLikeWhenDone": "İlk iki yufka tepside eşit serilmiş, yüzey nemlenmiş ama ıslak değil, hafif saydam görünüyor.",
+        "commonMistake": "Sosu tek bir yere dökmek — yufka bazı yerlerde kuru, bazı yerlerde çok ıslak olur.",
+        "recovery": "Sosu elinizle veya fırçayla yufkanın her köşesine yayın.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "Üçüncü ve dördüncü yufkayı üst üste serip sosla ıslatın. Tüm iç harcı bu katmanın üzerine eşit biçimde dağıtın.",
+        "why": "Orta katman en kritik kısımdır; eşit yayılmış harç böreğin her diliminde aynı lezzeti verir. İki yufka arasına koymak harcın hem alttan hem üstten nemlenip yumuşamasını sağlar.",
+        "looksLikeWhenDone": "Harç tüm yüzeye yayılmış, köşelere kadar eşit miktarda dağıtılmış. Peynir ve maydanoz dengeli görünüyor.",
+        "commonMistake": "Harcı ortaya yığmak — köşeler boş kalır.",
+        "recovery": "Bir kaşık veya spatula ile harcı kenarlardan başlayarak yeniden dağıtın.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "Beşinci ve altıncı yufkayı üste serin ve kalan sosla tamamen ıslatın. Taşan yufka kenarlarını içe kıvrarak tepsiyi kapatın. Kalan sosu varsa üzerine dökün.",
+        "why": "Üst kapak yufkaları alt katmanların fazla nemini emerek homojen bir kıvam oluşturur. Kıvrılan kenarlar kenarlardan peynirin dışarı akmasını önler.",
+        "looksLikeWhenDone": "Börek tepsiye düzgünce yerleşmiş, tüm yüzey eşit ıslanmış, kenarlar sıkıca kapatılmış.",
+        "commonMistake": "Üst yufkayı kuru bırakmak — üst kısım sert ve çatlamış pişer.",
+        "recovery": "Fırına girmeden önce fırçayla zeytinyağı veya kalan sosu üzerine sürün.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "Önceden ısıtılmış 180 derece fırına verin. 35-40 dakika, üstü altın sarısı ve kabarık görünene kadar pişirin. Fırından çıkarın ve servis etmeden önce 10 dakika bekleyin.",
+        "why": "180 derece orta sıcaklıkta dengeli pişirir; yüksek sıcaklık dışını yakar içini çiğ bırakır. Beklemek iç harcın yerleşmesini sağlar, böylece dağılmadan dilimlenebilir.",
+        "looksLikeWhenDone": "Üst yüzey altın sarısı ile kahverengi arasında, homojen renk almış. Kenarlar tepsiyle aynı hizada veya hafif kabarık. Bıçakla ortasına girildiğinde buharlı ve nemli ama akıcı değil.",
+        "commonMistake": "Fırından çıkar çıkmaz kesmek — harç dağılır ve börek parçalanır.",
+        "recovery": "Eğer çok erken kestiyseniz, parçaları yeniden düzleştirin ve 5 dakika bekleyin.",
+        "stepImage": null,
+        "timerSeconds": 2400
+      }
+    ]
+  },
+  {
+    "id": "menemen",
+    "title": "Menemen",
+    "cuisine": "türk",
+    "category": "kahvaltı",
+    "mealType": "breakfast",
+    "skillLevel": "beginner",
+    "prepTime": 10,
+    "cookTime": 15,
+    "servings": 2,
+    "coverImage": null,
+    "allergens": [
+      "egg",
+      "dairy"
+    ],
+    "equipment": [
+      "tava"
+    ],
+    "ingredientGroups": [
+      {
+        "label": null,
+        "items": [
+          {
+            "name": "Yumurta",
+            "amount": 4,
+            "unit": "adet",
+            "optional": false
+          },
+          {
+            "name": "Domates",
+            "amount": 300,
+            "unit": "gr",
+            "optional": false
+          },
+          {
+            "name": "Yeşil biber",
+            "amount": 2,
+            "unit": "adet",
+            "optional": false
+          },
+          {
+            "name": "Soğan",
+            "amount": 1,
+            "unit": "adet",
+            "optional": true
+          },
+          {
+            "name": "Tereyağı",
+            "amount": 1,
+            "unit": "yemek kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Tuz",
+            "amount": 1,
+            "unit": "tatlı kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Karabiber",
+            "amount": 1,
+            "unit": "tutam",
+            "optional": true
+          },
+          {
+            "name": "Beyaz peynir",
+            "amount": 50,
+            "unit": "gr",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "instruction": "Domatesleri soyun ve küçük küpler halinde doğrayın. Biberleri ince halkalar veya küçük parçalar halinde doğrayın. Soğan kullanıyorsanız ince doğrayın.",
+        "why": "Küçük doğranmış domates daha hızlı sulanır ve pişer. Biberler ince doğranırsa yumurtayla aynı anda pişer.",
+        "looksLikeWhenDone": "Domates parçaları 1-2 cm küp büyüklüğünde, biber parçaları ince ve düzenli görünüyor.",
+        "commonMistake": "Domatesleri soymamak — kabuğun sert dokusu menemenin kıvamını bozar.",
+        "recovery": "Pişirme sırasında kabuklar ayrışırsa bir kaşıkla çıkarabilirsiniz.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "Tavayı orta ateşte ısıtın ve tereyağını ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.",
+        "why": "Soğanı önce kavurmak tatlılığını ortaya çıkarır. Biberleri soğanla pişirmek her ikisinin de yumuşamasını sağlar.",
+        "looksLikeWhenDone": "Soğanlar şeffaflaşmış, biberler hafif yumuşamış ama hâlâ yeşil görünüyor.",
+        "commonMistake": "Yüksek ateşte kavurmak — tereyağı yanar ve biberler sertleşir.",
+        "recovery": "Ateşi hemen kısın, tavayı ocaktan alın ve kısa süre bekleyin.",
+        "stepImage": null,
+        "timerSeconds": 180
+      },
+      {
+        "instruction": "Domatesleri tavaya ekleyin ve orta ateşte, ara ara karıştırarak 5-7 dakika pişirin. Suyunu çekip koyulaşana kadar bekleyin.",
+        "why": "Fazla suyun buharlaşması gerekir, aksi hâlde menemen sulu ve cıvık olur. Koyulaşan domates sosun içinde yumurta şekil tutabilir.",
+        "looksLikeWhenDone": "Domates karışımı kaşığın gerisini bırakacak kadar koyulaşmış, rengi koyu kırmızıya dönmüş, tava dibinde sıvı birikmiyor.",
+        "commonMistake": "Domatesi yeterince pişirmemek — suyu bitmeden yumurta eklemek.",
+        "recovery": "Yumurtaları ekledikten sonra hâlâ çok sulu ise kapağı açık pişirmeye devam edin.",
+        "stepImage": null,
+        "timerSeconds": 420
+      },
+      {
+        "instruction": "Tuz ve karabiber ekleyip karıştırın. Yumurtaları kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.",
+        "why": "Sarıları bütün bırakmak yumurtanın gözenekli kıvamda pişmesini sağlar. Fazla karıştırmak yumurtayı lastikleştirir.",
+        "looksLikeWhenDone": "Yumurta beyazları tamamen donmuş, sarılar hâlâ hafif sıvı ya da az pişmiş görünüyor (tercih meselesi).",
+        "commonMistake": "Çok uzun süre karıştırmak veya fazla pişirmek — yumurta sertleşir.",
+        "recovery": "Ocağı hemen kapatın; tava sıcaklığı kalan pişirmeyi tamamlar.",
+        "stepImage": null,
+        "timerSeconds": 120
+      },
+      {
+        "instruction": "İsterseniz üzerine ufalanmış beyaz peynir serpin. Hemen tavadan servis edin.",
+        "why": "Sıcak menemenin üzerine eklenen peynir hafifçe eriyerek kremsi bir lezzet katmanı oluşturur. Bekletilirse yumurta sertleşir.",
+        "looksLikeWhenDone": "Peynir parçaları hafifçe erimeye başlamış, yüzey hâlâ canlı ve buharlı görünüyor.",
+        "commonMistake": "Servis etmeden önce menemi bekletmek — soğuduğunda yumurta kauçuk gibi olur.",
+        "recovery": "Soğumuşsa tavayı tekrar kısık ateşe alın ve 30 saniye ısıtın.",
+        "stepImage": null,
+        "timerSeconds": null
+      }
+    ]
+  },
+  {
+    "id": "mercimek-corbasi",
+    "title": "Mercimek Çorbası",
+    "cuisine": "türk",
+    "category": "çorba",
+    "mealType": "dinner",
+    "skillLevel": "beginner",
+    "prepTime": 10,
+    "cookTime": 35,
+    "servings": 4,
+    "coverImage": null,
+    "allergens": [],
+    "equipment": [
+      "tencere",
+      "blender"
+    ],
+    "ingredientGroups": [
+      {
+        "label": null,
+        "items": [
+          {
+            "name": "Kırmızı mercimek",
+            "amount": 200,
+            "unit": "gr",
+            "optional": false
+          },
+          {
+            "name": "Soğan",
+            "amount": 1,
+            "unit": "adet",
+            "optional": false
+          },
+          {
+            "name": "Havuç",
+            "amount": 1,
+            "unit": "adet",
+            "optional": false
+          },
+          {
+            "name": "Sarımsak",
+            "amount": 2,
+            "unit": "adet",
+            "optional": false
+          },
+          {
+            "name": "Zeytinyağı",
+            "amount": 2,
+            "unit": "yemek kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Domates salçası",
+            "amount": 1,
+            "unit": "yemek kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Kimyon",
+            "amount": 1,
+            "unit": "tatlı kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Tuz",
+            "amount": 2,
+            "unit": "tatlı kaşığı",
+            "optional": false
+          },
+          {
+            "name": "Karabiber",
+            "amount": 1,
+            "unit": "tutam",
+            "optional": false
+          },
+          {
+            "name": "Su veya et suyu",
+            "amount": 1200,
+            "unit": "ml",
+            "optional": false
+          },
+          {
+            "name": "Kuru kırmızı biber",
+            "amount": 1,
+            "unit": "tatlı kaşığı",
+            "optional": true
+          },
+          {
+            "name": "Tereyağı",
+            "amount": 1,
+            "unit": "yemek kaşığı",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "instruction": "Mercimekleri bol soğuk suda yıkayın ve süzün. Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.",
+        "why": "Mercimeği yıkamak fazla nişastayı giderir ve çorbanın berrak görünmesini sağlar. İri doğramak önemli değil çünkü her şey sonunda blenderdan geçecek.",
+        "looksLikeWhenDone": "Mercimek suyu berraklaşana kadar durulanmış. Sebzeler doğranmış ve hazır.",
+        "commonMistake": "Mercimeği ıslatmak için uzun süre beklemek — kırmızı mercimek pişirmeden önce ıslatılmaz.",
+        "recovery": "Eğer ıslattıysanız suyunu tamamen süzün ve devam edin.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "Tencereye zeytinyağını alın ve orta ateşte ısıtın. Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun. Sarımsak ve havucu ekleyip 2 dakika daha kavurun.",
+        "why": "Kavurma işlemi sebzelerin doğal şekerlerini karamelleştirerek çorbaya derinlik katar. Bu adım atlanırsa çorba düz ve tatsız olur.",
+        "looksLikeWhenDone": "Soğanlar şeffaflaşmış ve kenarları hafif altın rengi almış. Havuç parçaları hafif yumuşamış görünüyor.",
+        "commonMistake": "Soğanı yakmak — bu acı bir tat bırakır ve çorbanın rengini bozar.",
+        "recovery": "Yakmış olursanız o partı atıp baştan başlamanız gerekir; yanık tat geçmez.",
+        "stepImage": null,
+        "timerSeconds": 300
+      },
+      {
+        "instruction": "Domates salçasını ekleyin, 1 dakika kavurun. Ardından yıkanmış mercimekleri, kimyon ve karabiberi ekleyip karıştırın. Üzerine su veya et suyunu dökün.",
+        "why": "Salçayı kısaca kavurmak çiğ tadını giderir. Baharatları bu aşamada eklemek yağda çözünen aroma maddelerini suya geçmesini sağlar.",
+        "looksLikeWhenDone": "Salça koyulaşmış ve parlak görünüyor. Tüm malzemeler tencerede karışmış, su mercimeklerin 4-5 cm üzerinde.",
+        "commonMistake": "Salçayı kavurmadan doğrudan suya eklemek — çiğ, keskin bir tat kalır.",
+        "recovery": "Eğer doğrudan eklediyseniz, pişirme süresi sonunda biraz daha kavurunca tat dengelenir.",
+        "stepImage": null,
+        "timerSeconds": 60
+      },
+      {
+        "instruction": "Tencereyi kapağı kapalı olarak kaynatın. Kaynadıktan sonra ateşi kısın ve 20-25 dakika kısık ateşte pişirin. Mercimekler tamamen dağılmış olmalı.",
+        "why": "Kısık ateşte yavaş pişirmek mercimeklerin tamamen yumuşamasını sağlar. Çok yüksek ateşte mercimek dışı pişer içi sert kalabilir.",
+        "looksLikeWhenDone": "Mercimekler tamamen dağılmış ve sarı renkli bir kıvama gelmiş. Kaşıkla bastırınca kolayca eziliyor.",
+        "commonMistake": "Yeterince pişirmemek — blenderde bütün mercimek parçaları kalırsa çorba pütürlü olur.",
+        "recovery": "Mercimekler hâlâ sert ise 5-10 dakika daha pişirin.",
+        "stepImage": null,
+        "timerSeconds": 1500
+      },
+      {
+        "instruction": "Tencereyi ocaktan alın ve 5 dakika bekleyin. Çorbayı dikkatlice blenderdan geçirin; ya daldırma blender kullanın ya da küçük partiler hâlinde standart blendere alın. Tuz ekleyip tadına bakın.",
+        "why": "Sıcak sıvı blenderde basınç oluşturur; beklemek ya da küçük partilerde işlemek kapağın fırlamasını önler. Blenderlama pürüzsüz, kadifemsi bir kıvam verir.",
+        "looksLikeWhenDone": "Çorba tamamen pürüzsüz, ipeksi kıvamda ve homojen sarı-turuncu renkte. Hiç mercimek parçası görünmüyor.",
+        "commonMistake": "Sıcak çorbayı kapalı blendere tamamen doldurmak — kapak fırlar ve yanıklara yol açar.",
+        "recovery": "Kapak uçarsa yaralanma olup olmadığını kontrol edin; çorbanın geri kalanını temizleyip daha az miktarlarda blend edin.",
+        "stepImage": null,
+        "timerSeconds": null
+      },
+      {
+        "instruction": "İsterseniz küçük bir tavada tereyağını eritin ve kuru kırmızı biberi ekleyip 30 saniye kızdırın. Bu kırmızı yağı kaselere döktüğünüz çorbanın üzerine gezdirin. Hemen servis edin.",
+        "why": "Kızdırılmış tereyağı ve biber çorbaya geleneksel sunum görünümü ve ekstra aroma kazandırır. Sıcak servis kıvamın en iyi hissettirdiği andır.",
+        "looksLikeWhenDone": "Çorba kasesi parlak sarı-turuncu renkte, üzerinde kırmızı yağ damlacıkları ve varsa kurutulmuş nane ile servis ediliyor.",
+        "commonMistake": "Tereyağını yakmak — biberi eklemeden önce yağ çok kızarırsa acı bir tat oluşur.",
+        "recovery": "Yanmış yağı atın ve yeniden yapın; bu adım atlanabilir, çorba yine de lezzetlidir.",
+        "stepImage": null,
+        "timerSeconds": 30
+      }
+    ]
+  }
+]

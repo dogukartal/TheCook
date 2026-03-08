@@ -1,0 +1,108 @@
+id: mercimek-corbasi
+title: Mercimek Çorbası
+cuisine: türk
+category: çorba
+mealType: dinner
+skillLevel: beginner
+prepTime: 10
+cookTime: 35
+servings: 4
+coverImage: null
+allergens: []
+equipment:
+  - tencere
+  - blender
+ingredientGroups:
+  - label: null
+    items:
+      - name: Kırmızı mercimek
+        amount: 200
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Havuç
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Sarımsak
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Zeytinyağı
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Domates salçası
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Kimyon
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Tuz
+        amount: 2
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Su veya et suyu
+        amount: 1200
+        unit: ml
+        optional: false
+      - name: Kuru kırmızı biber
+        amount: 1
+        unit: tatlı kaşığı
+        optional: true
+      - name: Tereyağı
+        amount: 1
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Mercimekleri bol soğuk suda yıkayın ve süzün. Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.
+    why: Mercimeği yıkamak fazla nişastayı giderir ve çorbanın berrak görünmesini sağlar. İri doğramak önemli değil çünkü her şey sonunda blenderdan geçecek.
+    looksLikeWhenDone: Mercimek suyu berraklaşana kadar durulanmış. Sebzeler doğranmış ve hazır.
+    commonMistake: Mercimeği ıslatmak için uzun süre beklemek — kırmızı mercimek pişirmeden önce ıslatılmaz.
+    recovery: Eğer ıslattıysanız suyunu tamamen süzün ve devam edin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Tencereye zeytinyağını alın ve orta ateşte ısıtın. Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun. Sarımsak ve havucu ekleyip 2 dakika daha kavurun.
+    why: Kavurma işlemi sebzelerin doğal şekerlerini karamelleştirerek çorbaya derinlik katar. Bu adım atlanırsa çorba düz ve tatsız olur.
+    looksLikeWhenDone: Soğanlar şeffaflaşmış ve kenarları hafif altın rengi almış. Havuç parçaları hafif yumuşamış görünüyor.
+    commonMistake: Soğanı yakmak — bu acı bir tat bırakır ve çorbanın rengini bozar.
+    recovery: Yakmış olursanız o partı atıp baştan başlamanız gerekir; yanık tat geçmez.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Domates salçasını ekleyin, 1 dakika kavurun. Ardından yıkanmış mercimekleri, kimyon ve karabiberi ekleyip karıştırın. Üzerine su veya et suyunu dökün.
+    why: Salçayı kısaca kavurmak çiğ tadını giderir. Baharatları bu aşamada eklemek yağda çözünen aroma maddelerini suya geçmesini sağlar.
+    looksLikeWhenDone: Salça koyulaşmış ve parlak görünüyor. Tüm malzemeler tencerede karışmış, su mercimeklerin 4-5 cm üzerinde.
+    commonMistake: Salçayı kavurmadan doğrudan suya eklemek — çiğ, keskin bir tat kalır.
+    recovery: Eğer doğrudan eklediyseniz, pişirme süresi sonunda biraz daha kavurunca tat dengelenir.
+    stepImage: null
+    timerSeconds: 60
+  - instruction: Tencereyi kapağı kapalı olarak kaynatın. Kaynadıktan sonra ateşi kısın ve 20-25 dakika kısık ateşte pişirin. Mercimekler tamamen dağılmış olmalı.
+    why: Kısık ateşte yavaş pişirmek mercimeklerin tamamen yumuşamasını sağlar. Çok yüksek ateşte mercimek dışı pişer içi sert kalabilir.
+    looksLikeWhenDone: Mercimekler tamamen dağılmış ve sarı renkli bir kıvama gelmiş. Kaşıkla bastırınca kolayca eziliyor.
+    commonMistake: Yeterince pişirmemek — blenderde bütün mercimek parçaları kalırsa çorba pütürlü olur.
+    recovery: Mercimekler hâlâ sert ise 5-10 dakika daha pişirin.
+    stepImage: null
+    timerSeconds: 1500
+  - instruction: Tencereyi ocaktan alın ve 5 dakika bekleyin. Çorbayı dikkatlice blenderdan geçirin; ya daldırma blender kullanın ya da küçük partiler hâlinde standart blendere alın. Tuz ekleyip tadına bakın.
+    why: Sıcak sıvı blenderde basınç oluşturur; beklemek ya da küçük partilerde işlemek kapağın fırlamasını önler. Blenderlama pürüzsüz, kadifemsi bir kıvam verir.
+    looksLikeWhenDone: Çorba tamamen pürüzsüz, ipeksi kıvamda ve homojen sarı-turuncu renkte. Hiç mercimek parçası görünmüyor.
+    commonMistake: Sıcak çorbayı kapalı blendere tamamen doldurmak — kapak fırlar ve yanıklara yol açar.
+    recovery: Kapak uçarsa yaralanma olup olmadığını kontrol edin; çorbanın geri kalanını temizleyip daha az miktarlarda blend edin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: İsterseniz küçük bir tavada tereyağını eritin ve kuru kırmızı biberi ekleyip 30 saniye kızdırın. Bu kırmızı yağı kaselere döktüğünüz çorbanın üzerine gezdirin. Hemen servis edin.
+    why: Kızdırılmış tereyağı ve biber çorbaya geleneksel sunum görünümü ve ekstra aroma kazandırır. Sıcak servis kıvamın en iyi hissettirdiği andır.
+    looksLikeWhenDone: Çorba kasesi parlak sarı-turuncu renkte, üzerinde kırmızı yağ damlacıkları ve varsa kurutulmuş nane ile servis ediliyor.
+    commonMistake: Tereyağını yakmak — biberi eklemeden önce yağ çok kızarırsa acı bir tat oluşur.
+    recovery: Yanmış yağı atın ve yeniden yapın; bu adım atlanabilir, çorba yine de lezzetlidir.
+    stepImage: null
+    timerSeconds: 30
