@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation 01-01-PLAN.md
-last_updated: "2026-03-08T21:01:13.464Z"
+stopped_at: Completed 01-foundation 01-02-PLAN.md
+last_updated: "2026-03-08T21:31:56.227Z"
 last_activity: 2026-03-08 — Roadmap created; all 17 v1 requirements mapped across 5 phases
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 7 | 2 tasks | 13 files |
+| Phase 01-foundation P02 | 27 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,10 @@ Recent decisions affecting current work:
 - [Roadmap]: No Polish/Ship phase — offline hardening criteria embedded in Phase 5 success criteria; app store submission is an execution task, not a phase
 - [Phase 01-foundation]: Used --legacy-peer-deps for @testing-library/react-native due to react@19.1.0 vs react-test-renderer@19.2.4 peer dep conflict
 - [Phase 01-foundation]: Created Wave 0 placeholder src/types/recipe.ts with minimal zod stub so schema.test.ts compiles; Plan 02 replaces it with full RecipeSchema
+- [Phase 01-foundation]: Zod v4 z.enum([...]) used exclusively — no TypeScript enum keyword, no z.nativeEnum (removed in Zod v4)
+- [Phase 01-foundation]: TypeScript types derived via z.infer<typeof Schema> — no duplicate interface definitions in recipe.ts
+- [Phase 01-foundation]: totalTime omitted from RecipeSchema — derived at runtime as prepTime + cookTime, never stored
+- [Phase 01-foundation]: jest/setup.ts added to fix jest 30 + jest-expo 55 lazy global teardown incompatibility
 
 ### Pending Todos
 
@@ -78,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T21:01:13.462Z
-Stopped at: Completed 01-foundation 01-01-PLAN.md
+Last session: 2026-03-08T21:31:56.225Z
+Stopped at: Completed 01-foundation 01-02-PLAN.md
 Resume file: None
