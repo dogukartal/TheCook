@@ -48,7 +48,16 @@ Plans:
   3. A user can create an account and their profile and bookmarks sync to the cloud; the same data is accessible after signing in on a second device
   4. A user can log out; local data persists and is overwritten by their cloud profile on next sign-in
   5. Recipes requiring equipment the user has not declared are visibly flagged or de-prioritized
-**Plans**: TBD
+**Plans**: 7 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Install Phase 2 dependencies and create failing test stubs (Wave 0)
+- [ ] 02-02-PLAN.md — Human checkpoint: Supabase project + Google OAuth + Apple Sign In setup + dev build (Wave 0)
+- [ ] 02-03-PLAN.md — ProfileSchema + BookmarkSchema types + DB_VERSION 2 migration + profile CRUD (Wave 1)
+- [ ] 02-04-PLAN.md — Supabase client + SessionContext + cloud-wins sync listener (Wave 2)
+- [ ] 02-05-PLAN.md — Onboarding wizard: allergens, skill level, equipment screens + account nudge (Wave 3)
+- [ ] 02-06-PLAN.md — Auth UI: sign-in screen (Apple + Google + email) + sign-up form (Wave 3)
+- [ ] 02-07-PLAN.md — Root layout onboarding gate + Settings screen + Settings tab (Wave 4)
 
 ### Phase 3: Content Library
 **Goal**: The 30–50 curated Turkish recipes are fully authored, allergen-tagged, structured to schema, and bundled inside the app binary so recipe content is available offline with no network dependency
@@ -95,7 +104,7 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete    | 2026-03-09 |
-| 2. Profile and Auth | 0/TBD | Not started | - |
+| 2. Profile and Auth | 0/7 | Not started | - |
 | 3. Content Library | 0/TBD | Not started | - |
 | 4. Recipe Discovery | 0/TBD | Not started | - |
 | 5. Guided Cooking Mode | 0/TBD | Not started | - |
