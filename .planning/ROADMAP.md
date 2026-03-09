@@ -32,11 +32,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 5 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Bootstrap Expo project, configure TypeScript strict mode, create test scaffolds (Wave 0)
-- [ ] 01-02-PLAN.md — Define Zod recipe schema with all locked enums and types (TDD)
+- [x] 01-01-PLAN.md — Bootstrap Expo project, configure TypeScript strict mode, create test scaffolds (Wave 0)
+- [x] 01-02-PLAN.md — Define Zod recipe schema with all locked enums and types (TDD)
 - [x] 01-03-PLAN.md — SQLite migration + seed logic + SQLiteProvider root layout wiring (TDD)
-- [ ] 01-04-PLAN.md — Validator CLI, build script, and 3 real test YAML recipes (TDD)
-- [ ] 01-05-PLAN.md — Content authoring guide for Hira + device verification checkpoint
+- [x] 01-04-PLAN.md — Validator CLI, build script, and 3 real test YAML recipes (TDD)
+- [x] 01-05-PLAN.md — Content authoring guide for Hira + device verification checkpoint
 
 ### Phase 2: Profile and Auth
 **Goal**: Users can complete onboarding, declare their preferences, and optionally create an account — their profile is stored locally from the start and synced to the cloud when they sign in
