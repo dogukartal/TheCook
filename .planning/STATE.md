@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation 01-03-PLAN.md
+stopped_at: Completed 01-foundation 01-04-PLAN.md
 last_updated: "2026-03-09T00:00:00.000Z"
-last_activity: 2026-03-09 — SQLite migration, seeding, and SQLiteProvider root layout implemented; 4 seed tests passing
+last_activity: 2026-03-09 — Content pipeline implemented; 3 Turkish test recipes validated cleanly against RecipeSchema; schema confirmed stable for Phase 3
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 1 of 5 (Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-09 — SQLite migration, seeding, and SQLiteProvider root layout implemented; 4 seed tests passing
+Plan: 4 of 5 completed in current phase
+Status: In progress
+Last activity: 2026-03-09 — Content pipeline implemented; 3 Turkish test recipes validated cleanly against RecipeSchema; schema confirmed stable for Phase 3
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation P01 | 7 | 2 tasks | 13 files |
 | Phase 01-foundation P02 | 27 | 2 tasks | 4 files |
 | Phase 01-foundation P03 | 10 | 2 tasks | 6 files |
+| Phase 01-foundation P04 | 35 | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: PRAGMA user_version used for DB migration versioning (DB_VERSION=1) — idiomatic SQLite approach
 - [Phase 01-foundation]: seed_version sentinel row (id=1) checked before every app launch — prevents data loss on restart
 - [Phase 01-foundation]: All seed INSERTs wrapped in withTransactionAsync — single transaction for atomicity and performance
+- [Phase 01-foundation]: YAML block scalars (>-) used for step instructions containing colons — avoids BLOCK_AS_IMPLICIT_KEY parse errors in yaml package
+- [Phase 01-foundation]: spawnSync with shell:true required on Windows for npx to resolve in subprocess tests
+- [Phase 01-foundation]: RecipeSchema confirmed stable — 0 field changes needed across 3 real test recipes (menemen, mercimek corbasi, borek)
 
 ### Pending Todos
 
@@ -82,12 +86,12 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Pre-Phase 1]: Recipe schema must be validated against 2–3 real test recipes before Phase 3 content authoring begins — schema changes after content is authored are expensive
+- ~~[Pre-Phase 1]: Recipe schema must be validated against 2–3 real test recipes before Phase 3 content authoring begins~~ — RESOLVED in Plan 04: 3 test recipes validated cleanly, schema confirmed stable
 - [Pre-Phase 2]: expo-sqlite capability vs. WatermelonDB tradeoff should be confirmed at project init (research flagged in SUMMARY.md)
 - [Pre-Phase 4]: Turkish ingredient matching strategy (Zemberek-NLP vs. LLM normalization fallback) needs a decision before DISC-01 implementation — flagged for Phase 2 research
 
 ## Session Continuity
 
-Last session: 2026-03-08T21:31:56.225Z
-Stopped at: Completed 01-foundation 01-03-PLAN.md
+Last session: 2026-03-09T00:00:00.000Z
+Stopped at: Completed 01-foundation 01-04-PLAN.md
 Resume file: None
