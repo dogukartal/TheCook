@@ -13,7 +13,7 @@ The Cook ships as an offline-first mobile cooking companion for Turkish 18–30 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Lock the recipe data schema and bootstrap the Expo project so all subsequent work builds on a stable base (completed 2026-03-09)
-- [ ] **Phase 2: Profile and Auth** - Users can declare allergens, skill, and equipment at onboarding; profile is stored locally and optionally synced via an optional account
+- [x] **Phase 2: Profile and Auth** - Users can declare allergens, skill, and equipment at onboarding; profile is stored locally and optionally synced via an optional account (completed 2026-03-10)
 - [ ] **Phase 3: Content Library** - 30–50 hand-curated Turkish recipes authored using the locked schema and bundled into the app binary
 - [ ] **Phase 4: Recipe Discovery** - Users can find recipes by ingredient input, browse the curated feed, filter by mood/category, and bookmark favorites — all offline
 - [ ] **Phase 5: Guided Cooking Mode** - Users can enter cooking mode for any recipe and be guided through each step with timers, mistake warnings, and why annotations
@@ -104,7 +104,7 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete    | 2026-03-09 |
-| 2. Profile and Auth | 6/7 | In Progress|  |
+| 2. Profile and Auth | 7/7 | Complete   | 2026-03-10 |
 | 3. Content Library | 0/TBD | Not started | - |
 | 4. Recipe Discovery | 0/TBD | Not started | - |
 | 5. Guided Cooking Mode | 0/TBD | Not started | - |

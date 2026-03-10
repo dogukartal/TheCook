@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-profile-and-auth/02-05-PLAN.md
-last_updated: "2026-03-10T16:24:12.119Z"
+stopped_at: Completed 02-profile-and-auth/02-07-PLAN.md
+last_updated: "2026-03-10T16:29:11.549Z"
 last_activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 12
-  completed_plans: 11
+  completed_plans: 12
   percent: 75
 ---
 
@@ -61,6 +61,7 @@ Progress: [████████░░] 75% (Phase 2 in progress)
 | Phase 02-profile-and-auth P04 | 3 | 2 tasks | 4 files |
 | Phase 02-profile-and-auth P06 | 4 | 2 tasks | 4 files |
 | Phase 02-profile-and-auth P05 | 5 | 2 tasks | 6 files |
+| Phase 02-profile-and-auth P07 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -105,6 +106,9 @@ Recent decisions affecting current work:
 - [Phase 02-profile-and-auth]: account-nudge writes onboardingCompleted+accountNudgeShown on mount — covers both complete and skip-all paths
 - [Phase 02-profile-and-auth]: Equipment screen reads defaults from DB (fırın+tava) not hardcoded component state
 - [Phase 02-profile-and-auth]: MaterialCommunityIcons names validated against glyphmaps JSON — mixer/frying-pan/cutting-board invalid, replaced with chef-hat/pan/silverware variants
+- [Phase 02-profile-and-auth]: RootNavigator returns null while onboardingDone===null — prevents premature redirect before SQLite resolves (Pitfall 5 guard)
+- [Phase 02-profile-and-auth]: Settings saves immediately on change (no Save button) — immediate-save UX for chip interactions
+- [Phase 02-profile-and-auth]: GoogleSignin.configure() moved to root layout module level — guarantees configuration before any screen mounts
 
 ### Pending Todos
 
@@ -118,6 +122,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T16:24:12.117Z
-Stopped at: Completed 02-profile-and-auth/02-05-PLAN.md
+Last session: 2026-03-10T16:29:11.547Z
+Stopped at: Completed 02-profile-and-auth/02-07-PLAN.md
 Resume file: None
