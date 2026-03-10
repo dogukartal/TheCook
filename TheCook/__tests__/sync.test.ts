@@ -1,80 +1,207 @@
-// Plan 02-01 stubs — will fail until src/auth/supabase.ts and src/db/profile.ts exist
 // AUTH-02: cloud-wins upsert on sign-in
 // AUTH-03: sign-out preserves local SQLite data
+//
+// Tests for initAuthListener (sync.ts) and pullCloudProfile (sync.ts)
+// Mocking Supabase so tests don't require a live connection.
 
-import { pullCloudProfile, signOut } from "../src/auth/supabase";
-import { getLocalProfile } from "../src/db/profile";
+import { pullCloudProfile, initAuthListener } from "../src/auth/sync";
+import { saveProfileToDb, saveBookmarksToDb } from "../src/db/profile";
 
-// Mock Supabase client so tests don't require a live connection
+// Mock the supabase client
 jest.mock("../src/auth/supabase", () => ({
-  pullCloudProfile: jest.fn(),
-  signOut: jest.fn(),
+  supabase: {
+    auth: {
+      onAuthStateChange: jest.fn(),
+    },
+    from: jest.fn(),
+  },
 }));
 
-const mockPullCloudProfile = pullCloudProfile as jest.MockedFunction<typeof pullCloudProfile>;
-const mockSignOut = signOut as jest.MockedFunction<typeof signOut>;
+// Mock db functions so we can observe calls without real SQLite
+jest.mock("../src/db/profile", () => ({
+  saveProfileToDb: jest.fn(),
+  saveBookmarksToDb: jest.fn(),
+}));
 
-describe("Cloud sync — AUTH-02: cloud wins on sign-in", () => {
-  it("pullCloudProfile() overwrites local profile with cloud data", async () => {
-    const mockDb = {} as any;
-    const cloudProfile = {
-      allergens: ["gluten", "dairy"],
-      skillLevel: "intermediate" as const,
-      equipment: ["fırın", "blender"],
-      onboardingCompleted: true,
-      accountNudgeShown: true,
+import { supabase } from "../src/auth/supabase";
+
+const mockSaveProfileToDb = saveProfileToDb as jest.MockedFunction<typeof saveProfileToDb>;
+const mockSaveBookmarksToDb = saveBookmarksToDb as jest.MockedFunction<typeof saveBookmarksToDb>;
+const mockSupabase = supabase as jest.Mocked<typeof supabase>;
+
+function makeMockDb() {
+  return {} as any;
+}
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+// ---------------------------------------------------------------------------
+// pullCloudProfile tests
+// ---------------------------------------------------------------------------
+
+describe("pullCloudProfile()", () => {
+  it("fetches cloud profile and saves to local SQLite — cloud allergens overwrite local", async () => {
+    const mockDb = makeMockDb();
+    const userId = "user-123";
+
+    // Mock profiles query
+    const mockProfileSelect = {
+      select: jest.fn().mockReturnThis(),
+      eq: jest.fn().mockReturnThis(),
+      single: jest.fn().mockResolvedValue({
+        data: {
+          allergens: ["gluten", "dairy"],
+          skill_level: "intermediate",
+          equipment: ["fırın", "blender"],
+        },
+        error: null,
+      }),
     };
 
-    mockPullCloudProfile.mockResolvedValueOnce(cloudProfile);
+    // Mock bookmarks query
+    const mockBookmarksSelect = {
+      select: jest.fn().mockReturnThis(),
+      eq: jest.fn().mockResolvedValue({
+        data: [],
+        error: null,
+      }),
+    };
 
-    const result = await pullCloudProfile(mockDb);
+    (mockSupabase.from as jest.Mock)
+      .mockReturnValueOnce(mockProfileSelect)
+      .mockReturnValueOnce(mockBookmarksSelect);
 
-    expect(result).toEqual(cloudProfile);
-    expect(result.allergens).toContain("gluten");
-    expect(result.skillLevel).toBe("intermediate");
+    await pullCloudProfile(mockDb, userId);
+
+    expect(mockSaveProfileToDb).toHaveBeenCalledWith(mockDb, {
+      allergens: ["gluten", "dairy"],
+      skillLevel: "intermediate",
+      equipment: ["fırın", "blender"],
+    });
   });
 
-  it("cloud data overwrites local profile — cloud always wins on conflict", async () => {
-    const mockDb = {} as any;
-    const cloudProfile = {
-      allergens: ["nuts"],
-      skillLevel: "advanced" as const,
-      equipment: ["wok"],
-      onboardingCompleted: true,
-      accountNudgeShown: true,
+  it("cloud has empty allergens — local allergens become [] (cloud wins)", async () => {
+    const mockDb = makeMockDb();
+    const userId = "user-456";
+
+    const mockProfileSelect = {
+      select: jest.fn().mockReturnThis(),
+      eq: jest.fn().mockReturnThis(),
+      single: jest.fn().mockResolvedValue({
+        data: {
+          allergens: [],
+          skill_level: null,
+          equipment: ["tava"],
+        },
+        error: null,
+      }),
     };
 
-    mockPullCloudProfile.mockResolvedValueOnce(cloudProfile);
+    const mockBookmarksSelect = {
+      select: jest.fn().mockReturnThis(),
+      eq: jest.fn().mockResolvedValue({
+        data: [],
+        error: null,
+      }),
+    };
 
-    const result = await pullCloudProfile(mockDb);
+    (mockSupabase.from as jest.Mock)
+      .mockReturnValueOnce(mockProfileSelect)
+      .mockReturnValueOnce(mockBookmarksSelect);
 
-    // Cloud data must replace local — cloud wins
-    expect(result.allergens).toEqual(["nuts"]);
-    expect(result.equipment).toEqual(["wok"]);
+    await pullCloudProfile(mockDb, userId);
+
+    // Cloud wins — empty cloud allergens must replace any local allergens
+    expect(mockSaveProfileToDb).toHaveBeenCalledWith(mockDb, {
+      allergens: [],
+      skillLevel: null,
+      equipment: ["tava"],
+    });
+  });
+
+  it("pullCloudProfile with null userId does nothing and does not throw", async () => {
+    const mockDb = makeMockDb();
+
+    // Should not throw — exit early
+    await expect(pullCloudProfile(mockDb, null as any)).resolves.toBeUndefined();
+    expect(mockSaveProfileToDb).not.toHaveBeenCalled();
+    expect(mockSaveBookmarksToDb).not.toHaveBeenCalled();
   });
 });
 
-describe("Sign-out — AUTH-03: local data preserved after sign-out", () => {
-  it("local profile is still accessible in SQLite after sign-out", async () => {
-    const mockDb = {} as any;
+// ---------------------------------------------------------------------------
+// initAuthListener tests (onAuthStateChange integration)
+// ---------------------------------------------------------------------------
 
-    mockSignOut.mockResolvedValueOnce(undefined);
-    await signOut(mockDb);
+describe("initAuthListener()", () => {
+  it("SIGNED_IN event triggers pullCloudProfile — cloud data saved to SQLite", async () => {
+    const mockDb = makeMockDb();
+    const userId = "user-789";
 
-    // getLocalProfile should still work after sign-out (data not wiped)
-    const localProfile = await getLocalProfile(mockDb);
+    const mockProfileSelect = {
+      select: jest.fn().mockReturnThis(),
+      eq: jest.fn().mockReturnThis(),
+      single: jest.fn().mockResolvedValue({
+        data: {
+          allergens: ["nuts"],
+          skill_level: "beginner",
+          equipment: ["fırın"],
+        },
+        error: null,
+      }),
+    };
 
-    expect(localProfile).toBeDefined();
+    const mockBookmarksSelect = {
+      select: jest.fn().mockReturnThis(),
+      eq: jest.fn().mockResolvedValue({ data: [], error: null }),
+    };
+
+    (mockSupabase.from as jest.Mock)
+      .mockReturnValueOnce(mockProfileSelect)
+      .mockReturnValueOnce(mockBookmarksSelect);
+
+    let authCallback: (event: string, session: any) => Promise<void>;
+    const mockUnsubscribe = jest.fn();
+    (mockSupabase.auth.onAuthStateChange as jest.Mock).mockImplementation((cb) => {
+      authCallback = cb;
+      return { data: { subscription: { unsubscribe: mockUnsubscribe } } };
+    });
+
+    const unsubscribe = initAuthListener(mockDb);
+
+    // Simulate SIGNED_IN event
+    await authCallback!("SIGNED_IN", { user: { id: userId } });
+
+    expect(mockSaveProfileToDb).toHaveBeenCalledWith(mockDb, {
+      allergens: ["nuts"],
+      skillLevel: "beginner",
+      equipment: ["fırın"],
+    });
+
+    // Cleanup unsubscribes correctly
+    unsubscribe();
+    expect(mockUnsubscribe).toHaveBeenCalled();
   });
 
-  it("sign-out does not delete local SQLite profile row", async () => {
-    const mockDb = {} as any;
+  it("SIGNED_OUT event does NOT modify local profile — local data preserved", async () => {
+    const mockDb = makeMockDb();
 
-    mockSignOut.mockResolvedValueOnce(undefined);
-    await signOut(mockDb);
+    let authCallback: (event: string, session: any) => Promise<void>;
+    const mockUnsubscribe = jest.fn();
+    (mockSupabase.auth.onAuthStateChange as jest.Mock).mockImplementation((cb) => {
+      authCallback = cb;
+      return { data: { subscription: { unsubscribe: mockUnsubscribe } } };
+    });
 
-    // Local profile row id=1 must still be accessible
-    const localProfile = await getLocalProfile(mockDb);
-    expect(localProfile).not.toBeNull();
+    initAuthListener(mockDb);
+
+    // Simulate SIGNED_OUT event
+    await authCallback!("SIGNED_OUT", null);
+
+    // Neither profile nor bookmarks should be touched
+    expect(mockSaveProfileToDb).not.toHaveBeenCalled();
+    expect(mockSaveBookmarksToDb).not.toHaveBeenCalled();
   });
 });
