@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: In Progress
-stopped_at: Completed 02-profile-and-auth/02-02-PLAN.md
-last_updated: "2026-03-10T16:15:00.000Z"
-last_activity: 2026-03-10 — Phase 2 Plan 02 complete; Supabase + Google OAuth provisioned, .env.local populated, iOS dev build verified; Apple Sign In deferred
+status: executing
+stopped_at: Completed 02-profile-and-auth/02-04-PLAN.md
+last_updated: "2026-03-10T16:16:28.126Z"
+last_activity: 2026-03-10 — Phase 2 Plan 02 complete; Supabase + Google OAuth provisioned; Apple Sign In deferred to future iteration
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 12
-  completed_plans: 8
-  percent: 14
+  completed_plans: 9
+  percent: 67
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 2 of 5 (Profile and Auth) — IN PROGRESS
-Plan: 3 of 7 — ready to execute next plan (02-04 Supabase client init)
-Status: In Progress — credentials provisioned, env vars populated, iOS dev build verified
-Last activity: 2026-03-10 — Phase 2 Plan 02 complete; Supabase + Google OAuth provisioned; Apple Sign In deferred to future iteration
+Plan: 4 of 7 — ready to execute next plan (02-05 onboarding UI)
+Status: In Progress — auth layer complete; supabase.ts, sync.ts, useSession.ts implemented
+Last activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
 
-Progress: [███████░░░] 67% (Phase 2 in progress)
+Progress: [████████░░] 75% (Phase 2 in progress)
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: [███████░░░] 67% (Phase 2 in progress)
 | Phase 02-profile-and-auth P03 | 18 | 2 tasks | 5 files |
 | Phase 02-profile-and-auth P01 | 4 | 2 tasks | 5 files |
 | Phase 02-profile-and-auth P02 | checkpoint | 1 tasks | 2 files |
+| Phase 02-profile-and-auth P04 | 3 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 02-profile-and-auth P02]: Apple Sign In .p8 private key expires after 6 months — calendar reminder required at setup
 - [Phase 02-profile-and-auth]: profile.test.ts and migration.test.ts were pre-implemented ahead of plan 02-01 — only sync.test.ts created as new failing stub
 - [Phase 02-profile-and-auth]: Apple Sign In skipped in provisioning round — will be configured before App Store submission; Plan 02-06 can implement code but cannot end-to-end test until credentials added
+- [Phase 02-profile-and-auth]: expo-sqlite localStorage wrapped in try/catch for Jest fallback — prevents native module crash in test environment
+- [Phase 02-profile-and-auth]: pullCloudProfile accepts nullable userId and returns early — null-guard prevents Supabase queries with no active session
 
 ### Pending Todos
 
@@ -107,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T16:11:01.357Z
-Stopped at: Completed 02-profile-and-auth/02-02-PLAN.md
+Last session: 2026-03-10T16:16:28.124Z
+Stopped at: Completed 02-profile-and-auth/02-04-PLAN.md
 Resume file: None

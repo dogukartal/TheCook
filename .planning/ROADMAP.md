@@ -104,7 +104,7 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete    | 2026-03-09 |
-| 2. Profile and Auth | 3/7 | In Progress|  |
+| 2. Profile and Auth | 4/7 | In Progress|  |
 | 3. Content Library | 0/TBD | Not started | - |
 | 4. Recipe Discovery | 0/TBD | Not started | - |
 | 5. Guided Cooking Mode | 0/TBD | Not started | - |
