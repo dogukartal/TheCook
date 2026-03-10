@@ -68,7 +68,12 @@ Plans:
   2. Every recipe has complete step-level data: instruction, why annotation, looks-like-when-done description, and common-mistake flag — no steps are missing any field
   3. Every recipe has accurate allergen flags and a skill level tag applied at content creation time
   4. The recipe library loads from the local SQLite database with no network request on any launch after first install
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Developer prep: bump SEED_VERSION to 2.0.0, add validator count warning, add version-mismatch re-seed test
+- [ ] 03-02-PLAN.md — Hira authors 27+ YAML recipe files covering all 6 categories
+- [ ] 03-03-PLAN.md — Build recipes.json, verify 30+ recipes seed on fresh device install
 
 ### Phase 4: Recipe Discovery
 **Goal**: Users can find recipes they can actually make — by what they have, by browsing, or by filtering — and allergen-incompatible recipes are never shown
