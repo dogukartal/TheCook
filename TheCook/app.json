@@ -13,7 +13,17 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thecook.app",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.230547724005-4ejkhcv0hfsaekdj9d8knqek7lfa1cdl"
+            ]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
