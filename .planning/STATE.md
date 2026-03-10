@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Blocked at checkpoint — external service setup required before auth implementation can proceed
-stopped_at: "02-02-PLAN.md — checkpoint:human-action; awaiting Supabase/Google/Apple credential provisioning"
-last_updated: "2026-03-10T15:25:00Z"
+stopped_at: Completed 02-profile-and-auth/02-01-PLAN.md
+last_updated: "2026-03-10T15:25:14.209Z"
 last_activity: 2026-03-10 — Phase 2 Plan 02 checkpoint; .env.local placeholder exists; Supabase/Google/Apple setup needed
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 12
-  completed_plans: 7
+  completed_plans: 8
   percent: 14
 ---
 
@@ -56,6 +56,7 @@ Progress: [██░░░░░░░░] 14% (Phase 2 in progress)
 | Phase 01-foundation P04 | 35 | 3 tasks | 8 files |
 | Phase 01-foundation P05 | 10 | 2 tasks | 1 files |
 | Phase 02-profile-and-auth P03 | 18 | 2 tasks | 5 files |
+| Phase 02-profile-and-auth P01 | 4 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,7 @@ Recent decisions affecting current work:
 - [Phase 02-profile-and-auth P02]: Supabase chosen as auth + sync backend — profiles and bookmarks tables with RLS; cloud-wins conflict resolution
 - [Phase 02-profile-and-auth P02]: Google OAuth requires separate Web + iOS client IDs; reversed iOS client ID added to app.json ios.infoPlist.CFBundleURLTypes as iosUrlScheme
 - [Phase 02-profile-and-auth P02]: Apple Sign In .p8 private key expires after 6 months — calendar reminder required at setup
+- [Phase 02-profile-and-auth]: profile.test.ts and migration.test.ts were pre-implemented ahead of plan 02-01 — only sync.test.ts created as new failing stub
 
 ### Pending Todos
 
@@ -103,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T15:25:00Z
-Stopped at: 02-02-PLAN.md checkpoint:human-action — awaiting Supabase + Google OAuth + Apple Sign In provisioning
-Resume file: .planning/phases/02-profile-and-auth/02-02-SUMMARY.md
+Last session: 2026-03-10T15:25:14.207Z
+Stopped at: Completed 02-profile-and-auth/02-01-PLAN.md
+Resume file: None
