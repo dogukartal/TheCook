@@ -9,9 +9,9 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 ### Onboarding & Profile
 
-- [ ] **ONBRD-01**: User can declare allergens and dietary restrictions at onboarding; stored and applied automatically to all recipe recommendations
-- [ ] **ONBRD-02**: User can set cooking skill level (beginner / intermediate / advanced); controls which recipes surface and step explanation depth
-- [ ] **ONBRD-03**: User can declare available kitchen equipment; recipes requiring unlisted equipment are de-prioritized or flagged
+- [x] **ONBRD-01**: User can declare allergens and dietary restrictions at onboarding; stored and applied automatically to all recipe recommendations
+- [x] **ONBRD-02**: User can set cooking skill level (beginner / intermediate / advanced); controls which recipes surface and step explanation depth
+- [x] **ONBRD-03**: User can declare available kitchen equipment; recipes requiring unlisted equipment are de-prioritized or flagged
 
 ### Discovery
 
@@ -35,9 +35,9 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 ### Authentication
 
-- [ ] **AUTH-01**: App works fully without an account — user profile and bookmarks stored locally on device
-- [ ] **AUTH-02**: User can optionally create an account; doing so syncs their profile and bookmarks across devices
-- [ ] **AUTH-03**: User can log in and out; local data syncs on sign-in
+- [x] **AUTH-01**: App works fully without an account — user profile and bookmarks stored locally on device
+- [x] **AUTH-02**: User can optionally create an account; doing so syncs their profile and bookmarks across devices
+- [x] **AUTH-03**: User can log in and out; local data syncs on sign-in
 
 ## v2 Requirements
 
@@ -79,12 +79,12 @@ Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | CONT-02 | Phase 1 | Complete |
-| ONBRD-01 | Phase 2 | Pending |
-| ONBRD-02 | Phase 2 | Pending |
-| ONBRD-03 | Phase 2 | Pending |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
+| ONBRD-01 | Phase 2 | Complete |
+| ONBRD-02 | Phase 2 | Complete |
+| ONBRD-03 | Phase 2 | Complete |
+| AUTH-01 | Phase 2 | Complete |
+| AUTH-02 | Phase 2 | Complete |
+| AUTH-03 | Phase 2 | Complete |
 | CONT-01 | Phase 3 | Pending |
 | DISC-01 | Phase 4 | Pending |
 | DISC-02 | Phase 4 | Pending |

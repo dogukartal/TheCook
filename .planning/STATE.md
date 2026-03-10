@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Blocked at checkpoint — external service setup required before auth implementation can proceed
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-03-10T15:22:38.294Z"
+stopped_at: "02-02-PLAN.md — checkpoint:human-action; awaiting Supabase/Google/Apple credential provisioning"
+last_updated: "2026-03-10T15:25:00Z"
 last_activity: 2026-03-10 — Phase 2 Plan 02 checkpoint; .env.local placeholder exists; Supabase/Google/Apple setup needed
 progress:
   total_phases: 5
@@ -87,13 +87,13 @@ Recent decisions affecting current work:
 - [Phase 02-profile-and-auth]: allergens default is [] (empty array) — opt-in safety constraint; never pre-selected
 - [Phase 02-profile-and-auth]: Dual export pattern for profile.ts: useProfileDb hook for UI, standalone saveProfileToDb/saveBookmarksToDb for sync layer
 
-### Pending Todos
-
-None yet.
-
 - [Phase 02-profile-and-auth P02]: Supabase chosen as auth + sync backend — profiles and bookmarks tables with RLS; cloud-wins conflict resolution
 - [Phase 02-profile-and-auth P02]: Google OAuth requires separate Web + iOS client IDs; reversed iOS client ID added to app.json ios.infoPlist.CFBundleURLTypes as iosUrlScheme
 - [Phase 02-profile-and-auth P02]: Apple Sign In .p8 private key expires after 6 months — calendar reminder required at setup
+
+### Pending Todos
+
+None yet.
 
 ### Blockers/Concerns
 
@@ -103,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T15:22:38.293Z
-Stopped at: Completed 02-03-PLAN.md
-Resume file: None
+Last session: 2026-03-10T15:25:00Z
+Stopped at: 02-02-PLAN.md checkpoint:human-action — awaiting Supabase + Google OAuth + Apple Sign In provisioning
+Resume file: .planning/phases/02-profile-and-auth/02-02-SUMMARY.md
