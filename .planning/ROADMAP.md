@@ -51,7 +51,7 @@ Plans:
 **Plans**: 7 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Install Phase 2 dependencies and create failing test stubs (Wave 0)
+- [x] 02-01-PLAN.md — Install Phase 2 dependencies and create failing test stubs (Wave 0) (completed 2026-03-10)
 - [ ] 02-02-PLAN.md — Human checkpoint: Supabase project + Google OAuth + Apple Sign In setup + dev build (Wave 0)
 - [ ] 02-03-PLAN.md — ProfileSchema + BookmarkSchema types + DB_VERSION 2 migration + profile CRUD (Wave 1)
 - [ ] 02-04-PLAN.md — Supabase client + SessionContext + cloud-wins sync listener (Wave 2)
@@ -104,7 +104,7 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete    | 2026-03-09 |
-| 2. Profile and Auth | 7/7 | Complete   | 2026-03-10 |
+| 2. Profile and Auth | 8/8 | Complete   | 2026-03-10 |
 | 3. Content Library | 0/TBD | Not started | - |
 | 4. Recipe Discovery | 0/TBD | Not started | - |
 | 5. Guided Cooking Mode | 0/TBD | Not started | - |
