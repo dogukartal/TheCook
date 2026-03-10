@@ -1,4 +1,4 @@
-import { useSQLiteContext, SQLiteDatabase } from "expo-sqlite";
+import { useSQLiteContext, SQLiteDatabase, SQLiteBindValue } from "expo-sqlite";
 import {
   ProfileSchema,
   BookmarkSchema,
@@ -29,7 +29,7 @@ export function useProfileDb() {
 
   async function saveProfile(profile: Partial<Profile>): Promise<void> {
     const fields: string[] = [];
-    const values: unknown[] = [];
+    const values: SQLiteBindValue[] = [];
     if (profile.allergens !== undefined) {
       fields.push("allergens = ?");
       values.push(JSON.stringify(profile.allergens));
@@ -98,7 +98,7 @@ export async function saveProfileToDb(
   profile: Partial<Profile>
 ): Promise<void> {
   const fields: string[] = [];
-  const values: unknown[] = [];
+  const values: SQLiteBindValue[] = [];
   if (profile.allergens !== undefined) {
     fields.push("allergens = ?");
     values.push(JSON.stringify(profile.allergens));
