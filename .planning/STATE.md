@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-profile-and-auth/02-04-PLAN.md
-last_updated: "2026-03-10T16:16:28.126Z"
-last_activity: 2026-03-10 — Phase 2 Plan 02 complete; Supabase + Google OAuth provisioned; Apple Sign In deferred to future iteration
+stopped_at: Completed 02-profile-and-auth/02-06-PLAN.md
+last_updated: "2026-03-10T16:23:07.412Z"
+last_activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 12
-  completed_plans: 9
-  percent: 67
+  completed_plans: 10
+  percent: 75
 ---
 
 # Project State
@@ -59,6 +59,7 @@ Progress: [████████░░] 75% (Phase 2 in progress)
 | Phase 02-profile-and-auth P01 | 4 | 2 tasks | 5 files |
 | Phase 02-profile-and-auth P02 | checkpoint | 1 tasks | 2 files |
 | Phase 02-profile-and-auth P04 | 3 | 2 tasks | 4 files |
+| Phase 02-profile-and-auth P06 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,9 @@ Recent decisions affecting current work:
 - [Phase 02-profile-and-auth]: Apple Sign In skipped in provisioning round — will be configured before App Store submission; Plan 02-06 can implement code but cannot end-to-end test until credentials added
 - [Phase 02-profile-and-auth]: expo-sqlite localStorage wrapped in try/catch for Jest fallback — prevents native module crash in test environment
 - [Phase 02-profile-and-auth]: pullCloudProfile accepts nullable userId and returns early — null-guard prevents Supabase queries with no active session
+- [Phase 02-profile-and-auth]: Apple Sign In code implemented but requires Apple Developer Portal .p8 key + Supabase Apple provider config for end-to-end testing
+- [Phase 02-profile-and-auth]: useSession.ts renamed to useSession.tsx — file contained JSX causing tsc failure with .ts extension
+- [Phase 02-profile-and-auth]: Generic 'Invalid email or password' error on sign-in failure — does not reveal which field is wrong (security best practice)
 
 ### Pending Todos
 
@@ -110,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T16:16:28.124Z
-Stopped at: Completed 02-profile-and-auth/02-04-PLAN.md
+Last session: 2026-03-10T16:23:07.410Z
+Stopped at: Completed 02-profile-and-auth/02-06-PLAN.md
 Resume file: None
