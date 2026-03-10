@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-09T17:20:49.248Z"
-last_activity: 2026-03-09 — Phase 1 complete; Expo app verified on iOS simulator; 21 tests passing; authoring guide delivered for Hira
+status: Blocked at checkpoint — external service setup required before auth implementation can proceed
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-10T15:22:38.294Z"
+last_activity: 2026-03-10 — Phase 2 Plan 02 checkpoint; .env.local placeholder exists; Supabase/Google/Apple setup needed
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_plans: 12
+  completed_plans: 7
+  percent: 14
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** The user must never feel like the app gave them a recipe and walked away — every interaction, from ingredient input to the last step, must feel like having a knowledgeable friend in the kitchen.
-**Current focus:** Phase 1 - Foundation
+**Current focus:** Phase 2 - Profile and Auth
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation) — COMPLETE
-Plan: 5 of 5 completed in current phase
-Status: Phase complete — ready to begin Phase 2
-Last activity: 2026-03-09 — Phase 1 complete; Expo app verified on iOS simulator; 21 tests passing; authoring guide delivered for Hira
+Phase: 2 of 5 (Profile and Auth) — IN PROGRESS
+Plan: 2 of 7 — checkpoint:human-action (awaiting Supabase + OAuth credential provisioning)
+Status: Blocked at checkpoint — external service setup required before auth implementation can proceed
+Last activity: 2026-03-10 — Phase 2 Plan 02 checkpoint; .env.local placeholder exists; Supabase/Google/Apple setup needed
 
-Progress: [██████████] 100%
+Progress: [██░░░░░░░░] 14% (Phase 2 in progress)
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██████████] 100%
 | Phase 01-foundation P03 | 10 | 2 tasks | 6 files |
 | Phase 01-foundation P04 | 35 | 3 tasks | 8 files |
 | Phase 01-foundation P05 | 10 | 2 tasks | 1 files |
+| Phase 02-profile-and-auth P03 | 18 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -83,10 +84,16 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: YAML block scalar syntax (>-) documented in authoring guide for instructions containing colons — prevents BLOCK_AS_IMPLICIT_KEY parse errors for non-developer authors
 - [Phase 01-foundation]: Image workflow delegated to developer in authoring guide — Hira provides photos, developer adds filename to YAML to prevent formatting errors
 - [Phase 01-foundation]: jest pinned to 29.7.0, jest-expo to ~54.0.17, react-test-renderer override added (user commit f45c783) to resolve peer dep conflicts with react@19.1.0
+- [Phase 02-profile-and-auth]: allergens default is [] (empty array) — opt-in safety constraint; never pre-selected
+- [Phase 02-profile-and-auth]: Dual export pattern for profile.ts: useProfileDb hook for UI, standalone saveProfileToDb/saveBookmarksToDb for sync layer
 
 ### Pending Todos
 
 None yet.
+
+- [Phase 02-profile-and-auth P02]: Supabase chosen as auth + sync backend — profiles and bookmarks tables with RLS; cloud-wins conflict resolution
+- [Phase 02-profile-and-auth P02]: Google OAuth requires separate Web + iOS client IDs; reversed iOS client ID added to app.json ios.infoPlist.CFBundleURLTypes as iosUrlScheme
+- [Phase 02-profile-and-auth P02]: Apple Sign In .p8 private key expires after 6 months — calendar reminder required at setup
 
 ### Blockers/Concerns
 
@@ -96,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T17:20:49.239Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-profile-and-auth/02-CONTEXT.md
+Last session: 2026-03-10T15:22:38.293Z
+Stopped at: Completed 02-03-PLAN.md
+Resume file: None
