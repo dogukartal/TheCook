@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const result = await db.getFirstAsync<{ user_version: number }>(
@@ -38,6 +38,30 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
 
       CREATE INDEX IF NOT EXISTS idx_recipes_skill_level ON recipes (skill_level);
       CREATE INDEX IF NOT EXISTS idx_recipes_category ON recipes (category);
+    `);
+  }
+
+  if (currentVersion < 2) {
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS profile (
+        id INTEGER PRIMARY KEY NOT NULL DEFAULT 1,
+        allergens TEXT NOT NULL DEFAULT '[]',
+        skill_level TEXT,
+        equipment TEXT NOT NULL DEFAULT '["fırın","tava"]',
+        onboarding_completed INTEGER NOT NULL DEFAULT 0,
+        account_nudge_shown INTEGER NOT NULL DEFAULT 0
+      );
+
+      INSERT OR IGNORE INTO profile (id) VALUES (1);
+
+      CREATE TABLE IF NOT EXISTS bookmarks (
+        id TEXT PRIMARY KEY NOT NULL,
+        recipe_id TEXT NOT NULL,
+        user_id TEXT,
+        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_bookmarks_recipe_id ON bookmarks (recipe_id);
     `);
   }
 
