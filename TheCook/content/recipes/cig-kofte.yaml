@@ -1,0 +1,91 @@
+id: cig-kofte
+title: Çiğ Köfte
+cuisine: türk
+category: aperatif
+mealType: snack
+skillLevel: beginner
+prepTime: 30
+cookTime: 5
+servings: 6
+coverImage: null
+allergens:
+  - gluten
+equipment:
+  - tencere
+ingredientGroups:
+  - label: null
+    items:
+      - name: İnce bulgur
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Kaynar su
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Domates salçası
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Biber salçası (acı)
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Zeytinyağı
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Limon suyu
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Nar ekşisi
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kırmızı toz biber
+        amount: 2
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kimyon
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Maydanoz
+        amount: 1
+        unit: demet
+        optional: false
+      - name: Yeşil soğan
+        amount: 4
+        unit: adet
+        optional: true
+steps:
+  - instruction: Bulguru geniş kaba koyun ve kaynar su ekleyip karıştırın. 15 dakika kapağını kapatarak demlendirin. Bulgur su çekince soğuyunca açın.
+    why: Bulgur kaynar suda şişer ve ön pişirme gerçekleşir. 15 dakika yeterlidir; daha uzun bekletmek yapışkan kıvam oluşturur.
+    looksLikeWhenDone: Bulgur şişmiş, su tamamen çekilmiş. Çatal geçince yumuşak ama yapışkan değil.
+    commonMistake: Fazla su kullanmak — bulgur sulanır ve kıvam tutmaz.
+    recovery: Sulanmışsa kuru bulgur ekleyerek dengeyin.
+    stepImage: null
+    timerSeconds: 900
+  - instruction: Soğanı rendeleyin ve suyunu sıkın. Bulgura soğan, salçalar, zeytinyağı, limon suyu, nar ekşisi, tuz ve baharatları ekleyin. Elimizle 10-15 dakika kuvvetlice yoğurun.
+    why: Uzun yoğurma bulgurla tatların birleşmesini sağlar. Elle yoğurma baharatların her taneye işlemesini garanti eder.
+    looksLikeWhenDone: Tüm bulgur taneleri kırmızı renk almış ve eşit kaplanmış. Karışım yapışkan ama ele bırakmaz.
+    commonMistake: Az yoğurmak — bazı kısımlar tutsuz ve renksiz kalır.
+    recovery: Yoğurmaya devam edin; 15 dakika yeterli.
+    stepImage: null
+    timerSeconds: 900
+  - instruction: Maydanozu ve yeşil soğanı ince kıyın. Ekleyip hafifçe karıştırın. Tadını kontrol edin; gerekirse lemon, tuz veya salça ekleyin. Islatılmış marul yaprakları üzerinde servis edin.
+    why: Taze otlar eklendikten sonra çok karıştırmak onları ezer; hafif karıştırma görünümü korur. Marul yaprakları geleneksel çiğ köfte servisidir.
+    looksLikeWhenDone: Maydanoz eşit dağılmış. Kıvam elle yuvarlanabiliyor. Tadı dengeli, ekşi-acı-tuzlu.
+    commonMistake: Çok fazla ekşi koymak — nar ekşisi ve limon birlikte kullanılınca aşırı ekşi olabilir.
+    recovery: Ekşilik fazlaysa biraz şeker veya salça ekleyerek dengeleyin.
+    stepImage: null
+    timerSeconds: null

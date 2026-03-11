@@ -1,0 +1,44 @@
+id: sucuklu-yumurta
+title: Sucuklu Yumurta
+cuisine: türk
+category: kahvaltı
+mealType: breakfast
+skillLevel: beginner
+prepTime: 5
+cookTime: 10
+servings: 2
+coverImage: null
+allergens:
+  - egg
+equipment:
+  - tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Sucuk
+        amount: 6
+        unit: dilim
+        optional: false
+      - name: Yumurta
+        amount: 4
+        unit: adet
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tutam
+        optional: false
+steps:
+  - instruction: Sucuk dilimlerini yağsız tavaya koyun ve orta ateşte her iki taraftan 1-2 dakika kızartın. Sucuklar kendi yağını salar.
+    why: Sucuk kendi yağını salarken lezzet yağa geçer. Bu yağ yumurtaları kızartmak için idealdir; ekstra yağ gerekmez.
+    looksLikeWhenDone: Sucuklar hafif büzülmüş ve kenarları kızarmış. Tavada kırmızı yağ birikmiş.
+    commonMistake: Sucukları yüksek ateşte yakmak — içi kurur ve acı bir tat oluşur.
+    recovery: Yanmışsa o parçaları çıkarın ve temiz tavayla yeniden başlayın.
+    stepImage: null
+    timerSeconds: 120
+  - instruction: Sucukları tavayla kenara itin ya da küçük bir kenara dizin. Yumurtaları sucuk yağının üzerine kırın. Tuzlayın. Sarılar bütün kalacak şekilde 3-4 dakika pişirin.
+    why: Yumurtalar sucuk yağında pişince yağın tüm aromasını emer. Sarıyı bütün tutmak görsel ve tat açısından daha iyi bir deneyim sunar.
+    looksLikeWhenDone: Yumurta beyazları tamamen donmuş ve opak. Sarılar parlaklığını koruyor, hafif titreyerek hareket ediyor.
+    commonMistake: Yumurtaları karıştırmak — scrambled egg olur, geleneksel görünüm kaybolur.
+    recovery: Sarılar kırıldıysa devam edin, tat aynıdır.
+    stepImage: null
+    timerSeconds: 240

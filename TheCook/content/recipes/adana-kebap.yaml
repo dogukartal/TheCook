@@ -1,0 +1,70 @@
+id: adana-kebap
+title: Adana Kebabı
+cuisine: türk
+category: ana yemek
+mealType: dinner
+skillLevel: intermediate
+prepTime: 25
+cookTime: 15
+servings: 4
+coverImage: null
+allergens: []
+equipment:
+  - döküm tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Dana kıyma (yağlı, %20 yağ)
+        amount: 600
+        unit: gr
+        optional: false
+      - name: Kuyruk yağı veya iç yağ
+        amount: 80
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Kırmızı biber salçası (acı)
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Pul biber
+        amount: 2
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kimyon
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+steps:
+  - instruction: Soğanı rendeleyin ve suyunu iyice sıkın. Kuyruk yağını veya iç yağı çok ince kıyın ya da robotla çekin.
+    why: Soğan suyu harcı sularlatır ve kebap şeklini tutamaz. İnce kıyılmış yağ ise kıymaya işler ve kebabı sulu kılar.
+    looksLikeWhenDone: Soğan ince rende, suyunun büyük kısmı sıkılmış. Yağ çok küçük parçalara ayrılmış.
+    commonMistake: Soğan suyunu sıkmamak — kebap ıslak kalır ve şişe takılmaz.
+    recovery: Sıkmayı atladıysanız kağıt havluda bekletip fazla suyu aldırın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Kıyma, yağ, soğan, salça, pul biber, karabiber, tuz ve kimyonu derin bir kapta birleştirin. En az 10 dakika kuvvetlice yoğurun. Buzdolabında 1 saat dinlendirin.
+    why: Uzun yoğurma proteini aktive eder; harç birbirine yapışır ve şekil tutar. Dinlendirme tatların birbirine geçmesini sağlar.
+    looksLikeWhenDone: Harç yapışkan ve homojen. Elimize alınca şekil tutuyor, ısıya karşı direniyor.
+    commonMistake: Az yoğurmak — kebap şişte ya da tavada dağılır.
+    recovery: Dağılmaya başlarsa alıp tekrar yoğurun ve yeniden şekil verin.
+    stepImage: null
+    timerSeconds: 4200
+  - instruction: Harcın 1/6 kadarını avucunuza alın ve ıslak el ile uzun, silindir şekil verin. Döküm tavayı çok yüksek ateşte ısıtın. Kebapları 3-4 dakika, her taraftan güzelce kızarana kadar pişirin.
+    why: Çok yüksek ateş dışını hızla mühürler ve iç suyunu korur. Orta ateşte pişirilen kebap kızarmak yerine haşlanır.
+    looksLikeWhenDone: Dışı koyu kahverengi ve hafif çıtır. Baskı uygulanınca biraz direnç var. Kes kontrolü pembe ama pişmiş.
+    commonMistake: Kebabı döndürmeden süreklı aynı tarafta pişirmek — bir tarafı yanar, diğeri çiğ kalır.
+    recovery: Çok kızarmışsa ateşi kısın ve ters çevirin; kalan kısmı tamamlayın.
+    stepImage: null
+    timerSeconds: 480

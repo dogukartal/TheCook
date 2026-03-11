@@ -1,0 +1,73 @@
+id: pilav
+title: Tereyağlı Pirinç Pilavı
+cuisine: türk
+category: ana yemek
+mealType: dinner
+skillLevel: beginner
+prepTime: 10
+cookTime: 25
+servings: 4
+coverImage: null
+allergens:
+  - dairy
+equipment:
+  - tencere
+ingredientGroups:
+  - label: null
+    items:
+      - name: Pirinç
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Tereyağı
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Su veya tavuk suyu
+        amount: 3
+        unit: su bardağı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Şehriye
+        amount: 2
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Pirinci soğuk suda 3-4 kez yıkayın, su berraklaşana kadar. Son yıkamada 30 dakika ılık tuzlu suda bekletin, ardından süzün.
+    why: Yıkamak yüzey nişastasını giderir; bu sayede pirinçler piştikten sonra birbirine yapışmaz. Bekletmek pişme süresini kısaltır ve daha tane tane bir pilav verir.
+    looksLikeWhenDone: Yıkama suyu berrak görünüyor. Süzgeçte pirincin yüzeyi mat beyaz, ıslak ama köpüksüz.
+    commonMistake: Sadece bir kez yıkamak — nişasta kalır ve pilav yapışkan olur.
+    recovery: Pişmiş pilav yapışkansa bir sonraki yapımda daha fazla yıkayın; bu seferi fazla karıştırmadan servis edin.
+    stepImage: null
+    timerSeconds: 1800
+  - instruction: Tencereye tereyağını ekleyin ve orta ateşte eritin. İsteğe bağlı şehriyeyi ekleyin ve altın rengi alana kadar 2-3 dakika kavurun.
+    why: Tereyağında kavurma pirinç tanesine ısı ile yağ emdirir; pilav tane tane olur. Şehriye kızartılmadan eklenirse sararmaz ve renk vermez.
+    looksLikeWhenDone: Şehriye altın sarısı, tereyağı köpüklü. Tencerede hafif bir tereyağı aroması yükseliyor.
+    commonMistake: Şehriyeyi yakmak — acı bir tat bırakır.
+    recovery: Şehriye kararınca tüm malzemeyi atıp yeniden başlayın; kararma gidermez.
+    stepImage: null
+    timerSeconds: 180
+  - instruction: Süzülmüş pirinci tencereye ekleyin ve sürekli karıştırarak 2-3 dakika kavurun. Pirinçler mat ve hafif yarı saydam görünene kadar pişirin.
+    why: Kavurma pirincin yüzeyini mühürler ve her tanenin bağımsız pişmesini sağlar; bu tane tane pilavın sırrıdır.
+    looksLikeWhenDone: Pirinçler tamamen yağla kaplanmış, yarı saydam görünüyor. Hafif pişmiş bir koku yükseliyor.
+    commonMistake: Bu adımı atlamak — pirinç ham olarak suya girer ve sonuç yapışkan olur.
+    recovery: Geç kavurma yapılabilir ama pirinç zaten ıslandıysa kısaca kavurun.
+    stepImage: null
+    timerSeconds: 180
+  - instruction: Kaynar su veya tavuk suyunu ve tuzu ekleyin. Karıştırıp kaynatın. Kaynamaya başlayınca ateşi en kısık seviyeye alın, kapağı kapatın ve 18-20 dakika pişirin.
+    why: Çok kısık ateşte kapalı kapakla pişirmek buharın tencere içinde kalmasını ve pirincin buharla şişmesini sağlar. Kapak açılırsa buhar kaçar ve pilav kuru kalır.
+    looksLikeWhenDone: Tencere kapağında buhar damlacıkları var. Yüzeyden su görünmüyor, pirinçlerin arası kuru görünüyor.
+    commonMistake: Kapağı açmak — buhar kaçar, alt taraf pişmeden üst kurur.
+    recovery: Kapağı açtıysanız hızla kapatın ve 3-5 dakika daha pişirin.
+    stepImage: null
+    timerSeconds: 1200
+  - instruction: Ocağı kapatın. Kapak üzerine bir kağıt havlu ya da bez koyun ve kapağı kapatın. 10 dakika demlenmeye bırakın. Servis etmeden önce tahta bir kaşıkla altüst edin.
+    why: Kağıt havlu fazla buharı emer ve yoğuşmanın pilava damlamasını önler. Dinlendirmek nişastanın geri çökmesini sağlar, tane tane kıvam oluşur.
+    looksLikeWhenDone: Pirinçler tane tane ve şişkin. Tencere dibinde ince bir kabuk oluşmuş (bu istenilen bir şeydir). Pilav kaşığa yapışmıyor.
+    commonMistake: Dinlendirmeden hemen servis etmek — pilav yapışkan ve kırılgandır.
+    recovery: Yapışkan pilavı geniş kaba alın ve hafifçe karıştırın, biraz açılır.
+    stepImage: null
+    timerSeconds: 600

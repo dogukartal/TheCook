@@ -1,0 +1,83 @@
+id: simit
+title: Ev Simidi
+cuisine: türk
+category: kahvaltı
+mealType: breakfast
+skillLevel: advanced
+prepTime: 90
+cookTime: 25
+servings: 8
+coverImage: null
+allergens:
+  - gluten
+  - sesame
+equipment:
+  - fırın
+ingredientGroups:
+  - label: Hamur için
+    items:
+      - name: Un
+        amount: 4
+        unit: su bardağı
+        optional: false
+      - name: Instant maya
+        amount: 2
+        unit: tatlı kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Şeker
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Ilık su
+        amount: 280
+        unit: ml
+        optional: false
+      - name: Zeytinyağı veya sıvıyağ
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+  - label: Daldırma için
+    items:
+      - name: Pekmez veya nar ekşisi
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Su
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+  - label: Kaplama için
+    items:
+      - name: Susam
+        amount: 200
+        unit: gr
+        optional: false
+steps:
+  - instruction: Un, maya, tuz ve şekeri karıştırın. Ilık suyu ve yağı ekleyin. 10 dakika pürüzsüz ve esnek bir hamur yoğurun. Üstünü örtün, 1 saat mayalandırın.
+    why: Yeterli maya süresi hamuru kabarık ve yumuşak yapar. Uzun yoğurma glüten ağını geliştirerek simit şeklini kolayca almanızı sağlar.
+    looksLikeWhenDone: Hamur iki katına çıkmış. Parmak bastırınca yavaşça geri geliyor.
+    commonMistake: Maya zamanını kısaltmak — simit sıkı ve yoğun olur, kabarık olmaz.
+    recovery: Daha fazla bekleyin; soğuk ortamdaysa ılık bir yere taşıyın.
+    stepImage: null
+    timerSeconds: 3600
+  - instruction: Pekmez veya nar ekşisi ve suyu bir kaseye karıştırın. Susamı geniş bir tabağa yayın. Hamuru 8 eşit parçaya bölün, her parçayı ince uzun şerit hâline getirin. Bükerek halka yapın ve uçlarını birleştirin.
+    why: Pekmez-su karışımı susamın yapışmasını sağlar ve pişince simide karakteristik parlak kırmızımtırak rengi verir.
+    looksLikeWhenDone: Simid halkalar eşit büyüklükte ve birleşme noktası pürüzsüz. Susam her tarafı kaplamış.
+    commonMistake: Halkaları birleştirirken yeterince bastırmamak — pişerken açılır.
+    recovery: Açıldıysa ıslatılmış parmakla tekrar birleştirin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: >-
+      Her simit halkasını pekmez karışımına daldırın, her tarafı ıslanmış olsun. Ardından
+      susama batırıp her tarafını kaplayın. Yağlı kağıt kaplı tepsiye dizin. 15 dakika dinlendirin.
+      Önceden ısıtılmış 200 derece fırında 20-25 dakika, altın kahverengi renk alana kadar pişirin.
+    why: 200 derece yüksek sıcaklık dışını hızla kavurur ve çıtır bir kabuk oluşturur. Önceden dinlendirme son kabarma için alan açar.
+    looksLikeWhenDone: Simidler pişince köpürülü ve altın-kahverengi renk almış. Susam iyice kavrulmuş. Tıklatınca çıtır bir ses çıkıyor.
+    commonMistake: Düşük ısıda pişirmek — simid çıtır olmaz ve soluk renk alır.
+    recovery: Açık renk kaldıysa birkaç dakika daha fırında tutun veya ızgara moduna geçin.
+    stepImage: null
+    timerSeconds: 1500

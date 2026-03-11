@@ -1,0 +1,102 @@
+id: karniyarik
+title: Karnıyarık
+cuisine: türk
+category: ana yemek
+mealType: dinner
+skillLevel: intermediate
+prepTime: 20
+cookTime: 45
+servings: 4
+coverImage: null
+allergens:
+  - gluten
+equipment:
+  - fırın
+  - tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Patlıcan
+        amount: 4
+        unit: adet
+        optional: false
+      - name: Kıyma
+        amount: 300
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Domates
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Yeşil biber
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Sarımsak
+        amount: 3
+        unit: adet
+        optional: false
+      - name: Domates salçası
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Zeytinyağı
+        amount: 4
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Maydanoz
+        amount: 1
+        unit: demet
+        optional: true
+steps:
+  - instruction: >-
+      Patlıcanları boyuna yarıya bölün, her yarının ortasına keskin bir bıçakla V şeklinde derin bir
+      çentik açın. Tuzlu suda 20 dakika bekletin, ardından kurutun.
+    why: Tuzlu suda bekletmek patlıcanın acılığını giderir ve yağ emme kapasitesini azaltır. V çentik iç harcın düzgün yerleşmesini sağlar.
+    looksLikeWhenDone: Patlıcanlar hafif kararıp nemini bırakmış, kağıt havluyla kurulunca yüzey kuru görünüyor.
+    commonMistake: Patlıcanı tuzlu suda bekletmemek — acı tat kalır ve fazla yağ çeker.
+    recovery: Bekletmeyi atladıysanız kızartmadan önce patlıcanı iyice kurulayın ve daha az yağ kullanın.
+    stepImage: null
+    timerSeconds: 1200
+  - instruction: Tavada zeytinyağını kızdırın ve patlıcanları kesik yüzü aşağı bakacak şekilde 5-6 dakika kavurun. Ters çevirip 3 dakika daha pişirin. Fırın tepsisine alın.
+    why: Kızartma patlıcanın dokusunu yumuşatır ve fırında iç harcı çekecek yapıya kavuşturur. Kesik yüzü aşağı başlamak şekil tutmasını sağlar.
+    looksLikeWhenDone: Patlıcanlar altın sarısı ile kahverengi arasında renk almış, bıçak kolayca giriyor. Şekli korunuyor.
+    commonMistake: Çok yüksek ateşte yakmak — dışı yanar içi çiğ kalır.
+    recovery: Ateşi kısın ve kapağı kapalı biraz daha pişirin.
+    stepImage: null
+    timerSeconds: 540
+  - instruction: Aynı tavada kıymayı ve soğanı birlikte kavurun. Kıyma suyunu çekince sarımsağı ve salçayı ekleyip 2 dakika daha pişirin. Tuz ve karabiber ile tatlandırın.
+    why: Kıymayı soğanla kavurmak suyu erken çektirir. Salçayı yağda kavurmak çiğ tadını giderir ve iç harca renk verir.
+    looksLikeWhenDone: Kıyma tamamen pişmiş ve dağılmış, rengi kahverengi. Salça koyulaşmış. Tava dibinde sıvı birikmiyor.
+    commonMistake: Kıymayı çok ince kavurmak — içte nemli kalırsa fırında patlıcanı ıslatır.
+    recovery: Kıymanın tüm suyu çekilene kadar kavurmaya devam edin.
+    stepImage: null
+    timerSeconds: 360
+  - instruction: Fırın tepsisindeki patlıcanların çentiklerini aralayın ve hazırladığınız kıyma harcını her birine doldurun. Üzerine yarım domates ve biber dilimi yerleştirin.
+    why: Domates ve biber fırın süresi boyunca patlıcanın kurumasını önler, aynı zamanda sunum güzelliği sağlar.
+    looksLikeWhenDone: Her patlıcan harçla dolu, üstünde bir domates ve biber parçası var. Tepside düzenli dizilmiş.
+    commonMistake: Harcı taşıracak kadar doldurmak — pişirirken kayar ve tepsi kirlenebilir.
+    recovery: Taşan harçları kaşıkla geri yerleştirin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: >-
+      Önceden ısıtılmış 180 derece fırına verin. 25-30 dakika, domates ve biberler yumuşayıp hafif
+      kızarana kadar pişirin. Servis etmeden önce üzerine doğranmış taze maydanoz serpin.
+    why: Fırında yavaş pişirmek iç harcın patlıcanla bütünleşmesini sağlar. Maydanoz taze bir tat ve renk katar.
+    looksLikeWhenDone: Domates ve biberler hafif buruşmuş ve karamelize olmuş. Kıyma harcı koyulaşmış. Patlıcan fırın tabanında yumuşamış görünüyor.
+    commonMistake: Pişirmeden önce fırını ısıtmamak — eşit olmayan pişme ve uzayan süre.
+    recovery: Domates ve biberler hâlâ çiğ görünüyorsa 10 dakika daha fırında tutun.
+    stepImage: null
+    timerSeconds: 1800

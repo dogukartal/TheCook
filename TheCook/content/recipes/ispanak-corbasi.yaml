@@ -1,0 +1,83 @@
+id: ispanak-corbasi
+title: Ispanaklı Çorba
+cuisine: türk
+category: çorba
+mealType: dinner
+skillLevel: beginner
+prepTime: 10
+cookTime: 25
+servings: 4
+coverImage: null
+allergens:
+  - dairy
+equipment:
+  - tencere
+  - blender
+ingredientGroups:
+  - label: null
+    items:
+      - name: Taze ıspanak
+        amount: 400
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Sarımsak
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Patates
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Zeytinyağı
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Su veya tavuk suyu
+        amount: 800
+        unit: ml
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Krema veya yoğurt
+        amount: 3
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Soğanı iri doğrayın. Sarımsağı ezin. Patatesleri soyup küpler hâlinde doğrayın. Ispanakları iri parçalar hâlinde doğrayın.
+    why: Tüm malzemeler blenderdan geçeceği için kesim boyutu önemli değildir. İri doğramak zaman kazandırır.
+    looksLikeWhenDone: Tüm sebzeler doğranmış ve hazır. Ispanak iri parçalar hâlinde.
+    commonMistake: Ispanağı çok küçük doğramak — zaman kaybı, blender yine de öğütecek.
+    recovery: Boyuta göre değişen bir şey yok, devam edin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Tencerede zeytinyağını kızdırın. Soğan ve sarımsağı 3 dakika kavurun. Patatesleri ekleyip 2 dakika daha kavurun. Suyu veya tavuk suyunu ekleyin ve kaynatın. Kısık ateşte 12-15 dakika patatesler tamamen yumuşayana kadar pişirin.
+    why: Patates çorba kıvamının ana tutucusudur. Tamamen pişmesi blenderda pürüzsüz karışım sağlar.
+    looksLikeWhenDone: Patatesler çatal kolayca giriyor. Tencerede bulanık, sarımtırak bir sıvı var.
+    commonMistake: Patatesleri yetersiz pişirmek — blenderde parçacıklar kalır ve kıvam pütürlü olur.
+    recovery: Sert kalmışsa 5-10 dakika daha pişirin.
+    stepImage: null
+    timerSeconds: 1200
+  - instruction: Ispanakları ekleyin, karıştırın ve 3-4 dakika pişirin. Ocağı kapatın ve 5 dakika bekleyin. Daldırma blender veya standart blenderla püre yapın. Tuz ve karabiber ekleyin.
+    why: Ispanakları kısa pişirmek yeşil rengi ve vitamin değerini korur. Uzun pişirme rengi sarılaştırır ve tat kaybolur.
+    looksLikeWhenDone: Çorba koyu yeşil ve pürüzsüz. Kaşığa alındığında ince bir film bırakıyor.
+    commonMistake: Ispanağı çok uzun pişirmek — renk solar ve tat kaybolur.
+    recovery: Çok uzun pişirdiyseniz ekstra taze ıspanak ekleyip blenderdan geçirebilirsiniz.
+    stepImage: null
+    timerSeconds: 240
+  - instruction: Servis etmeden önce isteğe bağlı olarak üzerine krema veya yoğurt damlatın. Sıcak servis edin.
+    why: Krema veya yoğurt yeşilin keskin tadını dengeler ve kremsi bir görünüm katar.
+    looksLikeWhenDone: Kase koyu yeşil çorbayla dolu, üzerinde spiral krema ya da yoğurt damlaması var.
+    commonMistake: Soğuk servis etmek — ıspanak soğuyunca tat kaybolur.
+    recovery: Yeniden ısıtabilirsiniz; üzerindeki kremayı sonradan ekleyin.
+    stepImage: null
+    timerSeconds: null

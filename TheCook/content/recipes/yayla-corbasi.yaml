@@ -1,0 +1,79 @@
+id: yayla-corbasi
+title: Yayla Çorbası
+cuisine: türk
+category: çorba
+mealType: dinner
+skillLevel: beginner
+prepTime: 10
+cookTime: 25
+servings: 4
+coverImage: null
+allergens:
+  - dairy
+  - egg
+equipment:
+  - tencere
+ingredientGroups:
+  - label: null
+    items:
+      - name: Yoğurt
+        amount: 400
+        unit: gr
+        optional: false
+      - name: Pirinç
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Su
+        amount: 1000
+        unit: ml
+        optional: false
+      - name: Yumurta sarısı
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Un
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Tereyağı
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Kuru nane
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+steps:
+  - instruction: Pirinci yıkayın. Tencerede suyu kaynatın ve pirinci ekleyin. Orta ateşte 15 dakika pişirin, pirinçler yumuşayana kadar.
+    why: Pirinç önceden pişirilir çünkü yoğurt eklendiğinde kaynatma süresi kısalır ve yoğurt kesilme riski artar.
+    looksLikeWhenDone: Pirinçler şişmiş ve tamamen yumuşamış. Su bulanık beyaza dönmüş.
+    commonMistake: Pirinci az pişirmek — yoğurt eklendikten sonra sertleşebilir.
+    recovery: Yoğurt eklemeden kontrol edin; sertse biraz daha pişirin.
+    stepImage: null
+    timerSeconds: 900
+  - instruction: Geniş bir kasede yoğurdu yumurta sarısı ve unla pürüzsüz hale getirin. Tuzunu ekleyin.
+    why: Un ve yumurta sarısı yoğurdun bağlayıcı görevi görür ve yüksek ısıda kesilmesini önler. Bu adım olmadan yoğurt sulanarak peynir gibi topak yapar.
+    looksLikeWhenDone: Karışım pürüzsüz ve akıcı, topak yok. Renk açık sarı.
+    commonMistake: Un veya yumurta sarısını atlamak — yoğurt kaynar suda kesilir ve topak oluşturur.
+    recovery: Kesildiyse blenderdan geçirin; görünüm toparlanır ama tam çözülmez.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Yoğurt karışımını ısıtmak için 2-3 kepçe sıcak çorba suyu alın ve yavaşça yoğurda ekleyin, karıştırın. Bu işlemi 2-3 kez tekrarlayın. Ardından yoğurdu tencereye yavaşça döküp karıştırın.
+    why: Temperleme yoğurdu yavaşça ısıtır, ani ısı şokundan kesilmesini önler. Bu teknik kritiktir.
+    looksLikeWhenDone: Yoğurt tencerenin içine karışmış, çorba kremsi ve pürüzsüz. Renk beyaz-krem.
+    commonMistake: Yoğurdu direkt tencereye dökmek — kesilerek topaklanır.
+    recovery: Kesildiyse blenderdan geçirin ve kısık ateşte yeniden ısıtın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Kısık ateşte, sürekli karıştırarak 5 dakika pişirin. Kaynatmayın. Küçük tavada tereyağını eritip kuru naneyi kavurun, çorbaya gezdirin.
+    why: Yoğurt çorbasını kaynatmak kesilmesine yol açar. Kısık ateş yeterlidir. Naneli tereyağı geleneksel sunumun tamamlayıcısıdır.
+    looksLikeWhenDone: Çorba sıcak ve homojen, üzerine yeşil naneli tereyağı gezdirimi var. Krem rengi korunmuş.
+    commonMistake: Kaynamaya bırakmak — yoğurt kesilir, tat ekşi ve görünüm bozulur.
+    recovery: Kesildiyse tadı iyi olsa da görünüm değişir; servis edin ve bir sonraki seferde dikkat edin.
+    stepImage: null
+    timerSeconds: 300

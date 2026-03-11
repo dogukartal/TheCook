@@ -1,0 +1,71 @@
+id: kazandibi
+title: Kazandibi
+cuisine: türk
+category: tatlı
+mealType: snack
+skillLevel: intermediate
+prepTime: 15
+cookTime: 30
+servings: 6
+coverImage: null
+allergens:
+  - dairy
+equipment:
+  - tencere
+  - tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Süt
+        amount: 1000
+        unit: ml
+        optional: false
+      - name: Şeker
+        amount: 150
+        unit: gr
+        optional: false
+      - name: Pirinç unu veya nişasta
+        amount: 60
+        unit: gr
+        optional: false
+      - name: Un
+        amount: 30
+        unit: gr
+        optional: false
+      - name: Tavuk göğsü (haşlanmış, liflenmiş)
+        amount: 100
+        unit: gr
+        optional: false
+      - name: Vanilya
+        amount: 1
+        unit: tatlı kaşığı
+        optional: true
+steps:
+  - instruction: Haşlanmış tavuk göğsünü çatal veya elle çok ince liflere ayırın; görünmez hâle gelene kadar lifleyin. Bir kenarda tutun.
+    why: Kazandibi ve tavuk göğsü tatlısında tavuk görünmez ama kremsi dokuya katkı sağlar; bu geleneksel Osmanlı tekniğidir. İnce liflenmiş tavuk tatlı kıvamıyla bütünleşir.
+    looksLikeWhenDone: Tavuk çok ince ipliği andıran lifler hâlinde. Bütün küçük parça görünmüyor.
+    commonMistake: Tavuğu iri bırakmak — tatlıda beklenmedik dokusal bozukluk oluşur.
+    recovery: Mutfak robotu veya blenderla kısa süre çekin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Sütün 200 ml kadarını ayırın. Kalan soğuk sütü tencereye koyun. Nişasta, un ve şekeri ayırdığınız soğuk süttle karıştırın ve topak kalmayacak şekilde eritin. Tenceredeki soğuk süte ekleyin ve karıştırarak orta ateşte koyulaştırın. Koyulaşınca vanilya ve tavuğu ekleyin.
+    why: Soğuk süttte nişastayı çözmek topak oluşumunu önler. Kaynamadan koyulaşma doğru nişasta jelleşme noktasını gösterir.
+    looksLikeWhenDone: Karışım kaşıktan kopmadan akıyor, arka kısmı ince film ile kaplıyor. Tavuk görünmüyor.
+    commonMistake: Sıcak sütün içine nişasta dökmek — topaklar oluşur.
+    recovery: Topaklar oluştuysa daldırma blenderla geçirin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Teflon veya döküm küçük tavayı çok yüksek ateşte ısıtın. Pişmiş muhallebiyi 1-2 santim kalınlığında dökün. Taban yanık rengi alana kadar çevirmeyin. 2-3 dakika yüksek ateşte pişirin.
+    why: Çok sıcak tava tabanın hızla karamelleşmesini sağlar; bu kazandibinin karakteristik yanık alt kısmıdır. Yeterince beklemeden çevirmek yanık tabakayı bozar.
+    looksLikeWhenDone: Alt kısım koyu kahverengi ve hafif yanık, üst yüzey kremsi beyaz ve donmuş.
+    commonMistake: Tabanı yeterince kızartmamak — soluk ve renksiz; karakteristik tat oluşmuyor.
+    recovery: Biraz daha bekleyin; en kötü ihtimalle tamamen yanar ve atmanız gerekir.
+    stepImage: null
+    timerSeconds: 180
+  - instruction: Tepsiden veya tavaanın kenarından spatula ile dikkatli sıyırın. Yanık tarafı üste gelecek şekilde servis tabağına alın. Soğuduğunda buzdolabında 1-2 saat bekletin.
+    why: Yanık tarafı üste koymak görsel sunum içindir. Soğutma kıvamın gelişmesini sağlar.
+    looksLikeWhenDone: Tatlı dilimler hâlinde, taban kahverengi-yanık, üst kısım kremsi beyaz.
+    commonMistake: Sıcakken servis etmek — kıvam tutmamış, dağılır.
+    recovery: Buzdolabında bekletin; ertesi gün daha iyi olur.
+    stepImage: null
+    timerSeconds: 7200

@@ -1,0 +1,73 @@
+id: humus
+title: Humus
+cuisine: türk
+category: aperatif
+mealType: snack
+skillLevel: beginner
+prepTime: 10
+cookTime: 5
+servings: 4
+coverImage: null
+allergens:
+  - sesame
+equipment:
+  - blender
+ingredientGroups:
+  - label: null
+    items:
+      - name: Haşlanmış veya konserve nohut
+        amount: 400
+        unit: gr
+        optional: false
+      - name: Tahin
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Limon suyu
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Sarımsak
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Zeytinyağı
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kimyon
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Pul biber
+        amount: 1
+        unit: tutam
+        optional: true
+steps:
+  - instruction: Nohutları süzün, birkaç tanesini sunum için kenarda tutun. Konserve ise soğuk suyla yıkayın.
+    why: Yıkama konserve suyunun metalik tadını giderir. Kenarda tutulan nohutlar sunum için kullanılır.
+    looksLikeWhenDone: Nohutlar temiz, yıkama suyu berrak. Birkaç nohut ayrı kasede bekliyor.
+    commonMistake: Konserve suyunu humusa katmak — fazla tuz ve metalik tat geçer.
+    recovery: Çok tuzlu olduysa daha az tuz ekleyin ve tatlı bir şey (bir tutam şeker) ekleyerek dengeleyin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: >-
+      Blendere nohut, tahin, limon suyu, sarımsak, zeytinyağının yarısı, tuz ve kimyonu koyun. 3-4
+      yemek kaşığı soğuk su ekleyerek 2-3 dakika, tamamen pürüzsüz bir kıvama gelene kadar blenderayın.
+    why: Soğuk su humusun daha kremsi ve hafif olmasını sağlar. Uzun blenderlama hava katar ve kadifemsi doku oluşturur.
+    looksLikeWhenDone: Humus bembeyaz ve pürüzsüz, kaşıktan kayıyor. Hiç nohut tanesi veya granül kalmamış.
+    commonMistake: Az blenderlama — pütürlü ve kaba humus.
+    recovery: Blenderlayayı uzatın; ne kadar uzun o kadar kremsi olur.
+    stepImage: null
+    timerSeconds: 180
+  - instruction: Tadına bakın ve limon, tuz, sarımsak dengesini ayarlayın. Tabaklara alın, ortasında bir çukur yapın. Üzerine kalan zeytinyağını gezdirin, pul biber ve kimyon serpin. Kenarda tuttuktan nohutları yerleştirin.
+    why: Çukur zeytinyağının birikmesini sağlar — hem estetik hem de her dilimle biraz zeytinyağı alınmasını garanti eder.
+    looksLikeWhenDone: Krem rengi yüzey, ortasında zeytinyağı göleti, çevresinde pul biber kırmızısı ve nohutlar.
+    commonMistake: Soğuk servis etmemek — humus oda sıcaklığında veya hafif soğuk daha kremsi hissettirer.
+    recovery: Buzdolabında 30 dakika bekletebilirsiniz.
+    stepImage: null
+    timerSeconds: null

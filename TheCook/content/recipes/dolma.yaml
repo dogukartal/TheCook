@@ -1,0 +1,111 @@
+id: dolma
+title: Zeytinyağlı Yaprak Sarma
+cuisine: türk
+category: ana yemek
+mealType: dinner
+skillLevel: advanced
+prepTime: 60
+cookTime: 45
+servings: 6
+coverImage: null
+allergens: []
+equipment:
+  - tencere
+ingredientGroups:
+  - label: İç harç için
+    items:
+      - name: Pirinç
+        amount: 200
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 3
+        unit: adet
+        optional: false
+      - name: Zeytinyağı
+        amount: 6
+        unit: yemek kaşığı
+        optional: false
+      - name: Kuş üzümü
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Çam fıstığı
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Nane
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Dereotu
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Şeker
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+  - label: Yapraklar için
+    items:
+      - name: Taze veya salamura asma yaprağı
+        amount: 50
+        unit: adet
+        optional: false
+      - name: Limon suyu
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Su
+        amount: 400
+        unit: ml
+        optional: false
+steps:
+  - instruction: Pirinçleri soğuk suda yıkayın. Soğanları ince doğrayın. Çam fıstığını kuru tavada altın rengi alana kadar kavurun.
+    why: Yıkanmış pirinç pişerken yapışmaz. Çam fıstığını kavurmak tat açar; çiğ eklenmesi hafif bir acılık bırakır.
+    looksLikeWhenDone: Pirinç yıkama suyu berrak. Çam fıstığı altın sarısı renkte. Soğan küçük parçalara doğranmış.
+    commonMistake: Çam fıstığını gözden kaybetmek ve yakmak — acı bir tat bırakır.
+    recovery: Kararırsa atıp yeniden yapın; bu adım atlanabilir ama tat farklı olur.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Zeytinyağını ısıtın ve soğanı 5-6 dakika kavurun. Pirinç, kuş üzümü, kavurulan çam fıstığı, nane, dereotu, tuz, karabiber ve şekeri ekleyip karıştırın. 2 dakika kavurun. Ocağı kapatın.
+    why: İç harcın pirinciyle birlikte kısmen kavurulması sarmanın pişmesini hızlandırır. Şeker zeytinyağlı dolmanın karakteristik hafif tatlı notunu verir.
+    looksLikeWhenDone: Pirinçler yağla kaplanmış ve yarı saydam. Karışım homojen, malzemeler eşit dağılmış.
+    commonMistake: Harcı tamamen pişirmek — pirinç sarma içinde pişecek, önceden pişirilirse hamurlaşır.
+    recovery: Pirinç az pişmişse sarma pişirme süresini uzatın.
+    stepImage: null
+    timerSeconds: 480
+  - instruction: >-
+      Salamura yaprakları 15 dakika soğuk suda bekletin ve suyunu değiştirin. Taze yaprakları kaynar
+      suda 2-3 dakika haşlayın ve soğutun. Her yaprak mat tarafı üste gelecek şekilde düzeltin.
+    why: Salamura yapraklar tuzunu, taze yapraklar sertliğini bu adımda bırakır. Mat taraf üstte olunca parlak taraf dışarı bakar ve görünüm daha iyi olur.
+    looksLikeWhenDone: Yapraklar yumuşak ve esnek ama yırtılmadan katlanabilir durumda. Tuz tadı azalmış.
+    commonMistake: Çok sert yaprakları kullanmaya çalışmak — katlama sırasında yırtılır.
+    recovery: Yırtılan yaprakları üst üste koyarak iki yaprakla sarmayı deneyin.
+    stepImage: null
+    timerSeconds: 900
+  - instruction: Her yaprağın sapını kesin. Yaprağı düz yüzeye yatırın, sapa yakın kısmına 1 çay kaşığı harç koyun. Yaprak kenarlarını içe katlayın ve harç etrafında sıkıca rulo yapın.
+    why: Sıkı sarmak pişerken dolmanın açılmasını ve pirincin taşmasını önler. İnce sarmak pirinç için yer bırakır (şişer).
+    looksLikeWhenDone: Dolma parmak kalınlığında, yaklaşık 4 cm uzunluğunda. Kenarlar içe kıvrılmış ve sıkı tutulmuş.
+    commonMistake: Çok fazla harç koymak — pirinç şişince yaprak patlar ve dolma açılır.
+    recovery: Açılan dolmayı yeniden sarın veya tencerenin üstüne koyun.
+    stepImage: null
+    timerSeconds: null
+  - instruction: >-
+      Tencere dibine yaprak kalanlarını yayın. Dolmaları sıkıca yan yana dizin. Zeytinyağı, limon
+      suyu ve suyunu karıştırıp üzerine dökün. Üstüne ağır bir tabak veya ters kapak koyarak baskı
+      uygulayın. Kısık ateşte 40-45 dakika pişirin.
+    why: Taban yaprakları tencerenin dibini dönen dolmalardan korur. Baskı uygulamak sarmaların pişirirken açılmasını önler.
+    looksLikeWhenDone: Tenceredeki sıvı çoğunlukla çekilmiş. Dolmalar şişip sıkışmış. Dip yapraklardan hafif renk koku yükselmesi normal.
+    commonMistake: Baskı uygulamadan pişirmek — dolmalar tencerede döner ve açılır.
+    recovery: Pişirme ortasında açılanları sıkıştırın ve pişirmeye devam edin.
+    stepImage: null
+    timerSeconds: 2700

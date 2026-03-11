@@ -1,0 +1,78 @@
+id: sutlac
+title: Sütlaç
+cuisine: türk
+category: tatlı
+mealType: snack
+skillLevel: beginner
+prepTime: 10
+cookTime: 40
+servings: 6
+coverImage: null
+allergens:
+  - dairy
+equipment:
+  - tencere
+  - fırın
+ingredientGroups:
+  - label: null
+    items:
+      - name: Pirinç
+        amount: 100
+        unit: gr
+        optional: false
+      - name: Su
+        amount: 500
+        unit: ml
+        optional: false
+      - name: Süt
+        amount: 1000
+        unit: ml
+        optional: false
+      - name: Şeker
+        amount: 150
+        unit: gr
+        optional: false
+      - name: Nişasta
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Vanilya
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+steps:
+  - instruction: Pirinci yıkayıp 500 ml suda 15-18 dakika, su çekilene kadar haşlayın.
+    why: Pirinç önce suda pişirilir çünkü süt içinde pişirmeye çalışırsanız süt dibine yapışır ve yanar.
+    looksLikeWhenDone: Pirinç şişmiş, su tamamen çekilmiş. Taneler yumuşak ama ayrışmamış.
+    commonMistake: Su çekilmeden süt eklemek — sütlaç sulanır ve kıvam tutmaz.
+    recovery: Fazla su varsa süzün, pirinç pişmiş ise devam edin.
+    stepImage: null
+    timerSeconds: 1080
+  - instruction: Sütü tencereye ekleyin ve orta ateşte karıştırarak kaynatın. Kaynayınca şekeri ekleyin, 5 dakika karıştırmaya devam edin.
+    why: Süt kaynar sıcakta şekeri hızla çözer. Karıştırmak dibine yapışmayı önler.
+    looksLikeWhenDone: Süt hafif köpüklü, şeker tamamen eriyerek süte karışmış.
+    commonMistake: Sütü yüksek ateşte bırakmak — dibe yapışır ve yanar.
+    recovery: Yapışma seziyorsanız ateşi kısın ve güçlü karıştırın.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Nişastayı 3 yemek kaşığı soğuk sütle yoğurun ve topak kalmayacak şekilde karıştırın. Pişen sütün içine yavaşça ekleyin. Vanilya ekleyin. 10-12 dakika, kıvam alana kadar karıştırarak pişirin.
+    why: Nişastayı önce soğuk sıvıda çözmek topak oluşumunu önler. Kıvam alma işlemi nişastanın jelleşme noktasına ulaşmasıdır.
+    looksLikeWhenDone: Sütlaç kaşıktan kopmadan akıyor, kremsi bir görünümü var. Arkayı ince bir film olarak kaplayıyor.
+    commonMistake: Nişastayı sıcak sütün içine doğrudan dökmek — topaklar oluşur.
+    recovery: Topaklar oluştuysa daldırma blenderla hızlıca pürüzsüzleştirin.
+    stepImage: null
+    timerSeconds: 720
+  - instruction: Sütlacı kaseler veya fırın kaplarına dökün. Fırını ızgara modunda ısıtın ve kapları üst rafta 3-4 dakika kızdırın. Yüzey yanık kahverengi lekeler alınca çıkarın.
+    why: Fırın ızgara modunda üst yüzey hızla kızarır ve geleneksel sütlacın karakteristik karamelize üst yüzeyini oluşturur.
+    looksLikeWhenDone: Yüzeyde seyrek kahverengi ve hafif yanık lekeler var. Sütlaç hâlâ akıcı ama üst yüzeyi donmuş.
+    commonMistake: Çok uzun süre fırında bırakmak — yanık noktalarda acı tat oluşur.
+    recovery: Yüzeyin tamamı kararırsa artık o his kaybolmuştur; bir sonrakinde daha kısa süre fırında tutun.
+    stepImage: null
+    timerSeconds: 240
+  - instruction: Fırından çıkarın ve oda sıcaklığına gelene kadar bekleyin. Ardından buzdolabında en az 2 saat soğutun.
+    why: Sütlaç soğuyunca kıvamı gelişir ve tatları birbiriyle bütünleşir. Sıcak servis edilirse çorba kıvamında kalır.
+    looksLikeWhenDone: Sütlaç kap çevrildiğinde sıvı akmıyor, kıvamı donuklaşmış. Yüzey mat ve hafif benekli.
+    commonMistake: Soğumadan servis etmek — kıvam hâlâ sıvı ve tatlı dağılır.
+    recovery: Acelen varsa buzlu su dolu büyük kaba koyarak hızlandırın.
+    stepImage: null
+    timerSeconds: 7200

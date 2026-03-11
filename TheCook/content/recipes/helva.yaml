@@ -1,0 +1,71 @@
+id: helva
+title: Un Helvası
+cuisine: türk
+category: tatlı
+mealType: snack
+skillLevel: beginner
+prepTime: 5
+cookTime: 20
+servings: 6
+coverImage: null
+allergens:
+  - gluten
+  - dairy
+equipment:
+  - tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Un
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Tereyağı
+        amount: 150
+        unit: gr
+        optional: false
+      - name: Şeker
+        amount: 1
+        unit: su bardağı
+        optional: false
+      - name: Süt
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Su
+        amount: 1
+        unit: su bardağı
+        optional: false
+      - name: Çam fıstığı veya ceviz
+        amount: 3
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Şeker, süt ve suyu karıştırın ve bir kenarda tutun. Sıvının ılık olması gerekmez.
+    why: Sıvıyı önceden hazırlamak unu kavururken aceleci hareket etmenizi önler. Un kıvama gelince hızla sıvı eklemeniz gerekir.
+    looksLikeWhenDone: Şeker sıvıda çözülmüş, karışım hafif bulanık ama homojen.
+    commonMistake: Şekeri erimediyken dökmek — granüller dibine çöker ve helva taneli olur.
+    recovery: Şekeri tamamen eriyene kadar karıştırın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Geniş ve kalın tabanlı tavaya tereyağını alın ve eritin. Çam fıstığını ekleyip altın rengi alana kadar kavurun, bir kenara alın. Unu ekleyin ve orta ateşte sürekli karıştırarak kavurmaya başlayın.
+    why: Tereyağı içinde unun kavurulması elzem; bu işlem un helvacının temelidir. Sürekli karıştırmak altta tabakaların yanmasını önler.
+    looksLikeWhenDone: Un altın sarısından fındık rengine doğru değişiyor. Fındıksu bir koku yükseliyor.
+    commonMistake: Karıştırmayı bırakmak — un yanık lekeler oluşturur ve helva acı olur.
+    recovery: Yanık noktalar oluştuysa devam etmeyin; o partıyı atın ve yeniden başlayın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Un fındık rengine gelince (15-18 dakika olabilir) hazırladığınız sıvıyı yavaşça ve dikkatli şekilde dökün. Dikkat — çok sert kaynayacak. Hızla karıştırın ve topak bırakmayın.
+    why: Sıcak yağa sıvı eklenince güçlü bir kaynama olur; sıvıyı yavaşça dökmek sıçramayı azaltır. Hızla karıştırmak topak oluşumunu önler.
+    looksLikeWhenDone: Topak kalmamış, helva toptan kendini bırakan bir kıvam aldı. Renk homojen.
+    commonMistake: Sıvıyı hızla dökmek — sıçrama ve yaralanma riski.
+    recovery: Topaklar oluştuysa güçlüce karıştırın veya daldırma blenderla düzeltin.
+    stepImage: null
+    timerSeconds: 1080
+  - instruction: Kısık ateşte 3-5 dakika daha karıştırın. Helva tavadan ayrılmaya başlayınca ocağı kapatın. Kaşık veya spatula ile kalıba ya da tabaklara şekil verin.
+    why: Tavadan ayrılmak helvanın yeterince pişip nem dengesine ulaştığının işaretidir. Sıcakken şekil vermek kolaylaşır, soğuyunca sertleşir.
+    looksLikeWhenDone: Helva toplu ve tava kenarlarından ayrılıyor. Kaşık üzerine alınca şekil tutuyor.
+    commonMistake: Çok erken ocaktan almak — sulu ve dağınık helva.
+    recovery: Biraz daha pişirin; fazla pişmesi de sorun değildir, renk biraz koyulaşır.
+    stepImage: null
+    timerSeconds: 300

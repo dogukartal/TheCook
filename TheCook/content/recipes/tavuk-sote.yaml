@@ -1,0 +1,89 @@
+id: tavuk-sote
+title: Sebzeli Tavuk Sote
+cuisine: türk
+category: ana yemek
+mealType: dinner
+skillLevel: beginner
+prepTime: 15
+cookTime: 25
+servings: 4
+coverImage: null
+allergens: []
+equipment:
+  - tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Tavuk göğsü
+        amount: 500
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Sarımsak
+        amount: 3
+        unit: adet
+        optional: false
+      - name: Kırmızı biber
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Yeşil biber
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Domates
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Zeytinyağı
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Domates salçası
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Kırmızı toz biber
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+steps:
+  - instruction: Tavuk göğsünü iri küpler hâlinde doğrayın (yaklaşık 3x3 cm). Tuz ve karabiber serpin ve 5 dakika bekletin.
+    why: İri doğrama pişirme süresinde nemin korunmasına yardımcı olur. Baharatın önceden sindirilmesi lezzettin derinleşmesini sağlar.
+    looksLikeWhenDone: Tavuk parçaları eşit büyüklükte, hafif beyaz-pembe görünüyor. Yüzeyde tuz tanecikleri görülüyor.
+    commonMistake: Çok küçük doğramak — tavuk hızla kurur ve kauçuklaşır.
+    recovery: Pişmişse üzerine biraz su veya tavuk suyu ekleyip karıştırın.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Tavada zeytinyağını kızdırın. Tavuk parçalarını tek kat olacak şekilde koyun ve her taraftan 4-5 dakika kızartın. Büyük tava yoksa partiler hâlinde pişirin.
+    why: Tavayı doldurmak buhar oluşturur ve tavuğun kızarması yerine haşlanmasına neden olur. Tek kat pişirmek güzel renk ve doku sağlar.
+    looksLikeWhenDone: Tavuk parçaları altın sarısı renk almış. Tavayla temas eden taraflar kuru ve kahverengi, içi hâlâ pembe olabilir.
+    commonMistake: Tavaya çok fazla parça koymak — tavuk kızarmak yerine haşlanır.
+    recovery: Parçaları alın ve partiler hâlinde tekrar kızartın.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Tavukları kenara alın. Aynı tavada soğanı 3 dakika kavurun. Sarımsak, kırmızı ve yeşil biberi ekleyip 3 dakika daha kavurun. Salçayı ekleyip 1 dakika kavurun.
+    why: Aromatic sebzeleri önce kavurmak bir lezzet tabanı oluşturur. Salçayı kavurmak çiğ tadını giderir.
+    looksLikeWhenDone: Soğan şeffaf, biberler hafif yumuşamış. Salça koyulaşmış ve rengi koyulaşmış.
+    commonMistake: Salçayı kavurmadan hemen domates eklemek — keskin, çiğ bir tat kalır.
+    recovery: Ekledikten sonra karıştırarak 2 dakika daha kavurun.
+    stepImage: null
+    timerSeconds: 420
+  - instruction: Domatesleri küçük küpler hâlinde doğrayıp ekleyin ve kırmızı toz biberi serpip karıştırın. Tavukları geri ekleyin. Kapağı kapatıp kısık ateşte 10-12 dakika pişirin.
+    why: Kapalı kapak buharı hapser ve tavuğun kendi suyu içinde pişerek yumuşamasını sağlar. Domates sos taban görevi görür.
+    looksLikeWhenDone: Sos koyulaşmış. Tavuk parçaları tamamen pişmiş ve baskıya dayanaklı. Domates eriyerek sosu zenginleştirmiş.
+    commonMistake: Yüksek ateşte kapaksız pişirmek — sos kurur, tavuk sertleşir.
+    recovery: Sos kurursa biraz sıcak su ekleyin ve karıştırın.
+    stepImage: null
+    timerSeconds: 720

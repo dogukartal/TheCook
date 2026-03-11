@@ -1,0 +1,91 @@
+id: kisir
+title: Kısır
+cuisine: türk
+category: salata
+mealType: lunch
+skillLevel: beginner
+prepTime: 20
+cookTime: 5
+servings: 6
+coverImage: null
+allergens:
+  - gluten
+equipment:
+  - tencere
+ingredientGroups:
+  - label: null
+    items:
+      - name: İnce bulgur
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Kaynar su
+        amount: 2
+        unit: su bardağı
+        optional: false
+      - name: Domates salçası
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Biber salçası
+        amount: 1
+        unit: yemek kaşığı
+        optional: false
+      - name: Zeytinyağı
+        amount: 4
+        unit: yemek kaşığı
+        optional: false
+      - name: Limon suyu
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Nar ekşisi
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kırmızı toz biber
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kimyon
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Yeşil soğan
+        amount: 4
+        unit: adet
+        optional: false
+      - name: Maydanoz
+        amount: 1
+        unit: demet
+        optional: false
+      - name: Domates
+        amount: 2
+        unit: adet
+        optional: true
+steps:
+  - instruction: Bulguru geniş bir kaba koyun. Üzerine 2 bardak kaynar su dökün, karıştırın ve kapağını kapatıp 15 dakika demlendirin.
+    why: İnce bulgur kaynar suda şişer ve pişer. 15 dakika yeterli; daha fazla bekletmek bulguru aşırı yumuşatır.
+    looksLikeWhenDone: Bulgur su çekmiş ve şişmiş. Çatal geçince hafif direnç var ama sert değil. Su kalmamış.
+    commonMistake: Fazla su koymak — bulgur sulanır ve kısır hamur gibi olur.
+    recovery: Sulanmışsa üstü açık bekletin, nem uçsun ya da hafifçe süzün.
+    stepImage: null
+    timerSeconds: 900
+  - instruction: Bulgur ılıyınca domates salçası, biber salçası, zeytinyağı, limon suyu ve nar ekşisini ekleyin. Tuz, kırmızı biber ve kimyonu serpin. Ellerin ıslak olarak 5 dakika yoğurun.
+    why: Elle yoğurmak salçaların bulgur tanelerine tamamen işlemesini sağlar. Yeterince yoğurulmayan kısır kuru ve tatlardan yoksun olur.
+    looksLikeWhenDone: Tüm bulgur taneleri kırmızı renk almış ve eşit kaplı. Karışım hafif nemli ve parlak görünüyor.
+    commonMistake: Kaşıkla karıştırmak — salçalar yeterince işlemez.
+    recovery: Elle yoğurmak mümkün değilse uzun süre kaşıkla karıştırın.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Yeşil soğanı ince halkalar, maydanozu ince kıyın. İsteğe bağlı domatesleri küçük küpler hâlinde doğrayın. Tümünü ekleyip hafifçe karıştırın. Tadına bakarak lemon, tuz ve salçayı ayarlayın.
+    why: Taze ot ve sebze eklendikten sonra çok karıştırmak onları ezer. Hafif karıştırmak her malzemenin görünümünü ve dokusunu korur.
+    looksLikeWhenDone: Yeşil soğan ve maydanoz eşit dağılmış. Renk kırmızı-yeşil mozaik gibi. Kıvam elde bütünleşiyor.
+    commonMistake: Kıvamı hafif kuru bırakmak — kısır servis öncesinde biraz solar, en az 30 dakika dinlendirilmeli.
+    recovery: Kuruysa zeytinyağı ve limon suyu ekleyin.
+    stepImage: null
+    timerSeconds: null

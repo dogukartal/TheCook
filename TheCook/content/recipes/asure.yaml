@@ -1,0 +1,94 @@
+id: asure
+title: Aşure
+cuisine: türk
+category: tatlı
+mealType: snack
+skillLevel: intermediate
+prepTime: 30
+cookTime: 90
+servings: 10
+coverImage: null
+allergens:
+  - nuts
+equipment:
+  - tencere
+ingredientGroups:
+  - label: null
+    items:
+      - name: Buğday (aşurelik)
+        amount: 200
+        unit: gr
+        optional: false
+      - name: Nohut (haşlanmış veya konserve)
+        amount: 100
+        unit: gr
+        optional: false
+      - name: Kuru fasulye (haşlanmış veya konserve)
+        amount: 100
+        unit: gr
+        optional: false
+      - name: Pirinç
+        amount: 50
+        unit: gr
+        optional: false
+      - name: Şeker
+        amount: 200
+        unit: gr
+        optional: false
+      - name: Su
+        amount: 2000
+        unit: ml
+        optional: false
+      - name: Kuru incir
+        amount: 6
+        unit: adet
+        optional: false
+      - name: Kuru kayısı
+        amount: 6
+        unit: adet
+        optional: false
+      - name: Kuru üzüm
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Ceviz içi
+        amount: 50
+        unit: gr
+        optional: false
+      - name: Nohut
+        amount: 2
+        unit: yemek kaşığı
+        optional: true
+      - name: Nar ekşisi veya limon suyu
+        amount: 2
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Buğdayı bir gece öncesinden bol suda ıslatın. Kuru meyveleri (incir, kayısı) da ayrı ayrı küçük küpler hâlinde doğrayıp yarı saat suda bekletin.
+    why: Buğdayın ıslatılması pişirme süresini önemli ölçüde kısaltır ve doku daha kremsi olur. Kuru meyveler de ıslanınca güzel şişer ve pürüzsüz karışır.
+    looksLikeWhenDone: Buğday granülleri şişmiş ve yumuşak görünüyor. Kuru meyveler şişmiş, zarları yumuşamış.
+    commonMistake: Islatmayı atlamak — buğday pişmesi çok uzar (3 saate kadar) ve tekstür kaba kalır.
+    recovery: Islatmayı atladıysanız basınçlı tencere kullanın ya da 2-3 saat uzun süre pişirin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Süzülmüş buğdayı 2 litre suyla tencereye koyun ve kaynayınca kısık ateşte 45-50 dakika pişirin. Pirinç ve nohut ile fasulyeyi ekleyin, 20 dakika daha pişirin.
+    why: Buğday en uzun pişen malzemedir, önce eklenir. Nohut ve fasulye önceden haşlandıysa son 20 dakikaya katılması yeterlidir.
+    looksLikeWhenDone: Buğday taneleri yumuşamış ve ezilince pürüzsüz olacak şekilde pişmiş. Karışım koyulaşmaya başlamış.
+    commonMistake: Tüm malzemeleri aynı anda koymak — pirinç ve baklagiller aşırı pişip dağılır.
+    recovery: Erken koyulursa pirinç tamamen eridiyse bu aşure için sorun değildir, kıvam değişir.
+    stepImage: null
+    timerSeconds: 4200
+  - instruction: Kuru meyveleri (incir, kayısı, üzüm) ekleyin ve 10 dakika daha karıştırarak pişirin. Şekeri ekleyin ve şeker eriyene kadar karıştırın.
+    why: Meyveler son eklenir, fazla pişirilirse dağılır. Şekeri son eklemek koyulaşma sürecini kontrol etmeyi kolaylaştırır.
+    looksLikeWhenDone: Aşure kremsi ve koyulaşmış. Meyveler tanınan formlarını kaybetmeden yumuşamış. Renk koyu sarı-kahverengi.
+    commonMistake: Şekeri çok erken koymak — şeker dibine yapışabilir ve pişirme süresini uzatabilir.
+    recovery: Şeker dibine yapıştıysa ateşi kısın ve hızlı karıştırın.
+    stepImage: null
+    timerSeconds: 600
+  - instruction: Ocağı kapatın. Varsa nar ekşisi ekleyip karıştırın. Kaselere dağıtın. Üzerine ceviz, nar tanesi ve tarçın serpin.
+    why: Nar ekşisi aşurenin tatlılığını dengeler ve geleneksel ekşi-tatlı dengesini verir. Sunum malzemeleri geleneksel aşure görünümünü oluşturur.
+    looksLikeWhenDone: Kaseler kremsi aşureyle dolu. Üst yüzey nar taneleri ve cevizlerle bezeli.
+    commonMistake: Çok sıcak servis etmek — aşure soğuyunca kıvam alır, sıcak servis daha sıvı olur.
+    recovery: Oda sıcaklığına getirin ya da buzdolabında soğutun.
+    stepImage: null
+    timerSeconds: null

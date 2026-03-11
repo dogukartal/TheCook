@@ -1,0 +1,92 @@
+id: pogaca
+title: Peynirli Poğaça
+cuisine: türk
+category: kahvaltı
+mealType: breakfast
+skillLevel: intermediate
+prepTime: 30
+cookTime: 25
+servings: 12
+coverImage: null
+allergens:
+  - gluten
+  - dairy
+  - egg
+equipment:
+  - fırın
+ingredientGroups:
+  - label: Hamur için
+    items:
+      - name: Un
+        amount: 3
+        unit: su bardağı
+        optional: false
+      - name: Yoğurt
+        amount: 200
+        unit: gr
+        optional: false
+      - name: Sıvı yağ
+        amount: 100
+        unit: ml
+        optional: false
+      - name: Yumurta
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Toz şeker
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Instant maya
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+  - label: İç için
+    items:
+      - name: Beyaz peynir
+        amount: 200
+        unit: gr
+        optional: false
+      - name: Maydanoz
+        amount: 1
+        unit: demet
+        optional: true
+  - label: Üzeri için
+    items:
+      - name: Yumurta sarısı
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Susam veya çörek otu
+        amount: 1
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Un, maya, şeker ve tuzu karıştırın. Ortasına bir çukur açın. Yoğurt, sıvı yağ ve yumurtayı ekleyin. Ele yapışmayan, pürüzsüz bir hamur yoğurun (yaklaşık 8-10 dakika). Üstünü örtün ve ılık ortamda 45 dakika mayalandırın.
+    why: Maya şekeri yiyerek CO2 üretir ve hamuru kabarık yapar. Yeterince yoğurma glüten ağını güçlendirir. Ilık ortam (25-28 derece) mayanın aktif olması için idealdir.
+    looksLikeWhenDone: Hamur iki katına çıkmış. Parmakla bastırınca yavaşça geri geliyor.
+    commonMistake: Hamuru soğuk ortamda bekletmek — maya yeterince kabarık olmaz.
+    recovery: Fırını 30 saniye ısıtıp kapatın, hamuru içine koyun, kapıyı kapalı tutun.
+    stepImage: null
+    timerSeconds: 2700
+  - instruction: Peyniri ezerek ince kıyılmış maydanozla karıştırın. Mayalanmış hamuru yumruklayarak havasını alın. Ceviz büyüklüğünde parçalara bölün, açın ve içine peynir harcı koyarak yuvarlak kapatın.
+    why: Havanın alınması ikinci kabarma için yer açar ve hamuru homojen yapar. Küçük parçalar daha çabuk pişer.
+    looksLikeWhenDone: Poğaçalar eşit büyüklükte, yüzey gergin ve çatlaksız. İçte harç görünmüyor.
+    commonMistake: Hamuru çok ince açmak — harç pişerken dışarı çıkabilir.
+    recovery: Açılan yerleri bastırarak kapatın veya biraz daha hamurla kapatın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: >-
+      Poğaçaları yağlı kağıt kaplı tepsiye dizin. 15 dakika daha mayalandırın. Üzerine yumurta
+      sarısı sürüp susam veya çörek otu serpin. Önceden ısıtılmış 180 derece fırında 20-25 dakika,
+      altın sarısı renk alana kadar pişirin.
+    why: İkinci mayalanma son kabarık dokuyu oluşturur. Yumurta sarısı parlak ve altın sarısı bir yüzey verir.
+    looksLikeWhenDone: Poğaçalar kabarık ve altın sarısı. Üst yüzey parlak ve susam taneleri tutunmuş.
+    commonMistake: Fırını önceden ısıtmamak — alt ve üst eşit pişmez.
+    recovery: Üstü pişmiş altı çiğ ise fırın tepsisini daha aşağıya alın.
+    stepImage: null
+    timerSeconds: 1500

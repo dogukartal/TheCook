@@ -1,0 +1,87 @@
+id: kofte
+title: Izgarada Köfte
+cuisine: türk
+category: ana yemek
+mealType: dinner
+skillLevel: beginner
+prepTime: 20
+cookTime: 15
+servings: 4
+coverImage: null
+allergens:
+  - gluten
+  - egg
+equipment:
+  - döküm tava
+ingredientGroups:
+  - label: null
+    items:
+      - name: Dana kıyma
+        amount: 500
+        unit: gr
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Sarımsak
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Bayat ekmek içi
+        amount: 2
+        unit: dilim
+        optional: false
+      - name: Yumurta
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Kimyon
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Kırmızı biber
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Karabiber
+        amount: 1
+        unit: tutam
+        optional: false
+      - name: Maydanoz
+        amount: 3
+        unit: adet
+        optional: true
+steps:
+  - instruction: Soğanı rendeleyin ya da robotla ince doğrayın. Meyve suyu çıkarsa sıkıp atın. Sarımsağı ezin. Bayat ekmek içini ıslatıp sıkın.
+    why: Rendelenmiş soğan kıymaya karışır ve köfteyi yumuşatır. Suyunun alınması köftenin pişirirken dağılmamasını sağlar. Ekmek iç yapıyı gevrek yapar.
+    looksLikeWhenDone: Soğan ince rende hâlinde, fazla suyu alınmış. Ekmek iyice ıslanmış ve hamur hâlini almış.
+    commonMistake: Soğan suyunu sıkmamak — köfte ıslak hamur gibi olur, şeklini tutamaz.
+    recovery: Soğan suyunu elimizle sıkın; fazla suyunu boşaltın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Tüm malzemeleri derin bir kaba koyun; kıyma, soğan, sarımsak, ekmek, yumurta, kimyon, kırmızı biber, tuz, karabiber ve varsa maydanozu. En az 5 dakika, karışım yumuşak ve yapışkan hâle gelene kadar yoğurun.
+    why: Uzun yoğurma et proteini olan miyozini aktive eder ve köftenin şekil tutmasını sağlar. Az yoğrulmuş köfte pişirirken dağılır.
+    looksLikeWhenDone: Karışım homojen, yapışkan ama ele yapışmayan bir hamur kıvamında. Renk açık kahverengi.
+    commonMistake: Az yoğurmak — köfte pişirirken dağılır veya ayrılır.
+    recovery: Dağılmaya başlarsa tavadan alın, yeniden yoğurun ve tekrar şekil verin.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Avuç içi büyüklüğünde parçalar alıp oval veya yuvarlak şekil verin. Yaklaşık 1.5-2 cm kalınlığında olmalı. Yoğurmak için ıslak el kullanın.
+    why: Eşit kalınlıkta köfte eşit pişer. Çok kalın olursa ortası çiğ kalabilir; çok ince olursa kurur.
+    looksLikeWhenDone: Köfteler düzgün oval, yaklaşık 8-10 cm uzunluğunda. Yüzey düzgün ama pürüzsüz değil, hafif el izi var.
+    commonMistake: Köfteleri çok kalın şekillendirmek — ortası pişmeden dış yüzey kızarır.
+    recovery: Pişirirken ortası çiğ geliyorsa fırına verin, 10 dakika 180 derecede tamamlayın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Döküm tavayı ya da ızgarayı yüksek ateşte iyice kızdırın. Köfteleri yağ sürmeden koyun ve 4-5 dakika karıştırmadan pişirin. Ters çevirip 4 dakika daha pişirin.
+    why: Sıcak tava köftenin dışını hızla mühürler, içindeki suyu ve lezzeti hapseder. Erken karıştırmak yapışmaya ve dağılmaya neden olur.
+    looksLikeWhenDone: Pişen yüzey koyu kahverengi ve ızgara deseni var. Ters çevirince kolayca ayrılıyor. Yan kenarlar gri renk almış.
+    commonMistake: Köfteleri erken çevirmek — yapışır ve dağılır.
+    recovery: Yapıştıysa zorla çevirmeyin, 1 dakika daha bekleyin, köfte kendiliğinden ayrılır.
+    stepImage: null
+    timerSeconds: 480

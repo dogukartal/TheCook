@@ -1,0 +1,68 @@
+id: ezme
+title: Acı Ezme
+cuisine: türk
+category: salata
+mealType: lunch
+skillLevel: beginner
+prepTime: 20
+cookTime: 5
+servings: 4
+coverImage: null
+allergens: []
+equipment:
+  - bıçak seti
+  - kesme tahtası
+ingredientGroups:
+  - label: null
+    items:
+      - name: Domates
+        amount: 4
+        unit: adet
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Sivri biber veya yeşil biber
+        amount: 3
+        unit: adet
+        optional: false
+      - name: Sarımsak
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Maydanoz
+        amount: 1
+        unit: demet
+        optional: false
+      - name: Zeytinyağı
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Nar ekşisi
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Sumak
+        amount: 1
+        unit: tatlı kaşığı
+        optional: true
+steps:
+  - instruction: Tüm sebzeleri olabildiğince ince ve küçük doğrayın — zırh kullanıyorsanız zırha koyun ve kıyın. Bıçak kullanıyorsanız önce iri doğrayın ardından bıçakla doğramaya devam edin.
+    why: Ezmenin karakteri ince kıyımdan gelir. İri parçalar ezme olmaz, salata olur. Zırh geleneksel alet ve en iyi dokuyu verir.
+    looksLikeWhenDone: Tüm malzemeler çok ince, yaklaşık 2-3 mm parçalar hâlinde. Görünüm neredeyse pürüzsüz ama biraz doku var.
+    commonMistake: Blendere koymak — pürüye dönüşür, ezme değil salça gibi olur.
+    recovery: Eğer pürüye dönüştüyse salça olarak kullanın veya çok ince kıyılmış taze ekleyerek dokuyu geri kazandırın.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Kıyılan malzemeleri kaba koyun. Zeytinyağı, nar ekşisi ve tuz ekleyin. İsteğe bağlı sumak ekleyin. Karıştırın. 15-20 dakika buzdolabında dinlendirin.
+    why: Dinlendirme tatların birbirine karışmasını sağlar. Nar ekşisi domatesin suyunu çeker; bu kıvam istenilen ezme dokusunu oluşturur.
+    looksLikeWhenDone: Ezme hafif ıslak ve parlak. Kap altında biraz sıvı birikmiş. Tatlar birbirine geçmiş.
+    commonMistake: Hemen servis etmek — tatlar henüz birleşmemiştir.
+    recovery: En az 15 dakika dinlendirin; uzun beklemek daha iyi olur.
+    stepImage: null
+    timerSeconds: 1200

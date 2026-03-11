@@ -1,0 +1,75 @@
+id: coban-salatasi
+title: Çoban Salatası
+cuisine: türk
+category: salata
+mealType: lunch
+skillLevel: beginner
+prepTime: 15
+cookTime: 5
+servings: 4
+coverImage: null
+allergens: []
+equipment:
+  - bıçak seti
+  - kesme tahtası
+ingredientGroups:
+  - label: null
+    items:
+      - name: Domates
+        amount: 3
+        unit: adet
+        optional: false
+      - name: Salatalık
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Yeşil biber
+        amount: 2
+        unit: adet
+        optional: false
+      - name: Soğan
+        amount: 1
+        unit: adet
+        optional: false
+      - name: Maydanoz
+        amount: 1
+        unit: demet
+        optional: false
+      - name: Zeytinyağı
+        amount: 3
+        unit: yemek kaşığı
+        optional: false
+      - name: Limon suyu
+        amount: 2
+        unit: yemek kaşığı
+        optional: false
+      - name: Tuz
+        amount: 1
+        unit: tatlı kaşığı
+        optional: false
+      - name: Nar ekşisi
+        amount: 1
+        unit: yemek kaşığı
+        optional: true
+steps:
+  - instruction: Domatesleri soyup iri küpler hâlinde doğrayın (yaklaşık 1 cm). Salatalıkları soymadan ya da kısmen soyarak aynı boyutta doğrayın. Biberleri küçük halkalar veya küpler hâlinde doğrayın.
+    why: Eşit boyutlar her lokmada dengeli tat ve doku sağlar. Salatalığın kabuğu renk ve vitamin katar, soymak zorunlu değildir.
+    looksLikeWhenDone: Tüm sebzeler yaklaşık eşit boyutta, renkli ve taze görünüyor. Salatalık kesilince yeşil ve beyaz iç görüntüsü net.
+    commonMistake: Domatesi çok ince doğramak — sos sulanır ve salata pelte gibi olur.
+    recovery: Domates suyu fazla çıkarsa atık suyu dökün ve soğutulmuş servise geçin.
+    stepImage: null
+    timerSeconds: null
+  - instruction: Soğanı ince doğrayın. İstiyorsanız tuzlu suda 5 dakika bekletip suyunu sıkın — bu soğanın keskinliğini giderir. Maydanozu ince kıyın.
+    why: Soğanın acılığını gidermek salatanın diğer tatlarını öne çıkarır. Maydanoz taze ot aroması katar.
+    looksLikeWhenDone: Soğan ince dilimler hâlinde, bekletilmişse biraz yumuşamış görünüyor. Maydanoz ince kıyılmış.
+    commonMistake: Soğanı iri bırakmak — salatayla orantısız ve keskin tat baskın olur.
+    recovery: İnce dilimlerin de işe yaraması için tuzlu suya bırakın.
+    stepImage: null
+    timerSeconds: 300
+  - instruction: Tüm sebzeleri ve maydanozu salata kasesine koyun. Zeytinyağı, limon suyu, tuz ve varsa nar ekşisini ekleyin. Hafifçe karıştırın ve hemen servis edin.
+    why: Çoban salatası hazırlandıktan kısa süre içinde servis edilmelidir — bekledikçe sebzeler su bırakır ve salata sulanır.
+    looksLikeWhenDone: Malzemeler eşit karışmış. Yüzey parlak zeytinyağıyla kaplanmış. Taze bir koku yükseliyor.
+    commonMistake: Salatayı çok önceden hazırlamak — sebzeler su bırakır ve taze kıvamı kaybolur.
+    recovery: Sulanmışsa sosla birlikte karıştırın, ekstra zeytinyağı ekleyin.
+    stepImage: null
+    timerSeconds: null
