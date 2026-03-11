@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-11T20:58:32.886Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-11T21:16:57.081Z"
 last_activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 16
-  completed_plans: 14
+  completed_plans: 15
   percent: 75
 ---
 
@@ -64,6 +64,7 @@ Progress: [████████░░] 75% (Phase 2 in progress)
 | Phase 02-profile-and-auth P07 | 3 | 2 tasks | 3 files |
 | Phase 02-profile-and-auth P08 | 2 | 2 tasks | 2 files |
 | Phase 03-content-library P01 | 2 | 2 tasks | 3 files |
+| Phase 03-content-library P02 | 16 | 2 tasks | 27 files |
 
 ## Accumulated Context
 
@@ -114,6 +115,9 @@ Recent decisions affecting current work:
 - [Phase 02-profile-and-auth]: iOS URL scheme added to ios.infoPlist only — not android or web sections; SQLiteBindValue[] used explicitly for expo-sqlite runAsync bind params
 - [Phase 03-content-library]: SEED_VERSION bumped to 2.0.0 before content authoring — ensures new recipes are visible to users on first launch after install
 - [Phase 03-content-library]: Validator count warning threshold is 30 recipes (v1 target) — informational only, exit code remains 0
+- [Phase 03-content-library]: mealType 'dessert' not in RecipeSchema — tatlı category recipes use mealType: snack
+- [Phase 03-content-library]: cookTime must be positive integer — no-cook recipes use cookTime: 5 (schema minimum)
+- [Phase 03-content-library]: Unit enum mapping: diş→adet, dal→adet, litre→ml (1000x), paket→tatlı kaşığı; equipment bıçak→bıçak seti
 
 ### Pending Todos
 
@@ -127,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T20:58:32.884Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-11T21:16:57.080Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
