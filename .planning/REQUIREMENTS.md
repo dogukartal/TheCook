@@ -30,7 +30,7 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 ### Content Library
 
-- [ ] **CONT-01**: App ships with 30–50 hand-curated beginner-friendly Turkish recipes
+- [x] **CONT-01**: App ships with 30–50 hand-curated beginner-friendly Turkish recipes
 - [x] **CONT-02**: Each recipe contains structured metadata: step list (each with instruction, why, looks-like-when-done, common mistake, recovery), allergen flags, skill level tag, equipment requirements, ingredient list with quantities
 
 ### Authentication
@@ -85,7 +85,7 @@ Updated during roadmap creation.
 | AUTH-01 | Phase 2 | Complete |
 | AUTH-02 | Phase 2 | Complete |
 | AUTH-03 | Phase 2 | Complete |
-| CONT-01 | Phase 3 | Pending |
+| CONT-01 | Phase 3 | Complete |
 | DISC-01 | Phase 4 | Pending |
 | DISC-02 | Phase 4 | Pending |
 | DISC-03 | Phase 4 | Pending |
