@@ -39,6 +39,9 @@ for (const file of files) {
 if (hasErrors) {
   process.exit(1);
 } else {
-  console.log("\nAll recipes valid.");
+  console.log(`\nAll ${files.length} recipes valid.`);
+  if (files.length < 30) {
+    console.warn(`Warning: only ${files.length} recipes — target is 30+`);
+  }
   process.exit(0);
 }
