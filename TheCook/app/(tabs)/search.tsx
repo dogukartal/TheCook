@@ -9,8 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { router } from 'expo-router';
-import { useFocusEffect } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 import { useRecipesDb } from '@/src/db/recipes';
 import { useProfileDb } from '@/src/db/profile';
@@ -19,7 +18,7 @@ import { RecipeCardRow } from '@/components/ui/recipe-card-row';
 import { IngredientChips } from '@/components/discovery/ingredient-chips';
 
 import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem, AutocompleteSuggestion } from '@/src/types/discovery';
+import type { RecipeListItem } from '@/src/types/discovery';
 
 // ---------------------------------------------------------------------------
 // Search screen — Ara tab
@@ -28,7 +27,6 @@ import type { RecipeListItem, AutocompleteSuggestion } from '@/src/types/discove
 export default function SearchScreen() {
   const {
     getAllIngredientNames,
-    getAllRecipeTitles,
     getAllRecipesForSearch,
     searchRecipesByIngredients,
     getRecentViews,
@@ -39,9 +37,8 @@ export default function SearchScreen() {
   } = useRecipesDb();
   const { getProfile } = useProfileDb();
 
-  // Data loaded on mount
+  // Data loaded on focus
   const [allIngredients, setAllIngredients] = useState<string[]>([]);
-  const [allRecipeTitles, setAllRecipeTitles] = useState<{ id: string; title: string }[]>([]);
   const [allRecipes, setAllRecipes] = useState<(RecipeListItem & { ingredient_groups: string })[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
@@ -53,6 +50,7 @@ export default function SearchScreen() {
   const [results, setResults] = useState<RecipeListItem[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // ---------------------------------------------------------------------------
   // Load data on focus (re-fetches profile for allergen changes)
@@ -62,15 +60,12 @@ export default function SearchScreen() {
       let cancelled = false;
 
       async function loadAll() {
-        // Load profile first (needed for allergen exclusion)
         const p = await getProfile();
         if (cancelled) return;
         setProfile(p);
 
-        // Parallel: ingredients, titles, allergen-filtered recipe list (with ingredient_groups), bookmarks
-        const [ingredients, titles, recipes, bookmarks, recentViewEntries] = await Promise.all([
+        const [ingredients, recipes, bookmarks, recentViewEntries] = await Promise.all([
           getAllIngredientNames(),
-          getAllRecipeTitles(),
           getAllRecipesForSearch(p.allergens),
           getBookmarks(null),
           getRecentViews(),
@@ -79,11 +74,9 @@ export default function SearchScreen() {
         if (cancelled) return;
 
         setAllIngredients(ingredients);
-        setAllRecipeTitles(titles);
         setAllRecipes(recipes);
         setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
 
-        // Join recent views with recipe data (strip ingredient_groups for display)
         const recipeMap = new Map(recipes.map((r) => [r.id, r as RecipeListItem]));
         const recentRecipes = recentViewEntries
           .map((rv) => recipeMap.get(rv.recipeId))
@@ -99,36 +92,19 @@ export default function SearchScreen() {
   );
 
   // ---------------------------------------------------------------------------
-  // Autocomplete logic — in-memory filter on every query change (no DB calls)
+  // Ingredient autocomplete — only ingredient names, shown in dropdown
   // ---------------------------------------------------------------------------
-  const suggestions = useMemo<AutocompleteSuggestion[]>(() => {
+  const ingredientSuggestions = useMemo<string[]>(() => {
     if (query.length < 2) return [];
-
     const lowerQuery = query.toLowerCase();
-
-    const ingredientMatches = allIngredients
+    return allIngredients
       .filter((name) => name.toLowerCase().includes(lowerQuery))
-      .slice(0, 8)
-      .map<AutocompleteSuggestion>((name) => ({
-        value: name,
-        type: 'ingredient',
-        recipeId: null,
-      }));
-
-    const recipeMatches = allRecipeTitles
-      .filter((r) => r.title.toLowerCase().includes(lowerQuery))
-      .slice(0, 4)
-      .map<AutocompleteSuggestion>((r) => ({
-        value: r.title,
-        type: 'recipe',
-        recipeId: r.id,
-      }));
-
-    return [...ingredientMatches, ...recipeMatches];
-  }, [query, allIngredients, allRecipeTitles]);
+      .filter((name) => !ingredientChips.includes(name))
+      .slice(0, 8);
+  }, [query, allIngredients, ingredientChips]);
 
   // ---------------------------------------------------------------------------
-  // Search by ingredient chips — fires when chips change
+  // Search by ingredient chips + optional title filter
   // ---------------------------------------------------------------------------
   useEffect(() => {
     if (ingredientChips.length === 0) {
@@ -149,6 +125,14 @@ export default function SearchScreen() {
     return () => { cancelled = true; };
   }, [ingredientChips, allRecipes, profile]);
 
+  // When chips are active and user types, filter grid results by title
+  const displayResults = useMemo(() => {
+    if (ingredientChips.length === 0) return [];
+    if (query.length < 2) return results;
+    const lowerQuery = query.toLowerCase();
+    return results.filter((r) => r.title.toLowerCase().includes(lowerQuery));
+  }, [results, query, ingredientChips]);
+
   // ---------------------------------------------------------------------------
   // Interactions
   // ---------------------------------------------------------------------------
@@ -157,20 +141,15 @@ export default function SearchScreen() {
       setIngredientChips((prev) => [...prev, name]);
     }
     setQuery('');
+    setDropdownOpen(false);
   }
 
   function handleRemoveChip(name: string) {
     setIngredientChips((prev) => prev.filter((c) => c !== name));
   }
 
-  function handleSelectRecipe(recipeId: string) {
-    setQuery('');
-    router.push(`/recipe/${recipeId}` as never);
-  }
-
   function handleRecipePress(id: string) {
     recordRecentView(id);
-    // Update recent views state optimistically
     const recipe = allRecipes.find((r) => r.id === id);
     if (recipe) {
       setRecentViews((prev) => {
@@ -195,66 +174,68 @@ export default function SearchScreen() {
     }
   }
 
+  function handleQueryChange(text: string) {
+    setQuery(text);
+    setDropdownOpen(text.length >= 2);
+  }
+
   // ---------------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------------
   const isIdle = ingredientChips.length === 0 && query.length === 0;
   const hasChips = ingredientChips.length > 0;
+  const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips;
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Search bar */}
       <View style={styles.searchBarWrapper}>
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Malzeme veya tarif ara..."
-          placeholderTextColor="#9CA3AF"
-          value={query}
-          onChangeText={setQuery}
-          returnKeyType="search"
-          autoCorrect={false}
-          autoCapitalize="none"
-        />
+        <View style={styles.searchBarRow}>
+          <TextInput
+            style={styles.searchBar}
+            placeholder={hasChips ? 'Tarif adı ile filtrele...' : 'Malzeme ara...'}
+            placeholderTextColor="#9CA3AF"
+            value={query}
+            onChangeText={handleQueryChange}
+            onFocus={() => { if (query.length >= 2) setDropdownOpen(true); }}
+            returnKeyType="search"
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
+          {query.length > 0 && (
+            <Pressable
+              style={styles.clearButton}
+              onPress={() => { setQuery(''); setDropdownOpen(false); }}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Text style={styles.clearButtonText}>✕</Text>
+            </Pressable>
+          )}
+        </View>
       </View>
 
-      {/* Autocomplete dropdown */}
-      {suggestions.length > 0 && (
-        <View style={styles.dropdown}>
-          <FlatList
-            data={suggestions}
-            keyExtractor={(item) => `${item.type}:${item.value}`}
-            renderItem={({ item }) => (
-              <Pressable
-                style={styles.suggestionRow}
-                onPress={() => {
-                  if (item.type === 'ingredient') {
-                    handleSelectIngredient(item.value);
-                  } else if (item.recipeId) {
-                    handleSelectRecipe(item.recipeId);
-                  }
-                }}
-              >
-                <Text style={styles.suggestionText}>{item.value}</Text>
-                <View style={[
-                  styles.typeBadge,
-                  item.type === 'ingredient' ? styles.typeBadgeIngredient : styles.typeBadgeRecipe,
-                ]}>
-                  <Text style={styles.typeBadgeText}>
-                    {item.type === 'ingredient' ? 'Malzeme' : 'Tarif'}
-                  </Text>
-                </View>
-              </Pressable>
-            )}
-            style={styles.dropdownList}
-            keyboardShouldPersistTaps="handled"
-          />
+      {/* Ingredient chips */}
+      {hasChips && (
+        <View style={styles.chipsContainer}>
+          <IngredientChips chips={ingredientChips} onRemove={handleRemoveChip} />
         </View>
       )}
 
-      {/* Ingredient chips */}
-      {ingredientChips.length > 0 && (
-        <View style={styles.chipsContainer}>
-          <IngredientChips chips={ingredientChips} onRemove={handleRemoveChip} />
+      {/* Ingredient autocomplete dropdown (only when no chips active) */}
+      {showDropdown && (
+        <View style={styles.dropdown}>
+          {ingredientSuggestions.map((name) => (
+            <Pressable
+              key={name}
+              style={styles.suggestionRow}
+              onPress={() => handleSelectIngredient(name)}
+            >
+              <Text style={styles.suggestionText}>{name}</Text>
+              <View style={styles.typeBadge}>
+                <Text style={styles.typeBadgeText}>Malzeme</Text>
+              </View>
+            </Pressable>
+          ))}
         </View>
       )}
 
@@ -271,18 +252,25 @@ export default function SearchScreen() {
                 <RecipeCardRow recipe={item} onPress={handleRecipePress} />
               )}
               contentContainerStyle={styles.rowListContent}
+              keyboardShouldPersistTaps="handled"
             />
           </View>
-        ) : null
+        ) : (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>
+              Malzeme arayarak tarif bul
+            </Text>
+          </View>
+        )
       ) : hasChips ? (
-        // Chips active: show grid results
+        // Chips active: show grid results (filtered by title if typing)
         searchLoading ? (
           <View style={styles.emptyState}>
             <Text style={styles.emptyText}>Aranıyor...</Text>
           </View>
-        ) : results.length > 0 ? (
+        ) : displayResults.length > 0 ? (
           <FlashList
-            data={results}
+            data={displayResults}
             numColumns={2}
             renderItem={({ item }) => (
               <View style={styles.cardWrapper}>
@@ -297,15 +285,25 @@ export default function SearchScreen() {
             keyExtractor={(item) => item.id}
             ListEmptyComponent={null}
             contentContainerStyle={{ padding: 8 }}
+            keyboardShouldPersistTaps="handled"
           />
         ) : (
           <View style={styles.emptyState}>
             <Text style={styles.emptyText}>
-              Eşleşen tarif bulunamadı. Başka malzemeler dene.
+              {query.length > 0
+                ? `"${query}" ile eşleşen tarif bulunamadı.`
+                : 'Eşleşen tarif bulunamadı. Başka malzemeler dene.'}
             </Text>
           </View>
         )
-      ) : null}
+      ) : (
+        // Typing but no chips yet — show ingredient suggestions inline if dropdown closed
+        query.length >= 2 && !showDropdown ? (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>Malzeme seçerek aramaya başla</Text>
+          </View>
+        ) : null
+      )}
     </SafeAreaView>
   );
 }
@@ -324,21 +322,33 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 4,
   },
+  searchBarRow: {
+    position: 'relative',
+  },
   searchBar: {
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#E5E7EB',
     padding: 12,
+    paddingRight: 40,
     fontSize: 15,
     backgroundColor: '#F9FAFB',
     color: '#111827',
   },
-  dropdown: {
+  clearButton: {
     position: 'absolute',
-    top: 64,
-    left: 16,
-    right: 16,
-    zIndex: 100,
+    right: 12,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+  },
+  clearButtonText: {
+    fontSize: 16,
+    color: '#9CA3AF',
+    fontWeight: '600',
+  },
+  dropdown: {
+    marginHorizontal: 16,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#E5E7EB',
@@ -349,9 +359,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.12,
     shadowRadius: 8,
     elevation: 8,
-  },
-  dropdownList: {
-    borderRadius: 12,
+    overflow: 'hidden',
   },
   suggestionRow: {
     flexDirection: 'row',
@@ -372,17 +380,12 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 10,
     marginLeft: 8,
-  },
-  typeBadgeIngredient: {
     backgroundColor: '#FEF3EC',
-  },
-  typeBadgeRecipe: {
-    backgroundColor: '#EEF2FF',
   },
   typeBadgeText: {
     fontSize: 10,
     fontWeight: '600',
-    color: '#6B7280',
+    color: '#C05F20',
   },
   chipsContainer: {
     paddingHorizontal: 12,

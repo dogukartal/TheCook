@@ -243,7 +243,7 @@ export async function recordRecentView(
   recipeId: string
 ): Promise<void> {
   await db.runAsync(
-    "INSERT OR REPLACE INTO recent_views (recipe_id, viewed_at) VALUES (?, datetime('now'))",
+    "INSERT OR REPLACE INTO recent_views (recipe_id, viewed_at) VALUES (?, strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
     [recipeId]
   );
   await db.runAsync(
@@ -369,7 +369,7 @@ export async function addBookmark(
 ): Promise<void> {
   const id = Crypto.randomUUID();
   await db.runAsync(
-    "INSERT OR IGNORE INTO bookmarks (id, recipe_id, user_id, created_at) VALUES (?, ?, ?, datetime('now'))",
+    "INSERT OR IGNORE INTO bookmarks (id, recipe_id, user_id, created_at) VALUES (?, ?, ?, strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
     [id, recipeId, userId]
   );
 }

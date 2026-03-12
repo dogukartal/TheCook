@@ -64,7 +64,7 @@ export function useProfileDb() {
   ): Promise<void> {
     const id = Crypto.randomUUID();
     await db.runAsync(
-      "INSERT OR IGNORE INTO bookmarks (id, recipe_id, user_id, created_at) VALUES (?, ?, ?, datetime('now'))",
+      "INSERT OR IGNORE INTO bookmarks (id, recipe_id, user_id, created_at) VALUES (?, ?, ?, strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
       [id, recipeId, userId]
     );
   }
