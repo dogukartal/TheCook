@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-recipe-discovery 04-05-PLAN.md
-last_updated: "2026-03-12T18:07:06.693Z"
-last_activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
+stopped_at: Completed 04-recipe-discovery 04-06-PLAN.md
+last_updated: "2026-03-12T20:12:05.329Z"
+last_activity: 2026-03-12 — Phase 4 Plan 06 complete; Settings sub-screen + all 5 DISC requirements human-verified; Phase 4 complete
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 22
-  completed_plans: 21
-  percent: 75
+  completed_plans: 22
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** The user must never feel like the app gave them a recipe and walked away — every interaction, from ingredient input to the last step, must feel like having a knowledgeable friend in the kitchen.
-**Current focus:** Phase 2 - Profile and Auth
+**Current focus:** Phase 5 - Guided Cooking Mode
 
 ## Current Position
 
-Phase: 2 of 5 (Profile and Auth) — IN PROGRESS
-Plan: 4 of 7 — ready to execute next plan (02-05 onboarding UI)
-Status: In Progress — auth layer complete; supabase.ts, sync.ts, useSession.ts implemented
-Last activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
+Phase: 4 of 5 (Recipe Discovery) — COMPLETE
+Plan: 6 of 6 — Phase 4 complete, ready for Phase 5
+Status: Complete — all 5 DISC requirements human-verified; Settings sub-screen, Feed, Search, My Kitchen, recipe detail all working
+Last activity: 2026-03-12 — Phase 4 Plan 06 complete; Settings sub-screen + all 5 DISC requirements human-verified; Phase 4 complete
 
-Progress: [████████░░] 75% (Phase 2 in progress)
+Progress: [██████████] 100% (Phase 4 complete, Phase 5 not yet planned)
 
 ## Performance Metrics
 
@@ -72,6 +72,7 @@ Progress: [████████░░] 75% (Phase 2 in progress)
 | Phase 04-recipe-discovery P03 | 4 | 2 tasks | 5 files |
 | Phase 04-recipe-discovery P04 | 4 | 2 tasks | 6 files |
 | Phase 04-recipe-discovery P05 | 3 | 2 tasks | 3 files |
+| Phase 04-recipe-discovery P06 | checkpoint | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -139,6 +140,10 @@ Recent decisions affecting current work:
 - [Phase 04-recipe-discovery]: Search autocomplete built in useMemo from allIngredients loaded on mount — zero DB calls on keypress (Pitfall 7 prevention)
 - [Phase 04-recipe-discovery]: Batch SELECT IN used for bookmark recipe hydration in My Kitchen — avoids N+1 queries, preserves bookmark order via rowMap
 - [Phase 04-recipe-discovery]: getRecipeById added to recipes.ts using RecipeSchema.parse (SELECT * including steps) — only called on detail screen
+- [Phase 04-recipe-discovery]: Settings sub-screen uses immediate-save UX (no Save button) — consistent with Phase 2 onboarding pattern
+- [Phase 04-recipe-discovery]: useFocusEffect on Feed, Search, My Kitchen to reload allergen-filtered data when returning from Settings
+- [Phase 04-recipe-discovery]: Bookmark datetime stored as ISO 8601 with legacy format normalization on read
+- [Phase 04-recipe-discovery]: Search shows ingredients + recipes together in unified results view
 
 ### Pending Todos
 
@@ -152,6 +157,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T18:07:06.691Z
-Stopped at: Completed 04-recipe-discovery 04-05-PLAN.md
+Last session: 2026-03-12T20:12:05.329Z
+Stopped at: Completed 04-recipe-discovery 04-06-PLAN.md — Phase 4 complete
 Resume file: None
