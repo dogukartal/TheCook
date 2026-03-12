@@ -1,16 +1,5 @@
-// Plan 04-01 — Discovery feature failing test stubs (RED state)
-// These tests will be made GREEN by Plans 04-02 and 04-03.
-
-// Mock the recipes module before importing — it does not exist yet.
-jest.mock("../src/db/recipes", () => ({
-  filterRecipesByAllergens: jest.fn().mockRejectedValue(new Error("not implemented")),
-  getFeedRecipes: jest.fn().mockRejectedValue(new Error("not implemented")),
-  filterRecipesByCategory: jest.fn().mockRejectedValue(new Error("not implemented")),
-  searchRecipesByIngredients: jest.fn().mockRejectedValue(new Error("not implemented")),
-  addBookmark: jest.fn().mockRejectedValue(new Error("not implemented")),
-  removeBookmark: jest.fn().mockRejectedValue(new Error("not implemented")),
-  getBookmarks: jest.fn().mockRejectedValue(new Error("not implemented")),
-}));
+// Plan 04-02 — Discovery feature tests (GREEN state)
+// These tests call the real standalone functions from src/db/recipes.ts.
 
 import {
   filterRecipesByAllergens,
