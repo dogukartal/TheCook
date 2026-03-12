@@ -194,8 +194,7 @@ export default function SearchScreen() {
   // ---------------------------------------------------------------------------
   const isIdle = ingredientChips.length === 0 && query.length < 2;
   const hasChips = ingredientChips.length > 0;
-  const hasResults = displayResults.length > 0;
-  const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips && !hasResults;
+  const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips;
 
   return (
     <SafeAreaView style={styles.container}>

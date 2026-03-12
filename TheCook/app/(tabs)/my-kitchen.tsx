@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { FlashList } from '@shopify/flash-list';
 import { router, useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
@@ -275,12 +274,9 @@ export default function MyKitchenScreen() {
             </Text>
           </View>
         ) : (
-          <FlashList
-            data={savedRecipes}
-            numColumns={2}
-            scrollEnabled={false}
-            renderItem={({ item }) => (
-              <View style={styles.cardWrapper}>
+          <View style={styles.savedGrid}>
+            {savedRecipes.map((item) => (
+              <View key={item.id} style={styles.cardWrapper}>
                 <RecipeCardGrid
                   recipe={item}
                   isBookmarked={bookmarkedIds.has(item.id)}
@@ -288,10 +284,8 @@ export default function MyKitchenScreen() {
                   onPress={handleRecipePress}
                 />
               </View>
-            )}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{ paddingBottom: 16 }}
-          />
+            ))}
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -407,10 +401,15 @@ const styles = StyleSheet.create({
     width: '50%',
     padding: 4,
   },
+  savedGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 12,
+    paddingBottom: 16,
+  },
   cardWrapper: {
-    flex: 1,
+    width: '50%',
     padding: 4,
-    marginHorizontal: 4,
   },
   emptyState: {
     alignItems: 'center',
