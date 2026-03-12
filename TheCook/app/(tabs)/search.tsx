@@ -96,9 +96,9 @@ export default function SearchScreen() {
   // ---------------------------------------------------------------------------
   const ingredientSuggestions = useMemo<string[]>(() => {
     if (query.length < 2) return [];
-    const lowerQuery = query.toLowerCase();
+    const lowerQuery = query.toLocaleLowerCase('tr');
     return allIngredients
-      .filter((name) => name.toLowerCase().includes(lowerQuery))
+      .filter((name) => name.toLocaleLowerCase('tr').includes(lowerQuery))
       .filter((name) => !ingredientChips.includes(name))
       .slice(0, 8);
   }, [query, allIngredients, ingredientChips]);
@@ -125,13 +125,23 @@ export default function SearchScreen() {
     return () => { cancelled = true; };
   }, [ingredientChips, allRecipes, profile]);
 
-  // When chips are active and user types, filter grid results by title
+  // Display results: filter by title when typing, or show name-based search when no chips
   const displayResults = useMemo(() => {
-    if (ingredientChips.length === 0) return [];
-    if (query.length < 2) return results;
-    const lowerQuery = query.toLowerCase();
-    return results.filter((r) => r.title.toLowerCase().includes(lowerQuery));
-  }, [results, query, ingredientChips]);
+    const lowerQuery = query.length >= 2 ? query.toLocaleLowerCase('tr') : '';
+
+    // With chips: show ingredient-matched results, optionally filtered by title
+    if (ingredientChips.length > 0) {
+      if (!lowerQuery) return results;
+      return results.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
+    }
+
+    // Without chips but typing: search all recipes by title
+    if (lowerQuery) {
+      return allRecipes.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
+    }
+
+    return [];
+  }, [results, query, ingredientChips, allRecipes]);
 
   // ---------------------------------------------------------------------------
   // Interactions
@@ -182,9 +192,10 @@ export default function SearchScreen() {
   // ---------------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------------
-  const isIdle = ingredientChips.length === 0 && query.length === 0;
+  const isIdle = ingredientChips.length === 0 && query.length < 2;
   const hasChips = ingredientChips.length > 0;
-  const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips;
+  const hasResults = displayResults.length > 0;
+  const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips && !hasResults;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -193,7 +204,7 @@ export default function SearchScreen() {
         <View style={styles.searchBarRow}>
           <TextInput
             style={styles.searchBar}
-            placeholder={hasChips ? 'Tarif adı ile filtrele...' : 'Malzeme ara...'}
+            placeholder={hasChips ? 'Tarif adı ile filtrele...' : 'Malzeme veya tarif ara...'}
             placeholderTextColor="#9CA3AF"
             value={query}
             onChangeText={handleQueryChange}
@@ -258,51 +269,41 @@ export default function SearchScreen() {
         ) : (
           <View style={styles.emptyState}>
             <Text style={styles.emptyText}>
-              Malzeme arayarak tarif bul
+              Malzeme veya tarif adı arayın
             </Text>
           </View>
         )
-      ) : hasChips ? (
-        // Chips active: show grid results (filtered by title if typing)
-        searchLoading ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>Aranıyor...</Text>
-          </View>
-        ) : displayResults.length > 0 ? (
-          <FlashList
-            data={displayResults}
-            numColumns={2}
-            renderItem={({ item }) => (
-              <View style={styles.cardWrapper}>
-                <RecipeCardGrid
-                  recipe={item}
-                  isBookmarked={bookmarkedIds.has(item.id)}
-                  onBookmarkToggle={handleBookmarkToggle}
-                  onPress={handleRecipePress}
-                />
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-            ListEmptyComponent={null}
-            contentContainerStyle={{ padding: 8 }}
-            keyboardShouldPersistTaps="handled"
-          />
-        ) : (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>
-              {query.length > 0
-                ? `"${query}" ile eşleşen tarif bulunamadı.`
-                : 'Eşleşen tarif bulunamadı. Başka malzemeler dene.'}
-            </Text>
-          </View>
-        )
+      ) : searchLoading ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyText}>Aranıyor...</Text>
+        </View>
+      ) : displayResults.length > 0 ? (
+        <FlashList
+          data={displayResults}
+          numColumns={2}
+          renderItem={({ item }) => (
+            <View style={styles.cardWrapper}>
+              <RecipeCardGrid
+                recipe={item}
+                isBookmarked={bookmarkedIds.has(item.id)}
+                onBookmarkToggle={handleBookmarkToggle}
+                onPress={handleRecipePress}
+              />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={null}
+          contentContainerStyle={{ padding: 8 }}
+          keyboardShouldPersistTaps="handled"
+        />
       ) : (
-        // Typing but no chips yet — show ingredient suggestions inline if dropdown closed
-        query.length >= 2 && !showDropdown ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>Malzeme seçerek aramaya başla</Text>
-          </View>
-        ) : null
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyText}>
+            {query.length > 0
+              ? `"${query}" ile eşleşen tarif bulunamadı.`
+              : 'Eşleşen tarif bulunamadı. Başka malzemeler dene.'}
+          </Text>
+        </View>
       )}
     </SafeAreaView>
   );

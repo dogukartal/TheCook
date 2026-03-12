@@ -79,7 +79,7 @@ function extractIngredientNames(ingredientGroupsJson: string): string[] {
     for (const group of groups) {
       const items = group.items ?? group.ingredients ?? [];
       for (const item of items) {
-        if (item.name) names.push(item.name.toLowerCase().trim());
+        if (item.name) names.push(item.name.toLocaleLowerCase('tr').trim());
       }
     }
     return names;
@@ -171,7 +171,7 @@ export async function searchRecipesByIngredients(
 ): Promise<any[]> {
   if (chips.length === 0) return recipes;
 
-  const lowerChips = chips.map((c) => c.toLowerCase().trim());
+  const lowerChips = chips.map((c) => c.toLocaleLowerCase('tr').trim());
 
   // Score each recipe by overlap count
   const scored = recipes.map((recipe) => {
