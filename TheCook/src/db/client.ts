@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const result = await db.getFirstAsync<{ user_version: number }>(
@@ -62,6 +62,15 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
       );
 
       CREATE INDEX IF NOT EXISTS idx_bookmarks_recipe_id ON bookmarks (recipe_id);
+    `);
+  }
+
+  if (currentVersion < 3) {
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS recent_views (
+        recipe_id TEXT PRIMARY KEY NOT NULL,
+        viewed_at TEXT NOT NULL DEFAULT (datetime('now'))
+      );
     `);
   }
 

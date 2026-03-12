@@ -16,15 +16,15 @@ function createMockDb(currentUserVersion: number) {
   return db;
 }
 
-describe("migrateDb — DB_VERSION 2", () => {
-  it("DB_VERSION constant is 2", async () => {
-    // Fresh DB (version 0) — migration should run; version 2 should be set at end
+describe("migrateDb — DB_VERSION 3", () => {
+  it("DB_VERSION constant is 3", async () => {
+    // Fresh DB (version 0) — migration should run; version 3 should be set at end
     const db = createMockDb(0);
     await migrateDb(db as any);
 
-    // The last execAsync call should set user_version = 2
+    // The last execAsync call should set user_version = 3
     const allSql = db._execCalls.join("\n");
-    expect(allSql).toContain("PRAGMA user_version = 2");
+    expect(allSql).toContain("PRAGMA user_version = 3");
   });
 
   it("creates profile table on fresh install", async () => {
@@ -70,8 +70,8 @@ describe("migrateDb — DB_VERSION 2", () => {
     expect(allSql).toContain("onboarding_completed");
   });
 
-  it("is idempotent — does not run migration when already at version 2", async () => {
-    const db = createMockDb(2);
+  it("is idempotent — does not run migration when already at version 3", async () => {
+    const db = createMockDb(3);
     await migrateDb(db as any);
 
     // No execAsync should be called when already at target version
@@ -95,5 +95,21 @@ describe("migrateDb — DB_VERSION 2", () => {
 
     const allSql = db._execCalls.join("\n");
     expect(allSql).toContain("idx_bookmarks_recipe_id");
+  });
+
+  it("creates recent_views table on fresh install", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("CREATE TABLE IF NOT EXISTS recent_views");
+  });
+
+  it("creates recent_views table when upgrading from version 2", async () => {
+    const db = createMockDb(2);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("CREATE TABLE IF NOT EXISTS recent_views");
   });
 });
