@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-recipe-discovery 04-01-PLAN.md
-last_updated: "2026-03-12T17:41:57.342Z"
+stopped_at: Completed 04-recipe-discovery 04-02-PLAN.md
+last_updated: "2026-03-12T17:46:50.824Z"
 last_activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 22
-  completed_plans: 17
+  completed_plans: 18
   percent: 75
 ---
 
@@ -68,6 +68,7 @@ Progress: [████████░░] 75% (Phase 2 in progress)
 | Phase 03-content-library P03 | 2 | 1 tasks | 1 files |
 | Phase 03-content-library P03 | 2 | 2 tasks | 1 files |
 | Phase 04-recipe-discovery P01 | 3 | 2 tasks | 4 files |
+| Phase 04-recipe-discovery P02 | 5 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -125,6 +126,8 @@ Recent decisions affecting current work:
 - [Phase 03-content-library]: Phase 3 verification scope is content preparation readiness (YAML → recipes.json → SQLite seeding), not UI display — recipe browse screen is Phase 4 deliverable
 - [Phase 04-recipe-discovery]: recent_views table has no index — max 10 rows enforced by application layer trim on insert
 - [Phase 04-recipe-discovery]: src/db/recipes.ts stub created with real TypeScript signatures so jest.mock module resolution works without virtual module hack
+- [Phase 04-recipe-discovery]: filterRecipesByAllergens is pure JS (no DB call) — accepts recipes array, parses allergens field as JSON string or array
+- [Phase 04-recipe-discovery]: searchRecipesByIngredients uses JS ingredient_groups parsing — AND logic with partial-match fallback ranked by overlap count
 
 ### Pending Todos
 
@@ -138,6 +141,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T17:41:57.340Z
-Stopped at: Completed 04-recipe-discovery 04-01-PLAN.md
+Last session: 2026-03-12T17:46:44.648Z
+Stopped at: Completed 04-recipe-discovery 04-02-PLAN.md
 Resume file: None

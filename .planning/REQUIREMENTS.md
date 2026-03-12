@@ -18,7 +18,7 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 - [x] **DISC-01**: User can input available ingredients and receive recipe recommendations that match
 - [x] **DISC-02**: User can browse a curated feed of recipes without ingredient input, ordered by skill level match
 - [x] **DISC-03**: User can filter recipes by craving/mood (cuisine type, cooking time, dish type — breakfast / soup / main / etc.)
-- [ ] **DISC-04**: User can bookmark recipes to a personal saved list and return to them later
+- [x] **DISC-04**: User can bookmark recipes to a personal saved list and return to them later
 - [x] **DISC-05**: Allergen-incompatible recipes are automatically filtered out from all discovery surfaces
 
 ### Cooking Mode
@@ -89,7 +89,7 @@ Updated during roadmap creation.
 | DISC-01 | Phase 4 | Complete |
 | DISC-02 | Phase 4 | Complete |
 | DISC-03 | Phase 4 | Complete |
-| DISC-04 | Phase 4 | Pending |
+| DISC-04 | Phase 4 | Complete |
 | DISC-05 | Phase 4 | Complete |
 | COOK-01 | Phase 5 | Pending |
 | COOK-02 | Phase 5 | Pending |
