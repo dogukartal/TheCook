@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-recipe-discovery 04-04-PLAN.md
-last_updated: "2026-03-12T17:56:09.946Z"
+stopped_at: Completed 04-recipe-discovery 04-05-PLAN.md
+last_updated: "2026-03-12T18:07:06.693Z"
 last_activity: 2026-03-10 — Phase 2 Plan 04 complete; Supabase client, cloud-wins sync, SessionProvider/useSession hook implemented; 49 tests passing
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 22
-  completed_plans: 20
+  completed_plans: 21
   percent: 75
 ---
 
@@ -71,6 +71,7 @@ Progress: [████████░░] 75% (Phase 2 in progress)
 | Phase 04-recipe-discovery P02 | 5 | 2 tasks | 3 files |
 | Phase 04-recipe-discovery P03 | 4 | 2 tasks | 5 files |
 | Phase 04-recipe-discovery P04 | 4 | 2 tasks | 6 files |
+| Phase 04-recipe-discovery P05 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -136,6 +137,8 @@ Recent decisions affecting current work:
 - [Phase 04-recipe-discovery]: Safe tab rename order: create new routes first, update _layout.tsx, then delete old routes — prevents 404 route errors during transition
 - [Phase 04-recipe-discovery]: Feed Trending tab uses getAllRecipesForFeed rowid order; For You tab adds getFeedRecipes skill sort; category filter is JS Array.filter on already-loaded set
 - [Phase 04-recipe-discovery]: Search autocomplete built in useMemo from allIngredients loaded on mount — zero DB calls on keypress (Pitfall 7 prevention)
+- [Phase 04-recipe-discovery]: Batch SELECT IN used for bookmark recipe hydration in My Kitchen — avoids N+1 queries, preserves bookmark order via rowMap
+- [Phase 04-recipe-discovery]: getRecipeById added to recipes.ts using RecipeSchema.parse (SELECT * including steps) — only called on detail screen
 
 ### Pending Todos
 
@@ -149,6 +152,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T17:56:09.944Z
-Stopped at: Completed 04-recipe-discovery 04-04-PLAN.md
+Last session: 2026-03-12T18:07:06.691Z
+Stopped at: Completed 04-recipe-discovery 04-05-PLAN.md
 Resume file: None
