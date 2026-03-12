@@ -85,7 +85,15 @@ Plans:
   3. A user can filter the recipe feed by category (breakfast, soup, main dish, etc.) or cuisine type and receive a relevant subset
   4. A user can bookmark a recipe and find it later in a personal saved list; bookmarks persist across app restarts and are available offline
   5. No recipe that conflicts with the user's declared allergens or restrictions appears on any discovery surface under any filter combination
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Install packages (FlashList, LinearGradient), bump DB to version 3 (recent_views), create failing discovery test stubs (Wave 1)
+- [ ] 04-02-PLAN.md — Define discovery types + implement useRecipesDb hook with all query logic; tests go GREEN (Wave 2)
+- [ ] 04-03-PLAN.md — Build RecipeCardGrid, RecipeCardRow, SkeletonCard, CategoryFilter, IngredientChips components (Wave 2)
+- [ ] 04-04-PLAN.md — Tab restructure (Feed/Search/My Kitchen) + Feed screen + Search screen (Wave 3)
+- [ ] 04-05-PLAN.md — My Kitchen tab + Recipe detail screen + getRecipeById (Wave 3)
+- [ ] 04-06-PLAN.md — Settings sub-screen + human verification of all DISC requirements (Wave 4)
 
 ### Phase 5: Guided Cooking Mode
 **Goal**: Users can cook from any recipe using a focused step-by-step mode that keeps them on track, warns them before mistakes happen, and handles timing automatically
@@ -111,5 +119,5 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 1. Foundation | 5/5 | Complete    | 2026-03-09 |
 | 2. Profile and Auth | 8/8 | Complete   | 2026-03-10 |
 | 3. Content Library | 3/3 | Complete   | 2026-03-11 |
-| 4. Recipe Discovery | 0/TBD | Not started | - |
+| 4. Recipe Discovery | 0/6 | Not started | - |
 | 5. Guided Cooking Mode | 0/TBD | Not started | - |
