@@ -1,6 +1,7 @@
 import { useSQLiteContext, SQLiteDatabase } from "expo-sqlite";
 import { RecipeListItem, RecentView } from "../types/discovery";
 import { DiscoveryFilter } from "../types/discovery";
+import { Recipe, RecipeSchema } from "../types/recipe";
 
 // ---------------------------------------------------------------------------
 // Types for internal DB row shapes
@@ -373,6 +374,37 @@ export async function getBookmarks(
 }
 
 // ---------------------------------------------------------------------------
+// getRecipeById — full recipe fetch including steps (used only on detail screen)
+// ---------------------------------------------------------------------------
+
+export async function getRecipeById(
+  db: SQLiteDatabase,
+  id: string
+): Promise<Recipe | null> {
+  const row = await db.getFirstAsync<Record<string, unknown>>(
+    "SELECT * FROM recipes WHERE id = ?",
+    [id]
+  );
+  if (!row) return null;
+  return RecipeSchema.parse({
+    id: row.id,
+    title: row.title,
+    cuisine: row.cuisine,
+    category: row.category,
+    mealType: row.meal_type,
+    skillLevel: row.skill_level,
+    prepTime: row.prep_time,
+    cookTime: row.cook_time,
+    servings: row.servings,
+    coverImage: row.cover_image ?? null,
+    allergens: JSON.parse(row.allergens as string),
+    equipment: JSON.parse(row.equipment as string),
+    ingredientGroups: JSON.parse(row.ingredient_groups as string),
+    steps: JSON.parse(row.steps as string),
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Hook — for use in React components via expo-sqlite v2 context
 // ---------------------------------------------------------------------------
 
@@ -403,5 +435,6 @@ export function useRecipesDb() {
       addBookmark(db, recipeId, userId),
     removeBookmark: (recipeId: string) => removeBookmark(db, recipeId),
     getBookmarks: (userId: string | null) => getBookmarks(db, userId),
+    getRecipeById: (id: string) => getRecipeById(db, id),
   };
 }
