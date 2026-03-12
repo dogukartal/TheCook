@@ -5,9 +5,10 @@ import {
   Pressable,
   StyleSheet,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 import { useRecipesDb } from '@/src/db/recipes';
 import { useProfileDb } from '@/src/db/profile';
@@ -45,20 +46,24 @@ export default function FeedScreen() {
   const [filter, setFilter] = useState<DiscoveryFilter>(INITIAL_FILTER);
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
 
-  // Load profile first, then bookmarks — guard against allergen race condition
-  useEffect(() => {
-    let cancelled = false;
-    getProfile().then((p) => {
-      if (cancelled) return;
-      setProfile(p);
-      return getBookmarks().then((bookmarks) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Re-fetch profile + bookmarks on every focus (picks up allergen/skill changes)
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      getProfile().then((p) => {
         if (cancelled) return;
-        setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
-        setProfileLoaded(true);
+        setProfile(p);
+        return getBookmarks().then((bookmarks) => {
+          if (cancelled) return;
+          setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
+          setProfileLoaded(true);
+        });
       });
-    });
-    return () => { cancelled = true; };
-  }, []);
+      return () => { cancelled = true; };
+    }, [])
+  );
 
   // Load recipes whenever profile is loaded or tab/category/filter changes
   const loadRecipes = useCallback(async () => {
@@ -107,6 +112,17 @@ export default function FeedScreen() {
       await addBookmark(id, null);
       setBookmarkedIds((prev) => new Set([...prev, id]));
     }
+  }
+
+  // Pull-to-refresh
+  async function handleRefresh() {
+    setRefreshing(true);
+    const p = await getProfile();
+    setProfile(p);
+    const bookmarks = await getBookmarks();
+    setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
+    await loadRecipes();
+    setRefreshing(false);
   }
 
   // Navigate to recipe detail
@@ -203,6 +219,9 @@ export default function FeedScreen() {
             </View>
           }
           contentContainerStyle={{ padding: 8 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#E07B39" />
+          }
         />
       )}
     </SafeAreaView>

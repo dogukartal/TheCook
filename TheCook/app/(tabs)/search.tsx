@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
+import { useFocusEffect } from 'expo-router';
 
 import { useRecipesDb } from '@/src/db/recipes';
 import { useProfileDb } from '@/src/db/profile';
@@ -28,7 +29,7 @@ export default function SearchScreen() {
   const {
     getAllIngredientNames,
     getAllRecipeTitles,
-    getAllRecipesForFeed,
+    getAllRecipesForSearch,
     searchRecipesByIngredients,
     getRecentViews,
     recordRecentView,
@@ -41,7 +42,7 @@ export default function SearchScreen() {
   // Data loaded on mount
   const [allIngredients, setAllIngredients] = useState<string[]>([]);
   const [allRecipeTitles, setAllRecipeTitles] = useState<{ id: string; title: string }[]>([]);
-  const [allRecipes, setAllRecipes] = useState<RecipeListItem[]>([]);
+  const [allRecipes, setAllRecipes] = useState<(RecipeListItem & { ingredient_groups: string })[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [recentViews, setRecentViews] = useState<RecipeListItem[]>([]);
@@ -54,46 +55,48 @@ export default function SearchScreen() {
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
 
   // ---------------------------------------------------------------------------
-  // Mount: load all data in parallel
+  // Load data on focus (re-fetches profile for allergen changes)
   // ---------------------------------------------------------------------------
-  useEffect(() => {
-    let cancelled = false;
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
 
-    async function loadAll() {
-      // Load profile first (needed for allergen exclusion)
-      const p = await getProfile();
-      if (cancelled) return;
-      setProfile(p);
+      async function loadAll() {
+        // Load profile first (needed for allergen exclusion)
+        const p = await getProfile();
+        if (cancelled) return;
+        setProfile(p);
 
-      // Parallel: ingredients, titles, allergen-filtered recipe list, bookmarks
-      const [ingredients, titles, recipes, bookmarks, recentViewEntries] = await Promise.all([
-        getAllIngredientNames(),
-        getAllRecipeTitles(),
-        getAllRecipesForFeed(p.allergens),
-        getBookmarks(null),
-        getRecentViews(),
-      ]);
+        // Parallel: ingredients, titles, allergen-filtered recipe list (with ingredient_groups), bookmarks
+        const [ingredients, titles, recipes, bookmarks, recentViewEntries] = await Promise.all([
+          getAllIngredientNames(),
+          getAllRecipeTitles(),
+          getAllRecipesForSearch(p.allergens),
+          getBookmarks(null),
+          getRecentViews(),
+        ]);
 
-      if (cancelled) return;
+        if (cancelled) return;
 
-      setAllIngredients(ingredients);
-      setAllRecipeTitles(titles);
-      setAllRecipes(recipes);
-      setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
+        setAllIngredients(ingredients);
+        setAllRecipeTitles(titles);
+        setAllRecipes(recipes);
+        setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
 
-      // Join recent views with recipe data
-      const recipeMap = new Map(recipes.map((r) => [r.id, r]));
-      const recentRecipes = recentViewEntries
-        .map((rv) => recipeMap.get(rv.recipeId))
-        .filter((r): r is RecipeListItem => r !== undefined);
-      setRecentViews(recentRecipes);
+        // Join recent views with recipe data (strip ingredient_groups for display)
+        const recipeMap = new Map(recipes.map((r) => [r.id, r as RecipeListItem]));
+        const recentRecipes = recentViewEntries
+          .map((rv) => recipeMap.get(rv.recipeId))
+          .filter((r): r is RecipeListItem => r !== undefined);
+        setRecentViews(recentRecipes);
 
-      setProfileLoaded(true);
-    }
+        setProfileLoaded(true);
+      }
 
-    loadAll();
-    return () => { cancelled = true; };
-  }, []);
+      loadAll();
+      return () => { cancelled = true; };
+    }, [])
+  );
 
   // ---------------------------------------------------------------------------
   // Autocomplete logic — in-memory filter on every query change (no DB calls)

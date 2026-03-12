@@ -1,4 +1,5 @@
 import { useSQLiteContext, SQLiteDatabase, SQLiteBindValue } from "expo-sqlite";
+import * as Crypto from "expo-crypto";
 import {
   ProfileSchema,
   BookmarkSchema,
@@ -61,7 +62,7 @@ export function useProfileDb() {
     recipeId: string,
     userId: string | null
   ): Promise<void> {
-    const id = crypto.randomUUID();
+    const id = Crypto.randomUUID();
     await db.runAsync(
       "INSERT OR IGNORE INTO bookmarks (id, recipe_id, user_id, created_at) VALUES (?, ?, ?, datetime('now'))",
       [id, recipeId, userId]

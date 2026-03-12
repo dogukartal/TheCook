@@ -1,4 +1,5 @@
 import { useSQLiteContext, SQLiteDatabase } from "expo-sqlite";
+import * as Crypto from "expo-crypto";
 import { RecipeListItem, RecentView } from "../types/discovery";
 import { DiscoveryFilter } from "../types/discovery";
 import { Recipe, RecipeSchema } from "../types/recipe";
@@ -135,8 +136,8 @@ export async function getFeedRecipes(
   };
 
   const sorted = [...recipes].sort((a, b) => {
-    const aLevel = a.skill_level ?? "beginner";
-    const bLevel = b.skill_level ?? "beginner";
+    const aLevel = a.skillLevel ?? a.skill_level ?? "beginner";
+    const bLevel = b.skillLevel ?? b.skill_level ?? "beginner";
     const aOrder = order[aLevel] ?? 1;
     const bOrder = order[bLevel] ?? 1;
     return aOrder - bOrder;
@@ -332,6 +333,31 @@ export async function queryRecipesByFilter(
   return rows.map(mapRowToRecipeListItem);
 }
 
+/**
+ * Fetches all recipes WITH ingredient_groups for search matching.
+ * Returns RecipeListItem extended with ingredient_groups string.
+ */
+export async function getAllRecipesForSearch(
+  db: SQLiteDatabase,
+  userAllergens: string[]
+): Promise<(RecipeListItem & { ingredient_groups: string })[]> {
+  let sql = `SELECT ${SELECT_LIST_COLUMNS}, ingredient_groups FROM recipes r`;
+  const params: string[] = [];
+
+  if (userAllergens.length > 0) {
+    sql += ` WHERE ${ALLERGEN_EXCLUSION}`;
+    params.push(JSON.stringify(userAllergens));
+  }
+
+  sql += " ORDER BY rowid ASC";
+
+  const rows = await db.getAllAsync<RecipeRow & { ingredient_groups: string }>(sql, params);
+  return rows.map((row) => ({
+    ...mapRowToRecipeListItem(row),
+    ingredient_groups: row.ingredient_groups,
+  }));
+}
+
 // ---------------------------------------------------------------------------
 // Bookmark CRUD — same signatures as profile.ts but accepting db directly
 // ---------------------------------------------------------------------------
@@ -341,7 +367,7 @@ export async function addBookmark(
   recipeId: string,
   userId: string | null
 ): Promise<void> {
-  const id = crypto.randomUUID();
+  const id = Crypto.randomUUID();
   await db.runAsync(
     "INSERT OR IGNORE INTO bookmarks (id, recipe_id, user_id, created_at) VALUES (?, ?, ?, datetime('now'))",
     [id, recipeId, userId]
@@ -427,6 +453,8 @@ export function useRecipesDb() {
     getAllRecipeTitles: () => getAllRecipeTitles(db),
     getAllRecipesForFeed: (userAllergens: string[]) =>
       getAllRecipesForFeed(db, userAllergens),
+    getAllRecipesForSearch: (userAllergens: string[]) =>
+      getAllRecipesForSearch(db, userAllergens),
     queryRecipesByFilter: (filter: DiscoveryFilter, userAllergens: string[]) =>
       queryRecipesByFilter(db, filter, userAllergens),
     recordRecentView: (recipeId: string) => recordRecentView(db, recipeId),
