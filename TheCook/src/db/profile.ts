@@ -77,14 +77,19 @@ export function useProfileDb() {
     const rows = await db.getAllAsync<Record<string, unknown>>(
       "SELECT * FROM bookmarks ORDER BY created_at DESC"
     );
-    return rows.map((row) =>
-      BookmarkSchema.parse({
+    return rows.map((row) => {
+      // SQLite datetime('now') returns "YYYY-MM-DD HH:MM:SS" — normalize to ISO 8601
+      let createdAt = row.created_at as string;
+      if (createdAt && !createdAt.includes('T')) {
+        createdAt = createdAt.replace(' ', 'T') + 'Z';
+      }
+      return BookmarkSchema.parse({
         id: row.id,
         recipeId: row.recipe_id,
         userId: row.user_id ?? null,
-        createdAt: row.created_at,
-      })
-    );
+        createdAt,
+      });
+    });
   }
 
   return { getProfile, saveProfile, addBookmark, removeBookmark, getBookmarks };
