@@ -23,9 +23,9 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 ### Cooking Mode
 
-- [ ] **COOK-01**: User can enter cooking mode for any recipe; mode displays one step at a time — no full recipe visible while cooking
-- [ ] **COOK-02**: Each step displays: what to do, why you're doing it, and what it should look/smell/feel like when correctly done
-- [ ] **COOK-03**: Each step flags the most common mistake at that point and what to do if it happens
+- [x] **COOK-01**: User can enter cooking mode for any recipe; mode displays one step at a time — no full recipe visible while cooking
+- [x] **COOK-02**: Each step displays: what to do, why you're doing it, and what it should look/smell/feel like when correctly done
+- [x] **COOK-03**: Each step flags the most common mistake at that point and what to do if it happens
 - [x] **COOK-04**: Steps that require timing automatically trigger a countdown timer; timer runs in foreground and is visible at a glance
 
 ### Content Library
@@ -91,9 +91,9 @@ Updated during roadmap creation.
 | DISC-03 | Phase 4 | Complete |
 | DISC-04 | Phase 4 | Complete |
 | DISC-05 | Phase 4 | Complete |
-| COOK-01 | Phase 5 | Pending |
-| COOK-02 | Phase 5 | Pending |
-| COOK-03 | Phase 5 | Pending |
+| COOK-01 | Phase 5 | Complete |
+| COOK-02 | Phase 5 | Complete |
+| COOK-03 | Phase 5 | Complete |
 | COOK-04 | Phase 5 | Complete |
 
 **Coverage:**
