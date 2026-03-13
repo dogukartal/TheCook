@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-13T15:51:55.816Z"
-last_activity: 2026-03-12 — Phase 4 Plan 06 complete; Settings sub-screen + all 5 DISC requirements human-verified; Phase 4 complete
+status: executing
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-13T21:07:23.515Z"
+last_activity: 2026-03-13 — Phase 5 Plan 01 complete; DB migration v4, session CRUD, timer hook, notification service
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 22
-  completed_plans: 22
-  percent: 100
+  total_plans: 25
+  completed_plans: 23
+  percent: 92
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 
 ## Current Position
 
-Phase: 4 of 5 (Recipe Discovery) — COMPLETE
-Plan: 6 of 6 — Phase 4 complete, ready for Phase 5
-Status: Complete — all 5 DISC requirements human-verified; Settings sub-screen, Feed, Search, My Kitchen, recipe detail all working
-Last activity: 2026-03-12 — Phase 4 Plan 06 complete; Settings sub-screen + all 5 DISC requirements human-verified; Phase 4 complete
+Phase: 5 of 5 (Guided Cooking Mode)
+Plan: 1 of 3 — Plan 01 complete, Plan 02 next
+Status: Executing — backend services (DB migration, session CRUD, timer hook, notifications) complete
+Last activity: 2026-03-13 — Phase 5 Plan 01 complete; DB migration v4, session CRUD, timer hook, notification service
 
-Progress: [██████████] 100% (Phase 4 complete, Phase 5 not yet planned)
+Progress: [█████████░] 92% (23/25 plans complete)
 
 ## Performance Metrics
 
@@ -73,6 +73,7 @@ Progress: [██████████] 100% (Phase 4 complete, Phase 5 not y
 | Phase 04-recipe-discovery P04 | 4 | 2 tasks | 6 files |
 | Phase 04-recipe-discovery P05 | 3 | 2 tasks | 3 files |
 | Phase 04-recipe-discovery P06 | checkpoint | 2 tasks | 6 files |
+| Phase 05 P01 | 3 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -144,6 +145,8 @@ Recent decisions affecting current work:
 - [Phase 04-recipe-discovery]: useFocusEffect on Feed, Search, My Kitchen to reload allergen-filtered data when returning from Settings
 - [Phase 04-recipe-discovery]: Bookmark datetime stored as ISO 8601 with legacy format normalization on read
 - [Phase 04-recipe-discovery]: Search shows ingredients + recipes together in unified results view
+- [Phase 05]: Timer uses timestamp-based calculation (Date.now() - startTimestamp) not interval counting — survives background/foreground transitions
+- [Phase 05]: Cooking session singleton row (id=1) with INSERT OR REPLACE — only one active session at a time
 
 ### Pending Todos
 
@@ -157,6 +160,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13T15:51:55.814Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-guided-cooking-mode/05-CONTEXT.md
+Last session: 2026-03-13T21:07:23.513Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None
