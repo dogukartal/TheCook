@@ -59,7 +59,32 @@ const ALLERGEN_LABELS: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Recipe detail screen
+// Step preview pastel palette
+// ---------------------------------------------------------------------------
+
+const STEP_PASTEL_COLORS = [
+  '#FDE8D8',
+  '#D4F0E8',
+  '#E8DFF5',
+  '#FFF3CD',
+  '#D1ECF1',
+  '#F5D5D5',
+  '#E2F0CB',
+  '#FCE4EC',
+];
+
+// ---------------------------------------------------------------------------
+// Helper: format duration
+// ---------------------------------------------------------------------------
+
+function formatDuration(seconds: number): string {
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 1) return `${seconds} sn`;
+  return `${minutes} dk`;
+}
+
+// ---------------------------------------------------------------------------
+// Recipe detail / cooking preview screen
 // ---------------------------------------------------------------------------
 
 export default function RecipeDetailScreen() {
@@ -168,7 +193,7 @@ export default function RecipeDetailScreen() {
   const totalTime = recipe.prepTime + recipe.cookTime;
 
   // ---------------------------------------------------------------------------
-  // Full recipe render
+  // Full recipe cooking preview render
   // ---------------------------------------------------------------------------
 
   return (
@@ -264,28 +289,58 @@ export default function RecipeDetailScreen() {
             </View>
           ))}
 
-          {/* Steps section */}
-          <Text style={styles.sectionHeader}>Adımlar</Text>
-          {recipe.steps.map((step, idx) => (
-            <View key={idx} style={styles.stepCard}>
-              <View style={styles.stepNumberBadge}>
-                <Text style={styles.stepNumber}>{idx + 1}</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.stepInstruction}>{step.instruction}</Text>
-                {step.looksLikeWhenDone && (
-                  <Text style={styles.stepHint}>
-                    Sonucu: {step.looksLikeWhenDone}
-                  </Text>
-                )}
-              </View>
-            </View>
-          ))}
+          {/* Steps Preview section */}
+          <Text style={styles.sectionHeader}>Adimlar</Text>
+          {recipe.steps.map((step, idx) => {
+            const bgColor = STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
+            const truncatedInstruction =
+              step.instruction.length > 60
+                ? step.instruction.slice(0, 60) + '...'
+                : step.instruction;
 
-          {/* Bottom padding */}
+            return (
+              <View
+                key={idx}
+                style={[styles.stepPreviewBox, { backgroundColor: bgColor }]}
+              >
+                <View style={styles.stepPreviewHeader}>
+                  <View style={styles.stepPreviewNumberBadge}>
+                    <Text style={styles.stepPreviewNumber}>{idx + 1}</Text>
+                  </View>
+                  {step.timerSeconds != null && (
+                    <View style={styles.stepPreviewTimer}>
+                      <MaterialCommunityIcons
+                        name="clock-outline"
+                        size={13}
+                        color="#6B7280"
+                      />
+                      <Text style={styles.stepPreviewTimerText}>
+                        {formatDuration(step.timerSeconds)}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={styles.stepPreviewTitle}>{truncatedInstruction}</Text>
+              </View>
+            );
+          })}
+
+          {/* Bottom padding for scroll */}
           <View style={styles.bottomPad} />
         </View>
       </ScrollView>
+
+      {/* Start Cooking button — fixed at bottom */}
+      <View style={styles.startCookingContainer}>
+        <Pressable
+          style={styles.startCookingButton}
+          onPress={() => router.push(`/recipe/cook/${id}`)}
+          accessibilityRole="button"
+          accessibilityLabel="Pismek Baslat"
+        >
+          <Text style={styles.startCookingText}>Pismek Baslat</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
@@ -483,48 +538,69 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
 
-  // Steps
-  stepCard: {
-    flexDirection: 'row',
-    marginBottom: 16,
-    backgroundColor: '#F9FAFB',
+  // Steps preview boxes
+  stepPreviewBox: {
     borderRadius: 12,
     padding: 14,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+    marginBottom: 10,
   },
-  stepNumberBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#E07B39',
+  stepPreviewHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  stepPreviewNumberBadge: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: 'rgba(0,0,0,0.12)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
-    flexShrink: 0,
   },
-  stepNumber: {
-    color: '#FFFFFF',
+  stepPreviewNumber: {
+    color: '#374151',
     fontSize: 13,
     fontWeight: '700',
   },
-  stepContent: {
-    flex: 1,
+  stepPreviewTimer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
   },
-  stepInstruction: {
-    fontSize: 14,
-    color: '#111827',
-    lineHeight: 21,
-  },
-  stepHint: {
+  stepPreviewTimerText: {
     fontSize: 12,
     color: '#6B7280',
-    marginTop: 6,
-    fontStyle: 'italic',
-    lineHeight: 18,
+    fontWeight: '500',
+  },
+  stepPreviewTitle: {
+    fontSize: 14,
+    color: '#374151',
+    lineHeight: 20,
+  },
+
+  // Start cooking button
+  startCookingContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#F3F4F6',
+  },
+  startCookingButton: {
+    backgroundColor: '#E07B39',
+    height: 52,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  startCookingText: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '700',
   },
 
   bottomPad: {
-    height: 40,
+    height: 16,
   },
 });
