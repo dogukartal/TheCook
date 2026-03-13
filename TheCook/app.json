@@ -54,6 +54,7 @@
         }
       ],
       "expo-sqlite",
+      "expo-notifications",
       "@react-native-google-signin/google-signin"
     ],
     "experiments": {

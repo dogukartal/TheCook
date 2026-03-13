@@ -16,15 +16,15 @@ function createMockDb(currentUserVersion: number) {
   return db;
 }
 
-describe("migrateDb — DB_VERSION 3", () => {
-  it("DB_VERSION constant is 3", async () => {
-    // Fresh DB (version 0) — migration should run; version 3 should be set at end
+describe("migrateDb — DB_VERSION 4", () => {
+  it("DB_VERSION constant is 4", async () => {
+    // Fresh DB (version 0) — migration should run; version 4 should be set at end
     const db = createMockDb(0);
     await migrateDb(db as any);
 
-    // The last execAsync call should set user_version = 3
+    // The last execAsync call should set user_version = 4
     const allSql = db._execCalls.join("\n");
-    expect(allSql).toContain("PRAGMA user_version = 3");
+    expect(allSql).toContain("PRAGMA user_version = 4");
   });
 
   it("creates profile table on fresh install", async () => {
@@ -70,8 +70,8 @@ describe("migrateDb — DB_VERSION 3", () => {
     expect(allSql).toContain("onboarding_completed");
   });
 
-  it("is idempotent — does not run migration when already at version 3", async () => {
-    const db = createMockDb(3);
+  it("is idempotent — does not run migration when already at version 4", async () => {
+    const db = createMockDb(4);
     await migrateDb(db as any);
 
     // No execAsync should be called when already at target version
@@ -111,5 +111,34 @@ describe("migrateDb — DB_VERSION 3", () => {
 
     const allSql = db._execCalls.join("\n");
     expect(allSql).toContain("CREATE TABLE IF NOT EXISTS recent_views");
+  });
+
+  it("creates cooking_sessions table on fresh install", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("CREATE TABLE IF NOT EXISTS cooking_sessions");
+  });
+
+  it("creates cooking_sessions table when upgrading from version 3", async () => {
+    const db = createMockDb(3);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("CREATE TABLE IF NOT EXISTS cooking_sessions");
+  });
+
+  it("cooking_sessions table has required columns", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("recipe_id");
+    expect(allSql).toContain("current_step");
+    expect(allSql).toContain("timer_remaining");
+    expect(allSql).toContain("timer_start_timestamp");
+    expect(allSql).toContain("ingredient_checks");
+    expect(allSql).toContain("session_started_at");
   });
 });

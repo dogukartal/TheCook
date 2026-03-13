@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const result = await db.getFirstAsync<{ user_version: number }>(
@@ -70,6 +70,20 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
       CREATE TABLE IF NOT EXISTS recent_views (
         recipe_id TEXT PRIMARY KEY NOT NULL,
         viewed_at TEXT NOT NULL DEFAULT (datetime('now'))
+      );
+    `);
+  }
+
+  if (currentVersion < 4) {
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS cooking_sessions (
+        id INTEGER PRIMARY KEY NOT NULL DEFAULT 1,
+        recipe_id TEXT NOT NULL,
+        current_step INTEGER NOT NULL DEFAULT 0,
+        timer_remaining REAL,
+        timer_start_timestamp REAL,
+        ingredient_checks TEXT NOT NULL DEFAULT '[]',
+        session_started_at TEXT NOT NULL
       );
     `);
   }
