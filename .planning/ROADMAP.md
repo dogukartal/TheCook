@@ -105,7 +105,12 @@ Plans:
   3. Every step that has a known common mistake displays that mistake and what to do if it occurs
   4. Steps requiring timing automatically start a visible countdown timer; the timer continues running if the screen locks or the user switches apps briefly
   5. A cooking session can be interrupted (app killed, phone locked) and resumed at the same step on next open
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Install deps, DB migration to v4 (cooking_sessions), session CRUD + timer hook + notification service with tests
+- [ ] 05-02-PLAN.md — Cooking preview screen (replace recipe detail) + all cooking UI components (step-content, timer, progress bar, ingredients sheet, etc.)
+- [ ] 05-03-PLAN.md — Full-screen cooking view wiring (PagerView) + session persistence + resume banner + human verification
 
 ## Progress
 
@@ -120,4 +125,4 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 2. Profile and Auth | 8/8 | Complete   | 2026-03-10 |
 | 3. Content Library | 3/3 | Complete   | 2026-03-11 |
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
-| 5. Guided Cooking Mode | 0/TBD | Not started | - |
+| 5. Guided Cooking Mode | 0/3 | Not started | - |
