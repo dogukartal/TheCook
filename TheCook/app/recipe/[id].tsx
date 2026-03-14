@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 
 import { getRecipeById, recordRecentView, getBookmarks, addBookmark, removeBookmark } from '@/src/db/recipes';
+import { getActiveSession, clearSession, saveSession } from '@/src/db/cooking-session';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
 
 import type { Recipe, SkillLevel, Category } from '@/src/types/recipe';
@@ -93,6 +94,7 @@ export default function RecipeDetailScreen() {
 
   const [recipe, setRecipe] = useState<Recipe | null | undefined>(undefined); // undefined = loading, null = not found
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [hasActiveSession, setHasActiveSession] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -103,15 +105,17 @@ export default function RecipeDetailScreen() {
     let cancelled = false;
 
     async function load() {
-      const [r, bookmarks] = await Promise.all([
+      const [r, bookmarks, session] = await Promise.all([
         getRecipeById(db, id as string),
         getBookmarks(db, null),
+        getActiveSession(db),
       ]);
 
       if (cancelled) return;
 
       setRecipe(r);
       setIsBookmarked(bookmarks.some((b) => b.recipeId === id));
+      setHasActiveSession(session?.recipeId === id);
 
       if (r) {
         // Record view after recipe confirmed to exist
@@ -334,11 +338,32 @@ export default function RecipeDetailScreen() {
       <View style={styles.startCookingContainer}>
         <Pressable
           style={styles.startCookingButton}
-          onPress={() => router.push(`/recipe/cook/${id}`)}
+          onPress={async () => {
+            // If no active session for this recipe, check for other sessions
+            if (!hasActiveSession) {
+              const existingSession = await getActiveSession(db);
+              if (existingSession && existingSession.recipeId !== id) {
+                // Clear old session — only one at a time
+                await clearSession(db);
+              }
+              // Create new session
+              await saveSession(db, {
+                recipeId: id as string,
+                currentStep: 0,
+                timerRemaining: null,
+                timerStartTimestamp: null,
+                ingredientChecks: [],
+                sessionStartedAt: new Date().toISOString(),
+              });
+            }
+            router.push(`/recipe/cook/${id}` as never);
+          }}
           accessibilityRole="button"
-          accessibilityLabel="Pismek Baslat"
+          accessibilityLabel={hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
         >
-          <Text style={styles.startCookingText}>Pismek Baslat</Text>
+          <Text style={styles.startCookingText}>
+            {hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
+          </Text>
         </Pressable>
       </View>
     </SafeAreaView>

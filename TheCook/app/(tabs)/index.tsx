@@ -9,12 +9,15 @@ import {
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { router, useFocusEffect } from 'expo-router';
+import { useSQLiteContext } from 'expo-sqlite';
 
-import { useRecipesDb } from '@/src/db/recipes';
+import { useRecipesDb, getRecipeById } from '@/src/db/recipes';
 import { useProfileDb } from '@/src/db/profile';
+import { getActiveSession, clearSession, CookingSession } from '@/src/db/cooking-session';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
 import { CategoryFilter } from '@/components/discovery/category-filter';
+import { ResumeBanner } from '@/components/cooking/resume-banner';
 
 import type { Profile } from '@/src/types/profile';
 import type { RecipeListItem, DiscoveryFilter } from '@/src/types/discovery';
@@ -34,11 +37,17 @@ const INITIAL_FILTER: DiscoveryFilter = {
 };
 
 export default function FeedScreen() {
+  const db = useSQLiteContext();
   const { getAllRecipesForFeed, getFeedRecipes, filterRecipesByCategory } = useRecipesDb();
   const { getProfile, getBookmarks, addBookmark, removeBookmark } = useProfileDb();
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
+
+  // Resume banner state
+  const [resumeSession, setResumeSession] = useState<CookingSession | null>(null);
+  const [resumeRecipeName, setResumeRecipeName] = useState('');
+  const [resumeTotalSteps, setResumeTotalSteps] = useState(0);
   const [activeTab, setActiveTab] = useState<FeedTab>('trending');
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +73,40 @@ export default function FeedScreen() {
       return () => { cancelled = true; };
     }, [])
   );
+
+  // Check for active cooking session on every focus
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      async function checkSession() {
+        const session = await getActiveSession(db);
+        if (cancelled) return;
+        if (session) {
+          const recipe = await getRecipeById(db, session.recipeId);
+          if (cancelled) return;
+          setResumeSession(session);
+          setResumeRecipeName(recipe?.title ?? 'Tarif');
+          setResumeTotalSteps(recipe?.steps.length ?? 0);
+        } else {
+          setResumeSession(null);
+        }
+      }
+      checkSession();
+      return () => { cancelled = true; };
+    }, [])
+  );
+
+  // Resume banner actions
+  function handleResume() {
+    if (resumeSession) {
+      router.push(`/recipe/cook/${resumeSession.recipeId}` as never);
+    }
+  }
+
+  async function handleDismissResume() {
+    await clearSession(db);
+    setResumeSession(null);
+  }
 
   // Load recipes whenever profile is loaded or tab/category/filter changes
   const loadRecipes = useCallback(async () => {
@@ -147,6 +190,17 @@ export default function FeedScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Resume banner */}
+      {resumeSession && (
+        <ResumeBanner
+          recipeName={resumeRecipeName}
+          currentStep={resumeSession.currentStep}
+          totalSteps={resumeTotalSteps}
+          onResume={handleResume}
+          onDismiss={handleDismissResume}
+        />
+      )}
+
       {/* Top tabs */}
       <View style={styles.tabRow}>
         <Pressable
