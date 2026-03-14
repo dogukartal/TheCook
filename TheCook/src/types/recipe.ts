@@ -94,7 +94,7 @@ export const IngredientGroupSchema = z.object({
 // ---------------------------------------------------------------------------
 
 export const StepSchema = z.object({
-  title: z.string().min(1),
+  title: z.string().min(1).optional().default(""),
   instruction: z.string().min(1),
   why: z.string().min(1),
   looksLikeWhenDone: z.string().min(1),

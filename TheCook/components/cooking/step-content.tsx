@@ -87,7 +87,7 @@ export function StepContent({
       <View style={[styles.titleRow, hasTimer && styles.titleRowWithTimer]}>
         <View>
           <Text style={styles.stepLabel}>Adım {stepIndex + 1}</Text>
-          <Text style={styles.stepTitle}>{step.title}</Text>
+          {step.title ? <Text style={styles.stepTitle}>{step.title}</Text> : null}
         </View>
       </View>
 

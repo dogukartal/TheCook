@@ -320,7 +320,9 @@ export default function RecipeDetailScreen() {
                     </View>
                   )}
                 </View>
-                <Text style={styles.stepPreviewTitle}>{step.title}</Text>
+                <Text style={styles.stepPreviewTitle}>
+                  {step.title || step.instruction.slice(0, 60) + (step.instruction.length > 60 ? '...' : '')}
+                </Text>
               </View>
             );
           })}
