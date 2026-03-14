@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 06-02-PLAN.md
-last_updated: "2026-03-14T16:02:05.037Z"
+stopped_at: Completed 06-03-PLAN.md
+last_updated: "2026-03-14T17:06:23.875Z"
 last_activity: 2026-03-14 — Phase 5 Plan 03 Tasks 1-2 complete; full cooking view with PagerView, resume banner on feed, session persistence
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 28
-  completed_plans: 27
+  completed_plans: 28
   percent: 100
 ---
 
@@ -78,6 +78,7 @@ Progress: [██████████] 100% (25/25 plans complete)
 | Phase 05 P03 | checkpoint | 2 tasks | 3 files |
 | Phase 06-equipment-discovery-wiring P01 | 3 | 2 tasks | 5 files |
 | Phase 06-equipment-discovery-wiring P02 | 5 | 1 tasks | 1 files |
+| Phase 06-equipment-discovery-wiring P03 | checkpoint | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -160,6 +161,8 @@ Recent decisions affecting current work:
 - [Phase 06-equipment-discovery-wiring]: EquipmentEnum imported from recipe.ts into discovery.ts — not redeclared; RecipeListItemSchema uses z.array(z.string()) for equipment (raw string, same pattern as allergens); DiscoveryFilterSchema uses z.array(EquipmentEnum).default([])
 - [Phase 06-equipment-discovery-wiring]: Equipment sort uses every() not some() — a recipe with empty equipment array is always compatible (vacuous truth)
 - [Phase 06-equipment-discovery-wiring]: JS-sort-after-fetch pattern for equipment de-prioritization — SQL WHERE for hard exclusion (allergens), JS sort for soft ordering (equipment)
+- [Phase 06-equipment-discovery-wiring]: Badge uses .some() (at least one missing) while sort uses .every() (fully compatible) — distinct intents, both correct
+- [Phase 06-equipment-discovery-wiring]: My Kitchen does not sort saved recipes by equipment compatibility — bookmark recency order preserved; badge informs without reordering
 
 ### Pending Todos
 
@@ -173,6 +176,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T16:02:05.034Z
-Stopped at: Completed 06-02-PLAN.md
+Last session: 2026-03-14T17:06:23.873Z
+Stopped at: Completed 06-03-PLAN.md
 Resume file: None
