@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: "Checkpoint: 05-03-PLAN.md Task 3 human verification"
-last_updated: "2026-03-14T08:19:05.468Z"
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-14T15:58:08.201Z"
 last_activity: 2026-03-14 — Phase 5 Plan 03 Tasks 1-2 complete; full cooking view with PagerView, resume banner on feed, session persistence
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 5
-  total_plans: 25
-  completed_plans: 25
+  total_plans: 28
+  completed_plans: 26
   percent: 100
 ---
 
@@ -76,6 +76,7 @@ Progress: [██████████] 100% (25/25 plans complete)
 | Phase 05 P01 | 3 | 2 tasks | 10 files |
 | Phase 05 P02 | 5 | 2 tasks | 9 files |
 | Phase 05 P03 | checkpoint | 2 tasks | 3 files |
+| Phase 06-equipment-discovery-wiring P01 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -155,6 +156,7 @@ Recent decisions affecting current work:
 - [Phase 05]: Step preview boxes use 8-color cycling pastel palette — STEP_PASTEL_COLORS[index % 8]
 - [Phase 05]: PagerView mount-fire guard using mountedRef to skip initial onPageSelected when resuming at non-zero step
 - [Phase 05]: Completion screen rendered as final PagerView page (index === steps.length) rather than separate route
+- [Phase 06-equipment-discovery-wiring]: EquipmentEnum imported from recipe.ts into discovery.ts — not redeclared; RecipeListItemSchema uses z.array(z.string()) for equipment (raw string, same pattern as allergens); DiscoveryFilterSchema uses z.array(EquipmentEnum).default([])
 
 ### Pending Todos
 
@@ -168,6 +170,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T07:16:19.241Z
-Stopped at: Checkpoint: 05-03-PLAN.md Task 3 human verification
+Last session: 2026-03-14T15:58:08.198Z
+Stopped at: Completed 06-01-PLAN.md
 Resume file: None
