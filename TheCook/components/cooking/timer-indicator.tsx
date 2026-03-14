@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   pill: {
     position: 'absolute',
     bottom: 100,
-    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,

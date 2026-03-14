@@ -146,6 +146,9 @@ const styles = StyleSheet.create({
     bottom: -48,
     right: 16,
     zIndex: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 50,
+    padding: 2,
   },
   titleRow: {
     paddingHorizontal: 16,
