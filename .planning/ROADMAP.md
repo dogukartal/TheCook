@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Profile and Auth** - Users can declare allergens, skill, and equipment at onboarding; profile is stored locally and optionally synced via an optional account (completed 2026-03-10)
 - [x] **Phase 3: Content Library** - 30–50 hand-curated Turkish recipes authored using the locked schema and bundled into the app binary (completed 2026-03-11)
 - [x] **Phase 4: Recipe Discovery** - Users can find recipes by ingredient input, browse the curated feed, filter by mood/category, and bookmark favorites — all offline (completed 2026-03-12)
-- [ ] **Phase 5: Guided Cooking Mode** - Users can enter cooking mode for any recipe and be guided through each step with timers, mistake warnings, and why annotations
+- [x] **Phase 5: Guided Cooking Mode** - Users can enter cooking mode for any recipe and be guided through each step with timers, mistake warnings, and why annotations (completed 2026-03-14)
 
 ## Phase Details
 
@@ -125,4 +125,4 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 2. Profile and Auth | 8/8 | Complete   | 2026-03-10 |
 | 3. Content Library | 3/3 | Complete   | 2026-03-11 |
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
-| 5. Guided Cooking Mode | 0/3 | Not started | - |
+| 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
