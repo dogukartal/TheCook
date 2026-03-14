@@ -114,3 +114,7 @@ None - no external service configuration required.
 ---
 *Phase: 04-recipe-discovery*
 *Completed: 2026-03-12*
+
+## Self-Check: PASSED
+
+All created/modified files verified on disk. Both task commits (d619b1e, 7bdb885) verified in git log.
