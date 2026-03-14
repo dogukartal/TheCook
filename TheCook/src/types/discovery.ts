@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CategoryEnum, SkillLevelEnum } from "./recipe";
+import { CategoryEnum, EquipmentEnum, SkillLevelEnum } from "./recipe";
 
 // Lightweight recipe row for list screens (NO steps field — select only display columns)
 export const RecipeListItemSchema = z.object({
@@ -12,6 +12,7 @@ export const RecipeListItemSchema = z.object({
   cookTime: z.number().int(),
   coverImage: z.string().nullable(),
   allergens: z.array(z.string()), // raw string array from DB JSON parse
+  equipment: z.array(z.string()), // raw string array from DB JSON parse
 });
 export type RecipeListItem = z.infer<typeof RecipeListItemSchema>;
 
@@ -37,5 +38,6 @@ export const DiscoveryFilterSchema = z.object({
   cookTimeBucket: z.enum(["under15", "15to30", "over30"]).nullable().default(null),
   skillLevel: SkillLevelEnum.nullable().default(null),
   cuisine: z.string().nullable().default(null),
+  equipment: z.array(EquipmentEnum).default([]),
 });
 export type DiscoveryFilter = z.infer<typeof DiscoveryFilterSchema>;

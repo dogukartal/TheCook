@@ -18,6 +18,7 @@ interface RecipeRow {
   cook_time: number;
   cover_image: string | null;
   allergens: string; // JSON string
+  equipment: string; // JSON string
 }
 
 interface IngredientSearchRow {
@@ -44,7 +45,7 @@ interface IngredientGroup {
 // ---------------------------------------------------------------------------
 
 const SELECT_LIST_COLUMNS = `
-  id, title, cuisine, category, skill_level, prep_time, cook_time, cover_image, allergens
+  id, title, cuisine, category, skill_level, prep_time, cook_time, cover_image, allergens, equipment
 `;
 
 const ALLERGEN_EXCLUSION = `
@@ -65,6 +66,7 @@ function mapRowToRecipeListItem(row: RecipeRow): RecipeListItem {
     cookTime: row.cook_time,
     coverImage: row.cover_image,
     allergens: JSON.parse(row.allergens ?? "[]"),
+    equipment: JSON.parse(row.equipment ?? "[]"),
   };
 }
 

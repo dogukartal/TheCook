@@ -34,6 +34,7 @@ const INITIAL_FILTER: DiscoveryFilter = {
   cookTimeBucket: null,
   skillLevel: null,
   cuisine: null,
+  equipment: [],
 };
 
 export default function FeedScreen() {

@@ -89,8 +89,9 @@ export default function MyKitchenScreen() {
         cook_time: number;
         cover_image: string | null;
         allergens: string;
+        equipment: string;
       }>(
-        `SELECT id, title, cuisine, category, skill_level, prep_time, cook_time, cover_image, allergens
+        `SELECT id, title, cuisine, category, skill_level, prep_time, cook_time, cover_image, allergens, equipment
          FROM recipes WHERE id IN (${placeholders})`,
         ids
       );
@@ -110,6 +111,7 @@ export default function MyKitchenScreen() {
           cookTime: row.cook_time,
           coverImage: row.cover_image ?? null,
           allergens: JSON.parse(row.allergens ?? '[]'),
+          equipment: JSON.parse(row.equipment ?? '[]'),
         }));
 
       setSavedRecipes(ordered);
