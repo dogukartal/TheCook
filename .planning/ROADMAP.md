@@ -145,4 +145,4 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 3. Content Library | 3/3 | Complete   | 2026-03-11 |
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
-| 6. Wire Equipment to Recipe Discovery | 1/3 | In Progress|  |
+| 6. Wire Equipment to Recipe Discovery | 2/3 | In Progress|  |
