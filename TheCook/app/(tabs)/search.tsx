@@ -66,7 +66,7 @@ export default function SearchScreen() {
 
         const [ingredients, recipes, bookmarks, recentViewEntries] = await Promise.all([
           getAllIngredientNames(),
-          getAllRecipesForSearch(p.allergens),
+          getAllRecipesForSearch(p.allergens, p.equipment),
           getBookmarks(null),
           getRecentViews(),
         ]);
@@ -259,7 +259,7 @@ export default function SearchScreen() {
               data={recentViews}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <RecipeCardRow recipe={item} onPress={handleRecipePress} />
+                <RecipeCardRow recipe={item} onPress={handleRecipePress} userEquipment={profile?.equipment ?? []} />
               )}
               contentContainerStyle={styles.rowListContent}
               keyboardShouldPersistTaps="handled"
@@ -287,6 +287,7 @@ export default function SearchScreen() {
                 isBookmarked={bookmarkedIds.has(item.id)}
                 onBookmarkToggle={handleBookmarkToggle}
                 onPress={handleRecipePress}
+                userEquipment={profile?.equipment ?? []}
               />
             </View>
           )}

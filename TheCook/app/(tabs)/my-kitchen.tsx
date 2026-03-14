@@ -284,6 +284,7 @@ export default function MyKitchenScreen() {
                   isBookmarked={bookmarkedIds.has(item.id)}
                   onBookmarkToggle={handleBookmarkToggle}
                   onPress={handleRecipePress}
+                  userEquipment={profile?.equipment ?? []}
                 />
               </View>
             ))}

@@ -116,7 +116,7 @@ export default function FeedScreen() {
     setLoading(true);
     try {
       // Get allergen-excluded recipes from DB
-      const allergenFiltered = await getAllRecipesForFeed(profile.allergens);
+      const allergenFiltered = await getAllRecipesForFeed(profile.allergens, profile.equipment ?? []);
 
       let result: RecipeListItem[];
 
@@ -261,6 +261,7 @@ export default function FeedScreen() {
                 isBookmarked={bookmarkedIds.has(item.id)}
                 onBookmarkToggle={handleBookmarkToggle}
                 onPress={handleRecipePress}
+                userEquipment={profile?.equipment ?? []}
               />
             </View>
           )}
