@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RecipeListItem } from '@/src/types/discovery';
 import type { Category, SkillLevel } from '@/src/types/recipe';
 
@@ -31,15 +32,20 @@ const SKILL_LABELS: Record<SkillLevel, string> = {
 interface RecipeCardRowProps {
   recipe: RecipeListItem;
   onPress: (id: string) => void;
+  userEquipment?: string[];
 }
 
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
-export function RecipeCardRow({ recipe, onPress }: RecipeCardRowProps) {
+export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCardRowProps) {
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
   const totalTime = recipe.prepTime + recipe.cookTime;
+
+  const hasMissingEquipment =
+    recipe.equipment.length > 0 &&
+    recipe.equipment.some((e) => !userEquipment.includes(e));
 
   return (
     <Pressable
@@ -62,6 +68,12 @@ export function RecipeCardRow({ recipe, onPress }: RecipeCardRowProps) {
           <View style={styles.skillBadge}>
             <Text style={styles.skillText}>{SKILL_LABELS[recipe.skillLevel]}</Text>
           </View>
+          {hasMissingEquipment && (
+            <View style={styles.equipmentWarning}>
+              <MaterialCommunityIcons name="alert-circle-outline" size={12} color="#D97706" />
+              <Text style={styles.equipmentWarningText}>Ekipman eksik</Text>
+            </View>
+          )}
           <Text style={styles.cookTimeText}>{totalTime} dk</Text>
         </View>
       </View>
@@ -126,5 +138,15 @@ const styles = StyleSheet.create({
   cookTimeText: {
     color: '#6B7280',
     fontSize: 11,
+  },
+  equipmentWarning: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  equipmentWarningText: {
+    color: '#D97706',
+    fontSize: 10,
+    fontWeight: '500',
   },
 });

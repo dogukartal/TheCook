@@ -34,6 +34,7 @@ interface RecipeCardGridProps {
   isBookmarked: boolean;
   onBookmarkToggle: (id: string) => void;
   onPress: (id: string) => void;
+  userEquipment?: string[];
 }
 
 // ---------------------------------------------------------------------------
@@ -45,9 +46,14 @@ export function RecipeCardGrid({
   isBookmarked,
   onBookmarkToggle,
   onPress,
+  userEquipment = [],
 }: RecipeCardGridProps) {
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
   const totalTime = recipe.prepTime + recipe.cookTime;
+
+  const hasMissingEquipment =
+    recipe.equipment.length > 0 &&
+    recipe.equipment.some((e) => !userEquipment.includes(e));
 
   return (
     <Pressable
@@ -79,11 +85,17 @@ export function RecipeCardGrid({
         </Pressable>
       </View>
 
-      {/* Meta row — skill badge + cook time */}
+      {/* Meta row — skill badge + equipment warning + cook time */}
       <View style={styles.metaRow}>
         <View style={styles.skillBadge}>
           <Text style={styles.skillText}>{SKILL_LABELS[recipe.skillLevel]}</Text>
         </View>
+        {hasMissingEquipment && (
+          <View style={styles.equipmentWarning}>
+            <MaterialCommunityIcons name="alert-circle-outline" size={12} color="#D97706" />
+            <Text style={styles.equipmentWarningText}>Ekipman eksik</Text>
+          </View>
+        )}
         <Text style={styles.cookTimeText}>{totalTime} dk</Text>
       </View>
     </Pressable>
@@ -148,5 +160,15 @@ const styles = StyleSheet.create({
   cookTimeText: {
     color: '#6B7280',
     fontSize: 11,
+  },
+  equipmentWarning: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  equipmentWarningText: {
+    color: '#D97706',
+    fontSize: 10,
+    fontWeight: '500',
   },
 });
