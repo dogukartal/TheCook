@@ -124,7 +124,12 @@ Plans:
   4. Recipe cards display a visible indicator when a recipe requires equipment the user hasn't declared
   5. Allergen filtering is unaffected — both filters compose correctly
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Test stubs (RED) + extend DiscoveryFilterSchema, RecipeListItemSchema, SELECT_LIST_COLUMNS with equipment field (Wave 1)
+- [ ] 06-02-PLAN.md — Equipment sort logic in queryRecipesByFilter, getAllRecipesForFeed, getAllRecipesForSearch; tests go GREEN (Wave 2)
+- [ ] 06-03-PLAN.md — Equipment badge on RecipeCardGrid/RecipeCardRow + wire profile.equipment from Feed, Search, My Kitchen screens + human verification (Wave 3)
 
 ## Progress
 
@@ -140,4 +145,4 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 3. Content Library | 3/3 | Complete   | 2026-03-11 |
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
-| 6. Wire Equipment to Recipe Discovery | 0/? | Pending | — |
+| 6. Wire Equipment to Recipe Discovery | 0/3 | Pending | — |
