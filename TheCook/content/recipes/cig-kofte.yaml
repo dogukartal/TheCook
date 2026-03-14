@@ -68,21 +68,24 @@ ingredientGroups:
         unit: adet
         optional: true
 steps:
-  - instruction: Bulguru geniş kaba koyun ve kaynar su ekleyip karıştırın. 15 dakika kapağını kapatarak demlendirin. Bulgur su çekince soğuyunca açın.
+  - title: Bulguru demlendirin
+    instruction: Bulguru geniş kaba koyun ve kaynar su ekleyip karıştırın. 15 dakika kapağını kapatarak demlendirin. Bulgur su çekince soğuyunca açın.
     why: Bulgur kaynar suda şişer ve ön pişirme gerçekleşir. 15 dakika yeterlidir; daha uzun bekletmek yapışkan kıvam oluşturur.
     looksLikeWhenDone: Bulgur şişmiş, su tamamen çekilmiş. Çatal geçince yumuşak ama yapışkan değil.
     commonMistake: Fazla su kullanmak — bulgur sulanır ve kıvam tutmaz.
     recovery: Sulanmışsa kuru bulgur ekleyerek dengeyin.
     stepImage: null
     timerSeconds: 900
-  - instruction: Soğanı rendeleyin ve suyunu sıkın. Bulgura soğan, salçalar, zeytinyağı, limon suyu, nar ekşisi, tuz ve baharatları ekleyin. Elimizle 10-15 dakika kuvvetlice yoğurun.
+  - title: Harcı yoğurun
+    instruction: Soğanı rendeleyin ve suyunu sıkın. Bulgura soğan, salçalar, zeytinyağı, limon suyu, nar ekşisi, tuz ve baharatları ekleyin. Elimizle 10-15 dakika kuvvetlice yoğurun.
     why: Uzun yoğurma bulgurla tatların birleşmesini sağlar. Elle yoğurma baharatların her taneye işlemesini garanti eder.
     looksLikeWhenDone: Tüm bulgur taneleri kırmızı renk almış ve eşit kaplanmış. Karışım yapışkan ama ele bırakmaz.
     commonMistake: Az yoğurmak — bazı kısımlar tutsuz ve renksiz kalır.
     recovery: Yoğurmaya devam edin; 15 dakika yeterli.
     stepImage: null
     timerSeconds: 900
-  - instruction: Maydanozu ve yeşil soğanı ince kıyın. Ekleyip hafifçe karıştırın. Tadını kontrol edin; gerekirse lemon, tuz veya salça ekleyin. Islatılmış marul yaprakları üzerinde servis edin.
+  - title: Otları ekleyip servis edin
+    instruction: Maydanozu ve yeşil soğanı ince kıyın. Ekleyip hafifçe karıştırın. Tadını kontrol edin; gerekirse lemon, tuz veya salça ekleyin. Islatılmış marul yaprakları üzerinde servis edin.
     why: Taze otlar eklendikten sonra çok karıştırmak onları ezer; hafif karıştırma görünümü korur. Marul yaprakları geleneksel çiğ köfte servisidir.
     looksLikeWhenDone: Maydanoz eşit dağılmış. Kıvam elle yuvarlanabiliyor. Tadı dengeli, ekşi-acı-tuzlu.
     commonMistake: Çok fazla ekşi koymak — nar ekşisi ve limon birlikte kullanılınca aşırı ekşi olabilir.

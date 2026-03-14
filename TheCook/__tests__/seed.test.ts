@@ -18,7 +18,7 @@ describe("seedIfNeeded", () => {
   });
 
   it("skips seed when version matches", async () => {
-    const db = createMockDb("2.0.0");
+    const db = createMockDb("3.0.0");
     await seedIfNeeded(db as any);
     expect(db.withTransactionAsync).not.toHaveBeenCalled();
     expect(db.runAsync).not.toHaveBeenCalledWith(
@@ -38,12 +38,12 @@ describe("seedIfNeeded", () => {
     await seedIfNeeded(db as any);
     expect(db.runAsync).toHaveBeenCalledWith(
       "INSERT INTO seed_version (id, version) VALUES (1, ?)",
-      "2.0.0"
+      "3.0.0"
     );
   });
 
   it("seeds new version when SEED_VERSION bumped (version mismatch triggers re-seed)", async () => {
-    // Pre-existing DB has old version "1.0.0"; SEED_VERSION is now "2.0.0"
+    // Pre-existing DB has old version "1.0.0"; SEED_VERSION is now "3.0.0"
     const db = createMockDb("1.0.0");
     await seedIfNeeded(db as any);
     // Should have triggered a re-seed transaction
@@ -53,7 +53,7 @@ describe("seedIfNeeded", () => {
     // Should have inserted new seed_version row with current SEED_VERSION
     expect(db.runAsync).toHaveBeenCalledWith(
       "INSERT INTO seed_version (id, version) VALUES (1, ?)",
-      "2.0.0"
+      "3.0.0"
     );
   });
 });

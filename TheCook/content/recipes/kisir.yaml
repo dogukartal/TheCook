@@ -68,21 +68,24 @@ ingredientGroups:
         unit: adet
         optional: true
 steps:
-  - instruction: Bulguru geniş bir kaba koyun. Üzerine 2 bardak kaynar su dökün, karıştırın ve kapağını kapatıp 15 dakika demlendirin.
+  - title: Bulguru demlendirin
+    instruction: Bulguru geniş bir kaba koyun. Üzerine 2 bardak kaynar su dökün, karıştırın ve kapağını kapatıp 15 dakika demlendirin.
     why: İnce bulgur kaynar suda şişer ve pişer. 15 dakika yeterli; daha fazla bekletmek bulguru aşırı yumuşatır.
     looksLikeWhenDone: Bulgur su çekmiş ve şişmiş. Çatal geçince hafif direnç var ama sert değil. Su kalmamış.
     commonMistake: Fazla su koymak — bulgur sulanır ve kısır hamur gibi olur.
     recovery: Sulanmışsa üstü açık bekletin, nem uçsun ya da hafifçe süzün.
     stepImage: null
     timerSeconds: 900
-  - instruction: Bulgur ılıyınca domates salçası, biber salçası, zeytinyağı, limon suyu ve nar ekşisini ekleyin. Tuz, kırmızı biber ve kimyonu serpin. Ellerin ıslak olarak 5 dakika yoğurun.
+  - title: Salça ve baharatlı yoğurun
+    instruction: Bulgur ılıyınca domates salçası, biber salçası, zeytinyağı, limon suyu ve nar ekşisini ekleyin. Tuz, kırmızı biber ve kimyonu serpin. Ellerin ıslak olarak 5 dakika yoğurun.
     why: Elle yoğurmak salçaların bulgur tanelerine tamamen işlemesini sağlar. Yeterince yoğurulmayan kısır kuru ve tatlardan yoksun olur.
     looksLikeWhenDone: Tüm bulgur taneleri kırmızı renk almış ve eşit kaplı. Karışım hafif nemli ve parlak görünüyor.
     commonMistake: Kaşıkla karıştırmak — salçalar yeterince işlemez.
     recovery: Elle yoğurmak mümkün değilse uzun süre kaşıkla karıştırın.
     stepImage: null
     timerSeconds: 300
-  - instruction: Yeşil soğanı ince halkalar, maydanozu ince kıyın. İsteğe bağlı domatesleri küçük küpler hâlinde doğrayın. Tümünü ekleyip hafifçe karıştırın. Tadına bakarak lemon, tuz ve salçayı ayarlayın.
+  - title: Taze ot ekleyip bitirin
+    instruction: Yeşil soğanı ince halkalar, maydanozu ince kıyın. İsteğe bağlı domatesleri küçük küpler hâlinde doğrayın. Tümünü ekleyip hafifçe karıştırın. Tadına bakarak lemon, tuz ve salçayı ayarlayın.
     why: Taze ot ve sebze eklendikten sonra çok karıştırmak onları ezer. Hafif karıştırmak her malzemenin görünümünü ve dokusunu korur.
     looksLikeWhenDone: Yeşil soğan ve maydanoz eşit dağılmış. Renk kırmızı-yeşil mozaik gibi. Kıvam elde bütünleşiyor.
     commonMistake: Kıvamı hafif kuru bırakmak — kısır servis öncesinde biraz solar, en az 30 dakika dinlendirilmeli.

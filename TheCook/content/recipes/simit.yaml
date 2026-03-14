@@ -57,21 +57,24 @@ ingredientGroups:
         unit: gr
         optional: false
 steps:
-  - instruction: Un, maya, tuz ve şekeri karıştırın. Ilık suyu ve yağı ekleyin. 10 dakika pürüzsüz ve esnek bir hamur yoğurun. Üstünü örtün, 1 saat mayalandırın.
+  - title: Hamuru yoğurup mayalandırın
+    instruction: Un, maya, tuz ve şekeri karıştırın. Ilık suyu ve yağı ekleyin. 10 dakika pürüzsüz ve esnek bir hamur yoğurun. Üstünü örtün, 1 saat mayalandırın.
     why: Yeterli maya süresi hamuru kabarık ve yumuşak yapar. Uzun yoğurma glüten ağını geliştirerek simit şeklini kolayca almanızı sağlar.
     looksLikeWhenDone: Hamur iki katına çıkmış. Parmak bastırınca yavaşça geri geliyor.
     commonMistake: Maya zamanını kısaltmak — simit sıkı ve yoğun olur, kabarık olmaz.
     recovery: Daha fazla bekleyin; soğuk ortamdaysa ılık bir yere taşıyın.
     stepImage: null
     timerSeconds: 3600
-  - instruction: Pekmez veya nar ekşisi ve suyu bir kaseye karıştırın. Susamı geniş bir tabağa yayın. Hamuru 8 eşit parçaya bölün, her parçayı ince uzun şerit hâline getirin. Bükerek halka yapın ve uçlarını birleştirin.
+  - title: Halka şekli verin
+    instruction: Pekmez veya nar ekşisi ve suyu bir kaseye karıştırın. Susamı geniş bir tabağa yayın. Hamuru 8 eşit parçaya bölün, her parçayı ince uzun şerit hâline getirin. Bükerek halka yapın ve uçlarını birleştirin.
     why: Pekmez-su karışımı susamın yapışmasını sağlar ve pişince simide karakteristik parlak kırmızımtırak rengi verir.
     looksLikeWhenDone: Simid halkalar eşit büyüklükte ve birleşme noktası pürüzsüz. Susam her tarafı kaplamış.
     commonMistake: Halkaları birleştirirken yeterince bastırmamak — pişerken açılır.
     recovery: Açıldıysa ıslatılmış parmakla tekrar birleştirin.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Pekmeze daldırıp pişirin
+    instruction: >-
       Her simit halkasını pekmez karışımına daldırın, her tarafı ıslanmış olsun. Ardından
       susama batırıp her tarafını kaplayın. Yağlı kağıt kaplı tepsiye dizin. 15 dakika dinlendirin.
       Önceden ısıtılmış 200 derece fırında 20-25 dakika, altın kahverengi renk alana kadar pişirin.

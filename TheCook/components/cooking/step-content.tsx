@@ -62,19 +62,18 @@ export function StepContent({
 
   const bgColor = STEP_PASTEL_COLORS[stepIndex % STEP_PASTEL_COLORS.length];
 
+  const hasTimer = step.timerSeconds != null;
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Pastel color placeholder */}
-      <View style={[styles.imagePlaceholder, { backgroundColor: bgColor }]} />
-
-      {/* Step title + timer row */}
-      <View style={styles.titleTimerRow}>
-        <Text style={styles.stepTitle}>Adim {stepIndex + 1}</Text>
-        {step.timerSeconds != null && (
-          <View testID="circular-timer">
+      {/* Pastel color placeholder with overlapping timer */}
+      <View style={styles.imageWrapper}>
+        <View style={[styles.imagePlaceholder, { backgroundColor: bgColor }]} />
+        {hasTimer && (
+          <View style={styles.timerOverlap} testID="circular-timer">
             <CircularTimer
-              totalSeconds={step.timerSeconds}
-              displaySeconds={timerDisplaySeconds || step.timerSeconds}
+              totalSeconds={step.timerSeconds!}
+              displaySeconds={timerDisplaySeconds || step.timerSeconds!}
               isRunning={timerIsRunning}
               onStart={onTimerStart ?? (() => {})}
               onPause={onTimerPause ?? (() => {})}
@@ -82,6 +81,14 @@ export function StepContent({
             />
           </View>
         )}
+      </View>
+
+      {/* Step title */}
+      <View style={[styles.titleRow, hasTimer && styles.titleRowWithTimer]}>
+        <View>
+          <Text style={styles.stepLabel}>Adım {stepIndex + 1}</Text>
+          <Text style={styles.stepTitle}>{step.title}</Text>
+        </View>
       </View>
 
       {/* Instruction text */}
@@ -127,20 +134,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
+  imageWrapper: {
+    position: 'relative',
+  },
   imagePlaceholder: {
     height: 200,
     width: '100%',
   },
-  titleTimerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  timerOverlap: {
+    position: 'absolute',
+    bottom: -48,
+    right: 16,
+    zIndex: 10,
+  },
+  titleRow: {
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 8,
     paddingBottom: 8,
   },
+  titleRowWithTimer: {
+    paddingRight: 120,
+  },
+  stepLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#6B7280',
+    marginBottom: 2,
+  },
   stepTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: '#111827',
   },

@@ -42,9 +42,14 @@ export function TimerIndicator({
   const arrowIcon =
     direction === 'left' ? 'arrow-left' : 'arrow-right';
 
+  const positionStyle =
+    direction === 'left'
+      ? { left: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }
+      : { right: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 };
+
   return (
     <Pressable
-      style={styles.pill}
+      style={[styles.pill, positionStyle]}
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={`Zamanlayici adim ${timerStepIndex + 1}, ${formatTime(displaySeconds)} kaldi`}
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
   pill: {
     position: 'absolute',
     bottom: 100,
-    right: 16,
+    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,

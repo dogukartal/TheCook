@@ -35,6 +35,7 @@ import { StepContent } from '@/components/cooking/step-content';
 import type { RecipeStep } from '@/src/types/recipe';
 
 const mockStep: RecipeStep = {
+  title: 'Soganlari hazirlayin',
   instruction: 'Soganlari ince ince dogra',
   why: 'Ince dogranan soganlar daha cabuk karamellesir',
   looksLikeWhenDone: 'Soganlar seffaf ve altin rengi olmali',

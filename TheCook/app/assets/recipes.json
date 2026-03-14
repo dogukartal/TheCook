@@ -71,6 +71,7 @@
     ],
     "steps": [
       {
+        "title": "Soğan ve yağı hazırlayın",
         "instruction": "Soğanı rendeleyin ve suyunu iyice sıkın. Kuyruk yağını veya iç yağı çok ince kıyın ya da robotla çekin.",
         "why": "Soğan suyu harcı sularlatır ve kebap şeklini tutamaz. İnce kıyılmış yağ ise kıymaya işler ve kebabı sulu kılar.",
         "looksLikeWhenDone": "Soğan ince rende, suyunun büyük kısmı sıkılmış. Yağ çok küçük parçalara ayrılmış.",
@@ -80,6 +81,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Harcı yoğurup dinlendirin",
         "instruction": "Kıyma, yağ, soğan, salça, pul biber, karabiber, tuz ve kimyonu derin bir kapta birleştirin. En az 10 dakika kuvvetlice yoğurun. Buzdolabında 1 saat dinlendirin.",
         "why": "Uzun yoğurma proteini aktive eder; harç birbirine yapışır ve şekil tutar. Dinlendirme tatların birbirine geçmesini sağlar.",
         "looksLikeWhenDone": "Harç yapışkan ve homojen. Elimize alınca şekil tutuyor, ısıya karşı direniyor.",
@@ -89,6 +91,7 @@
         "timerSeconds": 4200
       },
       {
+        "title": "Şekil verip pişirin",
         "instruction": "Harcın 1/6 kadarını avucunuza alın ve ıslak el ile uzun, silindir şekil verin. Döküm tavayı çok yüksek ateşte ısıtın. Kebapları 3-4 dakika, her taraftan güzelce kızarana kadar pişirin.",
         "why": "Çok yüksek ateş dışını hızla mühürler ve iç suyunu korur. Orta ateşte pişirilen kebap kızarmak yerine haşlanır.",
         "looksLikeWhenDone": "Dışı koyu kahverengi ve hafif çıtır. Baskı uygulanınca biraz direnç var. Kes kontrolü pembe ama pişmiş.",
@@ -197,6 +200,7 @@
     ],
     "steps": [
       {
+        "title": "Malzemeleri ıslatın",
         "instruction": "Buğdayı bir gece öncesinden bol suda ıslatın. Kuru meyveleri (incir, kayısı) da ayrı ayrı küçük küpler hâlinde doğrayıp yarı saat suda bekletin.",
         "why": "Buğdayın ıslatılması pişirme süresini önemli ölçüde kısaltır ve doku daha kremsi olur. Kuru meyveler de ıslanınca güzel şişer ve pürüzsüz karışır.",
         "looksLikeWhenDone": "Buğday granülleri şişmiş ve yumuşak görünüyor. Kuru meyveler şişmiş, zarları yumuşamış.",
@@ -206,6 +210,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Buğday ve baklagilleri pişirin",
         "instruction": "Süzülmüş buğdayı 2 litre suyla tencereye koyun ve kaynayınca kısık ateşte 45-50 dakika pişirin. Pirinç ve nohut ile fasulyeyi ekleyin, 20 dakika daha pişirin.",
         "why": "Buğday en uzun pişen malzemedir, önce eklenir. Nohut ve fasulye önceden haşlandıysa son 20 dakikaya katılması yeterlidir.",
         "looksLikeWhenDone": "Buğday taneleri yumuşamış ve ezilince pürüzsüz olacak şekilde pişmiş. Karışım koyulaşmaya başlamış.",
@@ -215,6 +220,7 @@
         "timerSeconds": 4200
       },
       {
+        "title": "Meyve ve şeker ekleyin",
         "instruction": "Kuru meyveleri (incir, kayısı, üzüm) ekleyin ve 10 dakika daha karıştırarak pişirin. Şekeri ekleyin ve şeker eriyene kadar karıştırın.",
         "why": "Meyveler son eklenir, fazla pişirilirse dağılır. Şekeri son eklemek koyulaşma sürecini kontrol etmeyi kolaylaştırır.",
         "looksLikeWhenDone": "Aşure kremsi ve koyulaşmış. Meyveler tanınan formlarını kaybetmeden yumuşamış. Renk koyu sarı-kahverengi.",
@@ -224,6 +230,7 @@
         "timerSeconds": 600
       },
       {
+        "title": "Servis için hazırlayın",
         "instruction": "Ocağı kapatın. Varsa nar ekşisi ekleyip karıştırın. Kaselere dağıtın. Üzerine ceviz, nar tanesi ve tarçın serpin.",
         "why": "Nar ekşisi aşurenin tatlılığını dengeler ve geleneksel ekşi-tatlı dengesini verir. Sunum malzemeleri geleneksel aşure görünümünü oluşturur.",
         "looksLikeWhenDone": "Kaseler kremsi aşureyle dolu. Üst yüzey nar taneleri ve cevizlerle bezeli.",
@@ -308,6 +315,7 @@
     ],
     "steps": [
       {
+        "title": "Şerbeti hazırlayın",
         "instruction": "Şerbeti yapın. Şeker ve suyu tencereye koyun ve kaynatın. Kaynayınca limon suyunu ekleyin ve 15-18 dakika kısık ateşte pişirin. Şerbet kaşığa yapışıp damlarken hafif iplik tutmalı. Ocağı kapatıp oda sıcaklığına getirin.",
         "why": "Şerbetin önceden yapılıp soğutulması kritiktir. Baklava sıcak, şerbet soğuk olmalıdır; ikisi de aynı sıcaklıkta olursa baklava ıslanır ve hamur batar.",
         "looksLikeWhenDone": "Şerbet hafif viskoz, kaşık üzerinde ince bir film bırakıyor. Renk sarıdan hafif altına dönmüş.",
@@ -317,6 +325,7 @@
         "timerSeconds": 1080
       },
       {
+        "title": "Alt yufkaları dizin",
         "instruction": "Fırını 160 dereceye ısıtın. Yaklaşık 30x40 cm boyutunda bir tepsiye eritilmiş tereyağı sürün. Yufkaları tepsiye uyacak şekilde kesin. İlk yufkayı tepsiye koyun, üzerine tereyağı sürün. Bu işlemi 10 yufka olana kadar tekrarlayın.",
         "why": "160 derece düşük sıcaklık yufkaların yanmadan katman katman kızarmasını sağlar. Her yufkaya tereyağı sürmek katmanların ayrışmasını ve çıtır olmasını sağlar.",
         "looksLikeWhenDone": "İlk 10 yufka tepside üst üste, her biri ince tereyağı tabakasıyla ayrılmış. Tüm yüzey düzgün kaplanmış.",
@@ -326,6 +335,7 @@
         "timerSeconds": null
       },
       {
+        "title": "İç harcı yerleştirin",
         "instruction": "Öğütülmüş fıstığı veya cevizi eşit olarak yufkaların üzerine yayın. Kalan yufkaları da aynı tereyağı tekniğiyle üst üste koyun ve son yufkaya da bol tereyağı sürün.",
         "why": "Harç ortada olursa alttan ve üstten eşit pişer. Son yufkaya bol tereyağı dökmek güzel renk ve çıtır doku sağlar.",
         "looksLikeWhenDone": "Tepsi katmanlı ve düzgün. Yüzey tereyağıyla gece parıldıyor.",
@@ -335,6 +345,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Kesin ve fırına verin",
         "instruction": "Keskin bir bıçakla baklavayı önce şeritler, ardından eşkenar dörtgen veya kare şekillerde kesin. Bıçak tabana kadar girmelidir. Önceden ısıtılmış 160 derece fırına verin ve 40-45 dakika, üstü altın sarısı renk alana kadar pişirin.",
         "why": "Pişirmeden önce kesmek fırında yükselen hamurun dilimlenmeyi güçleştirmesini önler. Tam dip kesmek şerbetin her dilime eşit dağılmasını sağlar.",
         "looksLikeWhenDone": "Kesim çizgileri net, tabana ulaşmış. Üst yüzey altın sarısı, eşit renk almış.",
@@ -344,6 +355,7 @@
         "timerSeconds": 2700
       },
       {
+        "title": "Şerbeti dökün",
         "instruction": "Fırından çıkar çıkmaz, soğutulmuş şerbeti tüm yüzeye yavaşça ve eşit dökün. Sesi duyacaksınız. 2-3 saat oda sıcaklığında bekletin, şerbetin tüm katmanlara geçmesini sağlayın.",
         "why": "Sıcak-soğuk temas şerbetin hızla emilmesini sağlar. 2 saat beklemek şerbetin her katmana eşit dağılmasını sağlar; aceleyle servis edilirse şerbet yalnızca üstte kalır.",
         "looksLikeWhenDone": "Baklava ıslak ama batık görünmüyor. Şerbet tüm katmanlara geçmiş, dilimler arasında sıvı birikiyor. Çıtır ama nemli.",
@@ -441,6 +453,7 @@
     ],
     "steps": [
       {
+        "title": "Fırını ve harcı hazırlayın",
         "instruction": "Fırını 180 dereceye ısıtın. Yaklaşık 30x40 cm büyüklüğünde derin bir fırın tepsisini yağlayın. İç harcı önceden hazırlayın; peyniri elinizle ufalayın, maydanozu ince doğrayın, karabiber ve isteğe bağlı yumurtayla karıştırın.",
         "why": "Fırının önceden ısınması böreğin eşit pişmesini sağlar. İç harcı önceden hazırlamak montaj sırasında zaman kaybetmemenizi sağlar.",
         "looksLikeWhenDone": "İç harç toplu, eşit karışmış görünüyor. Tepsinin içi ince bir yağ tabakasıyla kaplanmış.",
@@ -450,6 +463,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Sütlü sosu yapın",
         "instruction": "Sosu hazırlamak için yumurtaları derin bir kaseye kırın, sütü, zeytinyağını ve tuzu ekleyip çırpın. Sos homojen görününce hazır.",
         "why": "Bu sos yufkaların nemli ve yumuşak kalmasını sağlar; böreğin sert ve kuru olmamasının sırrıdır. Yağ ve yumurta da renk ve lezzet katar.",
         "looksLikeWhenDone": "Sos homojen, açık sarı renkte ve hafif köpüklü görünüyor. Yağ ve süt ayrılmamış.",
@@ -459,6 +473,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Alt yufkaları serin",
         "instruction": "İlk iki yufkayı tepsiye serin. Her birini, hazırladığınız sostan 2-3 yemek kaşığı dökerek ıslatın. Yufkalar üst üste binebilir, tepsi kenarlarından taşabilir.",
         "why": "İlk katman taban görevi görür ve nem tutması için bol sos ister. Kenarlardan taşan yufkalar sonradan içe kıvrılarak böreği kapatır.",
         "looksLikeWhenDone": "İlk iki yufka tepside eşit serilmiş, yüzey nemlenmiş ama ıslak değil, hafif saydam görünüyor.",
@@ -468,6 +483,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Orta katmanı doldurun",
         "instruction": "Üçüncü ve dördüncü yufkayı üst üste serip sosla ıslatın. Tüm iç harcı bu katmanın üzerine eşit biçimde dağıtın.",
         "why": "Orta katman en kritik kısımdır; eşit yayılmış harç böreğin her diliminde aynı lezzeti verir. İki yufka arasına koymak harcın hem alttan hem üstten nemlenip yumuşamasını sağlar.",
         "looksLikeWhenDone": "Harç tüm yüzeye yayılmış, köşelere kadar eşit miktarda dağıtılmış. Peynir ve maydanoz dengeli görünüyor.",
@@ -477,6 +493,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Üst yufkaları kapatın",
         "instruction": "Beşinci ve altıncı yufkayı üste serin ve kalan sosla tamamen ıslatın. Taşan yufka kenarlarını içe kıvrarak tepsiyi kapatın. Kalan sosu varsa üzerine dökün.",
         "why": "Üst kapak yufkaları alt katmanların fazla nemini emerek homojen bir kıvam oluşturur. Kıvrılan kenarlar kenarlardan peynirin dışarı akmasını önler.",
         "looksLikeWhenDone": "Börek tepsiye düzgünce yerleşmiş, tüm yüzey eşit ıslanmış, kenarlar sıkıca kapatılmış.",
@@ -486,6 +503,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Fırında pişirin",
         "instruction": "Önceden ısıtılmış 180 derece fırına verin. 35-40 dakika, üstü altın sarısı ve kabarık görünene kadar pişirin. Fırından çıkarın ve servis etmeden önce 10 dakika bekleyin.",
         "why": "180 derece orta sıcaklıkta dengeli pişirir; yüksek sıcaklık dışını yakar içini çiğ bırakır. Beklemek iç harcın yerleşmesini sağlar, böylece dağılmadan dilimlenebilir.",
         "looksLikeWhenDone": "Üst yüzey altın sarısı ile kahverengi arasında, homojen renk almış. Kenarlar tepsiyle aynı hizada veya hafif kabarık. Bıçakla ortasına girildiğinde buharlı ve nemli ama akıcı değil.",
@@ -600,6 +618,7 @@
     ],
     "steps": [
       {
+        "title": "Bulguru demlendirin",
         "instruction": "Bulguru geniş kaba koyun ve kaynar su ekleyip karıştırın. 15 dakika kapağını kapatarak demlendirin. Bulgur su çekince soğuyunca açın.",
         "why": "Bulgur kaynar suda şişer ve ön pişirme gerçekleşir. 15 dakika yeterlidir; daha uzun bekletmek yapışkan kıvam oluşturur.",
         "looksLikeWhenDone": "Bulgur şişmiş, su tamamen çekilmiş. Çatal geçince yumuşak ama yapışkan değil.",
@@ -609,6 +628,7 @@
         "timerSeconds": 900
       },
       {
+        "title": "Harcı yoğurun",
         "instruction": "Soğanı rendeleyin ve suyunu sıkın. Bulgura soğan, salçalar, zeytinyağı, limon suyu, nar ekşisi, tuz ve baharatları ekleyin. Elimizle 10-15 dakika kuvvetlice yoğurun.",
         "why": "Uzun yoğurma bulgurla tatların birleşmesini sağlar. Elle yoğurma baharatların her taneye işlemesini garanti eder.",
         "looksLikeWhenDone": "Tüm bulgur taneleri kırmızı renk almış ve eşit kaplanmış. Karışım yapışkan ama ele bırakmaz.",
@@ -618,6 +638,7 @@
         "timerSeconds": 900
       },
       {
+        "title": "Otları ekleyip servis edin",
         "instruction": "Maydanozu ve yeşil soğanı ince kıyın. Ekleyip hafifçe karıştırın. Tadını kontrol edin; gerekirse lemon, tuz veya salça ekleyin. Islatılmış marul yaprakları üzerinde servis edin.",
         "why": "Taze otlar eklendikten sonra çok karıştırmak onları ezer; hafif karıştırma görünümü korur. Marul yaprakları geleneksel çiğ köfte servisidir.",
         "looksLikeWhenDone": "Maydanoz eşit dağılmış. Kıvam elle yuvarlanabiliyor. Tadı dengeli, ekşi-acı-tuzlu.",
@@ -707,6 +728,7 @@
     ],
     "steps": [
       {
+        "title": "Sebzeleri doğrayın",
         "instruction": "Domatesleri soyup iri küpler hâlinde doğrayın (yaklaşık 1 cm). Salatalıkları soymadan ya da kısmen soyarak aynı boyutta doğrayın. Biberleri küçük halkalar veya küpler hâlinde doğrayın.",
         "why": "Eşit boyutlar her lokmada dengeli tat ve doku sağlar. Salatalığın kabuğu renk ve vitamin katar, soymak zorunlu değildir.",
         "looksLikeWhenDone": "Tüm sebzeler yaklaşık eşit boyutta, renkli ve taze görünüyor. Salatalık kesilince yeşil ve beyaz iç görüntüsü net.",
@@ -716,6 +738,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Soğanı hazırlayın",
         "instruction": "Soğanı ince doğrayın. İstiyorsanız tuzlu suda 5 dakika bekletip suyunu sıkın — bu soğanın keskinliğini giderir. Maydanozu ince kıyın.",
         "why": "Soğanın acılığını gidermek salatanın diğer tatlarını öne çıkarır. Maydanoz taze ot aroması katar.",
         "looksLikeWhenDone": "Soğan ince dilimler hâlinde, bekletilmişse biraz yumuşamış görünüyor. Maydanoz ince kıyılmış.",
@@ -725,6 +748,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Karıştırıp servis edin",
         "instruction": "Tüm sebzeleri ve maydanozu salata kasesine koyun. Zeytinyağı, limon suyu, tuz ve varsa nar ekşisini ekleyin. Hafifçe karıştırın ve hemen servis edin.",
         "why": "Çoban salatası hazırlandıktan kısa süre içinde servis edilmelidir — bekledikçe sebzeler su bırakır ve salata sulanır.",
         "looksLikeWhenDone": "Malzemeler eşit karışmış. Yüzey parlak zeytinyağıyla kaplanmış. Taze bir koku yükseliyor.",
@@ -842,6 +866,7 @@
     ],
     "steps": [
       {
+        "title": "Malzemeleri hazırlayın",
         "instruction": "Pirinçleri soğuk suda yıkayın. Soğanları ince doğrayın. Çam fıstığını kuru tavada altın rengi alana kadar kavurun.",
         "why": "Yıkanmış pirinç pişerken yapışmaz. Çam fıstığını kavurmak tat açar; çiğ eklenmesi hafif bir acılık bırakır.",
         "looksLikeWhenDone": "Pirinç yıkama suyu berrak. Çam fıstığı altın sarısı renkte. Soğan küçük parçalara doğranmış.",
@@ -851,6 +876,7 @@
         "timerSeconds": null
       },
       {
+        "title": "İç harcı kavurun",
         "instruction": "Zeytinyağını ısıtın ve soğanı 5-6 dakika kavurun. Pirinç, kuş üzümü, kavurulan çam fıstığı, nane, dereotu, tuz, karabiber ve şekeri ekleyip karıştırın. 2 dakika kavurun. Ocağı kapatın.",
         "why": "İç harcın pirinciyle birlikte kısmen kavurulması sarmanın pişmesini hızlandırır. Şeker zeytinyağlı dolmanın karakteristik hafif tatlı notunu verir.",
         "looksLikeWhenDone": "Pirinçler yağla kaplanmış ve yarı saydam. Karışım homojen, malzemeler eşit dağılmış.",
@@ -860,6 +886,7 @@
         "timerSeconds": 480
       },
       {
+        "title": "Yaprakları hazırlayın",
         "instruction": "Salamura yaprakları 15 dakika soğuk suda bekletin ve suyunu değiştirin. Taze yaprakları kaynar suda 2-3 dakika haşlayın ve soğutun. Her yaprak mat tarafı üste gelecek şekilde düzeltin.",
         "why": "Salamura yapraklar tuzunu, taze yapraklar sertliğini bu adımda bırakır. Mat taraf üstte olunca parlak taraf dışarı bakar ve görünüm daha iyi olur.",
         "looksLikeWhenDone": "Yapraklar yumuşak ve esnek ama yırtılmadan katlanabilir durumda. Tuz tadı azalmış.",
@@ -869,6 +896,7 @@
         "timerSeconds": 900
       },
       {
+        "title": "Dolmaları sarın",
         "instruction": "Her yaprağın sapını kesin. Yaprağı düz yüzeye yatırın, sapa yakın kısmına 1 çay kaşığı harç koyun. Yaprak kenarlarını içe katlayın ve harç etrafında sıkıca rulo yapın.",
         "why": "Sıkı sarmak pişerken dolmanın açılmasını ve pirincin taşmasını önler. İnce sarmak pirinç için yer bırakır (şişer).",
         "looksLikeWhenDone": "Dolma parmak kalınlığında, yaklaşık 4 cm uzunluğunda. Kenarlar içe kıvrılmış ve sıkı tutulmuş.",
@@ -878,6 +906,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Tencerede pişirin",
         "instruction": "Tencere dibine yaprak kalanlarını yayın. Dolmaları sıkıca yan yana dizin. Zeytinyağı, limon suyu ve suyunu karıştırıp üzerine dökün. Üstüne ağır bir tabak veya ters kapak koyarak baskı uygulayın. Kısık ateşte 40-45 dakika pişirin.",
         "why": "Taban yaprakları tencerenin dibini dönen dolmalardan korur. Baskı uygulamak sarmaların pişirirken açılmasını önler.",
         "looksLikeWhenDone": "Tenceredeki sıvı çoğunlukla çekilmiş. Dolmalar şişip sıkışmış. Dip yapraklardan hafif renk koku yükselmesi normal.",
@@ -967,6 +996,7 @@
     ],
     "steps": [
       {
+        "title": "Sebzeleri ince kıyın",
         "instruction": "Tüm sebzeleri olabildiğince ince ve küçük doğrayın — zırh kullanıyorsanız zırha koyun ve kıyın. Bıçak kullanıyorsanız önce iri doğrayın ardından bıçakla doğramaya devam edin.",
         "why": "Ezmenin karakteri ince kıyımdan gelir. İri parçalar ezme olmaz, salata olur. Zırh geleneksel alet ve en iyi dokuyu verir.",
         "looksLikeWhenDone": "Tüm malzemeler çok ince, yaklaşık 2-3 mm parçalar hâlinde. Görünüm neredeyse pürüzsüz ama biraz doku var.",
@@ -976,6 +1006,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Baharatlayıp dinlendirin",
         "instruction": "Kıyılan malzemeleri kaba koyun. Zeytinyağı, nar ekşisi ve tuz ekleyin. İsteğe bağlı sumak ekleyin. Karıştırın. 15-20 dakika buzdolabında dinlendirin.",
         "why": "Dinlendirme tatların birbirine karışmasını sağlar. Nar ekşisi domatesin suyunu çeker; bu kıvam istenilen ezme dokusunu oluşturur.",
         "looksLikeWhenDone": "Ezme hafif ıslak ve parlak. Kap altında biraz sıvı birikmiş. Tatlar birbirine geçmiş.",
@@ -1060,6 +1091,7 @@
     ],
     "steps": [
       {
+        "title": "Hamuru yoğurup dinlendirin",
         "instruction": "Un, tuz, zeytinyağı ve ılık suyu karıştırarak yumuşak ama yapışmayan bir hamur yoğurun. 20 dakika dinlendirin.",
         "why": "Dinlendirme glütenin gevşemesini sağlar; böylece hamuru incecik açmak kolaylaşır.",
         "looksLikeWhenDone": "Hamur pürüzsüz ve yumuşak. Uzatılınca direnmeden esniyior. Yüzey kuru değil.",
@@ -1069,6 +1101,7 @@
         "timerSeconds": 1200
       },
       {
+        "title": "İç harcı hazırlayın",
         "instruction": "Ispanağı ince doğrayın. Peyniri ezerek ıspaklakla karıştırın. İsteğe bağlı soğanı ince doğrayıp ekleyin.",
         "why": "İç harcın hazır olması gözleme açılınca hızlı çalışmayı sağlar. Ispanak ve peynirin yoğunluğu gözlemenin tam lezzetini verir.",
         "looksLikeWhenDone": "Harç karışmış, peynir parçacıkları ve ıspanak eşit dağılmış.",
@@ -1078,6 +1111,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Hamuruı açıp doldurun",
         "instruction": "Hamuru 4 eşit parçaya bölün. Her parçayı un serpilmiş yüzeyde çok ince (2 mm kalınlık) açın. Yarısına harç yayın ve diğer yarıyı üstüne katlayın ya da dikdörtgen kesin.",
         "why": "İnce açılan hamur döküm tavada çabuk ve eşit pişer. Çok kalın hamur pişirirken iç harç sızdırabilir.",
         "looksLikeWhenDone": "Hamur neredeyse saydam derecede ince, yırtılmadan açılmış. Harç eşit dağılmış.",
@@ -1087,6 +1121,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Tavada pişirin",
         "instruction": "Döküm tavayı yüksek ateşte ısıtın. Gözlemeyi koyun, 2-3 dakika yüzeyde kabarcıklar oluşana kadar pişirin. Ters çevirip 2 dakika daha pişirin. Sıcak servis edin.",
         "why": "Çok sıcak tava gözlemeyi çabuk kavurur ve hamur ince pişer. Kabarcıklar buharın altından geçtiğinin işaretidir.",
         "looksLikeWhenDone": "Her iki yüzey altın-kahverengi lekeli. Peynir eriyerek sızıyor, ıspanak yeşil kalmış.",
@@ -1160,6 +1195,7 @@
     ],
     "steps": [
       {
+        "title": "Şekerli sıvıyı hazırlayın",
         "instruction": "Şeker, süt ve suyu karıştırın ve bir kenarda tutun. Sıvının ılık olması gerekmez.",
         "why": "Sıvıyı önceden hazırlamak unu kavururken aceleci hareket etmenizi önler. Un kıvama gelince hızla sıvı eklemeniz gerekir.",
         "looksLikeWhenDone": "Şeker sıvıda çözülmüş, karışım hafif bulanık ama homojen.",
@@ -1169,6 +1205,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Unu kavurun",
         "instruction": "Geniş ve kalın tabanlı tavaya tereyağını alın ve eritin. Çam fıstığını ekleyip altın rengi alana kadar kavurun, bir kenara alın. Unu ekleyin ve orta ateşte sürekli karıştırarak kavurmaya başlayın.",
         "why": "Tereyağı içinde unun kavurulması elzem; bu işlem un helvacının temelidir. Sürekli karıştırmak altta tabakaların yanmasını önler.",
         "looksLikeWhenDone": "Un altın sarısından fındık rengine doğru değişiyor. Fındıksu bir koku yükseliyor.",
@@ -1178,6 +1215,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Sıvıyı ekleyin",
         "instruction": "Un fındık rengine gelince (15-18 dakika olabilir) hazırladığınız sıvıyı yavaşça ve dikkatli şekilde dökün. Dikkat — çok sert kaynayacak. Hızla karıştırın ve topak bırakmayın.",
         "why": "Sıcak yağa sıvı eklenince güçlü bir kaynama olur; sıvıyı yavaşça dökmek sıçramayı azaltır. Hızla karıştırmak topak oluşumunu önler.",
         "looksLikeWhenDone": "Topak kalmamış, helva toptan kendini bırakan bir kıvam aldı. Renk homojen.",
@@ -1187,6 +1225,7 @@
         "timerSeconds": 1080
       },
       {
+        "title": "Kıvama getirip şekil verin",
         "instruction": "Kısık ateşte 3-5 dakika daha karıştırın. Helva tavadan ayrılmaya başlayınca ocağı kapatın. Kaşık veya spatula ile kalıba ya da tabaklara şekil verin.",
         "why": "Tavadan ayrılmak helvanın yeterince pişip nem dengesine ulaştığının işaretidir. Sıcakken şekil vermek kolaylaşır, soğuyunca sertleşir.",
         "looksLikeWhenDone": "Helva toplu ve tava kenarlarından ayrılıyor. Kaşık üzerine alınca şekil tutuyor.",
@@ -1271,6 +1310,7 @@
     ],
     "steps": [
       {
+        "title": "Nohutları hazırlayın",
         "instruction": "Nohutları süzün, birkaç tanesini sunum için kenarda tutun. Konserve ise soğuk suyla yıkayın.",
         "why": "Yıkama konserve suyunun metalik tadını giderir. Kenarda tutulan nohutlar sunum için kullanılır.",
         "looksLikeWhenDone": "Nohutlar temiz, yıkama suyu berrak. Birkaç nohut ayrı kasede bekliyor.",
@@ -1280,6 +1320,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Blenderdan geçirin",
         "instruction": "Blendere nohut, tahin, limon suyu, sarımsak, zeytinyağının yarısı, tuz ve kimyonu koyun. 3-4 yemek kaşığı soğuk su ekleyerek 2-3 dakika, tamamen pürüzsüz bir kıvama gelene kadar blenderayın.",
         "why": "Soğuk su humusun daha kremsi ve hafif olmasını sağlar. Uzun blenderlama hava katar ve kadifemsi doku oluşturur.",
         "looksLikeWhenDone": "Humus bembeyaz ve pürüzsüz, kaşıktan kayıyor. Hiç nohut tanesi veya granül kalmamış.",
@@ -1289,6 +1330,7 @@
         "timerSeconds": 180
       },
       {
+        "title": "Tatlandırıp servis edin",
         "instruction": "Tadına bakın ve limon, tuz, sarımsak dengesini ayarlayın. Tabaklara alın, ortasında bir çukur yapın. Üzerine kalan zeytinyağını gezdirin, pul biber ve kimyon serpin. Kenarda tuttuktan nohutları yerleştirin.",
         "why": "Çukur zeytinyağının birikmesini sağlar — hem estetik hem de her dilimle biraz zeytinyağı alınmasını garanti eder.",
         "looksLikeWhenDone": "Krem rengi yüzey, ortasında zeytinyağı göleti, çevresinde pul biber kırmızısı ve nohutlar.",
@@ -1384,6 +1426,7 @@
     ],
     "steps": [
       {
+        "title": "Patlıcanları tuzlayın",
         "instruction": "Patlıcanları soyun, boyuna bir tarafından derin bir kesi yapın ama ikiye ayırmayın. Tuzlu suda 20 dakika bekletin, ardından kurulayın.",
         "why": "Tuzlu su acılığı çeker ve yağ emme kapasitesini azaltır. Boyuna kesi iç doldurmak için gerekli oyuğu oluşturur.",
         "looksLikeWhenDone": "Patlıcanlar hafif kararıp su bırakmış. Kurulandığında yüzey kuru ve mat.",
@@ -1393,6 +1436,7 @@
         "timerSeconds": 1200
       },
       {
+        "title": "Patlıcanları kavurun",
         "instruction": "Tavada 4 yemek kaşığı zeytinyağını kızdırın. Patlıcanları her taraftan 5-7 dakika kavurun, yarı yumuşak hâle gelene kadar. Bir kenara alın.",
         "why": "Önceden kavurma patlıcanın iç harcı emmesini kolaylaştırır ve fırın süresini kısaltır.",
         "looksLikeWhenDone": "Patlıcanlar altın sarısı renk almış, dışı hafif kızarmış. Bıçak kolayca 2 cm kadar giriyor.",
@@ -1402,6 +1446,7 @@
         "timerSeconds": 420
       },
       {
+        "title": "İç harcı hazırlayın",
         "instruction": "Aynı tavada kalan zeytinyağını ısıtın. Soğanları ince halkalar hâlinde 4-5 dakika kavurun. Sarımsak ve biberi ekleyip 2 dakika daha kavurun. Domatesleri küçük küpler hâlinde doğrayıp ekleyin. Tuz ve şekeri ekleyip 10 dakika kısık ateşte pişirin.",
         "why": "Uzun kavurma iç harcın tatlılığını ve derinliğini oluşturur. Şeker asiditeli domatesi dengeler. Bu harç patlıcanın lezzetinin büyük kısmıdır.",
         "looksLikeWhenDone": "Soğanlar şeffaf ve çok yumuşak. Domates tamamen eriyerek sossu bir harç oluşturmuş. Yağ yüzeyde toplanmış.",
@@ -1411,6 +1456,7 @@
         "timerSeconds": 720
       },
       {
+        "title": "Patlıcanları doldurun",
         "instruction": "Patlıcanların ortasındaki kesiğe bastırarak cep açın. Her birine iç harcı doldurun. Tepsiye yan yana dizin. Kalan harcı ve 100 ml suyu tepsiye ekleyin.",
         "why": "Su fırın sırasında patlıcanların kurumasını önler ve alt kısmın buharla pişmesini sağlar.",
         "looksLikeWhenDone": "Her patlıcan ağzına kadar dolu. Tepsinin dibinde ince bir sos tabakası var.",
@@ -1420,6 +1466,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Fırında pişirin",
         "instruction": "Önceden ısıtılmış 180 derece fırında 30-35 dakika pişirin. Patlıcanlar çok yumuşayıp üstleri hafif kızarana kadar bekleyin. Oda sıcaklığında veya soğuk servis edin.",
         "why": "İmam bayıldı geleneksel olarak soğuk veya oda sıcaklığında servis edilir; zeytinyağı soğuyunca yoğunlaşır ve tat derinleşir.",
         "looksLikeWhenDone": "Patlıcanlar çok yumuşamış ve içe çökmüş görünüyor. Üstü hafif kızarmış. Tepsi sıvısı azalmış ve koyulaşmış.",
@@ -1511,6 +1558,7 @@
     ],
     "steps": [
       {
+        "title": "Sebzeleri doğrayın",
         "instruction": "Soğanı iri doğrayın. Sarımsağı ezin. Patatesleri soyup küpler hâlinde doğrayın. Ispanakları iri parçalar hâlinde doğrayın.",
         "why": "Tüm malzemeler blenderdan geçeceği için kesim boyutu önemli değildir. İri doğramak zaman kazandırır.",
         "looksLikeWhenDone": "Tüm sebzeler doğranmış ve hazır. Ispanak iri parçalar hâlinde.",
@@ -1520,6 +1568,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Sebzeleri pişirin",
         "instruction": "Tencerede zeytinyağını kızdırın. Soğan ve sarımsağı 3 dakika kavurun. Patatesleri ekleyip 2 dakika daha kavurun. Suyu veya tavuk suyunu ekleyin ve kaynatın. Kısık ateşte 12-15 dakika patatesler tamamen yumuşayana kadar pişirin.",
         "why": "Patates çorba kıvamının ana tutucusudur. Tamamen pişmesi blenderda pürüzsüz karışım sağlar.",
         "looksLikeWhenDone": "Patatesler çatal kolayca giriyor. Tencerede bulanık, sarımtırak bir sıvı var.",
@@ -1529,6 +1578,7 @@
         "timerSeconds": 1200
       },
       {
+        "title": "Ispanak ekleyip blenderlayın",
         "instruction": "Ispanakları ekleyin, karıştırın ve 3-4 dakika pişirin. Ocağı kapatın ve 5 dakika bekleyin. Daldırma blender veya standart blenderla püre yapın. Tuz ve karabiber ekleyin.",
         "why": "Ispanakları kısa pişirmek yeşil rengi ve vitamin değerini korur. Uzun pişirme rengi sarılaştırır ve tat kaybolur.",
         "looksLikeWhenDone": "Çorba koyu yeşil ve pürüzsüz. Kaşığa alındığında ince bir film bırakıyor.",
@@ -1538,6 +1588,7 @@
         "timerSeconds": 240
       },
       {
+        "title": "Servis için hazırlayın",
         "instruction": "Servis etmeden önce isteğe bağlı olarak üzerine krema veya yoğurt damlatın. Sıcak servis edin.",
         "why": "Krema veya yoğurt yeşilin keskin tadını dengeler ve kremsi bir görünüm katar.",
         "looksLikeWhenDone": "Kase koyu yeşil çorbayla dolu, üzerinde spiral krema ya da yoğurt damlaması var.",
@@ -1641,6 +1692,7 @@
     ],
     "steps": [
       {
+        "title": "Patlıcanları tuzlayın",
         "instruction": "Patlıcanları boyuna yarıya bölün, her yarının ortasına keskin bir bıçakla V şeklinde derin bir çentik açın. Tuzlu suda 20 dakika bekletin, ardından kurutun.",
         "why": "Tuzlu suda bekletmek patlıcanın acılığını giderir ve yağ emme kapasitesini azaltır. V çentik iç harcın düzgün yerleşmesini sağlar.",
         "looksLikeWhenDone": "Patlıcanlar hafif kararıp nemini bırakmış, kağıt havluyla kurulunca yüzey kuru görünüyor.",
@@ -1650,6 +1702,7 @@
         "timerSeconds": 1200
       },
       {
+        "title": "Patlıcanları kızartın",
         "instruction": "Tavada zeytinyağını kızdırın ve patlıcanları kesik yüzü aşağı bakacak şekilde 5-6 dakika kavurun. Ters çevirip 3 dakika daha pişirin. Fırın tepsisine alın.",
         "why": "Kızartma patlıcanın dokusunu yumuşatır ve fırında iç harcı çekecek yapıya kavuşturur. Kesik yüzü aşağı başlamak şekil tutmasını sağlar.",
         "looksLikeWhenDone": "Patlıcanlar altın sarısı ile kahverengi arasında renk almış, bıçak kolayca giriyor. Şekli korunuyor.",
@@ -1659,6 +1712,7 @@
         "timerSeconds": 540
       },
       {
+        "title": "Kıyma harcını pişirin",
         "instruction": "Aynı tavada kıymayı ve soğanı birlikte kavurun. Kıyma suyunu çekince sarımsağı ve salçayı ekleyip 2 dakika daha pişirin. Tuz ve karabiber ile tatlandırın.",
         "why": "Kıymayı soğanla kavurmak suyu erken çektirir. Salçayı yağda kavurmak çiğ tadını giderir ve iç harca renk verir.",
         "looksLikeWhenDone": "Kıyma tamamen pişmiş ve dağılmış, rengi kahverengi. Salça koyulaşmış. Tava dibinde sıvı birikmiyor.",
@@ -1668,6 +1722,7 @@
         "timerSeconds": 360
       },
       {
+        "title": "Patlıcanları doldurun",
         "instruction": "Fırın tepsisindeki patlıcanların çentiklerini aralayın ve hazırladığınız kıyma harcını her birine doldurun. Üzerine yarım domates ve biber dilimi yerleştirin.",
         "why": "Domates ve biber fırın süresi boyunca patlıcanın kurumasını önler, aynı zamanda sunum güzelliği sağlar.",
         "looksLikeWhenDone": "Her patlıcan harçla dolu, üstünde bir domates ve biber parçası var. Tepside düzenli dizilmiş.",
@@ -1677,6 +1732,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Fırında pişirin",
         "instruction": "Önceden ısıtılmış 180 derece fırına verin. 25-30 dakika, domates ve biberler yumuşayıp hafif kızarana kadar pişirin. Servis etmeden önce üzerine doğranmış taze maydanoz serpin.",
         "why": "Fırında yavaş pişirmek iç harcın patlıcanla bütünleşmesini sağlar. Maydanoz taze bir tat ve renk katar.",
         "looksLikeWhenDone": "Domates ve biberler hafif buruşmuş ve karamelize olmuş. Kıyma harcı koyulaşmış. Patlıcan fırın tabanında yumuşamış görünüyor.",
@@ -1750,6 +1806,7 @@
     ],
     "steps": [
       {
+        "title": "Tavuğu lifleyin",
         "instruction": "Haşlanmış tavuk göğsünü çatal veya elle çok ince liflere ayırın; görünmez hâle gelene kadar lifleyin. Bir kenarda tutun.",
         "why": "Kazandibi ve tavuk göğsü tatlısında tavuk görünmez ama kremsi dokuya katkı sağlar; bu geleneksel Osmanlı tekniğidir. İnce liflenmiş tavuk tatlı kıvamıyla bütünleşir.",
         "looksLikeWhenDone": "Tavuk çok ince ipliği andıran lifler hâlinde. Bütün küçük parça görünmüyor.",
@@ -1759,6 +1816,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Muhallebiyi pişirin",
         "instruction": "Sütün 200 ml kadarını ayırın. Kalan soğuk sütü tencereye koyun. Nişasta, un ve şekeri ayırdığınız soğuk süttle karıştırın ve topak kalmayacak şekilde eritin. Tenceredeki soğuk süte ekleyin ve karıştırarak orta ateşte koyulaştırın. Koyulaşınca vanilya ve tavuğu ekleyin.",
         "why": "Soğuk süttte nişastayı çözmek topak oluşumunu önler. Kaynamadan koyulaşma doğru nişasta jelleşme noktasını gösterir.",
         "looksLikeWhenDone": "Karışım kaşıktan kopmadan akıyor, arka kısmı ince film ile kaplıyor. Tavuk görünmüyor.",
@@ -1768,6 +1826,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Tabanı karamelize edin",
         "instruction": "Teflon veya döküm küçük tavayı çok yüksek ateşte ısıtın. Pişmiş muhallebiyi 1-2 santim kalınlığında dökün. Taban yanık rengi alana kadar çevirmeyin. 2-3 dakika yüksek ateşte pişirin.",
         "why": "Çok sıcak tava tabanın hızla karamelleşmesini sağlar; bu kazandibinin karakteristik yanık alt kısmıdır. Yeterince beklemeden çevirmek yanık tabakayı bozar.",
         "looksLikeWhenDone": "Alt kısım koyu kahverengi ve hafif yanık, üst yüzey kremsi beyaz ve donmuş.",
@@ -1777,6 +1836,7 @@
         "timerSeconds": 180
       },
       {
+        "title": "Soğutup servis edin",
         "instruction": "Tepsiden veya tavaanın kenarından spatula ile dikkatli sıyırın. Yanık tarafı üste gelecek şekilde servis tabağına alın. Soğuduğunda buzdolabında 1-2 saat bekletin.",
         "why": "Yanık tarafı üste koymak görsel sunum içindir. Soğutma kıvamın gelişmesini sağlar.",
         "looksLikeWhenDone": "Tatlı dilimler hâlinde, taban kahverengi-yanık, üst kısım kremsi beyaz.",
@@ -1891,6 +1951,7 @@
     ],
     "steps": [
       {
+        "title": "Bulguru demlendirin",
         "instruction": "Bulguru geniş bir kaba koyun. Üzerine 2 bardak kaynar su dökün, karıştırın ve kapağını kapatıp 15 dakika demlendirin.",
         "why": "İnce bulgur kaynar suda şişer ve pişer. 15 dakika yeterli; daha fazla bekletmek bulguru aşırı yumuşatır.",
         "looksLikeWhenDone": "Bulgur su çekmiş ve şişmiş. Çatal geçince hafif direnç var ama sert değil. Su kalmamış.",
@@ -1900,6 +1961,7 @@
         "timerSeconds": 900
       },
       {
+        "title": "Salça ve baharatlı yoğurun",
         "instruction": "Bulgur ılıyınca domates salçası, biber salçası, zeytinyağı, limon suyu ve nar ekşisini ekleyin. Tuz, kırmızı biber ve kimyonu serpin. Ellerin ıslak olarak 5 dakika yoğurun.",
         "why": "Elle yoğurmak salçaların bulgur tanelerine tamamen işlemesini sağlar. Yeterince yoğurulmayan kısır kuru ve tatlardan yoksun olur.",
         "looksLikeWhenDone": "Tüm bulgur taneleri kırmızı renk almış ve eşit kaplı. Karışım hafif nemli ve parlak görünüyor.",
@@ -1909,6 +1971,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Taze ot ekleyip bitirin",
         "instruction": "Yeşil soğanı ince halkalar, maydanozu ince kıyın. İsteğe bağlı domatesleri küçük küpler hâlinde doğrayın. Tümünü ekleyip hafifçe karıştırın. Tadına bakarak lemon, tuz ve salçayı ayarlayın.",
         "why": "Taze ot ve sebze eklendikten sonra çok karıştırmak onları ezer. Hafif karıştırmak her malzemenin görünümünü ve dokusunu korur.",
         "looksLikeWhenDone": "Yeşil soğan ve maydanoz eşit dağılmış. Renk kırmızı-yeşil mozaik gibi. Kıvam elde bütünleşiyor.",
@@ -2006,6 +2069,7 @@
     ],
     "steps": [
       {
+        "title": "Soğan ve ekmeği hazırlayın",
         "instruction": "Soğanı rendeleyin ya da robotla ince doğrayın. Meyve suyu çıkarsa sıkıp atın. Sarımsağı ezin. Bayat ekmek içini ıslatıp sıkın.",
         "why": "Rendelenmiş soğan kıymaya karışır ve köfteyi yumuşatır. Suyunun alınması köftenin pişirirken dağılmamasını sağlar. Ekmek iç yapıyı gevrek yapar.",
         "looksLikeWhenDone": "Soğan ince rende hâlinde, fazla suyu alınmış. Ekmek iyice ıslanmış ve hamur hâlini almış.",
@@ -2015,6 +2079,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Harcı yoğurun",
         "instruction": "Tüm malzemeleri derin bir kaba koyun; kıyma, soğan, sarımsak, ekmek, yumurta, kimyon, kırmızı biber, tuz, karabiber ve varsa maydanozu. En az 5 dakika, karışım yumuşak ve yapışkan hâle gelene kadar yoğurun.",
         "why": "Uzun yoğurma et proteini olan miyozini aktive eder ve köftenin şekil tutmasını sağlar. Az yoğrulmuş köfte pişirirken dağılır.",
         "looksLikeWhenDone": "Karışım homojen, yapışkan ama ele yapışmayan bir hamur kıvamında. Renk açık kahverengi.",
@@ -2024,6 +2089,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Köftelere şekil verin",
         "instruction": "Avuç içi büyüklüğünde parçalar alıp oval veya yuvarlak şekil verin. Yaklaşık 1.5-2 cm kalınlığında olmalı. Yoğurmak için ıslak el kullanın.",
         "why": "Eşit kalınlıkta köfte eşit pişer. Çok kalın olursa ortası çiğ kalabilir; çok ince olursa kurur.",
         "looksLikeWhenDone": "Köfteler düzgün oval, yaklaşık 8-10 cm uzunluğunda. Yüzey düzgün ama pürüzsüz değil, hafif el izi var.",
@@ -2033,6 +2099,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Izgarada pişirin",
         "instruction": "Döküm tavayı ya da ızgarayı yüksek ateşte iyice kızdırın. Köfteleri yağ sürmeden koyun ve 4-5 dakika karıştırmadan pişirin. Ters çevirip 4 dakika daha pişirin.",
         "why": "Sıcak tava köftenin dışını hızla mühürler, içindeki suyu ve lezzeti hapseder. Erken karıştırmak yapışmaya ve dağılmaya neden olur.",
         "looksLikeWhenDone": "Pişen yüzey koyu kahverengi ve ızgara deseni var. Ters çevirince kolayca ayrılıyor. Yan kenarlar gri renk almış.",
@@ -2146,6 +2213,7 @@
     ],
     "steps": [
       {
+        "title": "Lahana yapraklarını haşlayın",
         "instruction": "Lahanayı tencereye sığacak büyüklükte kesin ve kaynar tuzlu suda 8-10 dakika haşlayın. Yapraklar yumuşayınca çıkarın ve soğutun.",
         "why": "Haşlama yaprakların esnemesini sağlar; kırılmadan katlayabilirsiniz. Soğutmak elleri yakmadan çalışmanızı sağlar.",
         "looksLikeWhenDone": "Yapraklar yumuşak ve esnek, kırılmadan 90 derece katlanabiliyor. Rengi solmuş ve yeşilden sarı-yeşile dönmüş.",
@@ -2155,6 +2223,7 @@
         "timerSeconds": 600
       },
       {
+        "title": "İç harcı hazırlayın",
         "instruction": "Pirinçleri yıkayın. Soğanı ince doğrayın. Kıyma, pirinç, soğan, salça, tuz, karabiber ve naneyi birleştirin ve karıştırın.",
         "why": "Pirinç haşlanmamış eklenir; pişerken iç haçın içinde şişer ve lahana suyunu emecektir. Çiğ pirinç harcı bağlar.",
         "looksLikeWhenDone": "Harç homojen ve yapışkan. Pirinç taneleri görünüyor. Renk açık pembe-kırmızı.",
@@ -2164,6 +2233,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Sarmaları yuvarlayın",
         "instruction": "Her lahana yaprağının sertçe kalmış orta damarını bıçakla inceltip kesmeden düzeltin. Yaprağın alt kısmına 1-2 yemek kaşığı harç koyun, kenarları içe katlayıp sıkıca rulo yapın.",
         "why": "Damarı inceltmek katlamayı kolaylaştırır ve pişince eşit yumuşamasını sağlar. Sıkı sarma pişirirken açılmayı önler.",
         "looksLikeWhenDone": "Sarma sıkı, yaklaşık 7-8 cm uzunluğunda silindir. Kenarlar içe kıvrılmış.",
@@ -2173,6 +2243,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Tencerede pişirin",
         "instruction": "Tencere dibine küçük lahana yapraklarını ya da parçalarını yayın. Sarmaları sıkıca yan yana dizin. Tereyağı ve salçayı karıştırıp 500 ml su ile seyreltip üzerine dökün. Kapağı kapatıp önce orta ateşte kaynatın, sonra kısık ateşte 45-50 dakika pişirin.",
         "why": "Dip yapraklar tencere tabanını korur. Yağlı sos malzemelerin kaynarken kurumasını önler. Uzun yavaş pişirme hem sarmayı hem pirinciyi olgunlaştırır.",
         "looksLikeWhenDone": "Sos büyük ölçüde çekilmiş, sarmaların yüzeyi parlıyor. Dip yapraklardan karamelize koku yükseliyor.",
@@ -2258,6 +2329,7 @@
     ],
     "steps": [
       {
+        "title": "Sebzeleri doğrayın",
         "instruction": "Domatesleri soyun ve küçük küpler halinde doğrayın. Biberleri ince halkalar veya küçük parçalar halinde doğrayın. Soğan kullanıyorsanız ince doğrayın.",
         "why": "Küçük doğranmış domates daha hızlı sulanır ve pişer. Biberler ince doğranırsa yumurtayla aynı anda pişer.",
         "looksLikeWhenDone": "Domates parçaları 1-2 cm küp büyüklüğünde, biber parçaları ince ve düzenli görünüyor.",
@@ -2267,6 +2339,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Soğan ve biberi kavurun",
         "instruction": "Tavayı orta ateşte ısıtın ve tereyağını ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.",
         "why": "Soğanı önce kavurmak tatlılığını ortaya çıkarır. Biberleri soğanla pişirmek her ikisinin de yumuşamasını sağlar.",
         "looksLikeWhenDone": "Soğanlar şeffaflaşmış, biberler hafif yumuşamış ama hâlâ yeşil görünüyor.",
@@ -2276,6 +2349,7 @@
         "timerSeconds": 180
       },
       {
+        "title": "Domatesi pişirin",
         "instruction": "Domatesleri tavaya ekleyin ve orta ateşte, ara ara karıştırarak 5-7 dakika pişirin. Suyunu çekip koyulaşana kadar bekleyin.",
         "why": "Fazla suyun buharlaşması gerekir, aksi hâlde menemen sulu ve cıvık olur. Koyulaşan domates sosun içinde yumurta şekil tutabilir.",
         "looksLikeWhenDone": "Domates karışımı kaşığın gerisini bırakacak kadar koyulaşmış, rengi koyu kırmızıya dönmüş, tava dibinde sıvı birikmiyor.",
@@ -2285,6 +2359,7 @@
         "timerSeconds": 420
       },
       {
+        "title": "Yumurtaları kırın",
         "instruction": "Tuz ve karabiber ekleyip karıştırın. Yumurtaları kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.",
         "why": "Sarıları bütün bırakmak yumurtanın gözenekli kıvamda pişmesini sağlar. Fazla karıştırmak yumurtayı lastikleştirir.",
         "looksLikeWhenDone": "Yumurta beyazları tamamen donmuş, sarılar hâlâ hafif sıvı ya da az pişmiş görünüyor (tercih meselesi).",
@@ -2294,6 +2369,7 @@
         "timerSeconds": 120
       },
       {
+        "title": "Peynirle servis edin",
         "instruction": "İsterseniz üzerine ufalanmış beyaz peynir serpin. Hemen tavadan servis edin.",
         "why": "Sıcak menemenin üzerine eklenen peynir hafifçe eriyerek kremsi bir lezzet katmanı oluşturur. Bekletilirse yumurta sertleşir.",
         "looksLikeWhenDone": "Peynir parçaları hafifçe erimeye başlamış, yüzey hâlâ canlı ve buharlı görünüyor.",
@@ -2401,6 +2477,7 @@
     ],
     "steps": [
       {
+        "title": "Mercimek ve sebzeleri hazırlayın",
         "instruction": "Mercimekleri bol soğuk suda yıkayın ve süzün. Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.",
         "why": "Mercimeği yıkamak fazla nişastayı giderir ve çorbanın berrak görünmesini sağlar. İri doğramak önemli değil çünkü her şey sonunda blenderdan geçecek.",
         "looksLikeWhenDone": "Mercimek suyu berraklaşana kadar durulanmış. Sebzeler doğranmış ve hazır.",
@@ -2410,6 +2487,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Soğan ve havucu kavurun",
         "instruction": "Tencereye zeytinyağını alın ve orta ateşte ısıtın. Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun. Sarımsak ve havucu ekleyip 2 dakika daha kavurun.",
         "why": "Kavurma işlemi sebzelerin doğal şekerlerini karamelleştirerek çorbaya derinlik katar. Bu adım atlanırsa çorba düz ve tatsız olur.",
         "looksLikeWhenDone": "Soğanlar şeffaflaşmış ve kenarları hafif altın rengi almış. Havuç parçaları hafif yumuşamış görünüyor.",
@@ -2419,6 +2497,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Salça ve mercimek ekleyin",
         "instruction": "Domates salçasını ekleyin, 1 dakika kavurun. Ardından yıkanmış mercimekleri, kimyon ve karabiberi ekleyip karıştırın. Üzerine su veya et suyunu dökün.",
         "why": "Salçayı kısaca kavurmak çiğ tadını giderir. Baharatları bu aşamada eklemek yağda çözünen aroma maddelerini suya geçmesini sağlar.",
         "looksLikeWhenDone": "Salça koyulaşmış ve parlak görünüyor. Tüm malzemeler tencerede karışmış, su mercimeklerin 4-5 cm üzerinde.",
@@ -2428,6 +2507,7 @@
         "timerSeconds": 60
       },
       {
+        "title": "Kısık ateşte pişirin",
         "instruction": "Tencereyi kapağı kapalı olarak kaynatın. Kaynadıktan sonra ateşi kısın ve 20-25 dakika kısık ateşte pişirin. Mercimekler tamamen dağılmış olmalı.",
         "why": "Kısık ateşte yavaş pişirmek mercimeklerin tamamen yumuşamasını sağlar. Çok yüksek ateşte mercimek dışı pişer içi sert kalabilir.",
         "looksLikeWhenDone": "Mercimekler tamamen dağılmış ve sarı renkli bir kıvama gelmiş. Kaşıkla bastırınca kolayca eziliyor.",
@@ -2437,6 +2517,7 @@
         "timerSeconds": 1500
       },
       {
+        "title": "Blenderdan geçirin",
         "instruction": "Tencereyi ocaktan alın ve 5 dakika bekleyin. Çorbayı dikkatlice blenderdan geçirin; ya daldırma blender kullanın ya da küçük partiler hâlinde standart blendere alın. Tuz ekleyip tadına bakın.",
         "why": "Sıcak sıvı blenderde basınç oluşturur; beklemek ya da küçük partilerde işlemek kapağın fırlamasını önler. Blenderlama pürüzsüz, kadifemsi bir kıvam verir.",
         "looksLikeWhenDone": "Çorba tamamen pürüzsüz, ipeksi kıvamda ve homojen sarı-turuncu renkte. Hiç mercimek parçası görünmüyor.",
@@ -2446,6 +2527,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Naneli tereyağı ekleyin",
         "instruction": "İsterseniz küçük bir tavada tereyağını eritin ve kuru kırmızı biberi ekleyip 30 saniye kızdırın. Bu kırmızı yağı kaselere döktüğünüz çorbanın üzerine gezdirin. Hemen servis edin.",
         "why": "Kızdırılmış tereyağı ve biber çorbaya geleneksel sunum görünümü ve ekstra aroma kazandırır. Sıcak servis kıvamın en iyi hissettirdiği andır.",
         "looksLikeWhenDone": "Çorba kasesi parlak sarı-turuncu renkte, üzerinde kırmızı yağ damlacıkları ve varsa kurutulmuş nane ile servis ediliyor.",
@@ -2512,6 +2594,7 @@
     ],
     "steps": [
       {
+        "title": "Pirinci yıkayıp ıslatın",
         "instruction": "Pirinci soğuk suda 3-4 kez yıkayın, su berraklaşana kadar. Son yıkamada 30 dakika ılık tuzlu suda bekletin, ardından süzün.",
         "why": "Yıkamak yüzey nişastasını giderir; bu sayede pirinçler piştikten sonra birbirine yapışmaz. Bekletmek pişme süresini kısaltır ve daha tane tane bir pilav verir.",
         "looksLikeWhenDone": "Yıkama suyu berrak görünüyor. Süzgeçte pirincin yüzeyi mat beyaz, ıslak ama köpüksüz.",
@@ -2521,6 +2604,7 @@
         "timerSeconds": 1800
       },
       {
+        "title": "Tereyağında şehriye kavurun",
         "instruction": "Tencereye tereyağını ekleyin ve orta ateşte eritin. İsteğe bağlı şehriyeyi ekleyin ve altın rengi alana kadar 2-3 dakika kavurun.",
         "why": "Tereyağında kavurma pirinç tanesine ısı ile yağ emdirir; pilav tane tane olur. Şehriye kızartılmadan eklenirse sararmaz ve renk vermez.",
         "looksLikeWhenDone": "Şehriye altın sarısı, tereyağı köpüklü. Tencerede hafif bir tereyağı aroması yükseliyor.",
@@ -2530,6 +2614,7 @@
         "timerSeconds": 180
       },
       {
+        "title": "Pirinci kavurun",
         "instruction": "Süzülmüş pirinci tencereye ekleyin ve sürekli karıştırarak 2-3 dakika kavurun. Pirinçler mat ve hafif yarı saydam görünene kadar pişirin.",
         "why": "Kavurma pirincin yüzeyini mühürler ve her tanenin bağımsız pişmesini sağlar; bu tane tane pilavın sırrıdır.",
         "looksLikeWhenDone": "Pirinçler tamamen yağla kaplanmış, yarı saydam görünüyor. Hafif pişmiş bir koku yükseliyor.",
@@ -2539,6 +2624,7 @@
         "timerSeconds": 180
       },
       {
+        "title": "Suyunu ekleyip pişirin",
         "instruction": "Kaynar su veya tavuk suyunu ve tuzu ekleyin. Karıştırıp kaynatın. Kaynamaya başlayınca ateşi en kısık seviyeye alın, kapağı kapatın ve 18-20 dakika pişirin.",
         "why": "Çok kısık ateşte kapalı kapakla pişirmek buharın tencere içinde kalmasını ve pirincin buharla şişmesini sağlar. Kapak açılırsa buhar kaçar ve pilav kuru kalır.",
         "looksLikeWhenDone": "Tencere kapağında buhar damlacıkları var. Yüzeyden su görünmüyor, pirinçlerin arası kuru görünüyor.",
@@ -2548,6 +2634,7 @@
         "timerSeconds": 1200
       },
       {
+        "title": "Demlenmeye bırakın",
         "instruction": "Ocağı kapatın. Kapak üzerine bir kağıt havlu ya da bez koyun ve kapağı kapatın. 10 dakika demlenmeye bırakın. Servis etmeden önce tahta bir kaşıkla altüst edin.",
         "why": "Kağıt havlu fazla buharı emer ve yoğuşmanın pilava damlamasını önler. Dinlendirmek nişastanın geri çökmesini sağlar, tane tane kıvam oluşur.",
         "looksLikeWhenDone": "Pirinçler tane tane ve şişkin. Tencere dibinde ince bir kabuk oluşmuş (bu istenilen bir şeydir). Pilav kaşığa yapışmıyor.",
@@ -2662,6 +2749,7 @@
     ],
     "steps": [
       {
+        "title": "Hamuru yoğurup mayalandırın",
         "instruction": "Un, maya, şeker ve tuzu karıştırın. Ortasına bir çukur açın. Yoğurt, sıvı yağ ve yumurtayı ekleyin. Ele yapışmayan, pürüzsüz bir hamur yoğurun (yaklaşık 8-10 dakika). Üstünü örtün ve ılık ortamda 45 dakika mayalandırın.",
         "why": "Maya şekeri yiyerek CO2 üretir ve hamuru kabarık yapar. Yeterince yoğurma glüten ağını güçlendirir. Ilık ortam (25-28 derece) mayanın aktif olması için idealdir.",
         "looksLikeWhenDone": "Hamur iki katına çıkmış. Parmakla bastırınca yavaşça geri geliyor.",
@@ -2671,6 +2759,7 @@
         "timerSeconds": 2700
       },
       {
+        "title": "Harcı doldurup şekil verin",
         "instruction": "Peyniri ezerek ince kıyılmış maydanozla karıştırın. Mayalanmış hamuru yumruklayarak havasını alın. Ceviz büyüklüğünde parçalara bölün, açın ve içine peynir harcı koyarak yuvarlak kapatın.",
         "why": "Havanın alınması ikinci kabarma için yer açar ve hamuru homojen yapar. Küçük parçalar daha çabuk pişer.",
         "looksLikeWhenDone": "Poğaçalar eşit büyüklükte, yüzey gergin ve çatlaksız. İçte harç görünmüyor.",
@@ -2680,6 +2769,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Fırında pişirin",
         "instruction": "Poğaçaları yağlı kağıt kaplı tepsiye dizin. 15 dakika daha mayalandırın. Üzerine yumurta sarısı sürüp susam veya çörek otu serpin. Önceden ısıtılmış 180 derece fırında 20-25 dakika, altın sarısı renk alana kadar pişirin.",
         "why": "İkinci mayalanma son kabarık dokuyu oluşturur. Yumurta sarısı parlak ve altın sarısı bir yüzey verir.",
         "looksLikeWhenDone": "Poğaçalar kabarık ve altın sarısı. Üst yüzey parlak ve susam taneleri tutunmuş.",
@@ -2758,6 +2848,7 @@
     ],
     "steps": [
       {
+        "title": "Peynir harcını hazırlayın",
         "instruction": "Peyniri bir kaba koyun ve çatalla ezerek ufaltın. İnce kıyılmış maydanozu ve yumurtayı ekleyin. İyice karıştırın.",
         "why": "Pürüzsüz bir harç yufkaya eşit dağılır ve sarma sırasında dağılmaz. Yumurta harçı bağlar.",
         "looksLikeWhenDone": "Harç toplu ve homojen. Peynir parçaları küçük, maydanoz eşit dağılmış.",
@@ -2767,6 +2858,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Yufkaları sarın",
         "instruction": "Yufka dilimini üçgen veya dikdörtgen parçalara kesin (yaklaşık 15x15 cm). Her parçanın bir kenarına 1 tatlı kaşığı harç koyun. Kenarları içe katlayıp sıkıca yuvarlayın.",
         "why": "Kenarlı katlama harcın kızartma sırasında dışarı çıkmasını önler. Sıkı sarma havanın içinde kalmasını engeller.",
         "looksLikeWhenDone": "İnce silindir şeklinde börekler, yaklaşık 8 cm uzunluğunda. Uçlar kapalı.",
@@ -2776,6 +2868,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Yağda kızartın",
         "instruction": "Yağı kızdırın (170 derece). Börekleri birkaçını aynı anda atmadan önce küçük bir parça atarak yağın sıcaklığını test edin. 3-4 dakika altın rengi alana kadar kızartın.",
         "why": "Doğru yağ sıcaklığı böreğin çabuk kızarmasını ve yağ emmemesini sağlar. Soğuk yağda kızartma yağ emmeye yol açar.",
         "looksLikeWhenDone": "Böreklerin her tarafı altın sarısı. Yüzey çıtır ve pürüzlü görünüyor.",
@@ -2877,6 +2970,7 @@
     ],
     "steps": [
       {
+        "title": "Hamuru yoğurup mayalandırın",
         "instruction": "Un, maya, tuz ve şekeri karıştırın. Ilık suyu ve yağı ekleyin. 10 dakika pürüzsüz ve esnek bir hamur yoğurun. Üstünü örtün, 1 saat mayalandırın.",
         "why": "Yeterli maya süresi hamuru kabarık ve yumuşak yapar. Uzun yoğurma glüten ağını geliştirerek simit şeklini kolayca almanızı sağlar.",
         "looksLikeWhenDone": "Hamur iki katına çıkmış. Parmak bastırınca yavaşça geri geliyor.",
@@ -2886,6 +2980,7 @@
         "timerSeconds": 3600
       },
       {
+        "title": "Halka şekli verin",
         "instruction": "Pekmez veya nar ekşisi ve suyu bir kaseye karıştırın. Susamı geniş bir tabağa yayın. Hamuru 8 eşit parçaya bölün, her parçayı ince uzun şerit hâline getirin. Bükerek halka yapın ve uçlarını birleştirin.",
         "why": "Pekmez-su karışımı susamın yapışmasını sağlar ve pişince simide karakteristik parlak kırmızımtırak rengi verir.",
         "looksLikeWhenDone": "Simid halkalar eşit büyüklükte ve birleşme noktası pürüzsüz. Susam her tarafı kaplamış.",
@@ -2895,6 +2990,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Pekmeze daldırıp pişirin",
         "instruction": "Her simit halkasını pekmez karışımına daldırın, her tarafı ıslanmış olsun. Ardından susama batırıp her tarafını kaplayın. Yağlı kağıt kaplı tepsiye dizin. 15 dakika dinlendirin. Önceden ısıtılmış 200 derece fırında 20-25 dakika, altın kahverengi renk alana kadar pişirin.",
         "why": "200 derece yüksek sıcaklık dışını hızla kavurur ve çıtır bir kabuk oluşturur. Önceden dinlendirme son kabarma için alan açar.",
         "looksLikeWhenDone": "Simidler pişince köpürülü ve altın-kahverengi renk almış. Susam iyice kavrulmuş. Tıklatınca çıtır bir ses çıkıyor.",
@@ -2949,6 +3045,7 @@
     ],
     "steps": [
       {
+        "title": "Sucukları kızartın",
         "instruction": "Sucuk dilimlerini yağsız tavaya koyun ve orta ateşte her iki taraftan 1-2 dakika kızartın. Sucuklar kendi yağını salar.",
         "why": "Sucuk kendi yağını salarken lezzet yağa geçer. Bu yağ yumurtaları kızartmak için idealdir; ekstra yağ gerekmez.",
         "looksLikeWhenDone": "Sucuklar hafif büzülmüş ve kenarları kızarmış. Tavada kırmızı yağ birikmiş.",
@@ -2958,6 +3055,7 @@
         "timerSeconds": 120
       },
       {
+        "title": "Yumurtaları pişirin",
         "instruction": "Sucukları tavayla kenara itin ya da küçük bir kenara dizin. Yumurtaları sucuk yağının üzerine kırın. Tuzlayın. Sarılar bütün kalacak şekilde 3-4 dakika pişirin.",
         "why": "Yumurtalar sucuk yağında pişince yağın tüm aromasını emer. Sarıyı bütün tutmak görsel ve tat açısından daha iyi bir deneyim sunar.",
         "looksLikeWhenDone": "Yumurta beyazları tamamen donmuş ve opak. Sarılar parlaklığını koruyor, hafif titreyerek hareket ediyor.",
@@ -3031,6 +3129,7 @@
     ],
     "steps": [
       {
+        "title": "Pirinci haşlayın",
         "instruction": "Pirinci yıkayıp 500 ml suda 15-18 dakika, su çekilene kadar haşlayın.",
         "why": "Pirinç önce suda pişirilir çünkü süt içinde pişirmeye çalışırsanız süt dibine yapışır ve yanar.",
         "looksLikeWhenDone": "Pirinç şişmiş, su tamamen çekilmiş. Taneler yumuşak ama ayrışmamış.",
@@ -3040,6 +3139,7 @@
         "timerSeconds": 1080
       },
       {
+        "title": "Sütü kaynatın",
         "instruction": "Sütü tencereye ekleyin ve orta ateşte karıştırarak kaynatın. Kaynayınca şekeri ekleyin, 5 dakika karıştırmaya devam edin.",
         "why": "Süt kaynar sıcakta şekeri hızla çözer. Karıştırmak dibine yapışmayı önler.",
         "looksLikeWhenDone": "Süt hafif köpüklü, şeker tamamen eriyerek süte karışmış.",
@@ -3049,6 +3149,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Nişasta ekleyip koyulaştırın",
         "instruction": "Nişastayı 3 yemek kaşığı soğuk sütle yoğurun ve topak kalmayacak şekilde karıştırın. Pişen sütün içine yavaşça ekleyin. Vanilya ekleyin. 10-12 dakika, kıvam alana kadar karıştırarak pişirin.",
         "why": "Nişastayı önce soğuk sıvıda çözmek topak oluşumunu önler. Kıvam alma işlemi nişastanın jelleşme noktasına ulaşmasıdır.",
         "looksLikeWhenDone": "Sütlaç kaşıktan kopmadan akıyor, kremsi bir görünümü var. Arkayı ince bir film olarak kaplayıyor.",
@@ -3058,6 +3159,7 @@
         "timerSeconds": 720
       },
       {
+        "title": "Fırında üstünü kızartın",
         "instruction": "Sütlacı kaseler veya fırın kaplarına dökün. Fırını ızgara modunda ısıtın ve kapları üst rafta 3-4 dakika kızdırın. Yüzey yanık kahverengi lekeler alınca çıkarın.",
         "why": "Fırın ızgara modunda üst yüzey hızla kızarır ve geleneksel sütlacın karakteristik karamelize üst yüzeyini oluşturur.",
         "looksLikeWhenDone": "Yüzeyde seyrek kahverengi ve hafif yanık lekeler var. Sütlaç hâlâ akıcı ama üst yüzeyi donmuş.",
@@ -3067,6 +3169,7 @@
         "timerSeconds": 240
       },
       {
+        "title": "Soğutup servis edin",
         "instruction": "Fırından çıkarın ve oda sıcaklığına gelene kadar bekleyin. Ardından buzdolabında en az 2 saat soğutun.",
         "why": "Sütlaç soğuyunca kıvamı gelişir ve tatları birbiriyle bütünleşir. Sıcak servis edilirse çorba kıvamında kalır.",
         "looksLikeWhenDone": "Sütlaç kap çevrildiğinde sıvı akmıyor, kıvamı donuklaşmış. Yüzey mat ve hafif benekli.",
@@ -3145,6 +3248,7 @@
     ],
     "steps": [
       {
+        "title": "Sebzeleri haşlayın",
         "instruction": "Havuçları veya zucchiniyi soyup dilimleyin. Hafif tuzlu suda 8-10 dakika, çatal girecek kadar yumuşayana kadar haşlayın. Süzün ve soğutun.",
         "why": "Haşlanmış sebze tarator sosunu emer ve lezzetini en iyi şekilde aktarır. Çiğ sebzeyle tarator lezzetini tam almaz.",
         "looksLikeWhenDone": "Sebzeler yumuşak ama dağılmamış. Çatal kolayca giriyor. Renk hafif solmuş.",
@@ -3154,6 +3258,7 @@
         "timerSeconds": 600
       },
       {
+        "title": "Tarator sosunu yapın",
         "instruction": "Cevizleri mutfak robotunda veya havanda ince kıyın. Sarımsağı ezin ve cevizlerle karıştırın. Zeytinyağı ve sirkeyi ekleyip homojen bir sos yapın. Tuz ekleyin.",
         "why": "Ceviz sosu taratoru tarif eden bağlayıcı unsurdur. Sarımsak ve sirke keskin tat verir; yağ kremsi bağlar.",
         "looksLikeWhenDone": "Sos krem rengi ve hafif pürüzlü. Ceviz parçacıkları görünüyor ama büyük parçalar yok. Tadı dengeli, ekşi ve natlı.",
@@ -3163,6 +3268,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Servis için hazırlayın",
         "instruction": "Sebzeleri tabağa dizin. Tarator sosunu üzerine döküp dağıtın. İsteğe bağlı olarak üzerine ince kıyılmış dereotu veya maydanoz serpin.",
         "why": "Sos sebze üzerine döküldükten sonra kısa süre bekletmek sebzenin sosu emmesini sağlar ve lezzet derinleşir.",
         "looksLikeWhenDone": "Sebzeler kremsi tarator sosuyla kaplanmış. Yeşil ot serpintisi renk katmış.",
@@ -3235,6 +3341,7 @@
     ],
     "steps": [
       {
+        "title": "Tarhanayı ıslatın",
         "instruction": "Tarhanayı 1 su bardağı soğuk su ile iyice ezin, topak kalmayacak şekilde karıştırın. En az 10 dakika ıslanmaya bırakın.",
         "why": "Kuru tarhanayı önceden ıslatmak tenceredo topak oluşumunu önler. Oda sıcaklığında ıslatmak tanelerin çözülmesini kolaylaştırır.",
         "looksLikeWhenDone": "Tarhana suyla karışmış, pütürsüz kıvamda ve koyu sarı-turuncu renkte.",
@@ -3244,6 +3351,7 @@
         "timerSeconds": 600
       },
       {
+        "title": "Çorbayı pişirin",
         "instruction": "Kalan suyu tencereye koyun ve kaynatın. Islatılmış tarhanayı ekleyin, sürekli karıştırın. Domates salçası ve tuzunu ekleyin. Kısık ateşte 15 dakika ara sıra karıştırarak pişirin.",
         "why": "Sürekli karıştırmak tarhananın dibine yapışmasını önler. 15 dakika çorbanın kıvam alması için yeterlidir.",
         "looksLikeWhenDone": "Çorba pürüzsüz ve kremsi. Kıvam mercimek çorbasına benzer. Renk turuncu-kırmızı.",
@@ -3253,6 +3361,7 @@
         "timerSeconds": 900
       },
       {
+        "title": "Naneli tereyağı ekleyin",
         "instruction": "Küçük bir tavada tereyağını eritin. Kuru naneyi ekleyip 10 saniye kavurun. Bu yağı çorbanın üzerine gezdirin ve hemen servis edin.",
         "why": "Tereyağında kavrulan nane çorbaya aromatik bir tat katar ve geleneksel servisi tamamlar.",
         "looksLikeWhenDone": "Çorba servis kasesinde, üzerinde yeşil naneli tereyağı gezdirimi var.",
@@ -3353,6 +3462,7 @@
     ],
     "steps": [
       {
+        "title": "Tavuğu baharatlayın",
         "instruction": "Tavuk göğsünü iri küpler hâlinde doğrayın (yaklaşık 3x3 cm). Tuz ve karabiber serpin ve 5 dakika bekletin.",
         "why": "İri doğrama pişirme süresinde nemin korunmasına yardımcı olur. Baharatın önceden sindirilmesi lezzettin derinleşmesini sağlar.",
         "looksLikeWhenDone": "Tavuk parçaları eşit büyüklükte, hafif beyaz-pembe görünüyor. Yüzeyde tuz tanecikleri görülüyor.",
@@ -3362,6 +3472,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Tavuğu kızartın",
         "instruction": "Tavada zeytinyağını kızdırın. Tavuk parçalarını tek kat olacak şekilde koyun ve her taraftan 4-5 dakika kızartın. Büyük tava yoksa partiler hâlinde pişirin.",
         "why": "Tavayı doldurmak buhar oluşturur ve tavuğun kızarması yerine haşlanmasına neden olur. Tek kat pişirmek güzel renk ve doku sağlar.",
         "looksLikeWhenDone": "Tavuk parçaları altın sarısı renk almış. Tavayla temas eden taraflar kuru ve kahverengi, içi hâlâ pembe olabilir.",
@@ -3371,6 +3482,7 @@
         "timerSeconds": 300
       },
       {
+        "title": "Sebzeleri kavurun",
         "instruction": "Tavukları kenara alın. Aynı tavada soğanı 3 dakika kavurun. Sarımsak, kırmızı ve yeşil biberi ekleyip 3 dakika daha kavurun. Salçayı ekleyip 1 dakika kavurun.",
         "why": "Aromatic sebzeleri önce kavurmak bir lezzet tabanı oluşturur. Salçayı kavurmak çiğ tadını giderir.",
         "looksLikeWhenDone": "Soğan şeffaf, biberler hafif yumuşamış. Salça koyulaşmış ve rengi koyulaşmış.",
@@ -3380,6 +3492,7 @@
         "timerSeconds": 420
       },
       {
+        "title": "Domates sosla pişirin",
         "instruction": "Domatesleri küçük küpler hâlinde doğrayıp ekleyin ve kırmızı toz biberi serpip karıştırın. Tavukları geri ekleyin. Kapağı kapatıp kısık ateşte 10-12 dakika pişirin.",
         "why": "Kapalı kapak buharı hapser ve tavuğun kendi suyu içinde pişerek yumuşamasını sağlar. Domates sos taban görevi görür.",
         "looksLikeWhenDone": "Sos koyulaşmış. Tavuk parçaları tamamen pişmiş ve baskıya dayanaklı. Domates eriyerek sosu zenginleştirmiş.",
@@ -3465,6 +3578,7 @@
     ],
     "steps": [
       {
+        "title": "Pirinci pişirin",
         "instruction": "Pirinci yıkayın. Tencerede suyu kaynatın ve pirinci ekleyin. Orta ateşte 15 dakika pişirin, pirinçler yumuşayana kadar.",
         "why": "Pirinç önceden pişirilir çünkü yoğurt eklendiğinde kaynatma süresi kısalır ve yoğurt kesilme riski artar.",
         "looksLikeWhenDone": "Pirinçler şişmiş ve tamamen yumuşamış. Su bulanık beyaza dönmüş.",
@@ -3474,6 +3588,7 @@
         "timerSeconds": 900
       },
       {
+        "title": "Yoğurdu hazırlayın",
         "instruction": "Geniş bir kasede yoğurdu yumurta sarısı ve unla pürüzsüz hale getirin. Tuzunu ekleyin.",
         "why": "Un ve yumurta sarısı yoğurdun bağlayıcı görevi görür ve yüksek ısıda kesilmesini önler. Bu adım olmadan yoğurt sulanarak peynir gibi topak yapar.",
         "looksLikeWhenDone": "Karışım pürüzsüz ve akıcı, topak yok. Renk açık sarı.",
@@ -3483,6 +3598,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Yoğurdu temperlayın",
         "instruction": "Yoğurt karışımını ısıtmak için 2-3 kepçe sıcak çorba suyu alın ve yavaşça yoğurda ekleyin, karıştırın. Bu işlemi 2-3 kez tekrarlayın. Ardından yoğurdu tencereye yavaşça döküp karıştırın.",
         "why": "Temperleme yoğurdu yavaşça ısıtır, ani ısı şokundan kesilmesini önler. Bu teknik kritiktir.",
         "looksLikeWhenDone": "Yoğurt tencerenin içine karışmış, çorba kremsi ve pürüzsüz. Renk beyaz-krem.",
@@ -3492,6 +3608,7 @@
         "timerSeconds": null
       },
       {
+        "title": "Naneli tereyağı ekleyin",
         "instruction": "Kısık ateşte, sürekli karıştırarak 5 dakika pişirin. Kaynatmayın. Küçük tavada tereyağını eritip kuru naneyi kavurun, çorbaya gezdirin.",
         "why": "Yoğurt çorbasını kaynatmak kesilmesine yol açar. Kısık ateş yeterlidir. Naneli tereyağı geleneksel sunumun tamamlayıcısıdır.",
         "looksLikeWhenDone": "Çorba sıcak ve homojen, üzerine yeşil naneli tereyağı gezdirimi var. Krem rengi korunmuş.",

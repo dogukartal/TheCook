@@ -297,10 +297,6 @@ export default function RecipeDetailScreen() {
           <Text style={styles.sectionHeader}>Adimlar</Text>
           {recipe.steps.map((step, idx) => {
             const bgColor = STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
-            const truncatedInstruction =
-              step.instruction.length > 60
-                ? step.instruction.slice(0, 60) + '...'
-                : step.instruction;
 
             return (
               <View
@@ -324,7 +320,7 @@ export default function RecipeDetailScreen() {
                     </View>
                   )}
                 </View>
-                <Text style={styles.stepPreviewTitle}>{truncatedInstruction}</Text>
+                <Text style={styles.stepPreviewTitle}>{step.title}</Text>
               </View>
             );
           })}

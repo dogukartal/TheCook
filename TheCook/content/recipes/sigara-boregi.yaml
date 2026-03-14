@@ -42,21 +42,24 @@ ingredientGroups:
         unit: ml
         optional: false
 steps:
-  - instruction: Peyniri bir kaba koyun ve çatalla ezerek ufaltın. İnce kıyılmış maydanozu ve yumurtayı ekleyin. İyice karıştırın.
+  - title: Peynir harcını hazırlayın
+    instruction: Peyniri bir kaba koyun ve çatalla ezerek ufaltın. İnce kıyılmış maydanozu ve yumurtayı ekleyin. İyice karıştırın.
     why: Pürüzsüz bir harç yufkaya eşit dağılır ve sarma sırasında dağılmaz. Yumurta harçı bağlar.
     looksLikeWhenDone: Harç toplu ve homojen. Peynir parçaları küçük, maydanoz eşit dağılmış.
     commonMistake: Peyniri iri bırakmak — sarma sırasında yufkayı yırtabilir.
     recovery: Israrla yoğurun ya da robottan geçirin.
     stepImage: null
     timerSeconds: null
-  - instruction: Yufka dilimini üçgen veya dikdörtgen parçalara kesin (yaklaşık 15x15 cm). Her parçanın bir kenarına 1 tatlı kaşığı harç koyun. Kenarları içe katlayıp sıkıca yuvarlayın.
+  - title: Yufkaları sarın
+    instruction: Yufka dilimini üçgen veya dikdörtgen parçalara kesin (yaklaşık 15x15 cm). Her parçanın bir kenarına 1 tatlı kaşığı harç koyun. Kenarları içe katlayıp sıkıca yuvarlayın.
     why: Kenarlı katlama harcın kızartma sırasında dışarı çıkmasını önler. Sıkı sarma havanın içinde kalmasını engeller.
     looksLikeWhenDone: İnce silindir şeklinde börekler, yaklaşık 8 cm uzunluğunda. Uçlar kapalı.
     commonMistake: Çok fazla harç koymak — yufka yırtılır veya pişerken açılır.
     recovery: Açılan böreği çıkarın ve yeniden sarın veya kenarını suyla yapıştırın.
     stepImage: null
     timerSeconds: null
-  - instruction: Yağı kızdırın (170 derece). Börekleri birkaçını aynı anda atmadan önce küçük bir parça atarak yağın sıcaklığını test edin. 3-4 dakika altın rengi alana kadar kızartın.
+  - title: Yağda kızartın
+    instruction: Yağı kızdırın (170 derece). Börekleri birkaçını aynı anda atmadan önce küçük bir parça atarak yağın sıcaklığını test edin. 3-4 dakika altın rengi alana kadar kızartın.
     why: Doğru yağ sıcaklığı böreğin çabuk kızarmasını ve yağ emmemesini sağlar. Soğuk yağda kızartma yağ emmeye yol açar.
     looksLikeWhenDone: Böreklerin her tarafı altın sarısı. Yüzey çıtır ve pürüzlü görünüyor.
     commonMistake: Yağı yeterince ısıtmamak — börekler yağ çeker, ağır ve sulu olur.

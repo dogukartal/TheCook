@@ -66,21 +66,24 @@ ingredientGroups:
         unit: yemek kaşığı
         optional: true
 steps:
-  - instruction: Un, maya, şeker ve tuzu karıştırın. Ortasına bir çukur açın. Yoğurt, sıvı yağ ve yumurtayı ekleyin. Ele yapışmayan, pürüzsüz bir hamur yoğurun (yaklaşık 8-10 dakika). Üstünü örtün ve ılık ortamda 45 dakika mayalandırın.
+  - title: Hamuru yoğurup mayalandırın
+    instruction: Un, maya, şeker ve tuzu karıştırın. Ortasına bir çukur açın. Yoğurt, sıvı yağ ve yumurtayı ekleyin. Ele yapışmayan, pürüzsüz bir hamur yoğurun (yaklaşık 8-10 dakika). Üstünü örtün ve ılık ortamda 45 dakika mayalandırın.
     why: Maya şekeri yiyerek CO2 üretir ve hamuru kabarık yapar. Yeterince yoğurma glüten ağını güçlendirir. Ilık ortam (25-28 derece) mayanın aktif olması için idealdir.
     looksLikeWhenDone: Hamur iki katına çıkmış. Parmakla bastırınca yavaşça geri geliyor.
     commonMistake: Hamuru soğuk ortamda bekletmek — maya yeterince kabarık olmaz.
     recovery: Fırını 30 saniye ısıtıp kapatın, hamuru içine koyun, kapıyı kapalı tutun.
     stepImage: null
     timerSeconds: 2700
-  - instruction: Peyniri ezerek ince kıyılmış maydanozla karıştırın. Mayalanmış hamuru yumruklayarak havasını alın. Ceviz büyüklüğünde parçalara bölün, açın ve içine peynir harcı koyarak yuvarlak kapatın.
+  - title: Harcı doldurup şekil verin
+    instruction: Peyniri ezerek ince kıyılmış maydanozla karıştırın. Mayalanmış hamuru yumruklayarak havasını alın. Ceviz büyüklüğünde parçalara bölün, açın ve içine peynir harcı koyarak yuvarlak kapatın.
     why: Havanın alınması ikinci kabarma için yer açar ve hamuru homojen yapar. Küçük parçalar daha çabuk pişer.
     looksLikeWhenDone: Poğaçalar eşit büyüklükte, yüzey gergin ve çatlaksız. İçte harç görünmüyor.
     commonMistake: Hamuru çok ince açmak — harç pişerken dışarı çıkabilir.
     recovery: Açılan yerleri bastırarak kapatın veya biraz daha hamurla kapatın.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Fırında pişirin
+    instruction: >-
       Poğaçaları yağlı kağıt kaplı tepsiye dizin. 15 dakika daha mayalandırın. Üzerine yumurta
       sarısı sürüp susam veya çörek otu serpin. Önceden ısıtılmış 180 derece fırında 20-25 dakika,
       altın sarısı renk alana kadar pişirin.

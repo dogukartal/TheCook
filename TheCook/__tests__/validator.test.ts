@@ -32,21 +32,24 @@ ingredientGroups:
         unit: gr
         optional: false
 steps:
-  - instruction: Domatesleri küp küp doğrayın.
+  - title: Domatesleri doğrayın
+    instruction: Domatesleri küp küp doğrayın.
     why: Küçük doğramak daha hızlı pişmesini sağlar.
     looksLikeWhenDone: Domatesler eşit büyüklükte parçalara ayrılmış olmalı.
     commonMistake: Çok büyük doğramak.
     recovery: Daha küçük parçalara bölün.
     stepImage: null
     timerSeconds: null
-  - instruction: Tavayı orta ateşte ısıtın ve domatesleri ekleyin.
+  - title: Domatesleri pişirin
+    instruction: Tavayı orta ateşte ısıtın ve domatesleri ekleyin.
     why: Orta ateş domateslerin yanmadan sulanmasını sağlar.
     looksLikeWhenDone: Domatesler yumuşamış ve suyunu bırakmış olmalı.
     commonMistake: Yüksek ateşte pişirmek.
     recovery: Ateşi kısın ve biraz su ekleyin.
     stepImage: null
     timerSeconds: 300
-  - instruction: Yumurtaları domateslerin üzerine kırın.
+  - title: Yumurtaları ekleyin
+    instruction: Yumurtaları domateslerin üzerine kırın.
     why: Yumurtaların domateslerle birlikte pişmesi lezzeti artırır.
     looksLikeWhenDone: Yumurtalar beyazlamaya başlamış olmalı.
     commonMistake: Yumurtaları çok erken karıştırmak.

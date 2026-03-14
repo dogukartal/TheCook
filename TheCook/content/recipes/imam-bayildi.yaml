@@ -56,35 +56,40 @@ ingredientGroups:
         unit: ml
         optional: false
 steps:
-  - instruction: Patlıcanları soyun, boyuna bir tarafından derin bir kesi yapın ama ikiye ayırmayın. Tuzlu suda 20 dakika bekletin, ardından kurulayın.
+  - title: Patlıcanları tuzlayın
+    instruction: Patlıcanları soyun, boyuna bir tarafından derin bir kesi yapın ama ikiye ayırmayın. Tuzlu suda 20 dakika bekletin, ardından kurulayın.
     why: Tuzlu su acılığı çeker ve yağ emme kapasitesini azaltır. Boyuna kesi iç doldurmak için gerekli oyuğu oluşturur.
     looksLikeWhenDone: Patlıcanlar hafif kararıp su bırakmış. Kurulandığında yüzey kuru ve mat.
     commonMistake: Bekletmeyi atlamak — patlıcan çok fazla yağ çeker ve acı kalabilir.
     recovery: Acılık çok belirginse daha uzun süre tuzlu suda bekletin.
     stepImage: null
     timerSeconds: 1200
-  - instruction: Tavada 4 yemek kaşığı zeytinyağını kızdırın. Patlıcanları her taraftan 5-7 dakika kavurun, yarı yumuşak hâle gelene kadar. Bir kenara alın.
+  - title: Patlıcanları kavurun
+    instruction: Tavada 4 yemek kaşığı zeytinyağını kızdırın. Patlıcanları her taraftan 5-7 dakika kavurun, yarı yumuşak hâle gelene kadar. Bir kenara alın.
     why: Önceden kavurma patlıcanın iç harcı emmesini kolaylaştırır ve fırın süresini kısaltır.
     looksLikeWhenDone: Patlıcanlar altın sarısı renk almış, dışı hafif kızarmış. Bıçak kolayca 2 cm kadar giriyor.
     commonMistake: Çok az yağla kavurmak — patlıcan kuru kalır ve sert pişer.
     recovery: Kavurma sırasında yağ azalırsa çekinmeden ekleyin.
     stepImage: null
     timerSeconds: 420
-  - instruction: Aynı tavada kalan zeytinyağını ısıtın. Soğanları ince halkalar hâlinde 4-5 dakika kavurun. Sarımsak ve biberi ekleyip 2 dakika daha kavurun. Domatesleri küçük küpler hâlinde doğrayıp ekleyin. Tuz ve şekeri ekleyip 10 dakika kısık ateşte pişirin.
+  - title: İç harcı hazırlayın
+    instruction: Aynı tavada kalan zeytinyağını ısıtın. Soğanları ince halkalar hâlinde 4-5 dakika kavurun. Sarımsak ve biberi ekleyip 2 dakika daha kavurun. Domatesleri küçük küpler hâlinde doğrayıp ekleyin. Tuz ve şekeri ekleyip 10 dakika kısık ateşte pişirin.
     why: Uzun kavurma iç harcın tatlılığını ve derinliğini oluşturur. Şeker asiditeli domatesi dengeler. Bu harç patlıcanın lezzetinin büyük kısmıdır.
     looksLikeWhenDone: Soğanlar şeffaf ve çok yumuşak. Domates tamamen eriyerek sossu bir harç oluşturmuş. Yağ yüzeyde toplanmış.
     commonMistake: Harcı kısa pişirmek — tatlar yeterince gelişmez ve su fazla kalır.
     recovery: Fazla suyu kapalı kapakla daha uzun pişirerek buharlaştırın.
     stepImage: null
     timerSeconds: 720
-  - instruction: Patlıcanların ortasındaki kesiğe bastırarak cep açın. Her birine iç harcı doldurun. Tepsiye yan yana dizin. Kalan harcı ve 100 ml suyu tepsiye ekleyin.
+  - title: Patlıcanları doldurun
+    instruction: Patlıcanların ortasındaki kesiğe bastırarak cep açın. Her birine iç harcı doldurun. Tepsiye yan yana dizin. Kalan harcı ve 100 ml suyu tepsiye ekleyin.
     why: Su fırın sırasında patlıcanların kurumasını önler ve alt kısmın buharla pişmesini sağlar.
     looksLikeWhenDone: Her patlıcan ağzına kadar dolu. Tepsinin dibinde ince bir sos tabakası var.
     commonMistake: Suyu az koymak — taban kurur ve patlıcanlar sertleşir.
     recovery: Pişirme ortasında kontrol edin; taban kurursa biraz su ekleyin.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Fırında pişirin
+    instruction: >-
       Önceden ısıtılmış 180 derece fırında 30-35 dakika pişirin. Patlıcanlar çok yumuşayıp üstleri
       hafif kızarana kadar bekleyin. Oda sıcaklığında veya soğuk servis edin.
     why: İmam bayıldı geleneksel olarak soğuk veya oda sıcaklığında servis edilir; zeytinyağı soğuyunca yoğunlaşır ve tat derinleşir.

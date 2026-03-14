@@ -5,6 +5,7 @@ import { RecipeSchema } from "../src/types/recipe";
 // Fixture: a complete valid menemen recipe
 // ---------------------------------------------------------------------------
 const validStep = {
+  title: "Soğanları kavurun",
   instruction: "Zeytinyağını tavada kızdırın, soğanları ekleyin.",
   why: "Soğanların karamelize olması tatlılık katar.",
   looksLikeWhenDone: "Soğanlar şeffaf ve hafif altın rengi.",
@@ -15,6 +16,7 @@ const validStep = {
 };
 
 const validStep2 = {
+  title: "Sebzeleri pişirin",
   instruction: "Domatesleri ve biberleri ekleyin, 5 dakika pişirin.",
   why: "Domateslerin suyunu salması sosun tabanını oluşturur.",
   looksLikeWhenDone: "Domates parçaları yumuşayıp sos kıvamına gelmiş.",

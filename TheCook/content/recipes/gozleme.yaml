@@ -47,28 +47,32 @@ ingredientGroups:
         unit: adet
         optional: true
 steps:
-  - instruction: Un, tuz, zeytinyağı ve ılık suyu karıştırarak yumuşak ama yapışmayan bir hamur yoğurun. 20 dakika dinlendirin.
+  - title: Hamuru yoğurup dinlendirin
+    instruction: Un, tuz, zeytinyağı ve ılık suyu karıştırarak yumuşak ama yapışmayan bir hamur yoğurun. 20 dakika dinlendirin.
     why: Dinlendirme glütenin gevşemesini sağlar; böylece hamuru incecik açmak kolaylaşır.
     looksLikeWhenDone: Hamur pürüzsüz ve yumuşak. Uzatılınca direnmeden esniyior. Yüzey kuru değil.
     commonMistake: Hamuru hemen açmak — dirençlidir, geri çekilir ve ince açılamaz.
     recovery: Dinlendirmeye devam edin; yeterince dinlendirilmemiş hamur açılamaz.
     stepImage: null
     timerSeconds: 1200
-  - instruction: Ispanağı ince doğrayın. Peyniri ezerek ıspaklakla karıştırın. İsteğe bağlı soğanı ince doğrayıp ekleyin.
+  - title: İç harcı hazırlayın
+    instruction: Ispanağı ince doğrayın. Peyniri ezerek ıspaklakla karıştırın. İsteğe bağlı soğanı ince doğrayıp ekleyin.
     why: İç harcın hazır olması gözleme açılınca hızlı çalışmayı sağlar. Ispanak ve peynirin yoğunluğu gözlemenin tam lezzetini verir.
     looksLikeWhenDone: Harç karışmış, peynir parçacıkları ve ıspanak eşit dağılmış.
     commonMistake: Ispanağı pişirip koymak — yeşil rengi solar ve fazla su bırakır.
     recovery: Fazla su bırakırsa üzerine kağıt havlu koyun.
     stepImage: null
     timerSeconds: null
-  - instruction: Hamuru 4 eşit parçaya bölün. Her parçayı un serpilmiş yüzeyde çok ince (2 mm kalınlık) açın. Yarısına harç yayın ve diğer yarıyı üstüne katlayın ya da dikdörtgen kesin.
+  - title: Hamuruı açıp doldurun
+    instruction: Hamuru 4 eşit parçaya bölün. Her parçayı un serpilmiş yüzeyde çok ince (2 mm kalınlık) açın. Yarısına harç yayın ve diğer yarıyı üstüne katlayın ya da dikdörtgen kesin.
     why: İnce açılan hamur döküm tavada çabuk ve eşit pişer. Çok kalın hamur pişirirken iç harç sızdırabilir.
     looksLikeWhenDone: Hamur neredeyse saydam derecede ince, yırtılmadan açılmış. Harç eşit dağılmış.
     commonMistake: Hamuru kalın bırakmak — gözleme kabarık ve hamursu olur.
     recovery: Kalın açılmışsa daha uzun pişirin.
     stepImage: null
     timerSeconds: null
-  - instruction: Döküm tavayı yüksek ateşte ısıtın. Gözlemeyi koyun, 2-3 dakika yüzeyde kabarcıklar oluşana kadar pişirin. Ters çevirip 2 dakika daha pişirin. Sıcak servis edin.
+  - title: Tavada pişirin
+    instruction: Döküm tavayı yüksek ateşte ısıtın. Gözlemeyi koyun, 2-3 dakika yüzeyde kabarcıklar oluşana kadar pişirin. Ters çevirip 2 dakika daha pişirin. Sıcak servis edin.
     why: Çok sıcak tava gözlemeyi çabuk kavurur ve hamur ince pişer. Kabarcıklar buharın altından geçtiğinin işaretidir.
     looksLikeWhenDone: Her iki yüzey altın-kahverengi lekeli. Peynir eriyerek sızıyor, ıspanak yeşil kalmış.
     commonMistake: Orta ateşte pişirmek — çok uzun sürer, hamur kurur.

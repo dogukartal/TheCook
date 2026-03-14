@@ -49,35 +49,40 @@ ingredientGroups:
         unit: gr
         optional: true
 steps:
-  - instruction: Domatesleri soyun ve küçük küpler halinde doğrayın. Biberleri ince halkalar veya küçük parçalar halinde doğrayın. Soğan kullanıyorsanız ince doğrayın.
+  - title: Sebzeleri doğrayın
+    instruction: Domatesleri soyun ve küçük küpler halinde doğrayın. Biberleri ince halkalar veya küçük parçalar halinde doğrayın. Soğan kullanıyorsanız ince doğrayın.
     why: Küçük doğranmış domates daha hızlı sulanır ve pişer. Biberler ince doğranırsa yumurtayla aynı anda pişer.
     looksLikeWhenDone: Domates parçaları 1-2 cm küp büyüklüğünde, biber parçaları ince ve düzenli görünüyor.
     commonMistake: Domatesleri soymamak — kabuğun sert dokusu menemenin kıvamını bozar.
     recovery: Pişirme sırasında kabuklar ayrışırsa bir kaşıkla çıkarabilirsiniz.
     stepImage: null
     timerSeconds: null
-  - instruction: Tavayı orta ateşte ısıtın ve tereyağını ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.
+  - title: Soğan ve biberi kavurun
+    instruction: Tavayı orta ateşte ısıtın ve tereyağını ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.
     why: Soğanı önce kavurmak tatlılığını ortaya çıkarır. Biberleri soğanla pişirmek her ikisinin de yumuşamasını sağlar.
     looksLikeWhenDone: Soğanlar şeffaflaşmış, biberler hafif yumuşamış ama hâlâ yeşil görünüyor.
     commonMistake: Yüksek ateşte kavurmak — tereyağı yanar ve biberler sertleşir.
     recovery: Ateşi hemen kısın, tavayı ocaktan alın ve kısa süre bekleyin.
     stepImage: null
     timerSeconds: 180
-  - instruction: Domatesleri tavaya ekleyin ve orta ateşte, ara ara karıştırarak 5-7 dakika pişirin. Suyunu çekip koyulaşana kadar bekleyin.
+  - title: Domatesi pişirin
+    instruction: Domatesleri tavaya ekleyin ve orta ateşte, ara ara karıştırarak 5-7 dakika pişirin. Suyunu çekip koyulaşana kadar bekleyin.
     why: Fazla suyun buharlaşması gerekir, aksi hâlde menemen sulu ve cıvık olur. Koyulaşan domates sosun içinde yumurta şekil tutabilir.
     looksLikeWhenDone: Domates karışımı kaşığın gerisini bırakacak kadar koyulaşmış, rengi koyu kırmızıya dönmüş, tava dibinde sıvı birikmiyor.
     commonMistake: Domatesi yeterince pişirmemek — suyu bitmeden yumurta eklemek.
     recovery: Yumurtaları ekledikten sonra hâlâ çok sulu ise kapağı açık pişirmeye devam edin.
     stepImage: null
     timerSeconds: 420
-  - instruction: Tuz ve karabiber ekleyip karıştırın. Yumurtaları kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.
+  - title: Yumurtaları kırın
+    instruction: Tuz ve karabiber ekleyip karıştırın. Yumurtaları kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.
     why: Sarıları bütün bırakmak yumurtanın gözenekli kıvamda pişmesini sağlar. Fazla karıştırmak yumurtayı lastikleştirir.
     looksLikeWhenDone: Yumurta beyazları tamamen donmuş, sarılar hâlâ hafif sıvı ya da az pişmiş görünüyor (tercih meselesi).
     commonMistake: Çok uzun süre karıştırmak veya fazla pişirmek — yumurta sertleşir.
     recovery: Ocağı hemen kapatın; tava sıcaklığı kalan pişirmeyi tamamlar.
     stepImage: null
     timerSeconds: 120
-  - instruction: İsterseniz üzerine ufalanmış beyaz peynir serpin. Hemen tavadan servis edin.
+  - title: Peynirle servis edin
+    instruction: İsterseniz üzerine ufalanmış beyaz peynir serpin. Hemen tavadan servis edin.
     why: Sıcak menemenin üzerine eklenen peynir hafifçe eriyerek kremsi bir lezzet katmanı oluşturur. Bekletilirse yumurta sertleşir.
     looksLikeWhenDone: Peynir parçaları hafifçe erimeye başlamış, yüzey hâlâ canlı ve buharlı görünüyor.
     commonMistake: Servis etmeden önce menemi bekletmek — soğuduğunda yumurta kauçuk gibi olur.

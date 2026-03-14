@@ -275,9 +275,27 @@ export default function CookingScreen() {
   }
 
   function goToTimerStep() {
-    if (timer.stepIndex != null) {
-      pagerRef.current?.setPage(timer.stepIndex);
+    if (timer.stepIndex == null || !pagerRef.current) return;
+
+    const target = timer.stepIndex;
+    const direction = target < currentStep ? -1 : 1;
+    const distance = Math.abs(target - currentStep);
+
+    if (distance <= 1) {
+      // Adjacent step — just slide normally
+      pagerRef.current.setPage(target);
+      return;
     }
+
+    // Animate through intermediate pages with short delays
+    let step = currentStep;
+    const interval = setInterval(() => {
+      step += direction;
+      pagerRef.current?.setPage(step);
+      if (step === target) {
+        clearInterval(interval);
+      }
+    }, 150);
   }
 
   function handleCompletion() {

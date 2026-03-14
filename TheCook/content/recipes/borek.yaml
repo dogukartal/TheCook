@@ -56,7 +56,8 @@ ingredientGroups:
         unit: adet
         optional: true
 steps:
-  - instruction: >-
+  - title: Fırını ve harcı hazırlayın
+    instruction: >-
       Fırını 180 dereceye ısıtın. Yaklaşık 30x40 cm büyüklüğünde derin bir fırın tepsisini yağlayın.
       İç harcı önceden hazırlayın; peyniri elinizle ufalayın, maydanozu ince doğrayın, karabiber ve
       isteğe bağlı yumurtayla karıştırın.
@@ -66,7 +67,8 @@ steps:
     recovery: Peyniri parmaklarınızla iri tutarak ufalayın; ufak topaklar kalması normaldir.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Sütlü sosu yapın
+    instruction: >-
       Sosu hazırlamak için yumurtaları derin bir kaseye kırın, sütü, zeytinyağını ve tuzu ekleyip
       çırpın. Sos homojen görününce hazır.
     why: Bu sos yufkaların nemli ve yumuşak kalmasını sağlar; böreğin sert ve kuru olmamasının sırrıdır. Yağ ve yumurta da renk ve lezzet katar.
@@ -75,28 +77,32 @@ steps:
     recovery: Karışım ayrışmış ise tekrar çırpın; iyi karışmış olması yeterli.
     stepImage: null
     timerSeconds: null
-  - instruction: İlk iki yufkayı tepsiye serin. Her birini, hazırladığınız sostan 2-3 yemek kaşığı dökerek ıslatın. Yufkalar üst üste binebilir, tepsi kenarlarından taşabilir.
+  - title: Alt yufkaları serin
+    instruction: İlk iki yufkayı tepsiye serin. Her birini, hazırladığınız sostan 2-3 yemek kaşığı dökerek ıslatın. Yufkalar üst üste binebilir, tepsi kenarlarından taşabilir.
     why: İlk katman taban görevi görür ve nem tutması için bol sos ister. Kenarlardan taşan yufkalar sonradan içe kıvrılarak böreği kapatır.
     looksLikeWhenDone: İlk iki yufka tepside eşit serilmiş, yüzey nemlenmiş ama ıslak değil, hafif saydam görünüyor.
     commonMistake: Sosu tek bir yere dökmek — yufka bazı yerlerde kuru, bazı yerlerde çok ıslak olur.
     recovery: Sosu elinizle veya fırçayla yufkanın her köşesine yayın.
     stepImage: null
     timerSeconds: null
-  - instruction: Üçüncü ve dördüncü yufkayı üst üste serip sosla ıslatın. Tüm iç harcı bu katmanın üzerine eşit biçimde dağıtın.
+  - title: Orta katmanı doldurun
+    instruction: Üçüncü ve dördüncü yufkayı üst üste serip sosla ıslatın. Tüm iç harcı bu katmanın üzerine eşit biçimde dağıtın.
     why: Orta katman en kritik kısımdır; eşit yayılmış harç böreğin her diliminde aynı lezzeti verir. İki yufka arasına koymak harcın hem alttan hem üstten nemlenip yumuşamasını sağlar.
     looksLikeWhenDone: Harç tüm yüzeye yayılmış, köşelere kadar eşit miktarda dağıtılmış. Peynir ve maydanoz dengeli görünüyor.
     commonMistake: Harcı ortaya yığmak — köşeler boş kalır.
     recovery: Bir kaşık veya spatula ile harcı kenarlardan başlayarak yeniden dağıtın.
     stepImage: null
     timerSeconds: null
-  - instruction: Beşinci ve altıncı yufkayı üste serin ve kalan sosla tamamen ıslatın. Taşan yufka kenarlarını içe kıvrarak tepsiyi kapatın. Kalan sosu varsa üzerine dökün.
+  - title: Üst yufkaları kapatın
+    instruction: Beşinci ve altıncı yufkayı üste serin ve kalan sosla tamamen ıslatın. Taşan yufka kenarlarını içe kıvrarak tepsiyi kapatın. Kalan sosu varsa üzerine dökün.
     why: Üst kapak yufkaları alt katmanların fazla nemini emerek homojen bir kıvam oluşturur. Kıvrılan kenarlar kenarlardan peynirin dışarı akmasını önler.
     looksLikeWhenDone: Börek tepsiye düzgünce yerleşmiş, tüm yüzey eşit ıslanmış, kenarlar sıkıca kapatılmış.
     commonMistake: Üst yufkayı kuru bırakmak — üst kısım sert ve çatlamış pişer.
     recovery: Fırına girmeden önce fırçayla zeytinyağı veya kalan sosu üzerine sürün.
     stepImage: null
     timerSeconds: null
-  - instruction: Önceden ısıtılmış 180 derece fırına verin. 35-40 dakika, üstü altın sarısı ve kabarık görünene kadar pişirin. Fırından çıkarın ve servis etmeden önce 10 dakika bekleyin.
+  - title: Fırında pişirin
+    instruction: Önceden ısıtılmış 180 derece fırına verin. 35-40 dakika, üstü altın sarısı ve kabarık görünene kadar pişirin. Fırından çıkarın ve servis etmeden önce 10 dakika bekleyin.
     why: 180 derece orta sıcaklıkta dengeli pişirir; yüksek sıcaklık dışını yakar içini çiğ bırakır. Beklemek iç harcın yerleşmesini sağlar, böylece dağılmadan dilimlenebilir.
     looksLikeWhenDone: Üst yüzey altın sarısı ile kahverengi arasında, homojen renk almış. Kenarlar tepsiyle aynı hizada veya hafif kabarık. Bıçakla ortasına girildiğinde buharlı ve nemli ama akıcı değil.
     commonMistake: Fırından çıkar çıkmaz kesmek — harç dağılır ve börek parçalanır.

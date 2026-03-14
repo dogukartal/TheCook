@@ -61,7 +61,8 @@ ingredientGroups:
         unit: demet
         optional: true
 steps:
-  - instruction: >-
+  - title: Patlıcanları tuzlayın
+    instruction: >-
       Patlıcanları boyuna yarıya bölün, her yarının ortasına keskin bir bıçakla V şeklinde derin bir
       çentik açın. Tuzlu suda 20 dakika bekletin, ardından kurutun.
     why: Tuzlu suda bekletmek patlıcanın acılığını giderir ve yağ emme kapasitesini azaltır. V çentik iç harcın düzgün yerleşmesini sağlar.
@@ -70,28 +71,32 @@ steps:
     recovery: Bekletmeyi atladıysanız kızartmadan önce patlıcanı iyice kurulayın ve daha az yağ kullanın.
     stepImage: null
     timerSeconds: 1200
-  - instruction: Tavada zeytinyağını kızdırın ve patlıcanları kesik yüzü aşağı bakacak şekilde 5-6 dakika kavurun. Ters çevirip 3 dakika daha pişirin. Fırın tepsisine alın.
+  - title: Patlıcanları kızartın
+    instruction: Tavada zeytinyağını kızdırın ve patlıcanları kesik yüzü aşağı bakacak şekilde 5-6 dakika kavurun. Ters çevirip 3 dakika daha pişirin. Fırın tepsisine alın.
     why: Kızartma patlıcanın dokusunu yumuşatır ve fırında iç harcı çekecek yapıya kavuşturur. Kesik yüzü aşağı başlamak şekil tutmasını sağlar.
     looksLikeWhenDone: Patlıcanlar altın sarısı ile kahverengi arasında renk almış, bıçak kolayca giriyor. Şekli korunuyor.
     commonMistake: Çok yüksek ateşte yakmak — dışı yanar içi çiğ kalır.
     recovery: Ateşi kısın ve kapağı kapalı biraz daha pişirin.
     stepImage: null
     timerSeconds: 540
-  - instruction: Aynı tavada kıymayı ve soğanı birlikte kavurun. Kıyma suyunu çekince sarımsağı ve salçayı ekleyip 2 dakika daha pişirin. Tuz ve karabiber ile tatlandırın.
+  - title: Kıyma harcını pişirin
+    instruction: Aynı tavada kıymayı ve soğanı birlikte kavurun. Kıyma suyunu çekince sarımsağı ve salçayı ekleyip 2 dakika daha pişirin. Tuz ve karabiber ile tatlandırın.
     why: Kıymayı soğanla kavurmak suyu erken çektirir. Salçayı yağda kavurmak çiğ tadını giderir ve iç harca renk verir.
     looksLikeWhenDone: Kıyma tamamen pişmiş ve dağılmış, rengi kahverengi. Salça koyulaşmış. Tava dibinde sıvı birikmiyor.
     commonMistake: Kıymayı çok ince kavurmak — içte nemli kalırsa fırında patlıcanı ıslatır.
     recovery: Kıymanın tüm suyu çekilene kadar kavurmaya devam edin.
     stepImage: null
     timerSeconds: 360
-  - instruction: Fırın tepsisindeki patlıcanların çentiklerini aralayın ve hazırladığınız kıyma harcını her birine doldurun. Üzerine yarım domates ve biber dilimi yerleştirin.
+  - title: Patlıcanları doldurun
+    instruction: Fırın tepsisindeki patlıcanların çentiklerini aralayın ve hazırladığınız kıyma harcını her birine doldurun. Üzerine yarım domates ve biber dilimi yerleştirin.
     why: Domates ve biber fırın süresi boyunca patlıcanın kurumasını önler, aynı zamanda sunum güzelliği sağlar.
     looksLikeWhenDone: Her patlıcan harçla dolu, üstünde bir domates ve biber parçası var. Tepside düzenli dizilmiş.
     commonMistake: Harcı taşıracak kadar doldurmak — pişirirken kayar ve tepsi kirlenebilir.
     recovery: Taşan harçları kaşıkla geri yerleştirin.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Fırında pişirin
+    instruction: >-
       Önceden ısıtılmış 180 derece fırına verin. 25-30 dakika, domates ve biberler yumuşayıp hafif
       kızarana kadar pişirin. Servis etmeden önce üzerine doğranmış taze maydanoz serpin.
     why: Fırında yavaş pişirmek iç harcın patlıcanla bütünleşmesini sağlar. Maydanoz taze bir tat ve renk katar.

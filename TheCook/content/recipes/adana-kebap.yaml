@@ -47,21 +47,24 @@ ingredientGroups:
         unit: tatlı kaşığı
         optional: false
 steps:
-  - instruction: Soğanı rendeleyin ve suyunu iyice sıkın. Kuyruk yağını veya iç yağı çok ince kıyın ya da robotla çekin.
+  - title: Soğan ve yağı hazırlayın
+    instruction: Soğanı rendeleyin ve suyunu iyice sıkın. Kuyruk yağını veya iç yağı çok ince kıyın ya da robotla çekin.
     why: Soğan suyu harcı sularlatır ve kebap şeklini tutamaz. İnce kıyılmış yağ ise kıymaya işler ve kebabı sulu kılar.
     looksLikeWhenDone: Soğan ince rende, suyunun büyük kısmı sıkılmış. Yağ çok küçük parçalara ayrılmış.
     commonMistake: Soğan suyunu sıkmamak — kebap ıslak kalır ve şişe takılmaz.
     recovery: Sıkmayı atladıysanız kağıt havluda bekletip fazla suyu aldırın.
     stepImage: null
     timerSeconds: null
-  - instruction: Kıyma, yağ, soğan, salça, pul biber, karabiber, tuz ve kimyonu derin bir kapta birleştirin. En az 10 dakika kuvvetlice yoğurun. Buzdolabında 1 saat dinlendirin.
+  - title: Harcı yoğurup dinlendirin
+    instruction: Kıyma, yağ, soğan, salça, pul biber, karabiber, tuz ve kimyonu derin bir kapta birleştirin. En az 10 dakika kuvvetlice yoğurun. Buzdolabında 1 saat dinlendirin.
     why: Uzun yoğurma proteini aktive eder; harç birbirine yapışır ve şekil tutar. Dinlendirme tatların birbirine geçmesini sağlar.
     looksLikeWhenDone: Harç yapışkan ve homojen. Elimize alınca şekil tutuyor, ısıya karşı direniyor.
     commonMistake: Az yoğurmak — kebap şişte ya da tavada dağılır.
     recovery: Dağılmaya başlarsa alıp tekrar yoğurun ve yeniden şekil verin.
     stepImage: null
     timerSeconds: 4200
-  - instruction: Harcın 1/6 kadarını avucunuza alın ve ıslak el ile uzun, silindir şekil verin. Döküm tavayı çok yüksek ateşte ısıtın. Kebapları 3-4 dakika, her taraftan güzelce kızarana kadar pişirin.
+  - title: Şekil verip pişirin
+    instruction: Harcın 1/6 kadarını avucunuza alın ve ıslak el ile uzun, silindir şekil verin. Döküm tavayı çok yüksek ateşte ısıtın. Kebapları 3-4 dakika, her taraftan güzelce kızarana kadar pişirin.
     why: Çok yüksek ateş dışını hızla mühürler ve iç suyunu korur. Orta ateşte pişirilen kebap kızarmak yerine haşlanır.
     looksLikeWhenDone: Dışı koyu kahverengi ve hafif çıtır. Baskı uygulanınca biraz direnç var. Kes kontrolü pembe ama pişmiş.
     commonMistake: Kebabı döndürmeden süreklı aynı tarafta pişirmek — bir tarafı yanar, diğeri çiğ kalır.

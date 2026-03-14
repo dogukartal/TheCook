@@ -44,21 +44,24 @@ ingredientGroups:
         unit: adet
         optional: false
 steps:
-  - instruction: Havuçları veya zucchiniyi soyup dilimleyin. Hafif tuzlu suda 8-10 dakika, çatal girecek kadar yumuşayana kadar haşlayın. Süzün ve soğutun.
+  - title: Sebzeleri haşlayın
+    instruction: Havuçları veya zucchiniyi soyup dilimleyin. Hafif tuzlu suda 8-10 dakika, çatal girecek kadar yumuşayana kadar haşlayın. Süzün ve soğutun.
     why: Haşlanmış sebze tarator sosunu emer ve lezzetini en iyi şekilde aktarır. Çiğ sebzeyle tarator lezzetini tam almaz.
     looksLikeWhenDone: Sebzeler yumuşak ama dağılmamış. Çatal kolayca giriyor. Renk hafif solmuş.
     commonMistake: Aşırı haşlamak — sebze dağılır ve taratoru emerken parçalanır.
     recovery: Dağıldıysa servis ederken fark edilmez; tat aynıdır.
     stepImage: null
     timerSeconds: 600
-  - instruction: Cevizleri mutfak robotunda veya havanda ince kıyın. Sarımsağı ezin ve cevizlerle karıştırın. Zeytinyağı ve sirkeyi ekleyip homojen bir sos yapın. Tuz ekleyin.
+  - title: Tarator sosunu yapın
+    instruction: Cevizleri mutfak robotunda veya havanda ince kıyın. Sarımsağı ezin ve cevizlerle karıştırın. Zeytinyağı ve sirkeyi ekleyip homojen bir sos yapın. Tuz ekleyin.
     why: Ceviz sosu taratoru tarif eden bağlayıcı unsurdur. Sarımsak ve sirke keskin tat verir; yağ kremsi bağlar.
     looksLikeWhenDone: Sos krem rengi ve hafif pürüzlü. Ceviz parçacıkları görünüyor ama büyük parçalar yok. Tadı dengeli, ekşi ve natlı.
     commonMistake: Cevizi çok kaba kıymak — dağınık doku, sos bağlanmaz.
     recovery: Sosu daha uzun işleyin ya da biraz su ekleyerek kremsi hâle getirin.
     stepImage: null
     timerSeconds: null
-  - instruction: Sebzeleri tabağa dizin. Tarator sosunu üzerine döküp dağıtın. İsteğe bağlı olarak üzerine ince kıyılmış dereotu veya maydanoz serpin.
+  - title: Servis için hazırlayın
+    instruction: Sebzeleri tabağa dizin. Tarator sosunu üzerine döküp dağıtın. İsteğe bağlı olarak üzerine ince kıyılmış dereotu veya maydanoz serpin.
     why: Sos sebze üzerine döküldükten sonra kısa süre bekletmek sebzenin sosu emmesini sağlar ve lezzet derinleşir.
     looksLikeWhenDone: Sebzeler kremsi tarator sosuyla kaplanmış. Yeşil ot serpintisi renk katmış.
     commonMistake: Hemen servis etmek — 10 dakika bekletmek lezzeti geliştirir.

@@ -52,14 +52,16 @@ ingredientGroups:
         unit: tatlı kaşığı
         optional: true
 steps:
-  - instruction: Tüm sebzeleri olabildiğince ince ve küçük doğrayın — zırh kullanıyorsanız zırha koyun ve kıyın. Bıçak kullanıyorsanız önce iri doğrayın ardından bıçakla doğramaya devam edin.
+  - title: Sebzeleri ince kıyın
+    instruction: Tüm sebzeleri olabildiğince ince ve küçük doğrayın — zırh kullanıyorsanız zırha koyun ve kıyın. Bıçak kullanıyorsanız önce iri doğrayın ardından bıçakla doğramaya devam edin.
     why: Ezmenin karakteri ince kıyımdan gelir. İri parçalar ezme olmaz, salata olur. Zırh geleneksel alet ve en iyi dokuyu verir.
     looksLikeWhenDone: Tüm malzemeler çok ince, yaklaşık 2-3 mm parçalar hâlinde. Görünüm neredeyse pürüzsüz ama biraz doku var.
     commonMistake: Blendere koymak — pürüye dönüşür, ezme değil salça gibi olur.
     recovery: Eğer pürüye dönüştüyse salça olarak kullanın veya çok ince kıyılmış taze ekleyerek dokuyu geri kazandırın.
     stepImage: null
     timerSeconds: null
-  - instruction: Kıyılan malzemeleri kaba koyun. Zeytinyağı, nar ekşisi ve tuz ekleyin. İsteğe bağlı sumak ekleyin. Karıştırın. 15-20 dakika buzdolabında dinlendirin.
+  - title: Baharatlayıp dinlendirin
+    instruction: Kıyılan malzemeleri kaba koyun. Zeytinyağı, nar ekşisi ve tuz ekleyin. İsteğe bağlı sumak ekleyin. Karıştırın. 15-20 dakika buzdolabında dinlendirin.
     why: Dinlendirme tatların birbirine karışmasını sağlar. Nar ekşisi domatesin suyunu çeker; bu kıvam istenilen ezme dokusunu oluşturur.
     looksLikeWhenDone: Ezme hafif ıslak ve parlak. Kap altında biraz sıvı birikmiş. Tatlar birbirine geçmiş.
     commonMistake: Hemen servis etmek — tatlar henüz birleşmemiştir.

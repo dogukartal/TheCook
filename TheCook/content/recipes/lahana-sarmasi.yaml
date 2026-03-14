@@ -66,28 +66,32 @@ ingredientGroups:
         unit: gr
         optional: true
 steps:
-  - instruction: Lahanayı tencereye sığacak büyüklükte kesin ve kaynar tuzlu suda 8-10 dakika haşlayın. Yapraklar yumuşayınca çıkarın ve soğutun.
+  - title: Lahana yapraklarını haşlayın
+    instruction: Lahanayı tencereye sığacak büyüklükte kesin ve kaynar tuzlu suda 8-10 dakika haşlayın. Yapraklar yumuşayınca çıkarın ve soğutun.
     why: Haşlama yaprakların esnemesini sağlar; kırılmadan katlayabilirsiniz. Soğutmak elleri yakmadan çalışmanızı sağlar.
     looksLikeWhenDone: Yapraklar yumuşak ve esnek, kırılmadan 90 derece katlanabiliyor. Rengi solmuş ve yeşilden sarı-yeşile dönmüş.
     commonMistake: Yetersiz haşlama — yapraklar sert ve katlamayı zorlaştırır.
     recovery: Yarım kalan yaprakları suya geri koyup 3 dakika daha haşlayın.
     stepImage: null
     timerSeconds: 600
-  - instruction: Pirinçleri yıkayın. Soğanı ince doğrayın. Kıyma, pirinç, soğan, salça, tuz, karabiber ve naneyi birleştirin ve karıştırın.
+  - title: İç harcı hazırlayın
+    instruction: Pirinçleri yıkayın. Soğanı ince doğrayın. Kıyma, pirinç, soğan, salça, tuz, karabiber ve naneyi birleştirin ve karıştırın.
     why: Pirinç haşlanmamış eklenir; pişerken iç haçın içinde şişer ve lahana suyunu emecektir. Çiğ pirinç harcı bağlar.
     looksLikeWhenDone: Harç homojen ve yapışkan. Pirinç taneleri görünüyor. Renk açık pembe-kırmızı.
     commonMistake: Pişmiş pirinç kullanmak — sarma içinde aşırı şişer ve yaprak patlar.
     recovery: Pişmiş pirinç kullandıysanız miktarı yarıya indirin.
     stepImage: null
     timerSeconds: null
-  - instruction: Her lahana yaprağının sertçe kalmış orta damarını bıçakla inceltip kesmeden düzeltin. Yaprağın alt kısmına 1-2 yemek kaşığı harç koyun, kenarları içe katlayıp sıkıca rulo yapın.
+  - title: Sarmaları yuvarlayın
+    instruction: Her lahana yaprağının sertçe kalmış orta damarını bıçakla inceltip kesmeden düzeltin. Yaprağın alt kısmına 1-2 yemek kaşığı harç koyun, kenarları içe katlayıp sıkıca rulo yapın.
     why: Damarı inceltmek katlamayı kolaylaştırır ve pişince eşit yumuşamasını sağlar. Sıkı sarma pişirirken açılmayı önler.
     looksLikeWhenDone: Sarma sıkı, yaklaşık 7-8 cm uzunluğunda silindir. Kenarlar içe kıvrılmış.
     commonMistake: Çok fazla harç koymak — pirinç şişince yaprak patlar.
     recovery: Açılırsa çıkarın, yarısını boşaltıp yeniden sarın.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Tencerede pişirin
+    instruction: >-
       Tencere dibine küçük lahana yapraklarını ya da parçalarını yayın. Sarmaları sıkıca yan yana
       dizin. Tereyağı ve salçayı karıştırıp 500 ml su ile seyreltip üzerine dökün. Kapağı kapatıp
       önce orta ateşte kaynatın, sonra kısık ateşte 45-50 dakika pişirin.

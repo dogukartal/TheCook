@@ -40,21 +40,24 @@ ingredientGroups:
         unit: tatlı kaşığı
         optional: true
 steps:
-  - instruction: Tarhanayı 1 su bardağı soğuk su ile iyice ezin, topak kalmayacak şekilde karıştırın. En az 10 dakika ıslanmaya bırakın.
+  - title: Tarhanayı ıslatın
+    instruction: Tarhanayı 1 su bardağı soğuk su ile iyice ezin, topak kalmayacak şekilde karıştırın. En az 10 dakika ıslanmaya bırakın.
     why: Kuru tarhanayı önceden ıslatmak tenceredo topak oluşumunu önler. Oda sıcaklığında ıslatmak tanelerin çözülmesini kolaylaştırır.
     looksLikeWhenDone: Tarhana suyla karışmış, pütürsüz kıvamda ve koyu sarı-turuncu renkte.
     commonMistake: Tarhanayı direkt sıcak suya koymak — dışı hızla pişer, içi topak kalır.
     recovery: Topaklar oluşmuşsa daldırma blenderla düzeltin.
     stepImage: null
     timerSeconds: 600
-  - instruction: Kalan suyu tencereye koyun ve kaynatın. Islatılmış tarhanayı ekleyin, sürekli karıştırın. Domates salçası ve tuzunu ekleyin. Kısık ateşte 15 dakika ara sıra karıştırarak pişirin.
+  - title: Çorbayı pişirin
+    instruction: Kalan suyu tencereye koyun ve kaynatın. Islatılmış tarhanayı ekleyin, sürekli karıştırın. Domates salçası ve tuzunu ekleyin. Kısık ateşte 15 dakika ara sıra karıştırarak pişirin.
     why: Sürekli karıştırmak tarhananın dibine yapışmasını önler. 15 dakika çorbanın kıvam alması için yeterlidir.
     looksLikeWhenDone: Çorba pürüzsüz ve kremsi. Kıvam mercimek çorbasına benzer. Renk turuncu-kırmızı.
     commonMistake: Karıştırmadan pişirmek — tarhana dibe yapışır ve yanar.
     recovery: Dibe yapıştıysa taşıyın ve yeni tencerede devam edin; kaynamış parça acı tat bırakır.
     stepImage: null
     timerSeconds: 900
-  - instruction: Küçük bir tavada tereyağını eritin. Kuru naneyi ekleyip 10 saniye kavurun. Bu yağı çorbanın üzerine gezdirin ve hemen servis edin.
+  - title: Naneli tereyağı ekleyin
+    instruction: Küçük bir tavada tereyağını eritin. Kuru naneyi ekleyip 10 saniye kavurun. Bu yağı çorbanın üzerine gezdirin ve hemen servis edin.
     why: Tereyağında kavrulan nane çorbaya aromatik bir tat katar ve geleneksel servisi tamamlar.
     looksLikeWhenDone: Çorba servis kasesinde, üzerinde yeşil naneli tereyağı gezdirimi var.
     commonMistake: Naneyi çok uzun süre kavurmak — bittikten sonra servis sırasında karantina oluşur.

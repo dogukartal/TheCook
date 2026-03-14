@@ -46,14 +46,16 @@ ingredientGroups:
         unit: yemek kaşığı
         optional: false
 steps:
-  - instruction: Şerbeti yapın. Şeker ve suyu tencereye koyun ve kaynatın. Kaynayınca limon suyunu ekleyin ve 15-18 dakika kısık ateşte pişirin. Şerbet kaşığa yapışıp damlarken hafif iplik tutmalı. Ocağı kapatıp oda sıcaklığına getirin.
+  - title: Şerbeti hazırlayın
+    instruction: Şerbeti yapın. Şeker ve suyu tencereye koyun ve kaynatın. Kaynayınca limon suyunu ekleyin ve 15-18 dakika kısık ateşte pişirin. Şerbet kaşığa yapışıp damlarken hafif iplik tutmalı. Ocağı kapatıp oda sıcaklığına getirin.
     why: Şerbetin önceden yapılıp soğutulması kritiktir. Baklava sıcak, şerbet soğuk olmalıdır; ikisi de aynı sıcaklıkta olursa baklava ıslanır ve hamur batar.
     looksLikeWhenDone: Şerbet hafif viskoz, kaşık üzerinde ince bir film bırakıyor. Renk sarıdan hafif altına dönmüş.
     commonMistake: Şerbeti de sıcak iken dökmek — baklava yumuşar ve hamuru batar.
     recovery: Her iki tarafı da aynı sıcaklığa getirip tekrar deneyin.
     stepImage: null
     timerSeconds: 1080
-  - instruction: >-
+  - title: Alt yufkaları dizin
+    instruction: >-
       Fırını 160 dereceye ısıtın. Yaklaşık 30x40 cm boyutunda bir tepsiye eritilmiş tereyağı sürün.
       Yufkaları tepsiye uyacak şekilde kesin. İlk yufkayı tepsiye koyun, üzerine tereyağı sürün.
       Bu işlemi 10 yufka olana kadar tekrarlayın.
@@ -63,14 +65,16 @@ steps:
     recovery: Eksik kalan yerlere tereyağı sürmeye devam edin.
     stepImage: null
     timerSeconds: null
-  - instruction: Öğütülmüş fıstığı veya cevizi eşit olarak yufkaların üzerine yayın. Kalan yufkaları da aynı tereyağı tekniğiyle üst üste koyun ve son yufkaya da bol tereyağı sürün.
+  - title: İç harcı yerleştirin
+    instruction: Öğütülmüş fıstığı veya cevizi eşit olarak yufkaların üzerine yayın. Kalan yufkaları da aynı tereyağı tekniğiyle üst üste koyun ve son yufkaya da bol tereyağı sürün.
     why: Harç ortada olursa alttan ve üstten eşit pişer. Son yufkaya bol tereyağı dökmek güzel renk ve çıtır doku sağlar.
     looksLikeWhenDone: Tepsi katmanlı ve düzgün. Yüzey tereyağıyla gece parıldıyor.
     commonMistake: Harcı yalnızca ortaya yığmak — kenarlar boş kalır ve eşit pişmez.
     recovery: Harcı spatula ile kenarlardan içe kadar düzeltin.
     stepImage: null
     timerSeconds: null
-  - instruction: >-
+  - title: Kesin ve fırına verin
+    instruction: >-
       Keskin bir bıçakla baklavayı önce şeritler, ardından eşkenar dörtgen veya kare şekillerde
       kesin. Bıçak tabana kadar girmelidir. Önceden ısıtılmış 160 derece fırına verin ve 40-45
       dakika, üstü altın sarısı renk alana kadar pişirin.
@@ -80,7 +84,8 @@ steps:
     recovery: Fırından çıkınca sıcakken dikkatlice kesin.
     stepImage: null
     timerSeconds: 2700
-  - instruction: Fırından çıkar çıkmaz, soğutulmuş şerbeti tüm yüzeye yavaşça ve eşit dökün. Sesi duyacaksınız. 2-3 saat oda sıcaklığında bekletin, şerbetin tüm katmanlara geçmesini sağlayın.
+  - title: Şerbeti dökün
+    instruction: Fırından çıkar çıkmaz, soğutulmuş şerbeti tüm yüzeye yavaşça ve eşit dökün. Sesi duyacaksınız. 2-3 saat oda sıcaklığında bekletin, şerbetin tüm katmanlara geçmesini sağlayın.
     why: Sıcak-soğuk temas şerbetin hızla emilmesini sağlar. 2 saat beklemek şerbetin her katmana eşit dağılmasını sağlar; aceleyle servis edilirse şerbet yalnızca üstte kalır.
     looksLikeWhenDone: Baklava ıslak ama batık görünmüyor. Şerbet tüm katmanlara geçmiş, dilimler arasında sıvı birikiyor. Çıtır ama nemli.
     commonMistake: Şerbeti döktükten hemen sonra servis etmek — şerbet dibe çökmüş, üst kuru kalır.
