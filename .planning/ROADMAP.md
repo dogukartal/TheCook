@@ -112,6 +112,20 @@ Plans:
 - [ ] 05-02-PLAN.md — Cooking preview screen (replace recipe detail) + all cooking UI components (step-content, timer, progress bar, ingredients sheet, etc.)
 - [ ] 05-03-PLAN.md — Full-screen cooking view wiring (PagerView) + session persistence + resume banner + human verification
 
+### Phase 6: Wire Equipment to Recipe Discovery
+**Goal**: Declared kitchen equipment actually affects recipe surfacing — recipes requiring equipment the user hasn't declared are visibly de-prioritized or flagged across all discovery surfaces
+**Depends on**: Phase 4 (discovery layer), Phase 2 (equipment in profile)
+**Requirements**: ONBRD-03
+**Gap Closure:** Closes gap from v1.0 audit — equipment stored in profile but never consumed by recipe queries
+**Success Criteria** (what must be TRUE):
+  1. `DiscoveryFilterSchema` includes an `equipment` field representing user's declared equipment
+  2. `queryRecipesByFilter` de-prioritizes (sorts to end) or flags recipes whose `equipment` requirements are not in the user's declared list
+  3. Feed, Search, and My Kitchen screens pass user equipment into filter queries
+  4. Recipe cards display a visible indicator when a recipe requires equipment the user hasn't declared
+  5. Allergen filtering is unaffected — both filters compose correctly
+
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
@@ -126,3 +140,4 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 3. Content Library | 3/3 | Complete   | 2026-03-11 |
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
+| 6. Wire Equipment to Recipe Discovery | 0/? | Pending | — |

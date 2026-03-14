@@ -11,7 +11,7 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 - [x] **ONBRD-01**: User can declare allergens and dietary restrictions at onboarding; stored and applied automatically to all recipe recommendations
 - [x] **ONBRD-02**: User can set cooking skill level (beginner / intermediate / advanced); controls which recipes surface and step explanation depth
-- [x] **ONBRD-03**: User can declare available kitchen equipment; recipes requiring unlisted equipment are de-prioritized or flagged
+- [ ] **ONBRD-03**: User can declare available kitchen equipment; recipes requiring unlisted equipment are de-prioritized or flagged
 
 ### Discovery
 
@@ -81,7 +81,7 @@ Updated during roadmap creation.
 | CONT-02 | Phase 1 | Complete |
 | ONBRD-01 | Phase 2 | Complete |
 | ONBRD-02 | Phase 2 | Complete |
-| ONBRD-03 | Phase 2 | Complete |
+| ONBRD-03 | Phase 6 | Pending |
 | AUTH-01 | Phase 2 | Complete |
 | AUTH-02 | Phase 2 | Complete |
 | AUTH-03 | Phase 2 | Complete |
@@ -100,6 +100,7 @@ Updated during roadmap creation.
 - v1 requirements: 17 total
 - Mapped to phases: 17
 - Unmapped: 0
+- Pending (gap closure): 1 (ONBRD-03 → Phase 6)
 
 ---
 *Requirements defined: 2026-03-08*
