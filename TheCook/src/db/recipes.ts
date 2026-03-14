@@ -91,6 +91,29 @@ function extractIngredientNames(ingredientGroupsJson: string): string[] {
 }
 
 // ---------------------------------------------------------------------------
+// Equipment compatibility sort helper
+// ---------------------------------------------------------------------------
+
+/**
+ * Sorts recipe items so that equipment-compatible recipes appear first.
+ * A recipe is compatible if the user owns ALL equipment it requires.
+ * If userEquipment is empty, items are returned unchanged (no sort applied).
+ */
+function sortByEquipmentCompatibility(
+  items: RecipeListItem[],
+  userEquipment: string[]
+): RecipeListItem[] {
+  if (userEquipment.length === 0) return items;
+  const userSet = new Set(userEquipment);
+  return [...items].sort((a, b) => {
+    const aCompatible = a.equipment.every((e) => userSet.has(e));
+    const bCompatible = b.equipment.every((e) => userSet.has(e));
+    if (aCompatible === bCompatible) return 0;
+    return aCompatible ? -1 : 1;
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Standalone functions — accept SQLiteDatabase directly (for testability)
 // ---------------------------------------------------------------------------
 
@@ -271,7 +294,8 @@ export async function getRecentViews(db: SQLiteDatabase): Promise<RecentView[]> 
  */
 export async function getAllRecipesForFeed(
   db: SQLiteDatabase,
-  userAllergens: string[]
+  userAllergens: string[],
+  userEquipment: string[] = []
 ): Promise<RecipeListItem[]> {
   let sql = `SELECT ${SELECT_LIST_COLUMNS} FROM recipes r`;
   const params: string[] = [];
@@ -284,7 +308,8 @@ export async function getAllRecipesForFeed(
   sql += " ORDER BY rowid ASC";
 
   const rows = await db.getAllAsync<RecipeRow>(sql, params);
-  return rows.map(mapRowToRecipeListItem);
+  const items = rows.map(mapRowToRecipeListItem);
+  return sortByEquipmentCompatibility(items, userEquipment);
 }
 
 /**
@@ -332,7 +357,8 @@ export async function queryRecipesByFilter(
   }
 
   const rows = await db.getAllAsync<RecipeRow>(sql, params);
-  return rows.map(mapRowToRecipeListItem);
+  const items = rows.map(mapRowToRecipeListItem);
+  return sortByEquipmentCompatibility(items, filter.equipment);
 }
 
 /**
@@ -341,7 +367,8 @@ export async function queryRecipesByFilter(
  */
 export async function getAllRecipesForSearch(
   db: SQLiteDatabase,
-  userAllergens: string[]
+  userAllergens: string[],
+  userEquipment: string[] = []
 ): Promise<(RecipeListItem & { ingredient_groups: string })[]> {
   let sql = `SELECT ${SELECT_LIST_COLUMNS}, ingredient_groups FROM recipes r`;
   const params: string[] = [];
@@ -354,10 +381,18 @@ export async function getAllRecipesForSearch(
   sql += " ORDER BY rowid ASC";
 
   const rows = await db.getAllAsync<RecipeRow & { ingredient_groups: string }>(sql, params);
-  return rows.map((row) => ({
+  const withIngredients = rows.map((row) => ({
     ...mapRowToRecipeListItem(row),
     ingredient_groups: row.ingredient_groups,
   }));
+  if (userEquipment.length === 0) return withIngredients;
+  const userSet = new Set(userEquipment);
+  return [...withIngredients].sort((a, b) => {
+    const aC = a.equipment.every((e) => userSet.has(e));
+    const bC = b.equipment.every((e) => userSet.has(e));
+    if (aC === bC) return 0;
+    return aC ? -1 : 1;
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -453,10 +488,10 @@ export function useRecipesDb() {
       filterRecipesByAllergens(db, recipes, userAllergens),
     getAllIngredientNames: () => getAllIngredientNames(db),
     getAllRecipeTitles: () => getAllRecipeTitles(db),
-    getAllRecipesForFeed: (userAllergens: string[]) =>
-      getAllRecipesForFeed(db, userAllergens),
-    getAllRecipesForSearch: (userAllergens: string[]) =>
-      getAllRecipesForSearch(db, userAllergens),
+    getAllRecipesForFeed: (userAllergens: string[], userEquipment: string[] = []) =>
+      getAllRecipesForFeed(db, userAllergens, userEquipment),
+    getAllRecipesForSearch: (userAllergens: string[], userEquipment: string[] = []) =>
+      getAllRecipesForSearch(db, userAllergens, userEquipment),
     queryRecipesByFilter: (filter: DiscoveryFilter, userAllergens: string[]) =>
       queryRecipesByFilter(db, filter, userAllergens),
     recordRecentView: (recipeId: string) => recordRecentView(db, recipeId),
