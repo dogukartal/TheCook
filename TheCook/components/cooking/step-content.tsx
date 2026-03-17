@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -66,9 +67,13 @@ export function StepContent({
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Pastel color placeholder with overlapping timer */}
+      {/* Step image or pastel color placeholder with overlapping timer */}
       <View style={styles.imageWrapper}>
-        <View style={[styles.imagePlaceholder, { backgroundColor: bgColor }]} />
+        {step.stepImage ? (
+          <Image source={{ uri: step.stepImage }} style={styles.stepImage} resizeMode="cover" testID="step-image" />
+        ) : (
+          <View style={[styles.imagePlaceholder, { backgroundColor: bgColor }]} />
+        )}
         {hasTimer && (
           <View style={styles.timerOverlap} testID="circular-timer">
             <CircularTimer
@@ -93,6 +98,22 @@ export function StepContent({
 
       {/* Instruction text */}
       <Text style={styles.instruction}>{step.instruction}</Text>
+
+      {/* Checkpoint callout (green) */}
+      {step.checkpoint ? (
+        <View style={styles.checkpointCallout} testID="checkpoint-callout">
+          <MaterialCommunityIcons name="check-circle" size={16} color="#16A34A" />
+          <Text style={styles.checkpointText}>{step.checkpoint}</Text>
+        </View>
+      ) : null}
+
+      {/* Warning callout (amber) */}
+      {step.warning ? (
+        <View style={styles.warningCallout} testID="warning-callout">
+          <MaterialCommunityIcons name="alert" size={16} color="#D97706" />
+          <Text style={styles.warningText}>{step.warning}</Text>
+        </View>
+      ) : null}
 
       {/* Gormeli section */}
       <View style={styles.gormeliSection}>
@@ -141,6 +162,10 @@ const styles = StyleSheet.create({
     height: 200,
     width: '100%',
   },
+  stepImage: {
+    height: 200,
+    width: '100%',
+  },
   timerOverlap: {
     position: 'absolute',
     bottom: -48,
@@ -175,6 +200,36 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     paddingHorizontal: 16,
     marginBottom: 16,
+  },
+  checkpointCallout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginHorizontal: 16,
+    marginBottom: 8,
+    backgroundColor: '#F0FDF4',
+    borderRadius: 8,
+    padding: 10,
+  },
+  checkpointText: {
+    fontSize: 14,
+    color: '#15803D',
+    flex: 1,
+  },
+  warningCallout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginHorizontal: 16,
+    marginBottom: 8,
+    backgroundColor: '#FFFBEB',
+    borderRadius: 8,
+    padding: 10,
+  },
+  warningText: {
+    fontSize: 14,
+    color: '#92400E',
+    flex: 1,
   },
   gormeliSection: {
     paddingHorizontal: 16,

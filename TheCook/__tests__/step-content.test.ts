@@ -43,6 +43,8 @@ const mockStep: RecipeStep = {
   recovery: 'Kalin dogramissaniz biraz daha uzun pisirin',
   stepImage: null,
   timerSeconds: null,
+  checkpoint: null,
+  warning: null,
 };
 
 describe('StepContent', () => {
@@ -131,5 +133,102 @@ describe('StepContent', () => {
       })
     );
     expect(screen.getByTestId('circular-timer')).toBeTruthy();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Phase 11 — image and checkpoint/warning
+// ---------------------------------------------------------------------------
+
+describe('Phase 11 — image and checkpoint/warning', () => {
+  it('renders Image when stepImage is non-null', () => {
+    const stepWithImage: RecipeStep = {
+      ...mockStep,
+      stepImage: 'https://example.com/step.jpg',
+    };
+    render(
+      React.createElement(StepContent, {
+        step: stepWithImage,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    expect(screen.getByTestId('step-image')).toBeTruthy();
+  });
+
+  it('renders pastel placeholder when stepImage is null (existing behavior)', () => {
+    render(
+      React.createElement(StepContent, {
+        step: mockStep,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    // No step-image testID should exist
+    expect(screen.queryByTestId('step-image')).toBeNull();
+  });
+
+  it('renders checkpoint text with check-circle when checkpoint is non-null', () => {
+    const stepWithCheckpoint: RecipeStep = {
+      ...mockStep,
+      checkpoint: 'Kopurmeli ve hafif kizarmis olmali',
+    };
+    render(
+      React.createElement(StepContent, {
+        step: stepWithCheckpoint,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    expect(screen.getByText('Kopurmeli ve hafif kizarmis olmali')).toBeTruthy();
+  });
+
+  it('hides checkpoint section when checkpoint is null', () => {
+    render(
+      React.createElement(StepContent, {
+        step: mockStep,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    expect(screen.queryByTestId('checkpoint-callout')).toBeNull();
+  });
+
+  it('renders warning text with alert icon when warning is non-null', () => {
+    const stepWithWarning: RecipeStep = {
+      ...mockStep,
+      warning: 'Cok kisdirmak yanar!',
+    };
+    render(
+      React.createElement(StepContent, {
+        step: stepWithWarning,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    expect(screen.getByText('Cok kisdirmak yanar!')).toBeTruthy();
+  });
+
+  it('hides warning section when warning is null', () => {
+    render(
+      React.createElement(StepContent, {
+        step: mockStep,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    expect(screen.queryByTestId('warning-callout')).toBeNull();
+  });
+
+  it('existing Dikkat section still renders commonMistake and recovery (unchanged)', () => {
+    render(
+      React.createElement(StepContent, {
+        step: mockStep,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    expect(screen.getByText('Soganlari cok kalin dogamak')).toBeTruthy();
+    expect(screen.getByText('Kalin dogramissaniz biraz daha uzun pisirin')).toBeTruthy();
   });
 });
