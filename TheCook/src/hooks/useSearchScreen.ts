@@ -1,11 +1,12 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { router, useFocusEffect } from 'expo-router';
 
-import { useRecipesDb } from '@/src/db/recipes';
+import { useRecipesDb, extractIngredientNames } from '@/src/db/recipes';
 import { useProfileDb } from '@/src/db/profile';
 
 import type { Profile } from '@/src/types/profile';
 import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
+import type { Category, SkillLevel } from '@/src/types/recipe';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -28,6 +29,10 @@ export interface SearchScreenState {
   isIdle: boolean;
   hasChips: boolean;
   showDropdown: boolean;
+  selectedCategory: Category | null;
+  showFilterPanel: boolean;
+  skillFilter: SkillLevel | null;
+  equipmentFilter: string[];
 }
 
 export interface SearchScreenActions {
@@ -37,6 +42,85 @@ export interface SearchScreenActions {
   handleBookmarkToggle: (id: string) => Promise<void>;
   handleQueryChange: (text: string) => void;
   setDropdownOpen: (open: boolean) => void;
+  handleCategorySelect: (category: Category | null) => void;
+  handleSkillFilterChange: (skill: SkillLevel | null) => void;
+  handleEquipmentFilterChange: (equipment: string[]) => void;
+  handleToggleFilterPanel: () => void;
+}
+
+// ---------------------------------------------------------------------------
+// Pure computation function (exported for testing)
+// ---------------------------------------------------------------------------
+
+export interface ComputeDisplayResultsInput {
+  allRecipes: (RecipeListItem & { ingredient_groups: string })[];
+  selectedCategory: Category | null;
+  query: string;
+  ingredientChips: string[];
+  chipResults: RecipeListItem[];
+  showFilters: boolean;
+  skillFilter: SkillLevel | null;
+  equipmentFilter: string[];
+}
+
+export function computeDisplayResults(input: ComputeDisplayResultsInput): RecipeListItem[] {
+  const {
+    allRecipes,
+    selectedCategory,
+    query,
+    ingredientChips,
+    chipResults,
+    showFilters,
+    skillFilter,
+    equipmentFilter,
+  } = input;
+
+  const lowerQuery = query.length >= 2 ? query.toLocaleLowerCase('tr') : '';
+
+  // Ingredient chip mode: use pre-filtered chipResults as base
+  if (ingredientChips.length > 0) {
+    let base = chipResults;
+    if (lowerQuery) {
+      base = base.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
+    }
+    return base;
+  }
+
+  // Start with allRecipes, apply category filter if set
+  let base = selectedCategory
+    ? allRecipes.filter((r) => r.category === selectedCategory)
+    : allRecipes;
+
+  // Apply text query (title + ingredient matching)
+  if (lowerQuery) {
+    base = base.filter((r) => {
+      const titleMatch = r.title.toLocaleLowerCase('tr').includes(lowerQuery);
+      if (titleMatch) return true;
+      // Also match against ingredient names
+      const ingredientNames = extractIngredientNames(
+        (r as RecipeListItem & { ingredient_groups: string }).ingredient_groups,
+      );
+      return ingredientNames.some((name) => name.includes(lowerQuery));
+    });
+  } else if (!selectedCategory) {
+    // No query, no category, no chips = idle state
+    return [];
+  }
+
+  // Apply skill/equipment filters ONLY when category is selected and filters are active
+  if (selectedCategory && showFilters) {
+    if (skillFilter) {
+      base = base.filter((r) => r.skillLevel === skillFilter);
+    }
+    if (equipmentFilter.length > 0) {
+      base = base.filter((r) => {
+        // Recipe is cookable if all its required equipment is in the user's filter set
+        return r.equipment.every((eq) => equipmentFilter.includes(eq));
+      });
+    }
+  }
+
+  return base;
 }
 
 // ---------------------------------------------------------------------------
@@ -70,6 +154,12 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
   const [searchLoading, setSearchLoading] = useState(false);
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Category & filter state (session-only)
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const [skillFilter, setSkillFilter] = useState<SkillLevel | null>(null);
+  const [equipmentFilter, setEquipmentFilter] = useState<string[]>([]);
 
   // Load data on focus (re-fetches profile for allergen changes)
   useFocusEffect(
@@ -112,6 +202,18 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
     }, [])
   );
 
+  // Reset session state on tab blur
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setSelectedCategory(null);
+        setSkillFilter(null);
+        setEquipmentFilter([]);
+        setShowFilters(false);
+      };
+    }, [])
+  );
+
   // Ingredient autocomplete
   const ingredientSuggestions = useMemo<string[]>(() => {
     if (query.length < 2) return [];
@@ -142,26 +244,27 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
     return () => { cancelled = true; };
   }, [ingredientChips, allRecipes, profile]);
 
-  // Display results: filter by title when typing, or show name-based search when no chips
-  const displayResults = useMemo(() => {
-    const lowerQuery = query.length >= 2 ? query.toLocaleLowerCase('tr') : '';
-
-    if (ingredientChips.length > 0) {
-      if (!lowerQuery) return results;
-      return results.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
-    }
-
-    if (lowerQuery) {
-      return allRecipes.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
-    }
-
-    return [];
-  }, [results, query, ingredientChips, allRecipes]);
+  // Display results using pure computation function
+  const displayResults = useMemo(
+    () =>
+      computeDisplayResults({
+        allRecipes,
+        selectedCategory,
+        query,
+        ingredientChips,
+        chipResults: results,
+        showFilters,
+        skillFilter,
+        equipmentFilter,
+      }),
+    [results, query, ingredientChips, allRecipes, selectedCategory, showFilters, skillFilter, equipmentFilter],
+  );
 
   // Computed state
-  const isIdle = ingredientChips.length === 0 && query.length < 2;
+  const isIdle = ingredientChips.length === 0 && query.length < 2 && selectedCategory === null;
   const hasChips = ingredientChips.length > 0;
   const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips;
+  const showFilterPanel = selectedCategory !== null && ingredientChips.length === 0;
 
   // Interactions
   function handleSelectIngredient(name: string) {
@@ -207,6 +310,30 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
     setDropdownOpen(text.length >= 2);
   }
 
+  function handleCategorySelect(category: Category | null) {
+    if (category === selectedCategory) {
+      // Toggle off if same category tapped again
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(category);
+    }
+    // Reset filters when category changes
+    setSkillFilter(null);
+    setEquipmentFilter([]);
+  }
+
+  function handleSkillFilterChange(skill: SkillLevel | null) {
+    setSkillFilter(skill === skillFilter ? null : skill);
+  }
+
+  function handleEquipmentFilterChange(equipment: string[]) {
+    setEquipmentFilter(equipment);
+  }
+
+  function handleToggleFilterPanel() {
+    setShowFilters((prev) => !prev);
+  }
+
   return {
     // State
     allIngredients,
@@ -225,6 +352,10 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
     isIdle,
     hasChips,
     showDropdown,
+    selectedCategory,
+    showFilterPanel,
+    skillFilter,
+    equipmentFilter,
     // Actions
     handleSelectIngredient,
     handleRemoveChip,
@@ -232,5 +363,9 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
     handleBookmarkToggle,
     handleQueryChange,
     setDropdownOpen,
+    handleCategorySelect,
+    handleSkillFilterChange,
+    handleEquipmentFilterChange,
+    handleToggleFilterPanel,
   };
 }
