@@ -245,6 +245,6 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 7. Foundation Pivot | 3/3 | Complete   | 2026-03-17 |
 | 8. Feed Redesign | 3/3 | Complete   | 2026-03-17 |
 | 9. Search & Category Redesign | 3/3 | Complete   | 2026-03-17 |
-| 10. Recipe Detail Evolution | 1/3 | In Progress|  |
+| 10. Recipe Detail Evolution | 2/3 | In Progress|  |
 | 11. Cooking Mode Evolution | 0/0 | Pending | — |
 | 12. Şef'im (AI Companion) | 0/0 | Pending | — |

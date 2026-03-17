@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-stopped_at: Completed 10-01-PLAN.md
-last_updated: "2026-03-17T18:38:30Z"
-last_activity: 2026-03-17 — Phase 10 Plan 01 complete; schema extensions, DB migration v7, adaptation test stubs
+status: executing
+stopped_at: Completed 10-02-PLAN.md
+last_updated: "2026-03-17T18:45:21.211Z"
+last_activity: 2026-03-17 — Phase 10 Plan 02 complete; adaptation hook, detail screen hook, ServingStepper
 progress:
   total_phases: 12
   completed_phases: 9
   total_plans: 40
-  completed_plans: 38
-  percent: 95
+  completed_plans: 39
+  percent: 98
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 10 of 12 (Recipe Detail Evolution)
-Plan: 1 of 3 complete
+Plan: 2 of 3 complete
 Status: In Progress
-Last activity: 2026-03-17 — Phase 10 Plan 01 complete; schema extensions, DB migration v7, adaptation test stubs
+Last activity: 2026-03-17 — Phase 10 Plan 02 complete; adaptation hook, detail screen hook, ServingStepper
 
-Progress: [██████████] 100% (38/40 plans complete)
+Progress: [██████████] 98% (39/40 plans complete)
 
 ## Performance Metrics
 
@@ -89,6 +89,7 @@ Progress: [██████████] 100% (38/40 plans complete)
 | Phase 09-search-category-redesign P02 | 2 | 1 tasks | 3 files |
 | Phase 09-search-category-redesign P03 | checkpoint | 2 tasks | 3 files |
 | Phase 10-recipe-detail-evolution P01 | 3 | 2 tasks | 7 files |
+| Phase 10-recipe-detail-evolution P02 | 3 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -196,6 +197,9 @@ Recent decisions affecting current work:
 - [Phase 10-recipe-detail-evolution]: alternatives defaults to [] and scalable defaults to true for backward compatibility with 30 existing recipes
 - [Phase 10-recipe-detail-evolution]: ingredient_swaps stored as JSON TEXT column with DEFAULT '{}' for null-safe reads
 - [Phase 10-recipe-detail-evolution]: test.todo() used for adaptation stubs (pending, not failing) so full suite stays green
+- [Phase 10-recipe-detail-evolution]: Unicode-safe regex [^.}]+ for Turkish ingredient names in variable resolution
+- [Phase 10-recipe-detail-evolution]: Pure adaptation functions exported separately from hook for direct unit testing
+- [Phase 10-recipe-detail-evolution]: useRecipeDetailScreen composes useRecipeAdaptation and persists adaptation state to session
 
 ### Pending Todos
 
@@ -209,6 +213,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T18:38:30Z
-Stopped at: Completed 10-01-PLAN.md
+Last session: 2026-03-17T18:45:21.209Z
+Stopped at: Completed 10-02-PLAN.md
 Resume file: None
