@@ -16,15 +16,15 @@ function createMockDb(currentUserVersion: number) {
   return db;
 }
 
-describe("migrateDb — DB_VERSION 5", () => {
-  it("DB_VERSION constant is 5", async () => {
-    // Fresh DB (version 0) — migration should run; version 5 should be set at end
+describe("migrateDb — DB_VERSION 6", () => {
+  it("DB_VERSION constant is 6", async () => {
+    // Fresh DB (version 0) — migration should run; version 6 should be set at end
     const db = createMockDb(0);
     await migrateDb(db as any);
 
-    // The last execAsync call should set user_version = 5
+    // The last execAsync call should set user_version = 6
     const allSql = db._execCalls.join("\n");
-    expect(allSql).toContain("PRAGMA user_version = 5");
+    expect(allSql).toContain("PRAGMA user_version = 6");
   });
 
   it("creates profile table on fresh install", async () => {
@@ -70,8 +70,8 @@ describe("migrateDb — DB_VERSION 5", () => {
     expect(allSql).toContain("onboarding_completed");
   });
 
-  it("is idempotent — does not run migration when already at version 5", async () => {
-    const db = createMockDb(5);
+  it("is idempotent — does not run migration when already at version 6", async () => {
+    const db = createMockDb(6);
     await migrateDb(db as any);
 
     // No execAsync should be called when already at target version
@@ -158,5 +158,39 @@ describe("migrateDb — DB_VERSION 5", () => {
     const allSql = db._execCalls.join("\n");
     expect(allSql).toContain("ALTER TABLE profile ADD COLUMN cuisine_preferences");
     expect(allSql).toContain("ALTER TABLE profile ADD COLUMN app_goals");
+  });
+
+  it("creates cooking_history table on fresh install", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("CREATE TABLE IF NOT EXISTS cooking_history");
+  });
+
+  it("creates cooking_history table when upgrading from version 5", async () => {
+    const db = createMockDb(5);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("CREATE TABLE IF NOT EXISTS cooking_history");
+  });
+
+  it("cooking_history table has required columns", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("recipe_id TEXT NOT NULL");
+    expect(allSql).toContain("cooked_at TEXT NOT NULL");
+    expect(allSql).toContain("rating INTEGER");
+  });
+
+  it("cooking_history has index on recipe_id", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("idx_cooking_history_recipe_id");
   });
 });
