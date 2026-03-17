@@ -28,11 +28,9 @@ export default function SearchScreen() {
     recentViews,
     query,
     bookmarkedIds,
-    ingredientSuggestions,
     displayResults,
     isIdle,
     hasChips,
-    showDropdown,
     searchLoading,
     ingredientChips,
     selectedCategory,
@@ -40,12 +38,10 @@ export default function SearchScreen() {
     showFilters,
     skillFilter,
     equipmentFilter,
-    handleSelectIngredient,
     handleRemoveChip,
     handleRecipePress,
     handleBookmarkToggle,
     handleQueryChange,
-    setDropdownOpen,
     handleCategorySelect,
     handleSkillFilterChange,
     handleEquipmentFilterChange,
@@ -63,7 +59,6 @@ export default function SearchScreen() {
             placeholderTextColor="#9CA3AF"
             value={query}
             onChangeText={handleQueryChange}
-            onFocus={() => { if (query.length >= 2) setDropdownOpen(true); }}
             returnKeyType="search"
             autoCorrect={false}
             autoCapitalize="none"
@@ -84,24 +79,6 @@ export default function SearchScreen() {
       {hasChips && (
         <View style={styles.chipsContainer}>
           <IngredientChips chips={ingredientChips} onRemove={handleRemoveChip} />
-        </View>
-      )}
-
-      {/* Ingredient autocomplete dropdown (only when no chips active) */}
-      {showDropdown && (
-        <View style={styles.dropdown}>
-          {ingredientSuggestions.map((name) => (
-            <Pressable
-              key={name}
-              style={styles.suggestionRow}
-              onPress={() => handleSelectIngredient(name)}
-            >
-              <Text style={styles.suggestionText}>{name}</Text>
-              <View style={styles.typeBadge}>
-                <Text style={styles.typeBadgeText}>Malzeme</Text>
-              </View>
-            </Pressable>
-          ))}
         </View>
       )}
 
@@ -241,46 +218,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#9CA3AF',
     fontWeight: '600',
-  },
-  dropdown: {
-    marginHorizontal: 16,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    borderRadius: 12,
-    maxHeight: 280,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-    elevation: 8,
-    overflow: 'hidden',
-  },
-  suggestionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
-  },
-  suggestionText: {
-    flex: 1,
-    fontSize: 14,
-    color: '#111827',
-  },
-  typeBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 10,
-    marginLeft: 8,
-    backgroundColor: '#FEF3EC',
-  },
-  typeBadgeText: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: '#C05F20',
   },
   chipsContainer: {
     paddingHorizontal: 12,
