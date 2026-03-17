@@ -179,6 +179,12 @@ Plans:
   4. Filter state is session-only (resets on app close or tab switch)
   5. Search matches against recipe names and ingredient lists with real-time results
   6. Category + search query compose together when both active
+**Plans**: 3 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Test stubs + CategoryStrip and FilterPanel UI components (Wave 1)
+- [ ] 09-02-PLAN.md — Rewrite useSearchScreen hook with category, composition, and split filter logic (Wave 2)
+- [ ] 09-03-PLAN.md — Rewrite search.tsx screen + human verification of all criteria (Wave 3)
 
 ### Phase 10: Recipe Detail Evolution
 **Goal**: Add serving size scaling, ingredient substitution, and step preview to the recipe detail page — all adaptation happens before cooking starts
@@ -232,7 +238,7 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 6. Wire Equipment to Recipe Discovery | 3/3 | Complete   | 2026-03-14 |
 | 7. Foundation Pivot | 3/3 | Complete   | 2026-03-17 |
 | 8. Feed Redesign | 3/3 | Complete   | 2026-03-17 |
-| 9. Search & Category Redesign | 0/0 | Pending | — |
+| 9. Search & Category Redesign | 0/3 | Planned | — |
 | 10. Recipe Detail Evolution | 0/0 | Pending | — |
 | 11. Cooking Mode Evolution | 0/0 | Pending | — |
 | 12. Şef'im (AI Companion) | 0/0 | Pending | — |
