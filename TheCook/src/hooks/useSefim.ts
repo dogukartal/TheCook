@@ -72,7 +72,7 @@ export function getLingerThreshold(step: RecipeStep): number {
 // ---------------------------------------------------------------------------
 
 export function useSefim(
-  recipe: Recipe,
+  recipe: Recipe | null,
   currentStepIndex: number,
   skillLevel: string,
   swaps: Record<string, string>,
@@ -93,6 +93,7 @@ export function useSefim(
     // Reset on step change
     setLingerActive(false);
 
+    if (!recipe) return;
     const step = recipe.steps[currentStepIndex];
     if (!step) return;
 
@@ -107,7 +108,7 @@ export function useSefim(
         timerRef.current = null;
       }
     };
-  }, [currentStepIndex, recipe.steps]);
+  }, [currentStepIndex, recipe]);
 
   // -------------------------------------------------------------------------
   // Actions
@@ -134,6 +135,8 @@ export function useSefim(
    */
   const handleOpenQuestion = useCallback(
     async (text: string) => {
+      if (!recipe) return;
+
       setMessages((prev) => [
         ...prev,
         { role: "user" as const, text },

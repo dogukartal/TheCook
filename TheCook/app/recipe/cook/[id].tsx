@@ -23,10 +23,14 @@ import {
 import { logCookingCompletion } from '@/src/db/cooking-history';
 import { useCookingTimer } from '@/src/hooks/useCookingTimer';
 import { useRecipeAdaptation } from '@/src/hooks/useRecipeAdaptation';
+import { useSefim } from '@/src/hooks/useSefim';
+import { useProfileDb } from '@/src/db/profile';
 
 import { StepContent } from '@/components/cooking/step-content';
 import { SegmentedProgressBar } from '@/components/cooking/progress-bar';
 import { IngredientsSheet } from '@/components/cooking/ingredients-sheet';
+import { SefimSheet } from '@/components/cooking/sefim-sheet';
+import { SefimPulse } from '@/components/cooking/sefim-pulse';
 import { TimerIndicator } from '@/components/cooking/timer-indicator';
 import { CompletionScreen } from '@/components/cooking/completion-screen';
 
@@ -63,6 +67,33 @@ export default function CookingScreen() {
   // ---------------------------------------------------------------------------
 
   const adaptation = useRecipeAdaptation(recipe);
+
+  // ---------------------------------------------------------------------------
+  // Skill level from profile
+  // ---------------------------------------------------------------------------
+
+  const [skillLevel, setSkillLevel] = useState<string>('beginner');
+  const { getProfile } = useProfileDb();
+
+  useEffect(() => {
+    getProfile().then((profile) => {
+      if (profile.skillLevel) {
+        setSkillLevel(profile.skillLevel);
+      }
+    });
+  }, []);
+
+  // ---------------------------------------------------------------------------
+  // Sef'im AI companion
+  // ---------------------------------------------------------------------------
+
+  const sefim = useSefim(
+    recipe,
+    currentStep,
+    skillLevel,
+    adaptation.swaps,
+    adaptation.servings,
+  );
 
   // ---------------------------------------------------------------------------
   // Timer
@@ -356,10 +387,6 @@ export default function CookingScreen() {
     );
   }
 
-  function handleAskChef() {
-    Alert.alert('Yakin zamanda!', 'Bu ozellik cok yakinda geliyor.');
-  }
-
   // ---------------------------------------------------------------------------
   // Loading / not found
   // ---------------------------------------------------------------------------
@@ -421,12 +448,14 @@ export default function CookingScreen() {
           </Pressable>
 
           <Pressable
-            onPress={handleAskChef}
+            onPress={sefim.open}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             accessibilityRole="button"
-            accessibilityLabel="Ask Chef"
+            accessibilityLabel="Sef'im"
           >
-            <MaterialCommunityIcons name="chef-hat" size={24} color="#E07B39" />
+            <SefimPulse active={sefim.lingerActive}>
+              <MaterialCommunityIcons name="chef-hat" size={24} color="#E07B39" />
+            </SefimPulse>
           </Pressable>
         </View>
 
@@ -495,6 +524,17 @@ export default function CookingScreen() {
         onSwap={handleSwap}
         onResetSwap={handleResetSwap}
         swaps={adaptation.swaps}
+      />
+
+      {/* Sef'im AI companion sheet */}
+      <SefimSheet
+        visible={sefim.isOpen}
+        onClose={sefim.close}
+        chips={recipe.steps[currentStep]?.sefimQA ?? []}
+        messages={sefim.messages}
+        isLoading={sefim.isLoading}
+        onChipTap={sefim.handleChipTap}
+        onSendQuestion={sefim.handleOpenQuestion}
       />
 
       {/* Bottom navigation bar */}
