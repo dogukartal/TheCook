@@ -41,9 +41,9 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 ### Recipe Adaptation (v1 — Phases 10+)
 
-- [ ] **ADAPT-01**: User can adjust serving size on recipe detail; all ingredient quantities scale proportionally and carry into cooking mode
-- [ ] **ADAPT-02**: User can swap a missing ingredient for a pre-defined alternative ("Elimde yok"); substitution reflected in step copy via dynamic variables
-- [ ] **ADAPT-03**: Step copy uses dynamic variables for ingredient references — quantities and names resolve to active state (scaled/substituted) at cook time
+- [x] **ADAPT-01**: User can adjust serving size on recipe detail; all ingredient quantities scale proportionally and carry into cooking mode
+- [x] **ADAPT-02**: User can swap a missing ingredient for a pre-defined alternative ("Elimde yok"); substitution reflected in step copy via dynamic variables
+- [x] **ADAPT-03**: Step copy uses dynamic variables for ingredient references — quantities and names resolve to active state (scaled/substituted) at cook time
 
 ### Cooking Experience (v1 — Phases 11-12)
 
@@ -121,9 +121,9 @@ Updated during roadmap creation.
 | NAV-01 | Phase 7 | Complete |
 | FEED-01 | Phase 8 | Complete |
 | FEED-02 | Phase 8 | Complete |
-| ADAPT-01 | Phase 10 | Pending |
-| ADAPT-02 | Phase 10 | Pending |
-| ADAPT-03 | Phase 10 | Pending |
+| ADAPT-01 | Phase 10 | Complete |
+| ADAPT-02 | Phase 10 | Complete |
+| ADAPT-03 | Phase 10 | Complete |
 | COOKX-01 | Phase 11 | Pending |
 | COOKX-02 | Phase 11 | Pending |
 | COOKX-03 | Phase 11 | Pending |

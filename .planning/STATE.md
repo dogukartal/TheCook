@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-03-17T18:12:40.751Z"
-last_activity: 2026-03-17 — Phase 9 Plan 03 complete; search screen integration with CategoryStrip chips, FilterPanel, human-verified
+status: in_progress
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-03-17T18:38:30Z"
+last_activity: 2026-03-17 — Phase 10 Plan 01 complete; schema extensions, DB migration v7, adaptation test stubs
 progress:
   total_phases: 12
   completed_phases: 9
-  total_plans: 37
-  completed_plans: 37
-  percent: 100
+  total_plans: 40
+  completed_plans: 38
+  percent: 95
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** The user must never feel like the app gave them a recipe and walked away — every interaction, from ingredient input to the last step, must feel like having a knowledgeable friend in the kitchen.
-**Current focus:** Phase 9 in progress - Search & Category Redesign; Plan 01 complete (UI components + test stubs)
+**Current focus:** Phase 10 in progress - Recipe Detail Evolution; Plan 01 complete (schema extensions + adaptation foundations)
 
 ## Current Position
 
-Phase: 9 of 12 (Search & Category Redesign)
-Plan: 3 of 3 complete
-Status: Phase Complete
-Last activity: 2026-03-17 — Phase 9 Plan 03 complete; search screen integration with CategoryStrip chips, FilterPanel, human-verified
+Phase: 10 of 12 (Recipe Detail Evolution)
+Plan: 1 of 3 complete
+Status: In Progress
+Last activity: 2026-03-17 — Phase 10 Plan 01 complete; schema extensions, DB migration v7, adaptation test stubs
 
-Progress: [██████████] 100% (37/37 plans complete)
+Progress: [██████████] 100% (38/40 plans complete)
 
 ## Performance Metrics
 
@@ -88,6 +88,7 @@ Progress: [██████████] 100% (37/37 plans complete)
 | Phase 09-search-category-redesign P01 | 2 | 2 tasks | 3 files |
 | Phase 09-search-category-redesign P02 | 2 | 1 tasks | 3 files |
 | Phase 09-search-category-redesign P03 | checkpoint | 2 tasks | 3 files |
+| Phase 10-recipe-detail-evolution P01 | 3 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -191,6 +192,10 @@ Recent decisions affecting current work:
 - [Phase 09-search-category-redesign]: Equipment filter uses every() semantics: recipe cookable only if ALL required equipment in filter set
 - [Phase 09-search-category-redesign]: Ingredient suggestion dropdown removed from UI (logic retained in hook for future use)
 - [Phase 09-search-category-redesign]: CategoryStrip redesigned from large gradient cards to compact chip-style buttons per user feedback
+- [Phase 10-recipe-detail-evolution]: SubstitutionSchema mirrors IngredientSchema fields (name, amount, unit) for swap compatibility
+- [Phase 10-recipe-detail-evolution]: alternatives defaults to [] and scalable defaults to true for backward compatibility with 30 existing recipes
+- [Phase 10-recipe-detail-evolution]: ingredient_swaps stored as JSON TEXT column with DEFAULT '{}' for null-safe reads
+- [Phase 10-recipe-detail-evolution]: test.todo() used for adaptation stubs (pending, not failing) so full suite stays green
 
 ### Pending Todos
 
@@ -204,6 +209,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T18:05:00.220Z
-Stopped at: Completed 09-03-PLAN.md
+Last session: 2026-03-17T18:38:30Z
+Stopped at: Completed 10-01-PLAN.md
 Resume file: None
