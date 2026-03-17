@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 12-01-PLAN.md
-last_updated: "2026-03-17T20:41:10.262Z"
-last_activity: 2026-03-17 — Phase 12 Plan 01 complete; StepSchema extended with sefimQA, useSefim hook built, sefim-ask Edge Function created
+stopped_at: Completed 12-02-PLAN.md
+last_updated: "2026-03-17T20:47:09.473Z"
+last_activity: 2026-03-17 — Phase 12 Plan 02 complete; SefimPulse + SefimSheet UI components built and wired into cooking screen
 progress:
   total_phases: 12
   completed_phases: 11
   total_plans: 46
-  completed_plans: 44
-  percent: 96
+  completed_plans: 45
+  percent: 98
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 12 of 12 (Sef'im AI Companion)
-Plan: 1 of 3 complete
+Plan: 2 of 3 complete
 Status: In Progress
-Last activity: 2026-03-17 — Phase 12 Plan 01 complete; StepSchema extended with sefimQA, useSefim hook built, sefim-ask Edge Function created
+Last activity: 2026-03-17 — Phase 12 Plan 02 complete; SefimPulse + SefimSheet UI components built and wired into cooking screen
 
-Progress: [██████████] 96% (44/46 plans complete)
+Progress: [██████████] 98% (45/46 plans complete)
 
 ## Performance Metrics
 
@@ -95,6 +95,7 @@ Progress: [██████████] 96% (44/46 plans complete)
 | Phase 11-cooking-mode-evolution P02 | 5 | 2 tasks | 4 files |
 | Phase 11-cooking-mode-evolution P03 | 2 | 2 tasks | 4 files |
 | Phase 12-sefim-ai-companion P01 | 4 | 2 tasks | 6 files |
+| Phase 12 P02 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -217,6 +218,7 @@ Recent decisions affecting current work:
 - [Phase 12]: SefimQASchema defined as named const before StepSchema for reuse and type export
 - [Phase 12]: Linger threshold: 1.5x timerSeconds for timed steps, 120s for untimed; chip taps instant, open questions via Edge Function
 - [Phase 12]: Turkish system prompt constrains Sef'im to cooking-only scope with friendly off-topic redirect
+- [Phase 12]: useSefim accepts nullable recipe (Recipe | null) for safe hook call before recipe loads
 
 ### Pending Todos
 
@@ -230,6 +232,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T20:41:08.897Z
-Stopped at: Completed 12-01-PLAN.md
+Last session: 2026-03-17T20:47:09.471Z
+Stopped at: Completed 12-02-PLAN.md
 Resume file: None
