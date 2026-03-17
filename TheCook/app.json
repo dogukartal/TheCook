@@ -55,7 +55,11 @@
       ],
       "expo-sqlite",
       "expo-notifications",
-      "@react-native-google-signin/google-signin"
+      "@react-native-google-signin/google-signin",
+      ["@jamsch/expo-speech-recognition", {
+        "microphonePermission": "Sef'im'e sesli soru sormak icin mikrofon izni gerekiyor",
+        "speechRecognitionPermission": "Sesli soru sormak icin konusma tanima izni gerekiyor"
+      }]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -98,6 +98,15 @@ export const IngredientGroupSchema = z.object({
 });
 
 // ---------------------------------------------------------------------------
+// Sef'im Q&A schema — pre-loaded chip questions for cooking steps
+// ---------------------------------------------------------------------------
+
+export const SefimQASchema = z.object({
+  question: z.string().min(1),
+  answer: z.string().min(1),
+});
+
+// ---------------------------------------------------------------------------
 // Step schema — all 5 CONT-02 required fields locked
 // ---------------------------------------------------------------------------
 
@@ -113,6 +122,7 @@ export const StepSchema = z.object({
   timerSeconds: z.number().int().positive().nullable().default(null),
   checkpoint: z.string().nullable().default(null),  // "Boyle gorunmeli" one-liner
   warning: z.string().nullable().default(null),     // "Dikkat et!" one-liner
+  sefimQA: z.array(SefimQASchema).default([]),      // Pre-loaded Q&A chips for Sef'im
 });
 
 // ---------------------------------------------------------------------------
@@ -153,3 +163,4 @@ export type Equipment = z.infer<typeof EquipmentEnum>;
 export type Category = z.infer<typeof CategoryEnum>;
 export type MealType = z.infer<typeof MealTypeEnum>;
 export type SkillLevel = z.infer<typeof SkillLevelEnum>;
+export type SefimQA = z.infer<typeof SefimQASchema>;
