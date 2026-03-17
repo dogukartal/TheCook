@@ -143,6 +143,12 @@ Plans:
   4. Allergen exclusion applied to Cookbook bookmarks query (DISC-05 closed)
   5. Profile DB schema extended with `cuisine_preferences` and `app_goals` columns (nullable, no UI yet)
   6. Inline SQL in my-kitchen.tsx extracted to `src/db/recipes.ts`
+**Plans**: 3 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — DB migration v5 + hard filter SQL (skill + equipment + allergen on bookmarks) + profile schema extension (Wave 1)
+- [ ] 07-02-PLAN.md — Extract screen data hooks (useFeedScreen, useSearchScreen, useCookbookScreen) + inline SQL extraction (Wave 2)
+- [ ] 07-03-PLAN.md — Tab restructure (Cookbook + Profile tabs) + 4-tab navigation + human verification (Wave 3)
 
 ### Phase 8: Feed Redesign
 **Goal**: Replace the current vertical feed with 4 horizontal sections that surface recipes based on trending, speed, personalization, and novelty
@@ -218,7 +224,7 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
 | 6. Wire Equipment to Recipe Discovery | 3/3 | Complete   | 2026-03-14 |
-| 7. Foundation Pivot | 0/0 | Pending | — |
+| 7. Foundation Pivot | 0/3 | Planned | — |
 | 8. Feed Redesign | 0/0 | Pending | — |
 | 9. Search & Category Redesign | 0/0 | Pending | — |
 | 10. Recipe Detail Evolution | 0/0 | Pending | — |
