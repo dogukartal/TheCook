@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in-progress
-stopped_at: Completed 09-01-PLAN.md
-last_updated: "2026-03-17T17:39:00Z"
-last_activity: 2026-03-17 — Phase 9 Plan 01 complete; CategoryStrip + FilterPanel components + useSearchScreen test stubs
+status: executing
+stopped_at: Completed 09-02-PLAN.md
+last_updated: "2026-03-17T17:44:32.670Z"
+last_activity: 2026-03-17 — Phase 9 Plan 02 complete; useSearchScreen rewrite with category/filter/composition logic
 progress:
   total_phases: 12
   completed_phases: 8
   total_plans: 37
-  completed_plans: 35
-  percent: 100
+  completed_plans: 36
+  percent: 97
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 9 of 12 (Search & Category Redesign)
-Plan: 1 of 3 complete
+Plan: 2 of 3 complete
 Status: In Progress
-Last activity: 2026-03-17 — Phase 9 Plan 01 complete; CategoryStrip + FilterPanel components + useSearchScreen test stubs
+Last activity: 2026-03-17 — Phase 9 Plan 02 complete; useSearchScreen rewrite with category/filter/composition logic
 
-Progress: [██████████] 95% (35/37 plans complete)
+Progress: [██████████] 97% (36/37 plans complete)
 
 ## Performance Metrics
 
@@ -86,6 +86,7 @@ Progress: [██████████] 95% (35/37 plans complete)
 | Phase 08-feed-redesign P02 | 3 | 2 tasks | 2 files |
 | Phase 08-feed-redesign P03 | checkpoint | 2 tasks | 2 files |
 | Phase 09-search-category-redesign P01 | 2 | 2 tasks | 3 files |
+| Phase 09-search-category-redesign P02 | 2 | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -184,6 +185,9 @@ Recent decisions affecting current work:
 - [Phase 08-feed-redesign]: FeedSection component is reusable with generic props for any horizontal recipe list
 - [Phase 09-search-category-redesign]: CATEGORY_GRADIENTS copied inline into CategoryStrip — not exported from recipe-card-grid
 - [Phase 09-search-category-redesign]: FilterPanel returns null when not visible — no conditional rendering in parent needed
+- [Phase 09-search-category-redesign]: computeDisplayResults extracted as exported pure function for unit testing without renderHook/expo-sqlite context
+- [Phase 09-search-category-redesign]: extractIngredientNames exported from recipes.ts (was private) for hook-level ingredient text matching
+- [Phase 09-search-category-redesign]: Equipment filter uses every() semantics: recipe cookable only if ALL required equipment in filter set
 
 ### Pending Todos
 
@@ -197,6 +201,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T17:39:00Z
-Stopped at: Completed 09-01-PLAN.md
+Last session: 2026-03-17T17:44:32.667Z
+Stopped at: Completed 09-02-PLAN.md
 Resume file: None
