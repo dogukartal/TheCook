@@ -2,13 +2,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSQLiteContext } from 'expo-sqlite';
 import { router, useFocusEffect } from 'expo-router';
 
-import { useRecipesDb, getRecipeById } from '@/src/db/recipes';
+import { getAllRecipesForFeed, getRecipeById } from '@/src/db/recipes';
+import { getCookedRecipeIds } from '@/src/db/cooking-history';
 import { useProfileDb } from '@/src/db/profile';
 import { getActiveSession, clearSession, CookingSession } from '@/src/db/cooking-session';
 
 import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem, DiscoveryFilter, HardFilter, FeedSection } from '@/src/types/discovery';
-import type { Category } from '@/src/types/recipe';
+import type { RecipeListItem, HardFilter, FeedSection } from '@/src/types/discovery';
 
 // ---------------------------------------------------------------------------
 // Pure functions (exported for testability)
@@ -68,50 +68,33 @@ export function buildFeedSections(
 // Types
 // ---------------------------------------------------------------------------
 
-export type FeedTab = 'trending' | 'for-you';
-
 export interface FeedScreenState {
   profile: Profile | null;
   profileLoaded: boolean;
-  recipes: RecipeListItem[];
+  sections: FeedSection[];
+  allEmpty: boolean;
   loading: boolean;
-  activeTab: FeedTab;
-  selectedCategory: Category | null;
   bookmarkedIds: Set<string>;
   resumeSession: CookingSession | null;
   resumeRecipeName: string;
   resumeTotalSteps: number;
   refreshing: boolean;
-  filter: DiscoveryFilter;
 }
 
 export interface FeedScreenActions {
-  setActiveTab: (tab: FeedTab) => void;
-  setSelectedCategory: (cat: Category | null) => void;
   handleBookmarkToggle: (id: string) => Promise<void>;
   handleRefresh: () => Promise<void>;
   handleResume: () => void;
   handleDismissResume: () => Promise<void>;
   handleRecipePress: (id: string) => void;
-  loadRecipes: () => Promise<void>;
-  setFilter: React.Dispatch<React.SetStateAction<DiscoveryFilter>>;
 }
 
 // ---------------------------------------------------------------------------
 // Hook
 // ---------------------------------------------------------------------------
 
-const INITIAL_FILTER: DiscoveryFilter = {
-  category: null,
-  cookTimeBucket: null,
-  skillLevel: null,
-  cuisine: null,
-  equipment: [],
-};
-
 export function useFeedScreen(): FeedScreenState & FeedScreenActions {
   const db = useSQLiteContext();
-  const { getAllRecipesForFeed, getFeedRecipes, filterRecipesByCategory } = useRecipesDb();
   const { getProfile, getBookmarks, addBookmark, removeBookmark } = useProfileDb();
 
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -121,11 +104,9 @@ export function useFeedScreen(): FeedScreenState & FeedScreenActions {
   const [resumeSession, setResumeSession] = useState<CookingSession | null>(null);
   const [resumeRecipeName, setResumeRecipeName] = useState('');
   const [resumeTotalSteps, setResumeTotalSteps] = useState(0);
-  const [activeTab, setActiveTab] = useState<FeedTab>('trending');
-  const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
+  const [sections, setSections] = useState<FeedSection[]>([]);
+  const [allEmpty, setAllEmpty] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-  const [filter, setFilter] = useState<DiscoveryFilter>(INITIAL_FILTER);
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
   const [refreshing, setRefreshing] = useState(false);
 
@@ -180,8 +161,8 @@ export function useFeedScreen(): FeedScreenState & FeedScreenActions {
     setResumeSession(null);
   }
 
-  // Load recipes whenever profile is loaded or tab/category/filter changes
-  const loadRecipes = useCallback(async () => {
+  // Load sections whenever profile is loaded
+  const loadSections = useCallback(async () => {
     if (!profileLoaded || !profile) return;
 
     setLoading(true);
@@ -191,29 +172,19 @@ export function useFeedScreen(): FeedScreenState & FeedScreenActions {
         skillLevel: profile.skillLevel,
         equipment: profile.equipment ?? [],
       };
-      const allergenFiltered = await getAllRecipesForFeed(hardFilter);
-
-      let result: RecipeListItem[];
-
-      if (activeTab === 'trending') {
-        result = allergenFiltered;
-      } else {
-        result = await getFeedRecipes(allergenFiltered, profile.skillLevel);
-      }
-
-      if (selectedCategory) {
-        result = await filterRecipesByCategory(result, selectedCategory);
-      }
-
-      setRecipes(result);
+      const allRecipes = await getAllRecipesForFeed(db, hardFilter);
+      const cookedIds = await getCookedRecipeIds(db);
+      const result = buildFeedSections(allRecipes, cookedIds, profile);
+      setSections(result.sections);
+      setAllEmpty(result.allEmpty);
     } finally {
       setLoading(false);
     }
-  }, [profileLoaded, profile, activeTab, selectedCategory]);
+  }, [profileLoaded, profile, db]);
 
   useEffect(() => {
-    loadRecipes();
-  }, [loadRecipes]);
+    loadSections();
+  }, [loadSections]);
 
   // Bookmark toggle
   async function handleBookmarkToggle(id: string) {
@@ -237,7 +208,7 @@ export function useFeedScreen(): FeedScreenState & FeedScreenActions {
     setProfile(p);
     const bookmarks = await getBookmarks();
     setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
-    await loadRecipes();
+    await loadSections();
     setRefreshing(false);
   }
 
@@ -250,25 +221,19 @@ export function useFeedScreen(): FeedScreenState & FeedScreenActions {
     // State
     profile,
     profileLoaded,
-    recipes,
+    sections,
+    allEmpty,
     loading,
-    activeTab,
-    selectedCategory,
     bookmarkedIds,
     resumeSession,
     resumeRecipeName,
     resumeTotalSteps,
     refreshing,
-    filter,
     // Actions
-    setActiveTab,
-    setSelectedCategory,
     handleBookmarkToggle,
     handleRefresh,
     handleResume,
     handleDismissResume,
     handleRecipePress,
-    loadRecipes,
-    setFilter,
   };
 }
