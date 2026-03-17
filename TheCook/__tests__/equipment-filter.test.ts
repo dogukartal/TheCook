@@ -1,9 +1,8 @@
-// Plan 06-01 — Equipment filter test stubs (RED state)
-// Tests 1 and 4 are RED until Plan 02 adds equipment sort logic to queryRecipesByFilter.
-// Tests 2 and 3 pass immediately as pure logic tests.
-// Test 5 passes as compose test (allergen exclusion is SQL-side, mock simulates it).
+// Plan 06-01 — Equipment filter tests
+// Updated for Phase 07 hard filter refactor: equipment is now a hard SQL exclusion, not JS sort.
 
 import { queryRecipesByFilter } from "../src/db/recipes";
+import { HardFilter } from "../src/types/discovery";
 
 // ---------------------------------------------------------------------------
 // Shared mock DB factory (same pattern as discovery.test.ts)
@@ -11,7 +10,7 @@ import { queryRecipesByFilter } from "../src/db/recipes";
 
 function createMockDb(rows: Record<string, unknown>[] = []) {
   const db = {
-    getFirstAsync: jest.fn().mockResolvedValue({ user_version: 3 }),
+    getFirstAsync: jest.fn().mockResolvedValue({ user_version: 5 }),
     execAsync: jest.fn(),
     getAllAsync: jest.fn().mockResolvedValue(rows),
     runAsync: jest.fn().mockResolvedValue({ lastInsertRowId: 1, changes: 1 }),
@@ -33,7 +32,7 @@ function makeRow(overrides: {
   return {
     id: overrides.id,
     title: `Recipe ${overrides.id}`,
-    cuisine: overrides.cuisine ?? "Türk",
+    cuisine: overrides.cuisine ?? "Turk",
     category: overrides.category ?? "ana yemek",
     skill_level: overrides.skill_level ?? "beginner",
     prep_time: overrides.prep_time ?? 10,
@@ -45,15 +44,12 @@ function makeRow(overrides: {
 }
 
 // ---------------------------------------------------------------------------
-// Test 1: Equipment de-prioritization
-// Compatible recipe must come first when filter.equipment is set.
-// RED until queryRecipesByFilter re-orders by equipment compatibility.
+// Test 1: Equipment hard exclusion — SQL contains equipment filter clause
 // ---------------------------------------------------------------------------
 
-describe("equipment de-prioritization", () => {
-  it("places equipment-compatible recipe before incompatible one", async () => {
+describe("equipment hard exclusion", () => {
+  it("SQL contains equipment exclusion clause when equipment is set", async () => {
     const rows = [
-      makeRow({ id: "incompatible", equipment: JSON.stringify(["fırın"]) }),
       makeRow({ id: "compatible", equipment: JSON.stringify(["tava"]) }),
     ];
     const db = createMockDb(rows);
@@ -63,24 +59,26 @@ describe("equipment de-prioritization", () => {
       cookTimeBucket: null,
       skillLevel: null,
       cuisine: null,
-      equipment: ["tava"], // user has tava but not fırın
+      equipment: [],
     };
+    const hardFilter: HardFilter = { allergens: [], skillLevel: null, equipment: ["tava"] };
 
-    const result = await queryRecipesByFilter(db as any, filter as any, []);
+    await queryRecipesByFilter(db as any, filter as any, hardFilter);
 
-    // compatible recipe (has only "tava" which user owns) should come first
-    expect(result[0].id).toBe("compatible");
+    const sqlCall = db.getAllAsync.mock.calls[0][0] as string;
+    expect(sqlCall).toContain("json_each(r.equipment)");
+    expect(sqlCall).toContain("NOT EXISTS");
   });
 });
 
 // ---------------------------------------------------------------------------
-// Test 2: Equipment indicator logic (pure logic — passes immediately)
+// Test 2: Equipment indicator logic (pure logic -- passes immediately)
 // hasMissingEquipment=true when recipe.equipment is NOT a subset of userEquipment
 // ---------------------------------------------------------------------------
 
 describe("equipment indicator logic", () => {
   it("hasMissingEquipment is true when recipe requires equipment the user lacks", () => {
-    const recipe = { equipment: ["fırın"] };
+    const recipe = { equipment: ["firin"] };
     const userEquipment = ["tava"];
     const hasMissing = recipe.equipment.some((e) => !userEquipment.includes(e));
     expect(hasMissing).toBe(true);
@@ -88,28 +86,27 @@ describe("equipment indicator logic", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Test 3: Vacuous truth — empty equipment array never triggers missing-equipment flag
-// (pure logic — passes immediately)
+// Test 3: Vacuous truth -- empty equipment array never triggers missing-equipment flag
+// (pure logic -- passes immediately)
 // ---------------------------------------------------------------------------
 
-describe("vacuous truth — empty recipe equipment", () => {
+describe("vacuous truth -- empty recipe equipment", () => {
   it("hasMissingEquipment is false when recipe.equipment is empty", () => {
-    const recipeNoEquip = { equipment: [] };
+    const recipeNoEquip = { equipment: [] as string[] };
     const userEquipment = ["tava"];
-    const hasMissing2 = recipeNoEquip.equipment.some((e) => !userEquipment.includes(e));
+    const hasMissing2 = recipeNoEquip.equipment.some((e: string) => !userEquipment.includes(e));
     expect(hasMissing2).toBe(false);
   });
 });
 
 // ---------------------------------------------------------------------------
-// Test 4: Empty filter.equipment — sort is skipped, original order preserved
-// RED until queryRecipesByFilter handles equipment=[] as no-op for ordering.
+// Test 4: Empty equipment in hard filter -- no equipment clause in SQL
 // ---------------------------------------------------------------------------
 
-describe("empty filter.equipment — no sort applied", () => {
-  it("preserves original row order when filter.equipment is empty", async () => {
+describe("empty equipment in hard filter -- no exclusion applied", () => {
+  it("SQL does not contain equipment clause when equipment is empty", async () => {
     const rows = [
-      makeRow({ id: "first", equipment: JSON.stringify(["fırın"]) }),
+      makeRow({ id: "first", equipment: JSON.stringify(["firin"]) }),
       makeRow({ id: "second", equipment: JSON.stringify(["tava"]) }),
     ];
     const db = createMockDb(rows);
@@ -119,26 +116,30 @@ describe("empty filter.equipment — no sort applied", () => {
       cookTimeBucket: null,
       skillLevel: null,
       cuisine: null,
-      equipment: [], // empty — no equipment sort
+      equipment: [],
     };
+    const hardFilter: HardFilter = { allergens: [], skillLevel: null, equipment: [] };
 
-    const result = await queryRecipesByFilter(db as any, filter as any, []);
+    const result = await queryRecipesByFilter(db as any, filter as any, hardFilter);
 
-    // Original order must be preserved: first before second
+    // SQL should NOT contain equipment exclusion
+    const sqlCall = db.getAllAsync.mock.calls[0][0] as string;
+    expect(sqlCall).not.toContain("json_each(r.equipment)");
+
+    // Original order must be preserved
     expect(result[0].id).toBe("first");
     expect(result[1].id).toBe("second");
   });
 });
 
 // ---------------------------------------------------------------------------
-// Test 5: Compose with allergens — allergen-excluded recipes do not appear
+// Test 5: Compose with allergens -- allergen-excluded recipes do not appear
 // Allergen exclusion is SQL-side; mock simulates SQL having already excluded
 // allergen recipes by returning only non-allergen rows.
-// (passes immediately — no equipment sort needed to verify compose)
 // ---------------------------------------------------------------------------
 
-describe("compose with allergens — allergen-excluded recipes absent from equipment sort", () => {
-  it("allergen-excluded recipes do not appear in equipment-sorted output", async () => {
+describe("compose with allergens -- allergen-excluded recipes absent from output", () => {
+  it("allergen-excluded recipes do not appear in output", async () => {
     // Mock simulates SQL allergen exclusion: only non-allergen recipe returned
     const rows = [
       makeRow({
@@ -146,8 +147,6 @@ describe("compose with allergens — allergen-excluded recipes absent from equip
         equipment: JSON.stringify(["tava"]),
         allergens: "[]", // safe recipe
       }),
-      // allergen recipe (e.g. id: "allergen-recipe") is NOT in rows —
-      // SQL WHERE clause already excluded it from the result set
     ];
     const db = createMockDb(rows);
 
@@ -156,11 +155,11 @@ describe("compose with allergens — allergen-excluded recipes absent from equip
       cookTimeBucket: null,
       skillLevel: null,
       cuisine: null,
-      equipment: ["tava"],
+      equipment: [],
     };
+    const hardFilter: HardFilter = { allergens: ["gluten"], skillLevel: null, equipment: ["tava"] };
 
-    // userAllergens=["gluten"] — SQL already excluded allergen recipe from rows mock
-    const result = await queryRecipesByFilter(db as any, filter as any, ["gluten"]);
+    const result = await queryRecipesByFilter(db as any, filter as any, hardFilter);
 
     // Only the safe recipe should be present
     expect(result).toHaveLength(1);

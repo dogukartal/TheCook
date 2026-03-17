@@ -20,7 +20,7 @@ import { CategoryFilter } from '@/components/discovery/category-filter';
 import { ResumeBanner } from '@/components/cooking/resume-banner';
 
 import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem, DiscoveryFilter } from '@/src/types/discovery';
+import type { RecipeListItem, DiscoveryFilter, HardFilter } from '@/src/types/discovery';
 import type { Category } from '@/src/types/recipe';
 
 // ---------------------------------------------------------------------------
@@ -115,8 +115,13 @@ export default function FeedScreen() {
 
     setLoading(true);
     try {
-      // Get allergen-excluded recipes from DB
-      const allergenFiltered = await getAllRecipesForFeed(profile.allergens, profile.equipment ?? []);
+      // Get hard-filtered recipes from DB (allergen + skill + equipment exclusion)
+      const hardFilter: HardFilter = {
+        allergens: profile.allergens,
+        skillLevel: profile.skillLevel,
+        equipment: profile.equipment ?? [],
+      };
+      const allergenFiltered = await getAllRecipesForFeed(hardFilter);
 
       let result: RecipeListItem[];
 

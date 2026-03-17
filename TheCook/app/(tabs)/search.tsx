@@ -18,7 +18,7 @@ import { RecipeCardRow } from '@/components/ui/recipe-card-row';
 import { IngredientChips } from '@/components/discovery/ingredient-chips';
 
 import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem } from '@/src/types/discovery';
+import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
 
 // ---------------------------------------------------------------------------
 // Search screen — Ara tab
@@ -66,7 +66,11 @@ export default function SearchScreen() {
 
         const [ingredients, recipes, bookmarks, recentViewEntries] = await Promise.all([
           getAllIngredientNames(),
-          getAllRecipesForSearch(p.allergens, p.equipment),
+          getAllRecipesForSearch({
+            allergens: p.allergens,
+            skillLevel: p.skillLevel,
+            equipment: p.equipment,
+          } as HardFilter),
           getBookmarks(null),
           getRecentViews(),
         ]);

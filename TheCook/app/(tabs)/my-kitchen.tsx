@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useSQLiteContext } from 'expo-sqlite';
 
 import { useProfileDb } from '@/src/db/profile';
 import { useRecipesDb } from '@/src/db/recipes';
@@ -18,7 +17,7 @@ import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
 
 import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem } from '@/src/types/discovery';
+import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
 
 // ---------------------------------------------------------------------------
 // Label maps (mirrors what was in settings.tsx before deletion)
@@ -52,9 +51,8 @@ const SKILL_LEVEL_LABELS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 export default function MyKitchenScreen() {
-  const db = useSQLiteContext();
   const { getProfile, getBookmarks, addBookmark, removeBookmark } = useProfileDb();
-  const { getAllRecipesForFeed } = useRecipesDb();
+  const { getBookmarkedRecipes } = useRecipesDb();
   const { session, signOut } = useSession();
 
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -77,43 +75,13 @@ export default function MyKitchenScreen() {
         return;
       }
 
-      // Batch SELECT for bookmark recipe list items
-      const placeholders = ids.map(() => '?').join(', ');
-      const rows = await db.getAllAsync<{
-        id: string;
-        title: string;
-        cuisine: string;
-        category: string;
-        skill_level: string | null;
-        prep_time: number;
-        cook_time: number;
-        cover_image: string | null;
-        allergens: string;
-        equipment: string;
-      }>(
-        `SELECT id, title, cuisine, category, skill_level, prep_time, cook_time, cover_image, allergens, equipment
-         FROM recipes WHERE id IN (${placeholders})`,
-        ids
-      );
-
-      // Preserve bookmark order (most recently saved first)
-      const rowMap = new Map(rows.map((r) => [r.id, r]));
-      const ordered: RecipeListItem[] = ids
-        .map((id) => rowMap.get(id))
-        .filter((r): r is NonNullable<typeof r> => r !== undefined)
-        .map((row) => ({
-          id: row.id,
-          title: row.title,
-          cuisine: row.cuisine,
-          category: row.category as RecipeListItem['category'],
-          skillLevel: (row.skill_level ?? 'beginner') as RecipeListItem['skillLevel'],
-          prepTime: row.prep_time,
-          cookTime: row.cook_time,
-          coverImage: row.cover_image ?? null,
-          allergens: JSON.parse(row.allergens ?? '[]'),
-          equipment: JSON.parse(row.equipment ?? '[]'),
-        }));
-
+      // Fetch bookmarked recipes with hard filter exclusion (preserves bookmark order)
+      const hardFilter: HardFilter = {
+        allergens: p.allergens,
+        skillLevel: p.skillLevel,
+        equipment: p.equipment,
+      };
+      const ordered = await getBookmarkedRecipes(ids, hardFilter);
       setSavedRecipes(ordered);
     } finally {
       setLoading(false);

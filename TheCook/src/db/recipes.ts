@@ -1,7 +1,7 @@
 import { useSQLiteContext, SQLiteDatabase } from "expo-sqlite";
 import * as Crypto from "expo-crypto";
 import { RecipeListItem, RecentView } from "../types/discovery";
-import { DiscoveryFilter } from "../types/discovery";
+import { DiscoveryFilter, HardFilter } from "../types/discovery";
 import { Recipe, RecipeSchema } from "../types/recipe";
 
 // ---------------------------------------------------------------------------
@@ -55,6 +55,20 @@ const ALLERGEN_EXCLUSION = `
   )
 `;
 
+const EQUIPMENT_EXCLUSION = `
+  NOT EXISTS (
+    SELECT 1 FROM json_each(r.equipment) AS re
+    WHERE re.value NOT IN (SELECT value FROM json_each(?))
+  )
+`;
+
+// Skill ceiling: beginner sees only beginner, intermediate sees beginner+intermediate, etc.
+const SKILL_CEILING_MAP: Record<string, string[]> = {
+  beginner: ["beginner"],
+  intermediate: ["beginner", "intermediate"],
+  advanced: ["beginner", "intermediate", "advanced"],
+};
+
 function mapRowToRecipeListItem(row: RecipeRow): RecipeListItem {
   return {
     id: row.id,
@@ -68,6 +82,41 @@ function mapRowToRecipeListItem(row: RecipeRow): RecipeListItem {
     allergens: JSON.parse(row.allergens ?? "[]"),
     equipment: JSON.parse(row.equipment ?? "[]"),
   };
+}
+
+// ---------------------------------------------------------------------------
+// Hard filter clause builder
+// ---------------------------------------------------------------------------
+
+/**
+ * Builds SQL WHERE clauses for hard filters (allergen, skill ceiling, equipment).
+ * Returns conditions array and params array to be merged into the query.
+ */
+function buildHardFilterClauses(filter: HardFilter): {
+  conditions: string[];
+  params: (string | number)[];
+} {
+  const conditions: string[] = [];
+  const params: (string | number)[] = [];
+
+  if (filter.allergens.length > 0) {
+    conditions.push(ALLERGEN_EXCLUSION.trim());
+    params.push(JSON.stringify(filter.allergens));
+  }
+
+  if (filter.skillLevel !== null) {
+    const allowed = SKILL_CEILING_MAP[filter.skillLevel] ?? [filter.skillLevel];
+    const placeholders = allowed.map(() => "?").join(", ");
+    conditions.push(`r.skill_level IN (${placeholders})`);
+    params.push(...allowed);
+  }
+
+  if (filter.equipment.length > 0) {
+    conditions.push(EQUIPMENT_EXCLUSION.trim());
+    params.push(JSON.stringify(filter.equipment));
+  }
+
+  return { conditions, params };
 }
 
 // ---------------------------------------------------------------------------
@@ -88,29 +137,6 @@ function extractIngredientNames(ingredientGroupsJson: string): string[] {
   } catch {
     return [];
   }
-}
-
-// ---------------------------------------------------------------------------
-// Equipment compatibility sort helper
-// ---------------------------------------------------------------------------
-
-/**
- * Sorts recipe items so that equipment-compatible recipes appear first.
- * A recipe is compatible if the user owns ALL equipment it requires.
- * If userEquipment is empty, items are returned unchanged (no sort applied).
- */
-function sortByEquipmentCompatibility(
-  items: RecipeListItem[],
-  userEquipment: string[]
-): RecipeListItem[] {
-  if (userEquipment.length === 0) return items;
-  const userSet = new Set(userEquipment);
-  return [...items].sort((a, b) => {
-    const aCompatible = a.equipment.every((e) => userSet.has(e));
-    const bCompatible = b.equipment.every((e) => userSet.has(e));
-    if (aCompatible === bCompatible) return 0;
-    return aCompatible ? -1 : 1;
-  });
 }
 
 // ---------------------------------------------------------------------------
@@ -290,43 +316,33 @@ export async function getRecentViews(db: SQLiteDatabase): Promise<RecentView[]> 
 }
 
 /**
- * Fetches all recipes for list display (no steps, allergen exclusion applied via SQL).
+ * Fetches all recipes for list display with hard filter exclusion at SQL level.
  */
 export async function getAllRecipesForFeed(
   db: SQLiteDatabase,
-  userAllergens: string[],
-  userEquipment: string[] = []
+  filter: HardFilter
 ): Promise<RecipeListItem[]> {
+  const { conditions, params } = buildHardFilterClauses(filter);
+
   let sql = `SELECT ${SELECT_LIST_COLUMNS} FROM recipes r`;
-  const params: string[] = [];
-
-  if (userAllergens.length > 0) {
-    sql += ` WHERE ${ALLERGEN_EXCLUSION}`;
-    params.push(JSON.stringify(userAllergens));
+  if (conditions.length > 0) {
+    sql += ` WHERE ${conditions.join(" AND ")}`;
   }
-
   sql += " ORDER BY rowid ASC";
 
   const rows = await db.getAllAsync<RecipeRow>(sql, params);
-  const items = rows.map(mapRowToRecipeListItem);
-  return sortByEquipmentCompatibility(items, userEquipment);
+  return rows.map(mapRowToRecipeListItem);
 }
 
 /**
- * Fetches recipes filtered by advanced filter criteria with allergen exclusion.
+ * Fetches recipes filtered by advanced filter criteria with hard filter exclusion.
  */
 export async function queryRecipesByFilter(
   db: SQLiteDatabase,
   filter: DiscoveryFilter,
-  userAllergens: string[]
+  hardFilter: HardFilter
 ): Promise<RecipeListItem[]> {
-  const conditions: string[] = [];
-  const params: (string | number)[] = [];
-
-  if (userAllergens.length > 0) {
-    conditions.push(ALLERGEN_EXCLUSION.trim());
-    params.push(JSON.stringify(userAllergens));
-  }
+  const { conditions, params } = buildHardFilterClauses(hardFilter);
 
   if (filter.category) {
     conditions.push("r.category = ?");
@@ -357,8 +373,7 @@ export async function queryRecipesByFilter(
   }
 
   const rows = await db.getAllAsync<RecipeRow>(sql, params);
-  const items = rows.map(mapRowToRecipeListItem);
-  return sortByEquipmentCompatibility(items, filter.equipment);
+  return rows.map(mapRowToRecipeListItem);
 }
 
 /**
@@ -367,32 +382,53 @@ export async function queryRecipesByFilter(
  */
 export async function getAllRecipesForSearch(
   db: SQLiteDatabase,
-  userAllergens: string[],
-  userEquipment: string[] = []
+  filter: HardFilter
 ): Promise<(RecipeListItem & { ingredient_groups: string })[]> {
+  const { conditions, params } = buildHardFilterClauses(filter);
+
   let sql = `SELECT ${SELECT_LIST_COLUMNS}, ingredient_groups FROM recipes r`;
-  const params: string[] = [];
-
-  if (userAllergens.length > 0) {
-    sql += ` WHERE ${ALLERGEN_EXCLUSION}`;
-    params.push(JSON.stringify(userAllergens));
+  if (conditions.length > 0) {
+    sql += ` WHERE ${conditions.join(" AND ")}`;
   }
-
   sql += " ORDER BY rowid ASC";
 
   const rows = await db.getAllAsync<RecipeRow & { ingredient_groups: string }>(sql, params);
-  const withIngredients = rows.map((row) => ({
+  return rows.map((row) => ({
     ...mapRowToRecipeListItem(row),
     ingredient_groups: row.ingredient_groups,
   }));
-  if (userEquipment.length === 0) return withIngredients;
-  const userSet = new Set(userEquipment);
-  return [...withIngredients].sort((a, b) => {
-    const aC = a.equipment.every((e) => userSet.has(e));
-    const bC = b.equipment.every((e) => userSet.has(e));
-    if (aC === bC) return 0;
-    return aC ? -1 : 1;
-  });
+}
+
+/**
+ * Fetches bookmarked recipes with hard filter exclusion.
+ * Preserves bookmark recency order using rowMap pattern.
+ */
+export async function getBookmarkedRecipes(
+  db: SQLiteDatabase,
+  bookmarkIds: string[],
+  filter: HardFilter
+): Promise<RecipeListItem[]> {
+  if (bookmarkIds.length === 0) return [];
+
+  const { conditions, params } = buildHardFilterClauses(filter);
+
+  const placeholders = bookmarkIds.map(() => "?").join(", ");
+  conditions.push(`r.id IN (${placeholders})`);
+  params.push(...bookmarkIds);
+
+  let sql = `SELECT ${SELECT_LIST_COLUMNS} FROM recipes r`;
+  if (conditions.length > 0) {
+    sql += ` WHERE ${conditions.join(" AND ")}`;
+  }
+
+  const rows = await db.getAllAsync<RecipeRow>(sql, params);
+  const items = rows.map(mapRowToRecipeListItem);
+
+  // Preserve bookmark order (most recently saved first)
+  const rowMap = new Map(items.map((item) => [item.id, item]));
+  return bookmarkIds
+    .map((id) => rowMap.get(id))
+    .filter((item): item is RecipeListItem => item !== undefined);
 }
 
 // ---------------------------------------------------------------------------
@@ -488,12 +524,14 @@ export function useRecipesDb() {
       filterRecipesByAllergens(db, recipes, userAllergens),
     getAllIngredientNames: () => getAllIngredientNames(db),
     getAllRecipeTitles: () => getAllRecipeTitles(db),
-    getAllRecipesForFeed: (userAllergens: string[], userEquipment: string[] = []) =>
-      getAllRecipesForFeed(db, userAllergens, userEquipment),
-    getAllRecipesForSearch: (userAllergens: string[], userEquipment: string[] = []) =>
-      getAllRecipesForSearch(db, userAllergens, userEquipment),
-    queryRecipesByFilter: (filter: DiscoveryFilter, userAllergens: string[]) =>
-      queryRecipesByFilter(db, filter, userAllergens),
+    getAllRecipesForFeed: (filter: HardFilter) =>
+      getAllRecipesForFeed(db, filter),
+    getAllRecipesForSearch: (filter: HardFilter) =>
+      getAllRecipesForSearch(db, filter),
+    queryRecipesByFilter: (filter: DiscoveryFilter, hardFilter: HardFilter) =>
+      queryRecipesByFilter(db, filter, hardFilter),
+    getBookmarkedRecipes: (bookmarkIds: string[], filter: HardFilter) =>
+      getBookmarkedRecipes(db, bookmarkIds, filter),
     recordRecentView: (recipeId: string) => recordRecentView(db, recipeId),
     getRecentViews: () => getRecentViews(db),
     addBookmark: (recipeId: string, userId: string | null) =>

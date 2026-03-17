@@ -41,3 +41,10 @@ export const DiscoveryFilterSchema = z.object({
   equipment: z.array(EquipmentEnum).default([]),
 });
 export type DiscoveryFilter = z.infer<typeof DiscoveryFilterSchema>;
+
+// Hard filter — SQL-level exclusion for skill ceiling, equipment, and allergens
+export interface HardFilter {
+  allergens: string[];
+  skillLevel: string | null;
+  equipment: string[];
+}
