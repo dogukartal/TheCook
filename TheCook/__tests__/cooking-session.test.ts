@@ -15,6 +15,8 @@ function createMockDb() {
           timer_start_timestamp: params![3],
           ingredient_checks: params![4],
           session_started_at: params![5],
+          adapted_servings: params![6] ?? null,
+          ingredient_swaps: params![7] ?? '{}',
         };
       }
       if (sql.includes("DELETE FROM cooking_sessions")) {
@@ -39,6 +41,8 @@ describe("cooking-session CRUD", () => {
     timerStartTimestamp: 1700000000000,
     ingredientChecks: [0, 2, 4],
     sessionStartedAt: "2026-03-13T10:00:00Z",
+    adaptedServings: null,
+    ingredientSwaps: {},
   };
 
   it("saveSession writes a row, getActiveSession reads it back with matching fields", async () => {

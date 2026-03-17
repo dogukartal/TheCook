@@ -11,6 +11,8 @@ export interface CookingSession {
   timerStartTimestamp: number | null;
   ingredientChecks: number[];
   sessionStartedAt: string; // ISO 8601
+  adaptedServings: number | null;
+  ingredientSwaps: Record<string, string>;
 }
 
 // ---------------------------------------------------------------------------
@@ -25,6 +27,8 @@ interface CookingSessionRow {
   timer_start_timestamp: number | null;
   ingredient_checks: string;
   session_started_at: string;
+  adapted_servings: number | null;
+  ingredient_swaps: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -41,8 +45,8 @@ export async function saveSession(
 ): Promise<void> {
   await db.runAsync(
     `INSERT OR REPLACE INTO cooking_sessions
-      (id, recipe_id, current_step, timer_remaining, timer_start_timestamp, ingredient_checks, session_started_at)
-     VALUES (1, ?, ?, ?, ?, ?, ?)`,
+      (id, recipe_id, current_step, timer_remaining, timer_start_timestamp, ingredient_checks, session_started_at, adapted_servings, ingredient_swaps)
+     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       session.recipeId,
       session.currentStep,
@@ -50,6 +54,8 @@ export async function saveSession(
       session.timerStartTimestamp,
       JSON.stringify(session.ingredientChecks),
       session.sessionStartedAt,
+      session.adaptedServings,
+      JSON.stringify(session.ingredientSwaps),
     ]
   );
 }
@@ -72,6 +78,8 @@ export async function getActiveSession(
     timerStartTimestamp: row.timer_start_timestamp,
     ingredientChecks: JSON.parse(row.ingredient_checks),
     sessionStartedAt: row.session_started_at,
+    adaptedServings: row.adapted_servings ?? null,
+    ingredientSwaps: row.ingredient_swaps ? JSON.parse(row.ingredient_swaps) : {},
   };
 }
 

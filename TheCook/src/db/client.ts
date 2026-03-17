@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-const DB_VERSION = 6;
+const DB_VERSION = 7;
 
 export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const result = await db.getFirstAsync<{ user_version: number }>(
@@ -104,6 +104,13 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
         rating INTEGER
       );
       CREATE INDEX IF NOT EXISTS idx_cooking_history_recipe_id ON cooking_history (recipe_id);
+    `);
+  }
+
+  if (currentVersion < 7) {
+    await db.execAsync(`
+      ALTER TABLE cooking_sessions ADD COLUMN adapted_servings INTEGER;
+      ALTER TABLE cooking_sessions ADD COLUMN ingredient_swaps TEXT DEFAULT '{}';
     `);
   }
 

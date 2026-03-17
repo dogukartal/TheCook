@@ -16,15 +16,15 @@ function createMockDb(currentUserVersion: number) {
   return db;
 }
 
-describe("migrateDb — DB_VERSION 6", () => {
-  it("DB_VERSION constant is 6", async () => {
-    // Fresh DB (version 0) — migration should run; version 6 should be set at end
+describe("migrateDb — DB_VERSION 7", () => {
+  it("DB_VERSION constant is 7", async () => {
+    // Fresh DB (version 0) — migration should run; version 7 should be set at end
     const db = createMockDb(0);
     await migrateDb(db as any);
 
-    // The last execAsync call should set user_version = 6
+    // The last execAsync call should set user_version = 7
     const allSql = db._execCalls.join("\n");
-    expect(allSql).toContain("PRAGMA user_version = 6");
+    expect(allSql).toContain("PRAGMA user_version = 7");
   });
 
   it("creates profile table on fresh install", async () => {
@@ -70,8 +70,8 @@ describe("migrateDb — DB_VERSION 6", () => {
     expect(allSql).toContain("onboarding_completed");
   });
 
-  it("is idempotent — does not run migration when already at version 6", async () => {
-    const db = createMockDb(6);
+  it("is idempotent — does not run migration when already at version 7", async () => {
+    const db = createMockDb(7);
     await migrateDb(db as any);
 
     // No execAsync should be called when already at target version
@@ -192,5 +192,23 @@ describe("migrateDb — DB_VERSION 6", () => {
 
     const allSql = db._execCalls.join("\n");
     expect(allSql).toContain("idx_cooking_history_recipe_id");
+  });
+
+  it("adds adapted_servings and ingredient_swaps columns in v7 migration", async () => {
+    const db = createMockDb(6);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("adapted_servings");
+    expect(allSql).toContain("ingredient_swaps");
+  });
+
+  it("adds adaptation columns on fresh install via v7 migration", async () => {
+    const db = createMockDb(0);
+    await migrateDb(db as any);
+
+    const allSql = db._execCalls.join("\n");
+    expect(allSql).toContain("ALTER TABLE cooking_sessions ADD COLUMN adapted_servings");
+    expect(allSql).toContain("ALTER TABLE cooking_sessions ADD COLUMN ingredient_swaps");
   });
 });

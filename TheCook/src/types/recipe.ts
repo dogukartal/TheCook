@@ -77,11 +77,19 @@ export const SkillLevelEnum = z.enum([
 // Ingredient schemas
 // ---------------------------------------------------------------------------
 
+export const SubstitutionSchema = z.object({
+  name: z.string().min(1),
+  amount: z.number().positive(),
+  unit: UnitEnum,
+});
+
 export const IngredientSchema = z.object({
   name: z.string().min(1),
   amount: z.number().positive(),
   unit: UnitEnum,
   optional: z.boolean().default(false),
+  alternatives: z.array(SubstitutionSchema).default([]),
+  scalable: z.boolean().default(true),
 });
 
 export const IngredientGroupSchema = z.object({
@@ -136,6 +144,7 @@ export type Recipe = z.infer<typeof RecipeSchema>;
 export type RecipeStep = z.infer<typeof StepSchema>;
 export type Ingredient = z.infer<typeof IngredientSchema>;
 export type IngredientGroup = z.infer<typeof IngredientGroupSchema>;
+export type Substitution = z.infer<typeof SubstitutionSchema>;
 export type Unit = z.infer<typeof UnitEnum>;
 export type AllergenTag = z.infer<typeof AllergenTagEnum>;
 export type Equipment = z.infer<typeof EquipmentEnum>;
