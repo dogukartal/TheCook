@@ -131,12 +131,84 @@ Plans:
 - [ ] 06-02-PLAN.md — Equipment sort logic in queryRecipesByFilter, getAllRecipesForFeed, getAllRecipesForSearch; tests go GREEN (Wave 2)
 - [ ] 06-03-PLAN.md — Equipment badge on RecipeCardGrid/RecipeCardRow + wire profile.equipment from Feed, Search, My Kitchen screens + human verification (Wave 3)
 
+### Phase 7: Foundation Pivot
+**Goal**: Restructure the app for the evolved product vision and enable parallel frontend/backend development — hard filters, 4-tab navigation, screen data hooks extraction, and new profile schema
+**Depends on**: Phase 6
+**Requirements**: DISC-05
+**Gap Closure:** Fixes DISC-05 (allergen exclusion on Cookbook bookmarks). DISC-03 deferred to Phase 9 (superseded by new search/feed design).
+**Success Criteria** (what must be TRUE):
+  1. Screen data orchestration extracted into typed hooks (`useFeedScreen`, `useSearchScreen`, `useCookbookScreen`) — screens are thin shells calling hook + rendering components
+  2. My Kitchen tab renamed to Cookbook; Profile added as 4th tab (Feed / Search / Cookbook / Profile)
+  3. Skill level and kitchen equipment are hard filters — recipes above skill ceiling or requiring missing tools never surface on any screen
+  4. Allergen exclusion applied to Cookbook bookmarks query (DISC-05 closed)
+  5. Profile DB schema extended with `cuisine_preferences` and `app_goals` columns (nullable, no UI yet)
+  6. Inline SQL in my-kitchen.tsx extracted to `src/db/recipes.ts`
+
+### Phase 8: Feed Redesign
+**Goal**: Replace the current vertical feed with 4 horizontal sections that surface recipes based on trending, speed, personalization, and novelty
+**Depends on**: Phase 7
+**Requirements**: DISC-02
+**Success Criteria** (what must be TRUE):
+  1. Feed displays 4 horizontal sections: Şu an trend, 30 dakikada bitir, Sana özel, Denemediklerin
+  2. Each section scrolls horizontally with recipe cards
+  3. Sections with zero results after filtering are hidden (no empty states)
+  4. Geçmiş (cooking history) table exists and feeds Denemediklerin exclusion
+  5. Sana özel uses rule-based ranking from profile data (AI ranking deferred)
+  6. All sections respect hard filters (skill, tools, dietary restrictions)
+
+### Phase 9: Search & Category Redesign
+**Goal**: Rebuild search with category strip, dietary-only filtering on search results, and optional skill/tool filter panel on category results
+**Depends on**: Phase 7
+**Requirements**: DISC-03, DISC-01
+**Success Criteria** (what must be TRUE):
+  1. Category strip displays horizontal scrolling category cards (Pasta, Burgers, Breakfast, Desserts, Chicken, Soups, Rice & Grains, Meat)
+  2. Search results filtered only by dietary restrictions — no skill/tool filtering
+  3. Category results have an optional filter panel for skill level and kitchen tools
+  4. Filter state is session-only (resets on app close or tab switch)
+  5. Search matches against recipe names and ingredient lists with real-time results
+  6. Category + search query compose together when both active
+
+### Phase 10: Recipe Detail Evolution
+**Goal**: Add serving size scaling, ingredient substitution, and step preview to the recipe detail page — all adaptation happens before cooking starts
+**Depends on**: Phase 8
+**Requirements**: (new functionality, no existing requirement ID)
+**Success Criteria** (what must be TRUE):
+  1. Serving size scaler (inline stepper) proportionally adjusts all ingredient quantities
+  2. Adjusted serving size carries forward into Cooking Mode
+  3. Ingredients with pre-defined alternatives show "Elimde yok" swap button
+  4. Swapped ingredients reflect in step copy via dynamic variables (not hardcoded strings)
+  5. Step preview shows step titles as read-only inline list
+  6. Start Cooking accessible from both main screen and ingredients bottom sheet
+
+### Phase 11: Cooking Mode Evolution
+**Goal**: Elevate cooking mode with step images, checkpoint/warning fields, celebration screen, rating, and completion logging to Geçmiş
+**Depends on**: Phase 10
+**Requirements**: COOK-01, COOK-02, COOK-03
+**Success Criteria** (what must be TRUE):
+  1. Each step displays an image (AI-generated process shot) with fallback color block
+  2. Each step shows Böyle görünmeli (checkpoint) and Dikkat et! (warning) fields
+  3. Completing the final step navigates to celebration screen
+  4. Post-cook star rating is submitted and stored with recipe ID and timestamp
+  5. Completion writes to Geçmiş — partial cooks are not logged
+  6. Exit triggers confirmation modal; nav bar hidden during cooking
+
+### Phase 12: Şef'im (AI Companion)
+**Goal**: Build the AI chef companion that lives inside cooking mode — context-aware, always one tap away, with pre-loaded answers and live AI fallback
+**Depends on**: Phase 11
+**Requirements**: (new functionality)
+**Success Criteria** (what must be TRUE):
+  1. Each step has 3 pre-loaded question-answer chips (stored at recipe creation time)
+  2. Tapping Şef'im opens a bottom sheet showing recipe + step context
+  3. Chip taps return instant pre-written answers (no AI call)
+  4. Open text and voice input trigger live AI call with full context (recipe, step, skill, swaps)
+  5. Pulse animation triggers when user lingers on a step beyond average duration
+  6. Şef'im redirects off-topic questions back to the recipe
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
-
-Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can run in parallel with Phase 2 (Profile and Auth). Phase 4 requires both Phase 2 and Phase 3 to be complete.
+Phases 1–6 complete. Phases 7–12 represent the product evolution toward the full v1 vision.
+Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -146,3 +218,9 @@ Note: Phase 3 (Content Library) depends only on Phase 1 (schema lock) and can ru
 | 4. Recipe Discovery | 6/6 | Complete   | 2026-03-12 |
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
 | 6. Wire Equipment to Recipe Discovery | 3/3 | Complete   | 2026-03-14 |
+| 7. Foundation Pivot | 0/0 | Pending | — |
+| 8. Feed Redesign | 0/0 | Pending | — |
+| 9. Search & Category Redesign | 0/0 | Pending | — |
+| 10. Recipe Detail Evolution | 0/0 | Pending | — |
+| 11. Cooking Mode Evolution | 0/0 | Pending | — |
+| 12. Şef'im (AI Companion) | 0/0 | Pending | — |

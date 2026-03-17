@@ -17,9 +17,9 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 - [x] **DISC-01**: User can input available ingredients and receive recipe recommendations that match
 - [x] **DISC-02**: User can browse a curated feed of recipes without ingredient input, ordered by skill level match
-- [x] **DISC-03**: User can filter recipes by craving/mood (cuisine type, cooking time, dish type — breakfast / soup / main / etc.)
+- [ ] **DISC-03**: User can filter recipes by craving/mood (cuisine type, cooking time, dish type — breakfast / soup / main / etc.)
 - [x] **DISC-04**: User can bookmark recipes to a personal saved list and return to them later
-- [x] **DISC-05**: Allergen-incompatible recipes are automatically filtered out from all discovery surfaces
+- [ ] **DISC-05**: Allergen-incompatible recipes are automatically filtered out from all discovery surfaces
 
 ### Cooking Mode
 
@@ -88,9 +88,9 @@ Updated during roadmap creation.
 | CONT-01 | Phase 3 | Complete |
 | DISC-01 | Phase 4 | Complete |
 | DISC-02 | Phase 4 | Complete |
-| DISC-03 | Phase 4 | Complete |
+| DISC-03 | Phase 9 | Pending |
 | DISC-04 | Phase 4 | Complete |
-| DISC-05 | Phase 4 | Complete |
+| DISC-05 | Phase 7 | Pending |
 | COOK-01 | Phase 5 | Complete |
 | COOK-02 | Phase 5 | Complete |
 | COOK-03 | Phase 5 | Complete |
@@ -100,7 +100,7 @@ Updated during roadmap creation.
 - v1 requirements: 17 total
 - Mapped to phases: 17
 - Unmapped: 0
-- Pending (gap closure): 1 (ONBRD-03 → Phase 6)
+- Pending (gap closure): 2 (DISC-05 → Phase 7, DISC-03 → Phase 9)
 
 ---
 *Requirements defined: 2026-03-08*
