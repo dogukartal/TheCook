@@ -112,6 +112,8 @@ steps:
     recovery: Yakmış olursanız o partı atıp baştan başlamanız gerekir; yanık tat geçmez.
     stepImage: null
     timerSeconds: 300
+    checkpoint: "Soganlar seffaf, havuc hafif yumusamis"
+    warning: "Sogani yakmayin — aci tat corbayi bozar"
   - title: Salça ve mercimek ekleyin
     instruction: Domates salçasını ekleyin, 1 dakika kavurun. Ardından yıkanmış mercimekleri, kimyon ve karabiberi ekleyip karıştırın. Üzerine su veya et suyunu dökün.
     why: Salçayı kısaca kavurmak çiğ tadını giderir. Baharatları bu aşamada eklemek yağda çözünen aroma maddelerini suya geçmesini sağlar.
@@ -128,6 +130,8 @@ steps:
     recovery: Mercimekler hâlâ sert ise 5-10 dakika daha pişirin.
     stepImage: null
     timerSeconds: 1500
+    checkpoint: "Mercimekler tamamen dagilmis, kasikla eziliyor"
+    warning: "Az pisen mercimek blenderda puturlu kalir"
   - title: Blenderdan geçirin
     instruction: Tencereyi ocaktan alın ve 5 dakika bekleyin. Çorbayı dikkatlice blenderdan geçirin; ya daldırma blender kullanın ya da küçük partiler hâlinde standart blendere alın. Tuz ekleyip tadına bakın.
     why: Sıcak sıvı blenderde basınç oluşturur; beklemek ya da küçük partilerde işlemek kapağın fırlamasını önler. Blenderlama pürüzsüz, kadifemsi bir kıvam verir.
@@ -136,6 +140,8 @@ steps:
     recovery: Kapak uçarsa yaralanma olup olmadığını kontrol edin; çorbanın geri kalanını temizleyip daha az miktarlarda blend edin.
     stepImage: null
     timerSeconds: null
+    checkpoint: "Corba puruzsuz, ipeksi ve homojen renkte"
+    warning: "Sicak corbayi kapali blendere doldurmak tehlikeli"
   - title: Naneli tereyağı ekleyin
     instruction: İsterseniz küçük bir tavada tereyağını eritin ve kuru kırmızı biberi ekleyip 30 saniye kızdırın. Bu kırmızı yağı kaselere döktüğünüz çorbanın üzerine gezdirin. Hemen servis edin.
     why: Kızdırılmış tereyağı ve biber çorbaya geleneksel sunum görünümü ve ekstra aroma kazandırır. Sıcak servis kıvamın en iyi hissettirdiği andır.

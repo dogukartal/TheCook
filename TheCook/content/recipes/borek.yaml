@@ -88,6 +88,8 @@ steps:
     recovery: Peyniri parmaklarınızla iri tutarak ufalayın; ufak topaklar kalması normaldir.
     stepImage: null
     timerSeconds: null
+    checkpoint: "Peynir iri ufalanmis, tepsi yaglanmis"
+    warning: "Peyniri macun haline getirmeyin"
   - title: Sütlü sosu yapın
     instruction: >-
       Sosu hazırlamak için {{Yumurta.amount}} {{Yumurta.unit}} yumurtayı derin bir kaseye kırın,
@@ -99,6 +101,8 @@ steps:
     recovery: Karışım ayrışmış ise tekrar çırpın; iyi karışmış olması yeterli.
     stepImage: null
     timerSeconds: null
+    checkpoint: "Sos homojen, acik sari ve hafif kopuklu"
+    warning: null
   - title: Alt yufkaları serin
     instruction: İlk iki yufkayı tepsiye serin. Her birini, hazırladığınız sostan 2-3 yemek kaşığı dökerek ıslatın. Yufkalar üst üste binebilir, tepsi kenarlarından taşabilir.
     why: İlk katman taban görevi görür ve nem tutması için bol sos ister. Kenarlardan taşan yufkalar sonradan içe kıvrılarak böreği kapatır.
@@ -131,3 +135,5 @@ steps:
     recovery: Eğer çok erken kestiyseniz, parçaları yeniden düzleştirin ve 5 dakika bekleyin.
     stepImage: null
     timerSeconds: 2400
+    checkpoint: "Ust yuzey altin sarisi, kenarlar kabarik"
+    warning: "Sicakken kesmeyin — ic harc dagilir"

@@ -76,6 +76,8 @@ steps:
     recovery: Pişirme sırasında kabuklar ayrışırsa bir kaşıkla çıkarabilirsiniz.
     stepImage: null
     timerSeconds: null
+    checkpoint: "Domates kupler 1-2 cm boyutunda"
+    warning: "Cok buyuk dograma pisirme suresini uzatir"
   - title: Soğan ve biberi kavurun
     instruction: >-
       Tavayı orta ateşte ısıtın ve {{Tereyağı.amount}} {{Tereyağı.unit}} {{Tereyağı.name}} ekleyin.
@@ -87,6 +89,8 @@ steps:
     recovery: Ateşi hemen kısın, tavayı ocaktan alın ve kısa süre bekleyin.
     stepImage: null
     timerSeconds: 180
+    checkpoint: "Soganlar seffaf, biberler parlak yesil"
+    warning: "Ates cok yuksekse tereyagi yanar"
   - title: Domatesi pişirin
     instruction: Domatesleri tavaya ekleyin ve orta ateşte, ara ara karıştırarak 5-7 dakika pişirin. Suyunu çekip koyulaşana kadar bekleyin.
     why: Fazla suyun buharlaşması gerekir, aksi hâlde menemen sulu ve cıvık olur. Koyulaşan domates sosun içinde yumurta şekil tutabilir.
@@ -95,6 +99,8 @@ steps:
     recovery: Yumurtaları ekledikten sonra hâlâ çok sulu ise kapağı açık pişirmeye devam edin.
     stepImage: null
     timerSeconds: 420
+    checkpoint: "Sos kasik izini tutacak kivamda"
+    warning: null
   - title: Yumurtaları kırın
     instruction: >-
       Tuz ve karabiber ekleyip karıştırın. {{Yumurta.amount}} {{Yumurta.unit}} {{Yumurta.name}} kırın,
@@ -106,6 +112,8 @@ steps:
     recovery: Ocağı hemen kapatın; tava sıcaklığı kalan pişirmeyi tamamlar.
     stepImage: null
     timerSeconds: 120
+    checkpoint: "Yumurta beyazlari donmus, sarilari akiskan"
+    warning: "Cok karistirma — yumurtalar parcalanir"
   - title: Peynirle servis edin
     instruction: İsterseniz üzerine ufalanmış beyaz peynir serpin. Hemen tavadan servis edin.
     why: Sıcak menemenin üzerine eklenen peynir hafifçe eriyerek kremsi bir lezzet katmanı oluşturur. Bekletilirse yumurta sertleşir.

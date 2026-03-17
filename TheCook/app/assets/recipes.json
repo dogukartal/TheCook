@@ -94,7 +94,9 @@
         "commonMistake": "Soğan suyunu sıkmamak — kebap ıslak kalır ve şişe takılmaz.",
         "recovery": "Sıkmayı atladıysanız kağıt havluda bekletip fazla suyu aldırın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Harcı yoğurup dinlendirin",
@@ -104,7 +106,9 @@
         "commonMistake": "Az yoğurmak — kebap şişte ya da tavada dağılır.",
         "recovery": "Dağılmaya başlarsa alıp tekrar yoğurun ve yeniden şekil verin.",
         "stepImage": null,
-        "timerSeconds": 4200
+        "timerSeconds": 4200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Şekil verip pişirin",
@@ -114,7 +118,9 @@
         "commonMistake": "Kebabı döndürmeden süreklı aynı tarafta pişirmek — bir tarafı yanar, diğeri çiğ kalır.",
         "recovery": "Çok kızarmışsa ateşi kısın ve ters çevirin; kalan kısmı tamamlayın.",
         "stepImage": null,
-        "timerSeconds": 480
+        "timerSeconds": 480,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -247,7 +253,9 @@
         "commonMistake": "Islatmayı atlamak — buğday pişmesi çok uzar (3 saate kadar) ve tekstür kaba kalır.",
         "recovery": "Islatmayı atladıysanız basınçlı tencere kullanın ya da 2-3 saat uzun süre pişirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Buğday ve baklagilleri pişirin",
@@ -257,7 +265,9 @@
         "commonMistake": "Tüm malzemeleri aynı anda koymak — pirinç ve baklagiller aşırı pişip dağılır.",
         "recovery": "Erken koyulursa pirinç tamamen eridiyse bu aşure için sorun değildir, kıvam değişir.",
         "stepImage": null,
-        "timerSeconds": 4200
+        "timerSeconds": 4200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Meyve ve şeker ekleyin",
@@ -267,7 +277,9 @@
         "commonMistake": "Şekeri çok erken koymak — şeker dibine yapışabilir ve pişirme süresini uzatabilir.",
         "recovery": "Şeker dibine yapıştıysa ateşi kısın ve hızlı karıştırın.",
         "stepImage": null,
-        "timerSeconds": 600
+        "timerSeconds": 600,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Servis için hazırlayın",
@@ -277,7 +289,9 @@
         "commonMistake": "Çok sıcak servis etmek — aşure soğuyunca kıvam alır, sıcak servis daha sıvı olur.",
         "recovery": "Oda sıcaklığına getirin ya da buzdolabında soğutun.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -374,7 +388,9 @@
         "commonMistake": "Şerbeti de sıcak iken dökmek — baklava yumuşar ve hamuru batar.",
         "recovery": "Her iki tarafı da aynı sıcaklığa getirip tekrar deneyin.",
         "stepImage": null,
-        "timerSeconds": 1080
+        "timerSeconds": 1080,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Alt yufkaları dizin",
@@ -384,7 +400,9 @@
         "commonMistake": "Yufkaları kuru bırakmak — o katmanlar kuru ve kırılgan pişer, ayrışmaz.",
         "recovery": "Eksik kalan yerlere tereyağı sürmeye devam edin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "İç harcı yerleştirin",
@@ -394,7 +412,9 @@
         "commonMistake": "Harcı yalnızca ortaya yığmak — kenarlar boş kalır ve eşit pişmez.",
         "recovery": "Harcı spatula ile kenarlardan içe kadar düzeltin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Kesin ve fırına verin",
@@ -404,7 +424,9 @@
         "commonMistake": "Kesmeden fırına vermek — pişmiş baklava çok kırılgan ve dilimleme zorlaşır.",
         "recovery": "Fırından çıkınca sıcakken dikkatlice kesin.",
         "stepImage": null,
-        "timerSeconds": 2700
+        "timerSeconds": 2700,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Şerbeti dökün",
@@ -414,7 +436,9 @@
         "commonMistake": "Şerbeti döktükten hemen sonra servis etmek — şerbet dibe çökmüş, üst kuru kalır.",
         "recovery": "Daha fazla bekleyin; 1 gün sonra daha iyi olur.",
         "stepImage": null,
-        "timerSeconds": 7200
+        "timerSeconds": 7200,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -536,7 +560,9 @@
         "commonMistake": "Peyniri çok ince ezmiş olmak — pürüzsüz bir macun hâline getirmek iç harcın içini sıkıştırır ve havadar bir kıvam vermez.",
         "recovery": "Peyniri parmaklarınızla iri tutarak ufalayın; ufak topaklar kalması normaldir.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": "Peynir iri ufalanmis, tepsi yaglanmis",
+        "warning": "Peyniri macun haline getirmeyin"
       },
       {
         "title": "Sütlü sosu yapın",
@@ -546,7 +572,9 @@
         "commonMistake": "Sosu hazırlamadan yufkaları ıslatmaya çalışmak — kuru yufka nem dağıtmaz.",
         "recovery": "Karışım ayrışmış ise tekrar çırpın; iyi karışmış olması yeterli.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": "Sos homojen, acik sari ve hafif kopuklu",
+        "warning": null
       },
       {
         "title": "Alt yufkaları serin",
@@ -556,7 +584,9 @@
         "commonMistake": "Sosu tek bir yere dökmek — yufka bazı yerlerde kuru, bazı yerlerde çok ıslak olur.",
         "recovery": "Sosu elinizle veya fırçayla yufkanın her köşesine yayın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Orta katmanı doldurun",
@@ -566,7 +596,9 @@
         "commonMistake": "Harcı ortaya yığmak — köşeler boş kalır.",
         "recovery": "Bir kaşık veya spatula ile harcı kenarlardan başlayarak yeniden dağıtın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Üst yufkaları kapatın",
@@ -576,7 +608,9 @@
         "commonMistake": "Üst yufkayı kuru bırakmak — üst kısım sert ve çatlamış pişer.",
         "recovery": "Fırına girmeden önce fırçayla zeytinyağı veya kalan sosu üzerine sürün.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Fırında pişirin",
@@ -586,7 +620,9 @@
         "commonMistake": "Fırından çıkar çıkmaz kesmek — harç dağılır ve börek parçalanır.",
         "recovery": "Eğer çok erken kestiyseniz, parçaları yeniden düzleştirin ve 5 dakika bekleyin.",
         "stepImage": null,
-        "timerSeconds": 2400
+        "timerSeconds": 2400,
+        "checkpoint": "Ust yuzey altin sarisi, kenarlar kabarik",
+        "warning": "Sicakken kesmeyin — ic harc dagilir"
       }
     ]
   },
@@ -727,7 +763,9 @@
         "commonMistake": "Fazla su kullanmak — bulgur sulanır ve kıvam tutmaz.",
         "recovery": "Sulanmışsa kuru bulgur ekleyerek dengeyin.",
         "stepImage": null,
-        "timerSeconds": 900
+        "timerSeconds": 900,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Harcı yoğurun",
@@ -737,7 +775,9 @@
         "commonMistake": "Az yoğurmak — bazı kısımlar tutsuz ve renksiz kalır.",
         "recovery": "Yoğurmaya devam edin; 15 dakika yeterli.",
         "stepImage": null,
-        "timerSeconds": 900
+        "timerSeconds": 900,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Otları ekleyip servis edin",
@@ -747,7 +787,9 @@
         "commonMistake": "Çok fazla ekşi koymak — nar ekşisi ve limon birlikte kullanılınca aşırı ekşi olabilir.",
         "recovery": "Ekşilik fazlaysa biraz şeker veya salça ekleyerek dengeleyin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -855,7 +897,9 @@
         "commonMistake": "Domatesi çok ince doğramak — sos sulanır ve salata pelte gibi olur.",
         "recovery": "Domates suyu fazla çıkarsa atık suyu dökün ve soğutulmuş servise geçin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Soğanı hazırlayın",
@@ -865,7 +909,9 @@
         "commonMistake": "Soğanı iri bırakmak — salatayla orantısız ve keskin tat baskın olur.",
         "recovery": "İnce dilimlerin de işe yaraması için tuzlu suya bırakın.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Karıştırıp servis edin",
@@ -875,7 +921,9 @@
         "commonMistake": "Salatayı çok önceden hazırlamak — sebzeler su bırakır ve taze kıvamı kaybolur.",
         "recovery": "Sulanmışsa sosla birlikte karıştırın, ekstra zeytinyağı ekleyin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1019,7 +1067,9 @@
         "commonMistake": "Çam fıstığını gözden kaybetmek ve yakmak — acı bir tat bırakır.",
         "recovery": "Kararırsa atıp yeniden yapın; bu adım atlanabilir ama tat farklı olur.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "İç harcı kavurun",
@@ -1029,7 +1079,9 @@
         "commonMistake": "Harcı tamamen pişirmek — pirinç sarma içinde pişecek, önceden pişirilirse hamurlaşır.",
         "recovery": "Pirinç az pişmişse sarma pişirme süresini uzatın.",
         "stepImage": null,
-        "timerSeconds": 480
+        "timerSeconds": 480,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Yaprakları hazırlayın",
@@ -1039,7 +1091,9 @@
         "commonMistake": "Çok sert yaprakları kullanmaya çalışmak — katlama sırasında yırtılır.",
         "recovery": "Yırtılan yaprakları üst üste koyarak iki yaprakla sarmayı deneyin.",
         "stepImage": null,
-        "timerSeconds": 900
+        "timerSeconds": 900,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Dolmaları sarın",
@@ -1049,7 +1103,9 @@
         "commonMistake": "Çok fazla harç koymak — pirinç şişince yaprak patlar ve dolma açılır.",
         "recovery": "Açılan dolmayı yeniden sarın veya tencerenin üstüne koyun.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tencerede pişirin",
@@ -1059,7 +1115,9 @@
         "commonMistake": "Baskı uygulamadan pişirmek — dolmalar tencerede döner ve açılır.",
         "recovery": "Pişirme ortasında açılanları sıkıştırın ve pişirmeye devam edin.",
         "stepImage": null,
-        "timerSeconds": 2700
+        "timerSeconds": 2700,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1167,7 +1225,9 @@
         "commonMistake": "Blendere koymak — pürüye dönüşür, ezme değil salça gibi olur.",
         "recovery": "Eğer pürüye dönüştüyse salça olarak kullanın veya çok ince kıyılmış taze ekleyerek dokuyu geri kazandırın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Baharatlayıp dinlendirin",
@@ -1177,7 +1237,9 @@
         "commonMistake": "Hemen servis etmek — tatlar henüz birleşmemiştir.",
         "recovery": "En az 15 dakika dinlendirin; uzun beklemek daha iyi olur.",
         "stepImage": null,
-        "timerSeconds": 1200
+        "timerSeconds": 1200,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1276,7 +1338,9 @@
         "commonMistake": "Hamuru hemen açmak — dirençlidir, geri çekilir ve ince açılamaz.",
         "recovery": "Dinlendirmeye devam edin; yeterince dinlendirilmemiş hamur açılamaz.",
         "stepImage": null,
-        "timerSeconds": 1200
+        "timerSeconds": 1200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "İç harcı hazırlayın",
@@ -1286,7 +1350,9 @@
         "commonMistake": "Ispanağı pişirip koymak — yeşil rengi solar ve fazla su bırakır.",
         "recovery": "Fazla su bırakırsa üzerine kağıt havlu koyun.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Hamuruı açıp doldurun",
@@ -1296,7 +1362,9 @@
         "commonMistake": "Hamuru kalın bırakmak — gözleme kabarık ve hamursu olur.",
         "recovery": "Kalın açılmışsa daha uzun pişirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tavada pişirin",
@@ -1306,7 +1374,9 @@
         "commonMistake": "Orta ateşte pişirmek — çok uzun sürer, hamur kurur.",
         "recovery": "Altı yanmışsa üstü pişmemişse tavayı kapatın ve kısık ateşte 1 dakika daha.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1392,7 +1462,9 @@
         "commonMistake": "Şekeri erimediyken dökmek — granüller dibine çöker ve helva taneli olur.",
         "recovery": "Şekeri tamamen eriyene kadar karıştırın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Unu kavurun",
@@ -1402,7 +1474,9 @@
         "commonMistake": "Karıştırmayı bırakmak — un yanık lekeler oluşturur ve helva acı olur.",
         "recovery": "Yanık noktalar oluştuysa devam etmeyin; o partıyı atın ve yeniden başlayın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Sıvıyı ekleyin",
@@ -1412,7 +1486,9 @@
         "commonMistake": "Sıvıyı hızla dökmek — sıçrama ve yaralanma riski.",
         "recovery": "Topaklar oluştuysa güçlüce karıştırın veya daldırma blenderla düzeltin.",
         "stepImage": null,
-        "timerSeconds": 1080
+        "timerSeconds": 1080,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Kıvama getirip şekil verin",
@@ -1422,7 +1498,9 @@
         "commonMistake": "Çok erken ocaktan almak — sulu ve dağınık helva.",
         "recovery": "Biraz daha pişirin; fazla pişmesi de sorun değildir, renk biraz koyulaşır.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1523,7 +1601,9 @@
         "commonMistake": "Konserve suyunu humusa katmak — fazla tuz ve metalik tat geçer.",
         "recovery": "Çok tuzlu olduysa daha az tuz ekleyin ve tatlı bir şey (bir tutam şeker) ekleyerek dengeleyin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Blenderdan geçirin",
@@ -1533,7 +1613,9 @@
         "commonMistake": "Az blenderlama — pütürlü ve kaba humus.",
         "recovery": "Blenderlayayı uzatın; ne kadar uzun o kadar kremsi olur.",
         "stepImage": null,
-        "timerSeconds": 180
+        "timerSeconds": 180,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tatlandırıp servis edin",
@@ -1543,7 +1625,9 @@
         "commonMistake": "Soğuk servis etmemek — humus oda sıcaklığında veya hafif soğuk daha kremsi hissettirer.",
         "recovery": "Buzdolabında 30 dakika bekletebilirsiniz.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1659,7 +1743,9 @@
         "commonMistake": "Bekletmeyi atlamak — patlıcan çok fazla yağ çeker ve acı kalabilir.",
         "recovery": "Acılık çok belirginse daha uzun süre tuzlu suda bekletin.",
         "stepImage": null,
-        "timerSeconds": 1200
+        "timerSeconds": 1200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Patlıcanları kavurun",
@@ -1669,7 +1755,9 @@
         "commonMistake": "Çok az yağla kavurmak — patlıcan kuru kalır ve sert pişer.",
         "recovery": "Kavurma sırasında yağ azalırsa çekinmeden ekleyin.",
         "stepImage": null,
-        "timerSeconds": 420
+        "timerSeconds": 420,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "İç harcı hazırlayın",
@@ -1679,7 +1767,9 @@
         "commonMistake": "Harcı kısa pişirmek — tatlar yeterince gelişmez ve su fazla kalır.",
         "recovery": "Fazla suyu kapalı kapakla daha uzun pişirerek buharlaştırın.",
         "stepImage": null,
-        "timerSeconds": 720
+        "timerSeconds": 720,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Patlıcanları doldurun",
@@ -1689,7 +1779,9 @@
         "commonMistake": "Suyu az koymak — taban kurur ve patlıcanlar sertleşir.",
         "recovery": "Pişirme ortasında kontrol edin; taban kurursa biraz su ekleyin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Fırında pişirin",
@@ -1699,7 +1791,9 @@
         "commonMistake": "Sıcak servis etmek — soğuyunca daha lezzetli olur, sabırsızlık ödüllendirilmez.",
         "recovery": "Çok erkenden yendiyse soğuk kalıntılar ertesi gün bile daha lezzetlidir.",
         "stepImage": null,
-        "timerSeconds": 2100
+        "timerSeconds": 2100,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1809,7 +1903,9 @@
         "commonMistake": "Ispanağı çok küçük doğramak — zaman kaybı, blender yine de öğütecek.",
         "recovery": "Boyuta göre değişen bir şey yok, devam edin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Sebzeleri pişirin",
@@ -1819,7 +1915,9 @@
         "commonMistake": "Patatesleri yetersiz pişirmek — blenderde parçacıklar kalır ve kıvam pütürlü olur.",
         "recovery": "Sert kalmışsa 5-10 dakika daha pişirin.",
         "stepImage": null,
-        "timerSeconds": 1200
+        "timerSeconds": 1200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Ispanak ekleyip blenderlayın",
@@ -1829,7 +1927,9 @@
         "commonMistake": "Ispanağı çok uzun pişirmek — renk solar ve tat kaybolur.",
         "recovery": "Çok uzun pişirdiyseniz ekstra taze ıspanak ekleyip blenderdan geçirebilirsiniz.",
         "stepImage": null,
-        "timerSeconds": 240
+        "timerSeconds": 240,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Servis için hazırlayın",
@@ -1839,7 +1939,9 @@
         "commonMistake": "Soğuk servis etmek — ıspanak soğuyunca tat kaybolur.",
         "recovery": "Yeniden ısıtabilirsiniz; üzerindeki kremayı sonradan ekleyin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -1965,7 +2067,9 @@
         "commonMistake": "Patlıcanı tuzlu suda bekletmemek — acı tat kalır ve fazla yağ çeker.",
         "recovery": "Bekletmeyi atladıysanız kızartmadan önce patlıcanı iyice kurulayın ve daha az yağ kullanın.",
         "stepImage": null,
-        "timerSeconds": 1200
+        "timerSeconds": 1200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Patlıcanları kızartın",
@@ -1975,7 +2079,9 @@
         "commonMistake": "Çok yüksek ateşte yakmak — dışı yanar içi çiğ kalır.",
         "recovery": "Ateşi kısın ve kapağı kapalı biraz daha pişirin.",
         "stepImage": null,
-        "timerSeconds": 540
+        "timerSeconds": 540,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Kıyma harcını pişirin",
@@ -1985,7 +2091,9 @@
         "commonMistake": "Kıymayı çok ince kavurmak — içte nemli kalırsa fırında patlıcanı ıslatır.",
         "recovery": "Kıymanın tüm suyu çekilene kadar kavurmaya devam edin.",
         "stepImage": null,
-        "timerSeconds": 360
+        "timerSeconds": 360,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Patlıcanları doldurun",
@@ -1995,7 +2103,9 @@
         "commonMistake": "Harcı taşıracak kadar doldurmak — pişirirken kayar ve tepsi kirlenebilir.",
         "recovery": "Taşan harçları kaşıkla geri yerleştirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Fırında pişirin",
@@ -2005,7 +2115,9 @@
         "commonMistake": "Pişirmeden önce fırını ısıtmamak — eşit olmayan pişme ve uzayan süre.",
         "recovery": "Domates ve biberler hâlâ çiğ görünüyorsa 10 dakika daha fırında tutun.",
         "stepImage": null,
-        "timerSeconds": 1800
+        "timerSeconds": 1800,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -2091,7 +2203,9 @@
         "commonMistake": "Tavuğu iri bırakmak — tatlıda beklenmedik dokusal bozukluk oluşur.",
         "recovery": "Mutfak robotu veya blenderla kısa süre çekin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Muhallebiyi pişirin",
@@ -2101,7 +2215,9 @@
         "commonMistake": "Sıcak sütün içine nişasta dökmek — topaklar oluşur.",
         "recovery": "Topaklar oluştuysa daldırma blenderla geçirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tabanı karamelize edin",
@@ -2111,7 +2227,9 @@
         "commonMistake": "Tabanı yeterince kızartmamak — soluk ve renksiz; karakteristik tat oluşmuyor.",
         "recovery": "Biraz daha bekleyin; en kötü ihtimalle tamamen yanar ve atmanız gerekir.",
         "stepImage": null,
-        "timerSeconds": 180
+        "timerSeconds": 180,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Soğutup servis edin",
@@ -2121,7 +2239,9 @@
         "commonMistake": "Sıcakken servis etmek — kıvam tutmamış, dağılır.",
         "recovery": "Buzdolabında bekletin; ertesi gün daha iyi olur.",
         "stepImage": null,
-        "timerSeconds": 7200
+        "timerSeconds": 7200,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -2262,7 +2382,9 @@
         "commonMistake": "Fazla su koymak — bulgur sulanır ve kısır hamur gibi olur.",
         "recovery": "Sulanmışsa üstü açık bekletin, nem uçsun ya da hafifçe süzün.",
         "stepImage": null,
-        "timerSeconds": 900
+        "timerSeconds": 900,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Salça ve baharatlı yoğurun",
@@ -2272,7 +2394,9 @@
         "commonMistake": "Kaşıkla karıştırmak — salçalar yeterince işlemez.",
         "recovery": "Elle yoğurmak mümkün değilse uzun süre kaşıkla karıştırın.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Taze ot ekleyip bitirin",
@@ -2282,7 +2406,9 @@
         "commonMistake": "Kıvamı hafif kuru bırakmak — kısır servis öncesinde biraz solar, en az 30 dakika dinlendirilmeli.",
         "recovery": "Kuruysa zeytinyağı ve limon suyu ekleyin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -2400,7 +2526,9 @@
         "commonMistake": "Soğan suyunu sıkmamak — köfte ıslak hamur gibi olur, şeklini tutamaz.",
         "recovery": "Soğan suyunu elimizle sıkın; fazla suyunu boşaltın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Harcı yoğurun",
@@ -2410,7 +2538,9 @@
         "commonMistake": "Az yoğurmak — köfte pişirirken dağılır veya ayrılır.",
         "recovery": "Dağılmaya başlarsa tavadan alın, yeniden yoğurun ve tekrar şekil verin.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Köftelere şekil verin",
@@ -2420,7 +2550,9 @@
         "commonMistake": "Köfteleri çok kalın şekillendirmek — ortası pişmeden dış yüzey kızarır.",
         "recovery": "Pişirirken ortası çiğ geliyorsa fırına verin, 10 dakika 180 derecede tamamlayın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Izgarada pişirin",
@@ -2430,7 +2562,9 @@
         "commonMistake": "Köfteleri erken çevirmek — yapışır ve dağılır.",
         "recovery": "Yapıştıysa zorla çevirmeyin, 1 dakika daha bekleyin, köfte kendiliğinden ayrılır.",
         "stepImage": null,
-        "timerSeconds": 480
+        "timerSeconds": 480,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -2568,7 +2702,9 @@
         "commonMistake": "Yetersiz haşlama — yapraklar sert ve katlamayı zorlaştırır.",
         "recovery": "Yarım kalan yaprakları suya geri koyup 3 dakika daha haşlayın.",
         "stepImage": null,
-        "timerSeconds": 600
+        "timerSeconds": 600,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "İç harcı hazırlayın",
@@ -2578,7 +2714,9 @@
         "commonMistake": "Pişmiş pirinç kullanmak — sarma içinde aşırı şişer ve yaprak patlar.",
         "recovery": "Pişmiş pirinç kullandıysanız miktarı yarıya indirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Sarmaları yuvarlayın",
@@ -2588,7 +2726,9 @@
         "commonMistake": "Çok fazla harç koymak — pirinç şişince yaprak patlar.",
         "recovery": "Açılırsa çıkarın, yarısını boşaltıp yeniden sarın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tencerede pişirin",
@@ -2598,7 +2738,9 @@
         "commonMistake": "Su az koyunca tencere kuruyabilir — sarmalar tutunur ve yanar.",
         "recovery": "Pişirme ortasında kontrol edin, kurursa biraz sıcak su ekleyin.",
         "stepImage": null,
-        "timerSeconds": 3000
+        "timerSeconds": 3000,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -2706,7 +2848,9 @@
         "commonMistake": "Domatesleri soymamak — kabuğun sert dokusu menemenin kıvamını bozar.",
         "recovery": "Pişirme sırasında kabuklar ayrışırsa bir kaşıkla çıkarabilirsiniz.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": "Domates kupler 1-2 cm boyutunda",
+        "warning": "Cok buyuk dograma pisirme suresini uzatir"
       },
       {
         "title": "Soğan ve biberi kavurun",
@@ -2716,7 +2860,9 @@
         "commonMistake": "Yüksek ateşte kavurmak — tereyağı yanar ve biberler sertleşir.",
         "recovery": "Ateşi hemen kısın, tavayı ocaktan alın ve kısa süre bekleyin.",
         "stepImage": null,
-        "timerSeconds": 180
+        "timerSeconds": 180,
+        "checkpoint": "Soganlar seffaf, biberler parlak yesil",
+        "warning": "Ates cok yuksekse tereyagi yanar"
       },
       {
         "title": "Domatesi pişirin",
@@ -2726,7 +2872,9 @@
         "commonMistake": "Domatesi yeterince pişirmemek — suyu bitmeden yumurta eklemek.",
         "recovery": "Yumurtaları ekledikten sonra hâlâ çok sulu ise kapağı açık pişirmeye devam edin.",
         "stepImage": null,
-        "timerSeconds": 420
+        "timerSeconds": 420,
+        "checkpoint": "Sos kasik izini tutacak kivamda",
+        "warning": null
       },
       {
         "title": "Yumurtaları kırın",
@@ -2736,7 +2884,9 @@
         "commonMistake": "Çok uzun süre karıştırmak veya fazla pişirmek — yumurta sertleşir.",
         "recovery": "Ocağı hemen kapatın; tava sıcaklığı kalan pişirmeyi tamamlar.",
         "stepImage": null,
-        "timerSeconds": 120
+        "timerSeconds": 120,
+        "checkpoint": "Yumurta beyazlari donmus, sarilari akiskan",
+        "warning": "Cok karistirma — yumurtalar parcalanir"
       },
       {
         "title": "Peynirle servis edin",
@@ -2746,7 +2896,9 @@
         "commonMistake": "Servis etmeden önce menemi bekletmek — soğuduğunda yumurta kauçuk gibi olur.",
         "recovery": "Soğumuşsa tavayı tekrar kısık ateşe alın ve 30 saniye ısıtın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -2884,7 +3036,9 @@
         "commonMistake": "Mercimeği ıslatmak için uzun süre beklemek — kırmızı mercimek pişirmeden önce ıslatılmaz.",
         "recovery": "Eğer ıslattıysanız suyunu tamamen süzün ve devam edin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Soğan ve havucu kavurun",
@@ -2894,7 +3048,9 @@
         "commonMistake": "Soğanı yakmak — bu acı bir tat bırakır ve çorbanın rengini bozar.",
         "recovery": "Yakmış olursanız o partı atıp baştan başlamanız gerekir; yanık tat geçmez.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": "Soganlar seffaf, havuc hafif yumusamis",
+        "warning": "Sogani yakmayin — aci tat corbayi bozar"
       },
       {
         "title": "Salça ve mercimek ekleyin",
@@ -2904,7 +3060,9 @@
         "commonMistake": "Salçayı kavurmadan doğrudan suya eklemek — çiğ, keskin bir tat kalır.",
         "recovery": "Eğer doğrudan eklediyseniz, pişirme süresi sonunda biraz daha kavurunca tat dengelenir.",
         "stepImage": null,
-        "timerSeconds": 60
+        "timerSeconds": 60,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Kısık ateşte pişirin",
@@ -2914,7 +3072,9 @@
         "commonMistake": "Yeterince pişirmemek — blenderde bütün mercimek parçaları kalırsa çorba pütürlü olur.",
         "recovery": "Mercimekler hâlâ sert ise 5-10 dakika daha pişirin.",
         "stepImage": null,
-        "timerSeconds": 1500
+        "timerSeconds": 1500,
+        "checkpoint": "Mercimekler tamamen dagilmis, kasikla eziliyor",
+        "warning": "Az pisen mercimek blenderda puturlu kalir"
       },
       {
         "title": "Blenderdan geçirin",
@@ -2924,7 +3084,9 @@
         "commonMistake": "Sıcak çorbayı kapalı blendere tamamen doldurmak — kapak fırlar ve yanıklara yol açar.",
         "recovery": "Kapak uçarsa yaralanma olup olmadığını kontrol edin; çorbanın geri kalanını temizleyip daha az miktarlarda blend edin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": "Corba puruzsuz, ipeksi ve homojen renkte",
+        "warning": "Sicak corbayi kapali blendere doldurmak tehlikeli"
       },
       {
         "title": "Naneli tereyağı ekleyin",
@@ -2934,7 +3096,9 @@
         "commonMistake": "Tereyağını yakmak — biberi eklemeden önce yağ çok kızarırsa acı bir tat oluşur.",
         "recovery": "Yanmış yağı atın ve yeniden yapın; bu adım atlanabilir, çorba yine de lezzetlidir.",
         "stepImage": null,
-        "timerSeconds": 30
+        "timerSeconds": 30,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3011,7 +3175,9 @@
         "commonMistake": "Sadece bir kez yıkamak — nişasta kalır ve pilav yapışkan olur.",
         "recovery": "Pişmiş pilav yapışkansa bir sonraki yapımda daha fazla yıkayın; bu seferi fazla karıştırmadan servis edin.",
         "stepImage": null,
-        "timerSeconds": 1800
+        "timerSeconds": 1800,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tereyağında şehriye kavurun",
@@ -3021,7 +3187,9 @@
         "commonMistake": "Şehriyeyi yakmak — acı bir tat bırakır.",
         "recovery": "Şehriye kararınca tüm malzemeyi atıp yeniden başlayın; kararma gidermez.",
         "stepImage": null,
-        "timerSeconds": 180
+        "timerSeconds": 180,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Pirinci kavurun",
@@ -3031,7 +3199,9 @@
         "commonMistake": "Bu adımı atlamak — pirinç ham olarak suya girer ve sonuç yapışkan olur.",
         "recovery": "Geç kavurma yapılabilir ama pirinç zaten ıslandıysa kısaca kavurun.",
         "stepImage": null,
-        "timerSeconds": 180
+        "timerSeconds": 180,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Suyunu ekleyip pişirin",
@@ -3041,7 +3211,9 @@
         "commonMistake": "Kapağı açmak — buhar kaçar, alt taraf pişmeden üst kurur.",
         "recovery": "Kapağı açtıysanız hızla kapatın ve 3-5 dakika daha pişirin.",
         "stepImage": null,
-        "timerSeconds": 1200
+        "timerSeconds": 1200,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Demlenmeye bırakın",
@@ -3051,7 +3223,9 @@
         "commonMistake": "Dinlendirmeden hemen servis etmek — pilav yapışkan ve kırılgandır.",
         "recovery": "Yapışkan pilavı geniş kaba alın ve hafifçe karıştırın, biraz açılır.",
         "stepImage": null,
-        "timerSeconds": 600
+        "timerSeconds": 600,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3188,7 +3362,9 @@
         "commonMistake": "Hamuru soğuk ortamda bekletmek — maya yeterince kabarık olmaz.",
         "recovery": "Fırını 30 saniye ısıtıp kapatın, hamuru içine koyun, kapıyı kapalı tutun.",
         "stepImage": null,
-        "timerSeconds": 2700
+        "timerSeconds": 2700,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Harcı doldurup şekil verin",
@@ -3198,7 +3374,9 @@
         "commonMistake": "Hamuru çok ince açmak — harç pişerken dışarı çıkabilir.",
         "recovery": "Açılan yerleri bastırarak kapatın veya biraz daha hamurla kapatın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Fırında pişirin",
@@ -3208,7 +3386,9 @@
         "commonMistake": "Fırını önceden ısıtmamak — alt ve üst eşit pişmez.",
         "recovery": "Üstü pişmiş altı çiğ ise fırın tepsisini daha aşağıya alın.",
         "stepImage": null,
-        "timerSeconds": 1500
+        "timerSeconds": 1500,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3297,7 +3477,9 @@
         "commonMistake": "Peyniri iri bırakmak — sarma sırasında yufkayı yırtabilir.",
         "recovery": "Israrla yoğurun ya da robottan geçirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Yufkaları sarın",
@@ -3307,7 +3489,9 @@
         "commonMistake": "Çok fazla harç koymak — yufka yırtılır veya pişerken açılır.",
         "recovery": "Açılan böreği çıkarın ve yeniden sarın veya kenarını suyla yapıştırın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Yağda kızartın",
@@ -3317,7 +3501,9 @@
         "commonMistake": "Yağı yeterince ısıtmamak — börekler yağ çeker, ağır ve sulu olur.",
         "recovery": "Çok yağlı olursa kağıt havlu üzerinde dinlendirin, biraz toparlanır.",
         "stepImage": null,
-        "timerSeconds": 240
+        "timerSeconds": 240,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3437,7 +3623,9 @@
         "commonMistake": "Maya zamanını kısaltmak — simit sıkı ve yoğun olur, kabarık olmaz.",
         "recovery": "Daha fazla bekleyin; soğuk ortamdaysa ılık bir yere taşıyın.",
         "stepImage": null,
-        "timerSeconds": 3600
+        "timerSeconds": 3600,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Halka şekli verin",
@@ -3447,7 +3635,9 @@
         "commonMistake": "Halkaları birleştirirken yeterince bastırmamak — pişerken açılır.",
         "recovery": "Açıldıysa ıslatılmış parmakla tekrar birleştirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Pekmeze daldırıp pişirin",
@@ -3457,7 +3647,9 @@
         "commonMistake": "Düşük ısıda pişirmek — simid çıtır olmaz ve soluk renk alır.",
         "recovery": "Açık renk kaldıysa birkaç dakika daha fırında tutun veya ızgara moduna geçin.",
         "stepImage": null,
-        "timerSeconds": 1500
+        "timerSeconds": 1500,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3518,7 +3710,9 @@
         "commonMistake": "Sucukları yüksek ateşte yakmak — içi kurur ve acı bir tat oluşur.",
         "recovery": "Yanmışsa o parçaları çıkarın ve temiz tavayla yeniden başlayın.",
         "stepImage": null,
-        "timerSeconds": 120
+        "timerSeconds": 120,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Yumurtaları pişirin",
@@ -3528,7 +3722,9 @@
         "commonMistake": "Yumurtaları karıştırmak — scrambled egg olur, geleneksel görünüm kaybolur.",
         "recovery": "Sarılar kırıldıysa devam edin, tat aynıdır.",
         "stepImage": null,
-        "timerSeconds": 240
+        "timerSeconds": 240,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3614,7 +3810,9 @@
         "commonMistake": "Su çekilmeden süt eklemek — sütlaç sulanır ve kıvam tutmaz.",
         "recovery": "Fazla su varsa süzün, pirinç pişmiş ise devam edin.",
         "stepImage": null,
-        "timerSeconds": 1080
+        "timerSeconds": 1080,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Sütü kaynatın",
@@ -3624,7 +3822,9 @@
         "commonMistake": "Sütü yüksek ateşte bırakmak — dibe yapışır ve yanar.",
         "recovery": "Yapışma seziyorsanız ateşi kısın ve güçlü karıştırın.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Nişasta ekleyip koyulaştırın",
@@ -3634,7 +3834,9 @@
         "commonMistake": "Nişastayı sıcak sütün içine doğrudan dökmek — topaklar oluşur.",
         "recovery": "Topaklar oluştuysa daldırma blenderla hızlıca pürüzsüzleştirin.",
         "stepImage": null,
-        "timerSeconds": 720
+        "timerSeconds": 720,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Fırında üstünü kızartın",
@@ -3644,7 +3846,9 @@
         "commonMistake": "Çok uzun süre fırında bırakmak — yanık noktalarda acı tat oluşur.",
         "recovery": "Yüzeyin tamamı kararırsa artık o his kaybolmuştur; bir sonrakinde daha kısa süre fırında tutun.",
         "stepImage": null,
-        "timerSeconds": 240
+        "timerSeconds": 240,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Soğutup servis edin",
@@ -3654,7 +3858,9 @@
         "commonMistake": "Soğumadan servis etmek — kıvam hâlâ sıvı ve tatlı dağılır.",
         "recovery": "Acelen varsa buzlu su dolu büyük kaba koyarak hızlandırın.",
         "stepImage": null,
-        "timerSeconds": 7200
+        "timerSeconds": 7200,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3747,7 +3953,9 @@
         "commonMistake": "Aşırı haşlamak — sebze dağılır ve taratoru emerken parçalanır.",
         "recovery": "Dağıldıysa servis ederken fark edilmez; tat aynıdır.",
         "stepImage": null,
-        "timerSeconds": 600
+        "timerSeconds": 600,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tarator sosunu yapın",
@@ -3757,7 +3965,9 @@
         "commonMistake": "Cevizi çok kaba kıymak — dağınık doku, sos bağlanmaz.",
         "recovery": "Sosu daha uzun işleyin ya da biraz su ekleyerek kremsi hâle getirin.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Servis için hazırlayın",
@@ -3767,7 +3977,9 @@
         "commonMistake": "Hemen servis etmek — 10 dakika bekletmek lezzeti geliştirir.",
         "recovery": "Bekletmek mümkün değilse yine de servis edin; tat biraz daha hafif olur.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3852,7 +4064,9 @@
         "commonMistake": "Tarhanayı direkt sıcak suya koymak — dışı hızla pişer, içi topak kalır.",
         "recovery": "Topaklar oluşmuşsa daldırma blenderla düzeltin.",
         "stepImage": null,
-        "timerSeconds": 600
+        "timerSeconds": 600,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Çorbayı pişirin",
@@ -3862,7 +4076,9 @@
         "commonMistake": "Karıştırmadan pişirmek — tarhana dibe yapışır ve yanar.",
         "recovery": "Dibe yapıştıysa taşıyın ve yeni tencerede devam edin; kaynamış parça acı tat bırakır.",
         "stepImage": null,
-        "timerSeconds": 900
+        "timerSeconds": 900,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Naneli tereyağı ekleyin",
@@ -3872,7 +4088,9 @@
         "commonMistake": "Naneyi çok uzun süre kavurmak — bittikten sonra servis sırasında karantina oluşur.",
         "recovery": "Yanar ise o partiyi atın ve fresher yağ ile tekrarlayın.",
         "stepImage": null,
-        "timerSeconds": 10
+        "timerSeconds": 10,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -3995,7 +4213,9 @@
         "commonMistake": "Çok küçük doğramak — tavuk hızla kurur ve kauçuklaşır.",
         "recovery": "Pişmişse üzerine biraz su veya tavuk suyu ekleyip karıştırın.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Tavuğu kızartın",
@@ -4005,7 +4225,9 @@
         "commonMistake": "Tavaya çok fazla parça koymak — tavuk kızarmak yerine haşlanır.",
         "recovery": "Parçaları alın ve partiler hâlinde tekrar kızartın.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Sebzeleri kavurun",
@@ -4015,7 +4237,9 @@
         "commonMistake": "Salçayı kavurmadan hemen domates eklemek — keskin, çiğ bir tat kalır.",
         "recovery": "Ekledikten sonra karıştırarak 2 dakika daha kavurun.",
         "stepImage": null,
-        "timerSeconds": 420
+        "timerSeconds": 420,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Domates sosla pişirin",
@@ -4025,7 +4249,9 @@
         "commonMistake": "Yüksek ateşte kapaksız pişirmek — sos kurur, tavuk sertleşir.",
         "recovery": "Sos kurursa biraz sıcak su ekleyin ve karıştırın.",
         "stepImage": null,
-        "timerSeconds": 720
+        "timerSeconds": 720,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   },
@@ -4127,7 +4353,9 @@
         "commonMistake": "Pirinci az pişirmek — yoğurt eklendikten sonra sertleşebilir.",
         "recovery": "Yoğurt eklemeden kontrol edin; sertse biraz daha pişirin.",
         "stepImage": null,
-        "timerSeconds": 900
+        "timerSeconds": 900,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Yoğurdu hazırlayın",
@@ -4137,7 +4365,9 @@
         "commonMistake": "Un veya yumurta sarısını atlamak — yoğurt kaynar suda kesilir ve topak oluşturur.",
         "recovery": "Kesildiyse blenderdan geçirin; görünüm toparlanır ama tam çözülmez.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Yoğurdu temperlayın",
@@ -4147,7 +4377,9 @@
         "commonMistake": "Yoğurdu direkt tencereye dökmek — kesilerek topaklanır.",
         "recovery": "Kesildiyse blenderdan geçirin ve kısık ateşte yeniden ısıtın.",
         "stepImage": null,
-        "timerSeconds": null
+        "timerSeconds": null,
+        "checkpoint": null,
+        "warning": null
       },
       {
         "title": "Naneli tereyağı ekleyin",
@@ -4157,7 +4389,9 @@
         "commonMistake": "Kaynamaya bırakmak — yoğurt kesilir, tat ekşi ve görünüm bozulur.",
         "recovery": "Kesildiyse tadı iyi olsa da görünüm değişir; servis edin ve bir sonraki seferde dikkat edin.",
         "stepImage": null,
-        "timerSeconds": 300
+        "timerSeconds": 300,
+        "checkpoint": null,
+        "warning": null
       }
     ]
   }
