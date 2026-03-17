@@ -62,7 +62,7 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 ### Feed & Navigation (v1 — Phase 7-8)
 
 - [x] **NAV-01**: App has 4 tabs: Feed, Search, Cookbook, Profile. Nav bar hidden during Cooking Mode.
-- [ ] **FEED-01**: Feed displays 4 horizontal sections (Su an trend, 30 dakikada bitir, Sana ozel, Denemediklerin) all respecting hard filters
+- [x] **FEED-01**: Feed displays 4 horizontal sections (Su an trend, 30 dakikada bitir, Sana ozel, Denemediklerin) all respecting hard filters
 - [ ] **FEED-02**: Sections with zero results after filtering are hidden silently; if all sections empty, prompt to update profile
 
 ## v2 Requirements
@@ -119,7 +119,7 @@ Updated during roadmap creation.
 | PROF-02 | Phase 7 | Complete |
 | PROF-03 | Phase 7 | Complete |
 | NAV-01 | Phase 7 | Complete |
-| FEED-01 | Phase 8 | Pending |
+| FEED-01 | Phase 8 | Complete |
 | FEED-02 | Phase 8 | Pending |
 | ADAPT-01 | Phase 10 | Pending |
 | ADAPT-02 | Phase 10 | Pending |
