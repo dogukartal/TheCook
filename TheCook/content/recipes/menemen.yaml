@@ -20,34 +20,53 @@ ingredientGroups:
         amount: 4
         unit: adet
         optional: false
+        scalable: true
+        alternatives: []
       - name: Domates
         amount: 300
         unit: gr
         optional: false
+        scalable: true
+        alternatives: []
       - name: Yeşil biber
         amount: 2
         unit: adet
         optional: false
+        scalable: true
+        alternatives: []
       - name: Soğan
         amount: 1
         unit: adet
         optional: true
+        scalable: true
+        alternatives: []
       - name: Tereyağı
         amount: 1
         unit: yemek kaşığı
         optional: false
+        scalable: true
+        alternatives:
+          - name: Zeytinyağı
+            amount: 1
+            unit: yemek kaşığı
       - name: Tuz
         amount: 1
         unit: tatlı kaşığı
         optional: false
+        scalable: false
+        alternatives: []
       - name: Karabiber
         amount: 1
         unit: tutam
         optional: true
+        scalable: false
+        alternatives: []
       - name: Beyaz peynir
         amount: 50
         unit: gr
         optional: true
+        scalable: true
+        alternatives: []
 steps:
   - title: Sebzeleri doğrayın
     instruction: Domatesleri soyun ve küçük küpler halinde doğrayın. Biberleri ince halkalar veya küçük parçalar halinde doğrayın. Soğan kullanıyorsanız ince doğrayın.
@@ -58,7 +77,10 @@ steps:
     stepImage: null
     timerSeconds: null
   - title: Soğan ve biberi kavurun
-    instruction: Tavayı orta ateşte ısıtın ve tereyağını ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.
+    instruction: >-
+      Tavayı orta ateşte ısıtın ve {{Tereyağı.amount}} {{Tereyağı.unit}} {{Tereyağı.name}} ekleyin.
+      Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun,
+      ardından biberleri ekleyin ve 3 dakika daha pişirin.
     why: Soğanı önce kavurmak tatlılığını ortaya çıkarır. Biberleri soğanla pişirmek her ikisinin de yumuşamasını sağlar.
     looksLikeWhenDone: Soğanlar şeffaflaşmış, biberler hafif yumuşamış ama hâlâ yeşil görünüyor.
     commonMistake: Yüksek ateşte kavurmak — tereyağı yanar ve biberler sertleşir.
@@ -74,7 +96,10 @@ steps:
     stepImage: null
     timerSeconds: 420
   - title: Yumurtaları kırın
-    instruction: Tuz ve karabiber ekleyip karıştırın. Yumurtaları kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.
+    instruction: >-
+      Tuz ve karabiber ekleyip karıştırın. {{Yumurta.amount}} {{Yumurta.unit}} {{Yumurta.name}} kırın,
+      sarılarını bütün bırakarak domateslerin üzerine dökün.
+      Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.
     why: Sarıları bütün bırakmak yumurtanın gözenekli kıvamda pişmesini sağlar. Fazla karıştırmak yumurtayı lastikleştirir.
     looksLikeWhenDone: Yumurta beyazları tamamen donmuş, sarılar hâlâ hafif sıvı ya da az pişmiş görünüyor (tercih meselesi).
     commonMistake: Çok uzun süre karıştırmak veya fazla pişirmek — yumurta sertleşir.

@@ -19,53 +19,82 @@ ingredientGroups:
         amount: 200
         unit: gr
         optional: false
+        scalable: true
+        alternatives: []
       - name: Soğan
         amount: 1
         unit: adet
         optional: false
+        scalable: true
+        alternatives: []
       - name: Havuç
         amount: 1
         unit: adet
         optional: false
+        scalable: true
+        alternatives: []
       - name: Sarımsak
         amount: 2
         unit: adet
         optional: false
+        scalable: true
+        alternatives: []
       - name: Zeytinyağı
         amount: 2
         unit: yemek kaşığı
         optional: false
+        scalable: true
+        alternatives:
+          - name: Tereyağı
+            amount: 2
+            unit: yemek kaşığı
       - name: Domates salçası
         amount: 1
         unit: yemek kaşığı
         optional: false
+        scalable: true
+        alternatives: []
       - name: Kimyon
         amount: 1
         unit: tatlı kaşığı
         optional: false
+        scalable: false
+        alternatives: []
       - name: Tuz
         amount: 2
         unit: tatlı kaşığı
         optional: false
+        scalable: false
+        alternatives: []
       - name: Karabiber
         amount: 1
         unit: tutam
         optional: false
+        scalable: false
+        alternatives: []
       - name: Su veya et suyu
         amount: 1200
         unit: ml
         optional: false
+        scalable: true
+        alternatives: []
       - name: Kuru kırmızı biber
         amount: 1
         unit: tatlı kaşığı
         optional: true
+        scalable: false
+        alternatives: []
       - name: Tereyağı
         amount: 1
         unit: yemek kaşığı
         optional: true
+        scalable: true
+        alternatives: []
 steps:
   - title: Mercimek ve sebzeleri hazırlayın
-    instruction: Mercimekleri bol soğuk suda yıkayın ve süzün. Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.
+    instruction: >-
+      {{Kırmızı mercimek.amount}} {{Kırmızı mercimek.unit}} mercimeği bol soğuk suda yıkayın ve süzün.
+      Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.
     why: Mercimeği yıkamak fazla nişastayı giderir ve çorbanın berrak görünmesini sağlar. İri doğramak önemli değil çünkü her şey sonunda blenderdan geçecek.
     looksLikeWhenDone: Mercimek suyu berraklaşana kadar durulanmış. Sebzeler doğranmış ve hazır.
     commonMistake: Mercimeği ıslatmak için uzun süre beklemek — kırmızı mercimek pişirmeden önce ıslatılmaz.
@@ -73,7 +102,10 @@ steps:
     stepImage: null
     timerSeconds: null
   - title: Soğan ve havucu kavurun
-    instruction: Tencereye zeytinyağını alın ve orta ateşte ısıtın. Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun. Sarımsak ve havucu ekleyip 2 dakika daha kavurun.
+    instruction: >-
+      Tencereye {{Zeytinyağı.amount}} {{Zeytinyağı.unit}} {{Zeytinyağı.name}} alın ve orta ateşte ısıtın.
+      Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun.
+      Sarımsak ve havucu ekleyip 2 dakika daha kavurun.
     why: Kavurma işlemi sebzelerin doğal şekerlerini karamelleştirerek çorbaya derinlik katar. Bu adım atlanırsa çorba düz ve tatsız olur.
     looksLikeWhenDone: Soğanlar şeffaflaşmış ve kenarları hafif altın rengi almış. Havuç parçaları hafif yumuşamış görünüyor.
     commonMistake: Soğanı yakmak — bu acı bir tat bırakır ve çorbanın rengini bozar.

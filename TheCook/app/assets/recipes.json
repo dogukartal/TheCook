@@ -22,49 +22,65 @@
             "name": "Dana kıyma (yağlı, %20 yağ)",
             "amount": 600,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuyruk yağı veya iç yağ",
             "amount": 80,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kırmızı biber salçası (acı)",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Pul biber",
             "amount": 2,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kimyon",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -127,73 +143,97 @@
             "name": "Buğday (aşurelik)",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nohut (haşlanmış veya konserve)",
             "amount": 100,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuru fasulye (haşlanmış veya konserve)",
             "amount": 100,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Pirinç",
             "amount": 50,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 2000,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuru incir",
             "amount": 6,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuru kayısı",
             "amount": 6,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuru üzüm",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Ceviz içi",
             "amount": 50,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nohut",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nar ekşisi veya limon suyu",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -268,13 +308,17 @@
             "name": "Hazır yufka veya baklava yufkası",
             "amount": 500,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı (eritilmiş)",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -285,7 +329,9 @@
             "name": "Antep fıstığı veya ceviz (öğütülmüş)",
             "amount": 300,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -296,19 +342,25 @@
             "name": "Şeker",
             "amount": 400,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 300,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Limon suyu",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -393,31 +445,47 @@
             "name": "Hazır yufka",
             "amount": 6,
             "unit": "dilim",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yumurta",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Süt",
             "amount": 200,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 4,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [
+              {
+                "name": "Tereyağı",
+                "amount": 4,
+                "unit": "yemek kaşığı"
+              }
+            ],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           }
         ]
       },
@@ -428,25 +496,33 @@
             "name": "Beyaz peynir (feta veya lor)",
             "amount": 400,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Taze maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Yumurta",
             "amount": 1,
             "unit": "adet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -464,7 +540,7 @@
       },
       {
         "title": "Sütlü sosu yapın",
-        "instruction": "Sosu hazırlamak için yumurtaları derin bir kaseye kırın, sütü, zeytinyağını ve tuzu ekleyip çırpın. Sos homojen görününce hazır.",
+        "instruction": "Sosu hazırlamak için {{Yumurta.amount}} {{Yumurta.unit}} yumurtayı derin bir kaseye kırın, {{Süt.amount}} {{Süt.unit}} sütü, {{Zeytinyağı.amount}} {{Zeytinyağı.unit}} {{Zeytinyağı.name}} ve tuzu ekleyip çırpın. Sos homojen görününce hazır.",
         "why": "Bu sos yufkaların nemli ve yumuşak kalmasını sağlar; böreğin sert ve kuru olmamasının sırrıdır. Yağ ve yumurta da renk ve lezzet katar.",
         "looksLikeWhenDone": "Sos homojen, açık sarı renkte ve hafif köpüklü görünüyor. Yağ ve süt ayrılmamış.",
         "commonMistake": "Sosu hazırlamadan yufkaları ıslatmaya çalışmak — kuru yufka nem dağıtmaz.",
@@ -539,79 +615,105 @@
             "name": "İnce bulgur",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kaynar su",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Biber salçası (acı)",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Limon suyu",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nar ekşisi",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kırmızı toz biber",
             "amount": 2,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kimyon",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil soğan",
             "amount": 4,
             "unit": "adet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -673,55 +775,73 @@
             "name": "Domates",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Salatalık",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil biber",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Limon suyu",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nar ekşisi",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -782,61 +902,81 @@
             "name": "Pirinç",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 6,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuş üzümü",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Çam fıstığı",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nane",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Dereotu",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -847,19 +987,25 @@
             "name": "Taze veya salamura asma yaprağı",
             "amount": 50,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Limon suyu",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 400,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -941,55 +1087,73 @@
             "name": "Domates",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sivri biber veya yeşil biber",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nar ekşisi",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sumak",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1043,25 +1207,33 @@
             "name": "Un",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su (ılık)",
             "amount": 200,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -1072,19 +1244,25 @@
             "name": "Taze ıspanak",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Beyaz peynir",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1158,37 +1336,49 @@
             "name": "Un",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı",
             "amount": 150,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 1,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Süt",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 1,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Çam fıstığı veya ceviz",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1261,49 +1451,65 @@
             "name": "Haşlanmış veya konserve nohut",
             "amount": 400,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tahin",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Limon suyu",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kimyon",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Pul biber",
             "amount": 1,
             "unit": "tutam",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1365,61 +1571,81 @@
             "name": "Patlıcan",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil biber",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 6,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 100,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1503,55 +1729,73 @@
             "name": "Taze ıspanak",
             "amount": 400,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Patates",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su veya tavuk suyu",
             "amount": 800,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Krema veya yoğurt",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1625,67 +1869,89 @@
             "name": "Patlıcan",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kıyma",
             "amount": 300,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil biber",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 4,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1769,37 +2035,49 @@
             "name": "Süt",
             "amount": 1000,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 150,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Pirinç unu veya nişasta",
             "amount": 60,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Un",
             "amount": 30,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tavuk göğsü (haşlanmış, liflenmiş)",
             "amount": 100,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Vanilya",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -1872,79 +2150,105 @@
             "name": "İnce bulgur",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kaynar su",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Biber salçası",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 4,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Limon suyu",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nar ekşisi",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kırmızı toz biber",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kimyon",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil soğan",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates",
             "amount": 2,
             "unit": "adet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2008,61 +2312,81 @@
             "name": "Dana kıyma",
             "amount": 500,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Bayat ekmek içi",
             "amount": 2,
             "unit": "dilim",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yumurta",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kimyon",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kırmızı biber",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 3,
             "unit": "adet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2135,43 +2459,57 @@
             "name": "Dana kıyma",
             "amount": 400,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Pirinç",
             "amount": 100,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nane (kuru)",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2182,31 +2520,41 @@
             "name": "Beyaz lahana",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 500,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yoğurt (servis için)",
             "amount": 200,
             "unit": "gr",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2280,49 +2628,71 @@
             "name": "Yumurta",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates",
             "amount": 300,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil biber",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [
+              {
+                "name": "Zeytinyağı",
+                "amount": 1,
+                "unit": "yemek kaşığı"
+              }
+            ],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Beyaz peynir",
             "amount": 50,
             "unit": "gr",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2340,7 +2710,7 @@
       },
       {
         "title": "Soğan ve biberi kavurun",
-        "instruction": "Tavayı orta ateşte ısıtın ve tereyağını ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.",
+        "instruction": "Tavayı orta ateşte ısıtın ve {{Tereyağı.amount}} {{Tereyağı.unit}} {{Tereyağı.name}} ekleyin. Tereyağı eriyince önce soğanı (kullanıyorsanız) 2-3 dakika kavurun, ardından biberleri ekleyin ve 3 dakika daha pişirin.",
         "why": "Soğanı önce kavurmak tatlılığını ortaya çıkarır. Biberleri soğanla pişirmek her ikisinin de yumuşamasını sağlar.",
         "looksLikeWhenDone": "Soğanlar şeffaflaşmış, biberler hafif yumuşamış ama hâlâ yeşil görünüyor.",
         "commonMistake": "Yüksek ateşte kavurmak — tereyağı yanar ve biberler sertleşir.",
@@ -2360,7 +2730,7 @@
       },
       {
         "title": "Yumurtaları kırın",
-        "instruction": "Tuz ve karabiber ekleyip karıştırın. Yumurtaları kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.",
+        "instruction": "Tuz ve karabiber ekleyip karıştırın. {{Yumurta.amount}} {{Yumurta.unit}} {{Yumurta.name}} kırın, sarılarını bütün bırakarak domateslerin üzerine dökün. Tercihlerinize göre hafifçe karıştırın ya da karıştırmadan pişirin.",
         "why": "Sarıları bütün bırakmak yumurtanın gözenekli kıvamda pişmesini sağlar. Fazla karıştırmak yumurtayı lastikleştirir.",
         "looksLikeWhenDone": "Yumurta beyazları tamamen donmuş, sarılar hâlâ hafif sıvı ya da az pişmiş görünüyor (tercih meselesi).",
         "commonMistake": "Çok uzun süre karıştırmak veya fazla pişirmek — yumurta sertleşir.",
@@ -2404,73 +2774,103 @@
             "name": "Kırmızı mercimek",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Havuç",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [
+              {
+                "name": "Tereyağı",
+                "amount": 2,
+                "unit": "yemek kaşığı"
+              }
+            ],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kimyon",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Tuz",
             "amount": 2,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Su veya et suyu",
             "amount": 1200,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuru kırmızı biber",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": false
           },
           {
             "name": "Tereyağı",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2478,7 +2878,7 @@
     "steps": [
       {
         "title": "Mercimek ve sebzeleri hazırlayın",
-        "instruction": "Mercimekleri bol soğuk suda yıkayın ve süzün. Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.",
+        "instruction": "{{Kırmızı mercimek.amount}} {{Kırmızı mercimek.unit}} mercimeği bol soğuk suda yıkayın ve süzün. Soğanı iri doğrayın, havucu soyup dilimleyin, sarımsağı ezin.",
         "why": "Mercimeği yıkamak fazla nişastayı giderir ve çorbanın berrak görünmesini sağlar. İri doğramak önemli değil çünkü her şey sonunda blenderdan geçecek.",
         "looksLikeWhenDone": "Mercimek suyu berraklaşana kadar durulanmış. Sebzeler doğranmış ve hazır.",
         "commonMistake": "Mercimeği ıslatmak için uzun süre beklemek — kırmızı mercimek pişirmeden önce ıslatılmaz.",
@@ -2488,7 +2888,7 @@
       },
       {
         "title": "Soğan ve havucu kavurun",
-        "instruction": "Tencereye zeytinyağını alın ve orta ateşte ısıtın. Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun. Sarımsak ve havucu ekleyip 2 dakika daha kavurun.",
+        "instruction": "Tencereye {{Zeytinyağı.amount}} {{Zeytinyağı.unit}} {{Zeytinyağı.name}} alın ve orta ateşte ısıtın. Soğanı ekleyin ve 3-4 dakika, hafif altın rengi alana kadar kavurun. Sarımsak ve havucu ekleyip 2 dakika daha kavurun.",
         "why": "Kavurma işlemi sebzelerin doğal şekerlerini karamelleştirerek çorbaya derinlik katar. Bu adım atlanırsa çorba düz ve tatsız olur.",
         "looksLikeWhenDone": "Soğanlar şeffaflaşmış ve kenarları hafif altın rengi almış. Havuç parçaları hafif yumuşamış görünüyor.",
         "commonMistake": "Soğanı yakmak — bu acı bir tat bırakır ve çorbanın rengini bozar.",
@@ -2563,31 +2963,41 @@
             "name": "Pirinç",
             "amount": 2,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su veya tavuk suyu",
             "amount": 3,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şehriye",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2672,43 +3082,57 @@
             "name": "Un",
             "amount": 3,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yoğurt",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sıvı yağ",
             "amount": 100,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yumurta",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Toz şeker",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Instant maya",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2719,13 +3143,17 @@
             "name": "Beyaz peynir",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2736,13 +3164,17 @@
             "name": "Yumurta sarısı",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Susam veya çörek otu",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2807,7 +3239,9 @@
             "name": "Hazır yufka",
             "amount": 3,
             "unit": "dilim",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2818,19 +3252,25 @@
             "name": "Beyaz peynir",
             "amount": 300,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yumurta",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2841,7 +3281,9 @@
             "name": "Sıvı yağ",
             "amount": 400,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -2905,37 +3347,49 @@
             "name": "Un",
             "amount": 4,
             "unit": "su bardağı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Instant maya",
             "amount": 2,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Ilık su",
             "amount": 280,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı veya sıvıyağ",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2946,13 +3400,17 @@
             "name": "Pekmez veya nar ekşisi",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       },
@@ -2963,7 +3421,9 @@
             "name": "Susam",
             "amount": 200,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -3026,19 +3486,25 @@
             "name": "Sucuk",
             "amount": 6,
             "unit": "dilim",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yumurta",
             "amount": 4,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -3092,37 +3558,49 @@
             "name": "Pirinç",
             "amount": 100,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 500,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Süt",
             "amount": 1000,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Şeker",
             "amount": 150,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nişasta",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Vanilya",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -3205,43 +3683,57 @@
             "name": "Ceviz içi",
             "amount": 100,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sirke (elma sirkesi veya üzüm sirkesi)",
             "amount": 2,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Dereotu veya maydanoz",
             "amount": 1,
             "unit": "demet",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Havuç veya zucchini (haşlanmış)",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -3304,37 +3796,49 @@
             "name": "Tarhana",
             "amount": 4,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su veya et suyu",
             "amount": 1200,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Nane (kuru)",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": true
+            "optional": true,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -3395,67 +3899,89 @@
             "name": "Tavuk göğsü",
             "amount": 500,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Soğan",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Sarımsak",
             "amount": 3,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kırmızı biber",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yeşil biber",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates",
             "amount": 2,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Zeytinyağı",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Domates salçası",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kırmızı toz biber",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Karabiber",
             "amount": 1,
             "unit": "tutam",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }
@@ -3529,49 +4055,65 @@
             "name": "Yoğurt",
             "amount": 400,
             "unit": "gr",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Pirinç",
             "amount": 3,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Su",
             "amount": 1000,
             "unit": "ml",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Yumurta sarısı",
             "amount": 1,
             "unit": "adet",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Un",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tuz",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Tereyağı",
             "amount": 1,
             "unit": "yemek kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           },
           {
             "name": "Kuru nane",
             "amount": 1,
             "unit": "tatlı kaşığı",
-            "optional": false
+            "optional": false,
+            "alternatives": [],
+            "scalable": true
           }
         ]
       }

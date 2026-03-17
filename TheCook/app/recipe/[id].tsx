@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,17 +6,18 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useSQLiteContext } from 'expo-sqlite';
 
-import { getRecipeById, recordRecentView, getBookmarks, addBookmark, removeBookmark } from '@/src/db/recipes';
-import { getActiveSession, clearSession, saveSession } from '@/src/db/cooking-session';
+import { useRecipeDetailScreen } from '@/src/hooks/useRecipeDetailScreen';
+import { ServingStepper } from '@/components/recipe/serving-stepper';
+import { formatAmount } from '@/src/hooks/useRecipeAdaptation';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
 
-import type { Recipe, SkillLevel, Category } from '@/src/types/recipe';
+import type { SkillLevel, Category, Ingredient } from '@/src/types/recipe';
 
 // ---------------------------------------------------------------------------
 // Gradient palette — same as RecipeCardGrid
@@ -37,26 +38,26 @@ const DEFAULT_GRADIENT: [string, string] = ['#9CA3AF', '#6B7280'];
 // ---------------------------------------------------------------------------
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
-  beginner: 'Başlangıç',
+  beginner: 'Baslangic',
   intermediate: 'Orta',
-  advanced: 'İleri',
+  advanced: 'Ileri',
 };
 
 const ALLERGEN_LABELS: Record<string, string> = {
   gluten: 'Gluten',
-  dairy: 'Süt Ürünleri',
+  dairy: 'Sut Urunleri',
   egg: 'Yumurta',
-  nuts: 'Kuruyemiş',
-  peanuts: 'Fıstık',
-  shellfish: 'Kabuklu Deniz Ürünleri',
-  fish: 'Balık',
+  nuts: 'Kuruyemis',
+  peanuts: 'Fistik',
+  shellfish: 'Kabuklu Deniz Urunleri',
+  fish: 'Balik',
   soy: 'Soya',
   sesame: 'Susam',
   mustard: 'Hardal',
   celery: 'Kereviz',
-  lupin: 'Acı Bakla',
-  molluscs: 'Yumuşakça',
-  sulphites: 'Sülfitler',
+  lupin: 'Aci Bakla',
+  molluscs: 'Yumusakca',
+  sulphites: 'Sulfitler',
 };
 
 // ---------------------------------------------------------------------------
@@ -85,61 +86,41 @@ function formatDuration(seconds: number): string {
 }
 
 // ---------------------------------------------------------------------------
+// Swap picker helper
+// ---------------------------------------------------------------------------
+
+function showSwapPicker(
+  item: Ingredient,
+  onSwap: (ingredientName: string, altName: string) => void,
+) {
+  if (item.alternatives.length === 1) {
+    onSwap(item.name, item.alternatives[0].name);
+    return;
+  }
+  // Multiple alternatives — show Alert picker
+  const buttons = item.alternatives.map((alt) => ({
+    text: `${alt.name} (${formatAmount(alt.amount)} ${alt.unit})`,
+    onPress: () => onSwap(item.name, alt.name),
+  }));
+  buttons.push({ text: 'Iptal', onPress: () => {} });
+  Alert.alert('Yerine ne kullanalim?', undefined, buttons);
+}
+
+// ---------------------------------------------------------------------------
 // Recipe detail / cooking preview screen
 // ---------------------------------------------------------------------------
 
 export default function RecipeDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const db = useSQLiteContext();
 
-  const [recipe, setRecipe] = useState<Recipe | null | undefined>(undefined); // undefined = loading, null = not found
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [hasActiveSession, setHasActiveSession] = useState(false);
-
-  useEffect(() => {
-    if (!id) {
-      setRecipe(null);
-      return;
-    }
-
-    let cancelled = false;
-
-    async function load() {
-      const [r, bookmarks, session] = await Promise.all([
-        getRecipeById(db, id as string),
-        getBookmarks(db, null),
-        getActiveSession(db),
-      ]);
-
-      if (cancelled) return;
-
-      setRecipe(r);
-      setIsBookmarked(bookmarks.some((b) => b.recipeId === id));
-      setHasActiveSession(session?.recipeId === id);
-
-      if (r) {
-        // Record view after recipe confirmed to exist
-        await recordRecentView(db, id as string);
-      }
-    }
-
-    load();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
-
-  async function handleBookmarkToggle() {
-    if (!id) return;
-    if (isBookmarked) {
-      await removeBookmark(db, id);
-      setIsBookmarked(false);
-    } else {
-      await addBookmark(db, id, null);
-      setIsBookmarked(true);
-    }
-  }
+  const {
+    recipe,
+    isBookmarked,
+    hasActiveSession,
+    adaptation,
+    handleBookmarkToggle,
+    startCooking,
+  } = useRecipeDetailScreen(id as string);
 
   // ---------------------------------------------------------------------------
   // Loading state
@@ -184,9 +165,9 @@ export default function RecipeDetailScreen() {
         </View>
         <View style={styles.notFoundContainer}>
           <MaterialCommunityIcons name="file-question-outline" size={48} color="#9CA3AF" />
-          <Text style={styles.notFoundText}>Tarif bulunamadı</Text>
+          <Text style={styles.notFoundText}>Tarif bulunamadi</Text>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Geri Dön</Text>
+            <Text style={styles.backButtonText}>Geri Don</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -223,7 +204,7 @@ export default function RecipeDetailScreen() {
               onPress={handleBookmarkToggle}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
               accessibilityRole="button"
-              accessibilityLabel={isBookmarked ? 'Favoriden çıkar' : 'Favoriye ekle'}
+              accessibilityLabel={isBookmarked ? 'Favoriden cikar' : 'Favoriye ekle'}
             >
               <MaterialCommunityIcons
                 name={isBookmarked ? 'heart' : 'heart-outline'}
@@ -250,10 +231,11 @@ export default function RecipeDetailScreen() {
               <MaterialCommunityIcons name="clock-outline" size={14} color="#6B7280" />
               <Text style={styles.metaText}>{totalTime} dk</Text>
             </View>
-            <View style={styles.metaItem}>
-              <MaterialCommunityIcons name="account-group-outline" size={14} color="#6B7280" />
-              <Text style={styles.metaText}>{recipe.servings} kişi</Text>
-            </View>
+            <ServingStepper
+              value={adaptation.servings}
+              originalValue={recipe.servings}
+              onChange={adaptation.setServings}
+            />
           </View>
 
           {/* Allergen tags row */}
@@ -271,31 +253,72 @@ export default function RecipeDetailScreen() {
 
           {/* Ingredients section */}
           <Text style={styles.sectionHeader}>Malzemeler</Text>
-          {recipe.ingredientGroups.map((group, groupIdx) => (
+          {adaptation.adaptedGroups.map((group, groupIdx) => (
             <View key={groupIdx} style={styles.ingredientGroup}>
               {group.label && (
                 <Text style={styles.ingredientGroupLabel}>{group.label}</Text>
               )}
-              {group.items.map((item, itemIdx) => (
-                <View key={itemIdx} style={styles.ingredientRow}>
-                  <View style={styles.ingredientDot} />
-                  <Text style={styles.ingredientText}>
-                    <Text style={styles.ingredientAmount}>
-                      {item.amount} {item.unit}{' '}
+              {group.items.map((item, itemIdx) => {
+                const hasAlts = item.alternatives && item.alternatives.length > 0;
+                const isSwapped = Boolean(adaptation.swaps[item.name]);
+                // Find the original ingredient name if swapped
+                const originalName = isSwapped
+                  ? Object.entries(adaptation.swaps).find(([, v]) => v === item.name)?.[0]
+                  : undefined;
+
+                return (
+                  <View key={itemIdx} style={styles.ingredientRow}>
+                    <View style={styles.ingredientDot} />
+                    <Text style={styles.ingredientText}>
+                      <Text style={styles.ingredientAmount}>
+                        {formatAmount(item.amount)} {item.unit}{' '}
+                      </Text>
+                      {item.name}
+                      {item.optional && (
+                        <Text style={styles.optionalLabel}> (opsiyonel)</Text>
+                      )}
                     </Text>
-                    {item.name}
-                    {item.optional && (
-                      <Text style={styles.optionalLabel}> (opsiyonel)</Text>
+                    {hasAlts && !isSwapped && (
+                      <Pressable
+                        style={styles.swapButton}
+                        onPress={() => showSwapPicker(item, adaptation.swapIngredient)}
+                        accessibilityRole="button"
+                        accessibilityLabel="Elimde yok"
+                      >
+                        <Text style={styles.swapButtonText}>Elimde yok</Text>
+                      </Pressable>
                     )}
-                  </Text>
-                </View>
-              ))}
+                    {isSwapped && originalName && (
+                      <Pressable
+                        style={[styles.swapButton, styles.swapButtonActive]}
+                        onPress={() => adaptation.resetSwap(originalName)}
+                        accessibilityRole="button"
+                        accessibilityLabel="Geri al"
+                      >
+                        <Text style={styles.swapButtonActiveText}>Geri al</Text>
+                      </Pressable>
+                    )}
+                  </View>
+                );
+              })}
             </View>
           ))}
 
+          {/* Start Cooking button inside ingredients section */}
+          <Pressable
+            style={styles.inlineStartCookingButton}
+            onPress={startCooking}
+            accessibilityRole="button"
+            accessibilityLabel={hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
+          >
+            <Text style={styles.inlineStartCookingText}>
+              {hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
+            </Text>
+          </Pressable>
+
           {/* Steps Preview section */}
           <Text style={styles.sectionHeader}>Adimlar</Text>
-          {recipe.steps.map((step, idx) => {
+          {adaptation.adaptedSteps.map((step, idx) => {
             const bgColor = STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
 
             return (
@@ -336,26 +359,7 @@ export default function RecipeDetailScreen() {
       <View style={styles.startCookingContainer}>
         <Pressable
           style={styles.startCookingButton}
-          onPress={async () => {
-            // If no active session for this recipe, check for other sessions
-            if (!hasActiveSession) {
-              const existingSession = await getActiveSession(db);
-              if (existingSession && existingSession.recipeId !== id) {
-                // Clear old session — only one at a time
-                await clearSession(db);
-              }
-              // Create new session
-              await saveSession(db, {
-                recipeId: id as string,
-                currentStep: 0,
-                timerRemaining: null,
-                timerStartTimestamp: null,
-                ingredientChecks: [],
-                sessionStartedAt: new Date().toISOString(),
-              });
-            }
-            router.push(`/recipe/cook/${id}` as never);
-          }}
+          onPress={startCooking}
           accessibilityRole="button"
           accessibilityLabel={hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
         >
@@ -535,7 +539,7 @@ const styles = StyleSheet.create({
   },
   ingredientRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     marginBottom: 6,
   },
   ingredientDot: {
@@ -543,7 +547,7 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     backgroundColor: '#E07B39',
-    marginTop: 7,
+    marginTop: 0,
     marginRight: 10,
   },
   ingredientText: {
@@ -559,6 +563,46 @@ const styles = StyleSheet.create({
   optionalLabel: {
     color: '#9CA3AF',
     fontStyle: 'italic',
+  },
+
+  // Swap buttons
+  swapButton: {
+    marginLeft: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderWidth: 1,
+    borderColor: '#E07B39',
+    borderRadius: 6,
+  },
+  swapButtonText: {
+    fontSize: 12,
+    color: '#E07B39',
+    fontWeight: '500',
+  },
+  swapButtonActive: {
+    backgroundColor: '#FEF3EC',
+    borderColor: '#9CA3AF',
+  },
+  swapButtonActiveText: {
+    fontSize: 12,
+    color: '#6B7280',
+    fontWeight: '500',
+  },
+
+  // Inline start cooking button (inside ingredients section)
+  inlineStartCookingButton: {
+    backgroundColor: '#E07B39',
+    height: 44,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  inlineStartCookingText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
   },
 
   // Steps preview boxes

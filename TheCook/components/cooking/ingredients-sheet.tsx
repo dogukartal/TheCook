@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { formatAmount } from '@/src/hooks/useRecipeAdaptation';
 import type { IngredientGroup } from '@/src/types/recipe';
 
 // ---------------------------------------------------------------------------
@@ -22,6 +23,9 @@ export interface IngredientsSheetProps {
   onToggleCheck: (flatIndex: number) => void;
   visible: boolean;
   onClose: () => void;
+  onSwap?: (ingredientName: string, alternativeName: string) => void;
+  onResetSwap?: (ingredientName: string) => void;
+  swaps?: Record<string, string>;
 }
 
 // ---------------------------------------------------------------------------
@@ -34,11 +38,23 @@ export function IngredientsSheet({
   onToggleCheck,
   visible,
   onClose,
+  onSwap,
+  onResetSwap,
+  swaps = {},
 }: IngredientsSheetProps) {
   // Flatten all ingredients with their group labels
   type FlatItem =
     | { type: 'header'; label: string }
-    | { type: 'ingredient'; flatIndex: number; text: string };
+    | {
+        type: 'ingredient';
+        flatIndex: number;
+        text: string;
+        hasAlternatives: boolean;
+        isSwapped: boolean;
+        originalName: string | undefined;
+        ingredientName: string;
+        alternatives: { name: string; amount: number; unit: string }[];
+      };
 
   const flatItems: FlatItem[] = [];
   let flatIndex = 0;
@@ -48,18 +64,44 @@ export function IngredientsSheet({
       flatItems.push({ type: 'header', label: group.label });
     }
     for (const item of group.items) {
-      const text = `${item.amount} ${item.unit} ${item.name}${item.optional ? ' (opsiyonel)' : ''}`;
-      flatItems.push({ type: 'ingredient', flatIndex, text });
+      const text = `${formatAmount(item.amount)} ${item.unit} ${item.name}${item.optional ? ' (opsiyonel)' : ''}`;
+      const hasAlternatives = item.alternatives != null && item.alternatives.length > 0;
+      const isSwapped = Boolean(swaps[item.name]);
+      // Find original name if this ingredient was swapped (the key in swaps map whose value matches item.name)
+      const originalName = isSwapped
+        ? undefined // already the swapped name, the key IS the original
+        : Object.entries(swaps).find(([, v]) => v === item.name)?.[0];
+
+      flatItems.push({
+        type: 'ingredient',
+        flatIndex,
+        text,
+        hasAlternatives,
+        isSwapped: Boolean(originalName), // true when the displayed item is a swapped-in alternative
+        originalName,
+        ingredientName: item.name,
+        alternatives: item.alternatives ?? [],
+      });
       flatIndex++;
     }
   }
 
-  function handleSwap() {
-    Alert.alert(
-      'Yakin zamanda!',
-      'Bu ozellik cok yakinda geliyor.',
-      [{ text: 'Tamam' }]
-    );
+  function handleSwapPress(
+    ingredientName: string,
+    alternatives: { name: string; amount: number; unit: string }[],
+  ) {
+    if (!onSwap) return;
+    if (alternatives.length === 1) {
+      onSwap(ingredientName, alternatives[0].name);
+      return;
+    }
+    // Multiple alternatives — show Alert picker
+    const buttons = alternatives.map((alt) => ({
+      text: `${alt.name} (${formatAmount(alt.amount)} ${alt.unit})`,
+      onPress: () => onSwap(ingredientName, alt.name),
+    }));
+    buttons.push({ text: 'Iptal', onPress: () => {} });
+    Alert.alert('Yerine ne kullanalim?', undefined, buttons);
   }
 
   return (
@@ -125,15 +167,27 @@ export function IngredientsSheet({
                     {item.text}
                   </Text>
 
-                  {/* Swap button */}
-                  <Pressable
-                    onPress={handleSwap}
-                    style={styles.swapButton}
-                    accessibilityRole="button"
-                    accessibilityLabel="Degistir"
-                  >
-                    <Text style={styles.swapButtonText}>Degistir</Text>
-                  </Pressable>
+                  {/* Swap button — only for ingredients with alternatives */}
+                  {item.hasAlternatives && !item.isSwapped && (
+                    <Pressable
+                      onPress={() => handleSwapPress(item.ingredientName, item.alternatives)}
+                      style={styles.swapButton}
+                      accessibilityRole="button"
+                      accessibilityLabel="Elimde yok"
+                    >
+                      <Text style={styles.swapButtonText}>Elimde yok</Text>
+                    </Pressable>
+                  )}
+                  {item.isSwapped && item.originalName && onResetSwap && (
+                    <Pressable
+                      onPress={() => onResetSwap(item.originalName!)}
+                      style={[styles.swapButton, styles.swapButtonActive]}
+                      accessibilityRole="button"
+                      accessibilityLabel="Geri al"
+                    >
+                      <Text style={styles.swapButtonActiveText}>Geri al</Text>
+                    </Pressable>
+                  )}
                 </View>
               );
             })}
@@ -216,10 +270,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#E07B39',
     borderRadius: 6,
   },
   swapButtonText: {
+    fontSize: 12,
+    color: '#E07B39',
+    fontWeight: '500',
+  },
+  swapButtonActive: {
+    backgroundColor: '#FEF3EC',
+    borderColor: '#9CA3AF',
+  },
+  swapButtonActiveText: {
     fontSize: 12,
     color: '#6B7280',
     fontWeight: '500',

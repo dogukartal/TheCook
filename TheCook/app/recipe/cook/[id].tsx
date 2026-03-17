@@ -21,6 +21,7 @@ import {
   CookingSession,
 } from '@/src/db/cooking-session';
 import { useCookingTimer } from '@/src/hooks/useCookingTimer';
+import { useRecipeAdaptation } from '@/src/hooks/useRecipeAdaptation';
 
 import { StepContent } from '@/components/cooking/step-content';
 import { SegmentedProgressBar } from '@/components/cooking/progress-bar';
@@ -57,6 +58,12 @@ export default function CookingScreen() {
   const mountedRef = useRef(false);
 
   // ---------------------------------------------------------------------------
+  // Adaptation — initialized after recipe loads, restored from session
+  // ---------------------------------------------------------------------------
+
+  const adaptation = useRecipeAdaptation(recipe);
+
+  // ---------------------------------------------------------------------------
   // Timer
   // ---------------------------------------------------------------------------
 
@@ -75,7 +82,7 @@ export default function CookingScreen() {
   }, []);
 
   // ---------------------------------------------------------------------------
-  // Load recipe + restore session
+  // Load recipe + restore session (including adaptation state)
   // ---------------------------------------------------------------------------
 
   useEffect(() => {
@@ -97,6 +104,16 @@ export default function CookingScreen() {
         setIngredientChecks(session.ingredientChecks);
         setSessionStartedAt(session.sessionStartedAt);
 
+        // Restore adaptation state from session
+        if (session.adaptedServings != null) {
+          adaptation.setServings(session.adaptedServings);
+        }
+        if (session.ingredientSwaps) {
+          for (const [originalName, subName] of Object.entries(session.ingredientSwaps)) {
+            adaptation.swapIngredient(originalName, subName);
+          }
+        }
+
         // Restore timer if it was running (Pitfall 4: recalculate remaining)
         if (
           session.timerRemaining != null &&
@@ -106,11 +123,7 @@ export default function CookingScreen() {
             (Date.now() - session.timerStartTimestamp) / 1000;
           const newRemaining = session.timerRemaining - elapsed;
           if (newRemaining > 0) {
-            // Timer still has time — we need to figure out which step
-            // The timer state from session doesn't store step index directly,
-            // so we start it from session.currentStep as best guess.
-            // The useCookingTimer will handle it once start() is called.
-            // For now, we don't auto-start (per CONTEXT.md: manual start).
+            // Timer still has time — manual start per CONTEXT.md
           }
         }
       } else if (!session) {
@@ -122,6 +135,8 @@ export default function CookingScreen() {
           timerStartTimestamp: null,
           ingredientChecks: [],
           sessionStartedAt: new Date().toISOString(),
+          adaptedServings: null,
+          ingredientSwaps: {},
         });
       }
 
@@ -152,12 +167,14 @@ export default function CookingScreen() {
         timerStartTimestamp: timer.isRunning ? timer.startTimestamp : null,
         ingredientChecks,
         sessionStartedAt,
+        adaptedServings: adaptation.servings,
+        ingredientSwaps: adaptation.swaps,
         ...overrides,
       };
 
       await saveSession(db, session);
     },
-    [id, currentStep, timer, displaySeconds, ingredientChecks, sessionStartedAt]
+    [id, currentStep, timer, displaySeconds, ingredientChecks, sessionStartedAt, adaptation.servings, adaptation.swaps]
   );
 
   // ---------------------------------------------------------------------------
@@ -194,9 +211,11 @@ export default function CookingScreen() {
         timerStartTimestamp: timer.isRunning ? timer.startTimestamp : null,
         ingredientChecks,
         sessionStartedAt,
+        adaptedServings: adaptation.servings,
+        ingredientSwaps: adaptation.swaps,
       });
     },
-    [recipe, id, timer, displaySeconds, ingredientChecks, sessionStartedAt, initialPage]
+    [recipe, id, timer, displaySeconds, ingredientChecks, sessionStartedAt, initialPage, adaptation.servings, adaptation.swaps]
   );
 
   // ---------------------------------------------------------------------------
@@ -244,13 +263,33 @@ export default function CookingScreen() {
             timerStartTimestamp: timer.isRunning ? timer.startTimestamp : null,
             ingredientChecks: next,
             sessionStartedAt,
+            adaptedServings: adaptation.servings,
+            ingredientSwaps: adaptation.swaps,
           });
         }
 
         return next;
       });
     },
-    [id, currentStep, timer, displaySeconds, sessionStartedAt]
+    [id, currentStep, timer, displaySeconds, sessionStartedAt, adaptation.servings, adaptation.swaps]
+  );
+
+  // ---------------------------------------------------------------------------
+  // Swap handlers for IngredientsSheet
+  // ---------------------------------------------------------------------------
+
+  const handleSwap = useCallback(
+    (ingredientName: string, alternativeName: string) => {
+      adaptation.swapIngredient(ingredientName, alternativeName);
+    },
+    [adaptation.swapIngredient]
+  );
+
+  const handleResetSwap = useCallback(
+    (ingredientName: string) => {
+      adaptation.resetSwap(ingredientName);
+    },
+    [adaptation.resetSwap]
   );
 
   // ---------------------------------------------------------------------------
@@ -349,7 +388,7 @@ export default function CookingScreen() {
   const nextLabel = isLastStep ? 'Bitir' : 'Sonraki';
 
   // ---------------------------------------------------------------------------
-  // Main render
+  // Main render — uses adapted data
   // ---------------------------------------------------------------------------
 
   return (
@@ -389,7 +428,7 @@ export default function CookingScreen() {
         initialPage={initialPage}
         onPageSelected={(e) => handlePageSelected(e.nativeEvent.position)}
       >
-        {recipe.steps.map((step, idx) => (
+        {adaptation.adaptedSteps.map((step, idx) => (
           <View key={idx} style={styles.pageContainer}>
             <StepContent
               step={step}
@@ -431,13 +470,16 @@ export default function CookingScreen() {
         />
       )}
 
-      {/* Ingredients sheet modal */}
+      {/* Ingredients sheet modal — adapted data */}
       <IngredientsSheet
-        ingredientGroups={recipe.ingredientGroups}
+        ingredientGroups={adaptation.adaptedGroups}
         checkedIndices={ingredientChecks}
         onToggleCheck={handleIngredientToggle}
         visible={showIngredients}
         onClose={() => setShowIngredients(false)}
+        onSwap={handleSwap}
+        onResetSwap={handleResetSwap}
+        swaps={adaptation.swaps}
       />
 
       {/* Bottom navigation bar */}

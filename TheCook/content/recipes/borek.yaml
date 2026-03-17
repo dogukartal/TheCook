@@ -21,40 +21,61 @@ ingredientGroups:
         amount: 6
         unit: dilim
         optional: false
+        scalable: true
+        alternatives: []
       - name: Yumurta
         amount: 2
         unit: adet
         optional: false
+        scalable: true
+        alternatives: []
       - name: Süt
         amount: 200
         unit: ml
         optional: false
+        scalable: true
+        alternatives: []
       - name: Zeytinyağı
         amount: 4
         unit: yemek kaşığı
         optional: false
+        scalable: true
+        alternatives:
+          - name: Tereyağı
+            amount: 4
+            unit: yemek kaşığı
       - name: Tuz
         amount: 1
         unit: tatlı kaşığı
         optional: false
+        scalable: false
+        alternatives: []
   - label: İç için
     items:
       - name: Beyaz peynir (feta veya lor)
         amount: 400
         unit: gr
         optional: false
+        scalable: true
+        alternatives: []
       - name: Taze maydanoz
         amount: 1
         unit: demet
         optional: false
+        scalable: false
+        alternatives: []
       - name: Karabiber
         amount: 1
         unit: tutam
         optional: false
+        scalable: false
+        alternatives: []
       - name: Yumurta
         amount: 1
         unit: adet
         optional: true
+        scalable: true
+        alternatives: []
 steps:
   - title: Fırını ve harcı hazırlayın
     instruction: >-
@@ -69,7 +90,8 @@ steps:
     timerSeconds: null
   - title: Sütlü sosu yapın
     instruction: >-
-      Sosu hazırlamak için yumurtaları derin bir kaseye kırın, sütü, zeytinyağını ve tuzu ekleyip
+      Sosu hazırlamak için {{Yumurta.amount}} {{Yumurta.unit}} yumurtayı derin bir kaseye kırın,
+      {{Süt.amount}} {{Süt.unit}} sütü, {{Zeytinyağı.amount}} {{Zeytinyağı.unit}} {{Zeytinyağı.name}} ve tuzu ekleyip
       çırpın. Sos homojen görününce hazır.
     why: Bu sos yufkaların nemli ve yumuşak kalmasını sağlar; böreğin sert ve kuru olmamasının sırrıdır. Yağ ve yumurta da renk ve lezzet katar.
     looksLikeWhenDone: Sos homojen, açık sarı renkte ve hafif köpüklü görünüyor. Yağ ve süt ayrılmamış.
