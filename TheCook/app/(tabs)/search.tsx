@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -9,16 +9,11 @@ import {
   Pressable,
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { router, useFocusEffect } from 'expo-router';
 
-import { useRecipesDb } from '@/src/db/recipes';
-import { useProfileDb } from '@/src/db/profile';
+import { useSearchScreen } from '@/src/hooks/useSearchScreen';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { RecipeCardRow } from '@/components/ui/recipe-card-row';
 import { IngredientChips } from '@/components/discovery/ingredient-chips';
-
-import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
 
 // ---------------------------------------------------------------------------
 // Search screen — Ara tab
@@ -26,179 +21,24 @@ import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
 
 export default function SearchScreen() {
   const {
-    getAllIngredientNames,
-    getAllRecipesForSearch,
-    searchRecipesByIngredients,
-    getRecentViews,
-    recordRecentView,
-    getBookmarks,
-    addBookmark,
-    removeBookmark,
-  } = useRecipesDb();
-  const { getProfile } = useProfileDb();
-
-  // Data loaded on focus
-  const [allIngredients, setAllIngredients] = useState<string[]>([]);
-  const [allRecipes, setAllRecipes] = useState<(RecipeListItem & { ingredient_groups: string })[]>([]);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [profileLoaded, setProfileLoaded] = useState(false);
-  const [recentViews, setRecentViews] = useState<RecipeListItem[]>([]);
-
-  // Search interaction state
-  const [query, setQuery] = useState('');
-  const [ingredientChips, setIngredientChips] = useState<string[]>([]);
-  const [results, setResults] = useState<RecipeListItem[]>([]);
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  // ---------------------------------------------------------------------------
-  // Load data on focus (re-fetches profile for allergen changes)
-  // ---------------------------------------------------------------------------
-  useFocusEffect(
-    useCallback(() => {
-      let cancelled = false;
-
-      async function loadAll() {
-        const p = await getProfile();
-        if (cancelled) return;
-        setProfile(p);
-
-        const [ingredients, recipes, bookmarks, recentViewEntries] = await Promise.all([
-          getAllIngredientNames(),
-          getAllRecipesForSearch({
-            allergens: p.allergens,
-            skillLevel: p.skillLevel,
-            equipment: p.equipment,
-          } as HardFilter),
-          getBookmarks(null),
-          getRecentViews(),
-        ]);
-
-        if (cancelled) return;
-
-        setAllIngredients(ingredients);
-        setAllRecipes(recipes);
-        setBookmarkedIds(new Set(bookmarks.map((b) => b.recipeId)));
-
-        const recipeMap = new Map(recipes.map((r) => [r.id, r as RecipeListItem]));
-        const recentRecipes = recentViewEntries
-          .map((rv) => recipeMap.get(rv.recipeId))
-          .filter((r): r is RecipeListItem => r !== undefined);
-        setRecentViews(recentRecipes);
-
-        setProfileLoaded(true);
-      }
-
-      loadAll();
-      return () => { cancelled = true; };
-    }, [])
-  );
-
-  // ---------------------------------------------------------------------------
-  // Ingredient autocomplete — only ingredient names, shown in dropdown
-  // ---------------------------------------------------------------------------
-  const ingredientSuggestions = useMemo<string[]>(() => {
-    if (query.length < 2) return [];
-    const lowerQuery = query.toLocaleLowerCase('tr');
-    return allIngredients
-      .filter((name) => name.toLocaleLowerCase('tr').includes(lowerQuery))
-      .filter((name) => !ingredientChips.includes(name))
-      .slice(0, 8);
-  }, [query, allIngredients, ingredientChips]);
-
-  // ---------------------------------------------------------------------------
-  // Search by ingredient chips + optional title filter
-  // ---------------------------------------------------------------------------
-  useEffect(() => {
-    if (ingredientChips.length === 0) {
-      setResults([]);
-      return;
-    }
-    if (!profile) return;
-
-    let cancelled = false;
-    setSearchLoading(true);
-
-    searchRecipesByIngredients(allRecipes, ingredientChips, true).then((matched) => {
-      if (cancelled) return;
-      setResults(matched);
-      setSearchLoading(false);
-    });
-
-    return () => { cancelled = true; };
-  }, [ingredientChips, allRecipes, profile]);
-
-  // Display results: filter by title when typing, or show name-based search when no chips
-  const displayResults = useMemo(() => {
-    const lowerQuery = query.length >= 2 ? query.toLocaleLowerCase('tr') : '';
-
-    // With chips: show ingredient-matched results, optionally filtered by title
-    if (ingredientChips.length > 0) {
-      if (!lowerQuery) return results;
-      return results.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
-    }
-
-    // Without chips but typing: search all recipes by title
-    if (lowerQuery) {
-      return allRecipes.filter((r) => r.title.toLocaleLowerCase('tr').includes(lowerQuery));
-    }
-
-    return [];
-  }, [results, query, ingredientChips, allRecipes]);
-
-  // ---------------------------------------------------------------------------
-  // Interactions
-  // ---------------------------------------------------------------------------
-  function handleSelectIngredient(name: string) {
-    if (!ingredientChips.includes(name)) {
-      setIngredientChips((prev) => [...prev, name]);
-    }
-    setQuery('');
-    setDropdownOpen(false);
-  }
-
-  function handleRemoveChip(name: string) {
-    setIngredientChips((prev) => prev.filter((c) => c !== name));
-  }
-
-  function handleRecipePress(id: string) {
-    recordRecentView(id);
-    const recipe = allRecipes.find((r) => r.id === id);
-    if (recipe) {
-      setRecentViews((prev) => {
-        const filtered = prev.filter((r) => r.id !== id);
-        return [recipe, ...filtered].slice(0, 10);
-      });
-    }
-    router.push(`/recipe/${id}` as never);
-  }
-
-  async function handleBookmarkToggle(id: string) {
-    if (bookmarkedIds.has(id)) {
-      await removeBookmark(id);
-      setBookmarkedIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    } else {
-      await addBookmark(id, null);
-      setBookmarkedIds((prev) => new Set([...prev, id]));
-    }
-  }
-
-  function handleQueryChange(text: string) {
-    setQuery(text);
-    setDropdownOpen(text.length >= 2);
-  }
-
-  // ---------------------------------------------------------------------------
-  // Render
-  // ---------------------------------------------------------------------------
-  const isIdle = ingredientChips.length === 0 && query.length < 2;
-  const hasChips = ingredientChips.length > 0;
-  const showDropdown = dropdownOpen && ingredientSuggestions.length > 0 && !hasChips;
+    profile,
+    recentViews,
+    query,
+    bookmarkedIds,
+    ingredientSuggestions,
+    displayResults,
+    isIdle,
+    hasChips,
+    showDropdown,
+    searchLoading,
+    ingredientChips,
+    handleSelectIngredient,
+    handleRemoveChip,
+    handleRecipePress,
+    handleBookmarkToggle,
+    handleQueryChange,
+    setDropdownOpen,
+  } = useSearchScreen();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -219,10 +59,10 @@ export default function SearchScreen() {
           {query.length > 0 && (
             <Pressable
               style={styles.clearButton}
-              onPress={() => { setQuery(''); setDropdownOpen(false); }}
+              onPress={() => handleQueryChange('')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              <Text style={styles.clearButtonText}>✕</Text>
+              <Text style={styles.clearButtonText}>{'\u2715'}</Text>
             </Pressable>
           )}
         </View>
