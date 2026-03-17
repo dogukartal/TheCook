@@ -50,8 +50,8 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 - [x] **COOKX-01**: Each cooking step displays an AI-generated process image with fallback colour block
 - [x] **COOKX-02**: Each step shows Boyle gorunmeli (checkpoint) and Dikkat et! (warning) — max one line each
 - [x] **COOKX-03**: Completing a recipe logs to Gecmis with date and optional star rating; partial cooks not logged
-- [ ] **COOKX-04**: Sef'im AI companion available in every cooking step — 3 pre-loaded Q&A chips (instant) plus open text/voice (live AI call)
-- [ ] **COOKX-05**: Sef'im is context-aware (recipe, step, skill level, ingredient swaps) and pulses when user lingers beyond average step duration
+- [x] **COOKX-04**: Sef'im AI companion available in every cooking step — 3 pre-loaded Q&A chips (instant) plus open text/voice (live AI call)
+- [x] **COOKX-05**: Sef'im is context-aware (recipe, step, skill level, ingredient swaps) and pulses when user lingers beyond average step duration
 
 ### Profile Evolution (v1 — Phase 7+)
 
@@ -127,8 +127,8 @@ Updated during roadmap creation.
 | COOKX-01 | Phase 11 | Complete |
 | COOKX-02 | Phase 11 | Complete |
 | COOKX-03 | Phase 11 | Complete |
-| COOKX-04 | Phase 12 | Pending |
-| COOKX-05 | Phase 12 | Pending |
+| COOKX-04 | Phase 12 | Complete |
+| COOKX-05 | Phase 12 | Complete |
 
 **Coverage:**
 - v1 requirements: 31 total (17 original + 14 new from product evolution)

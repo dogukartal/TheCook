@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 11-03-PLAN.md (Phase 11 complete)
-last_updated: "2026-03-17T20:12:18.033Z"
-last_activity: 2026-03-17 — Phase 11 Plan 03 complete; 3 recipes updated with checkpoint/warning content, Phase 11 verified end-to-end
+status: executing
+stopped_at: Completed 12-01-PLAN.md
+last_updated: "2026-03-17T20:41:10.262Z"
+last_activity: 2026-03-17 — Phase 12 Plan 01 complete; StepSchema extended with sefimQA, useSefim hook built, sefim-ask Edge Function created
 progress:
   total_phases: 12
   completed_phases: 11
-  total_plans: 43
-  completed_plans: 43
-  percent: 100
+  total_plans: 46
+  completed_plans: 44
+  percent: 96
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** The user must never feel like the app gave them a recipe and walked away — every interaction, from ingredient input to the last step, must feel like having a knowledgeable friend in the kitchen.
-**Current focus:** Phase 10 in progress - Recipe Detail Evolution; Plan 01 complete (schema extensions + adaptation foundations)
+**Current focus:** Phase 12 in progress - Sef'im AI Companion; Plan 01 complete (core hook + schema + Edge Function)
 
 ## Current Position
 
-Phase: 11 of 12 (Cooking Mode Evolution)
-Plan: 3 of 3 complete
-Status: Phase 11 Complete
-Last activity: 2026-03-17 — Phase 11 Plan 03 complete; 3 recipes updated with checkpoint/warning content, Phase 11 verified end-to-end
+Phase: 12 of 12 (Sef'im AI Companion)
+Plan: 1 of 3 complete
+Status: In Progress
+Last activity: 2026-03-17 — Phase 12 Plan 01 complete; StepSchema extended with sefimQA, useSefim hook built, sefim-ask Edge Function created
 
-Progress: [██████████] 100% (43/43 plans complete)
+Progress: [██████████] 96% (44/46 plans complete)
 
 ## Performance Metrics
 
@@ -94,6 +94,7 @@ Progress: [██████████] 100% (43/43 plans complete)
 | Phase 11-cooking-mode-evolution P01 | 2 | 2 tasks | 4 files |
 | Phase 11-cooking-mode-evolution P02 | 5 | 2 tasks | 4 files |
 | Phase 11-cooking-mode-evolution P03 | 2 | 2 tasks | 4 files |
+| Phase 12-sefim-ai-companion P01 | 4 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -213,6 +214,9 @@ Recent decisions affecting current work:
 - [Phase 11-cooking-mode-evolution]: Rating defaults to 0, passed as null to onComplete when no stars selected
 - [Phase 11-cooking-mode-evolution]: Exit confirmation uses Alert.alert with destructive 'Cik' button and cancel 'Devam et'
 - [Phase 11-cooking-mode-evolution]: Only 3 sample recipes updated with checkpoint/warning content; 27 others use null defaults from StepSchema
+- [Phase 12]: SefimQASchema defined as named const before StepSchema for reuse and type export
+- [Phase 12]: Linger threshold: 1.5x timerSeconds for timed steps, 120s for untimed; chip taps instant, open questions via Edge Function
+- [Phase 12]: Turkish system prompt constrains Sef'im to cooking-only scope with friendly off-topic redirect
 
 ### Pending Todos
 
@@ -226,6 +230,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T19:47:08Z
-Stopped at: Completed 11-03-PLAN.md (Phase 11 complete)
+Last session: 2026-03-17T20:41:08.897Z
+Stopped at: Completed 12-01-PLAN.md
 Resume file: None
