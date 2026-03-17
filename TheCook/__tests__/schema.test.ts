@@ -1,5 +1,5 @@
 // Plan 02 — full schema test suite (replaces Wave 0 stubs)
-import { RecipeSchema } from "../src/types/recipe";
+import { RecipeSchema, IngredientSchema, SubstitutionSchema } from "../src/types/recipe";
 
 // ---------------------------------------------------------------------------
 // Fixture: a complete valid menemen recipe
@@ -174,5 +174,97 @@ describe("RecipeSchema", () => {
     };
     const result = RecipeSchema.safeParse(recipe);
     expect(result.success).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// SubstitutionSchema tests (Phase 10)
+// ---------------------------------------------------------------------------
+
+describe("SubstitutionSchema", () => {
+  it("validates a valid substitution", () => {
+    const result = SubstitutionSchema.safeParse({
+      name: "Margarin",
+      amount: 50,
+      unit: "gr",
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects substitution with empty name", () => {
+    const result = SubstitutionSchema.safeParse({
+      name: "",
+      amount: 50,
+      unit: "gr",
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects substitution with invalid unit", () => {
+    const result = SubstitutionSchema.safeParse({
+      name: "Margarin",
+      amount: 50,
+      unit: "pounds",
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// IngredientSchema with alternatives + scalable (Phase 10)
+// ---------------------------------------------------------------------------
+
+describe("IngredientSchema — alternatives & scalable", () => {
+  it("accepts alternatives array and scalable boolean", () => {
+    const result = IngredientSchema.safeParse({
+      name: "Tereyağı",
+      amount: 50,
+      unit: "gr",
+      optional: false,
+      alternatives: [{ name: "Margarin", amount: 50, unit: "gr" }],
+      scalable: true,
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.alternatives).toHaveLength(1);
+      expect(result.data.scalable).toBe(true);
+    }
+  });
+
+  it("defaults alternatives to [] and scalable to true when omitted", () => {
+    const result = IngredientSchema.safeParse({
+      name: "Yumurta",
+      amount: 3,
+      unit: "adet",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.alternatives).toEqual([]);
+      expect(result.data.scalable).toBe(true);
+    }
+  });
+
+  it("allows scalable=false for non-scalable ingredients", () => {
+    const result = IngredientSchema.safeParse({
+      name: "Tuz",
+      amount: 1,
+      unit: "tutam",
+      scalable: false,
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.scalable).toBe(false);
+    }
+  });
+
+  it("existing recipe ingredient without alternatives/scalable still parses (backward compat)", () => {
+    // This simulates existing recipe data from the 30 curated recipes
+    const existing = { name: "Domates", amount: 200, unit: "gr", optional: false };
+    const result = IngredientSchema.safeParse(existing);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.alternatives).toEqual([]);
+      expect(result.data.scalable).toBe(true);
+    }
   });
 });

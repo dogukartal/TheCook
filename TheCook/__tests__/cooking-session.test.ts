@@ -100,4 +100,34 @@ describe("cooking-session CRUD", () => {
     const result = await getActiveSession(db as any);
     expect(result).toBeNull();
   });
+
+  it("saveSession persists adaptedServings and ingredientSwaps, getActiveSession reads them back", async () => {
+    const db = createMockDb();
+    const sessionWithAdaptation: CookingSession = {
+      ...sampleSession,
+      adaptedServings: 4,
+      ingredientSwaps: { "Tereyağı": "Margarin" },
+    };
+    await saveSession(db as any, sessionWithAdaptation);
+    const result = await getActiveSession(db as any);
+
+    expect(result).not.toBeNull();
+    expect(result!.adaptedServings).toBe(4);
+    expect(result!.ingredientSwaps).toEqual({ "Tereyağı": "Margarin" });
+  });
+
+  it("saveSession with null adaptedServings and empty swaps works (backward compat)", async () => {
+    const db = createMockDb();
+    const sessionNoAdaptation: CookingSession = {
+      ...sampleSession,
+      adaptedServings: null,
+      ingredientSwaps: {},
+    };
+    await saveSession(db as any, sessionNoAdaptation);
+    const result = await getActiveSession(db as any);
+
+    expect(result).not.toBeNull();
+    expect(result!.adaptedServings).toBeNull();
+    expect(result!.ingredientSwaps).toEqual({});
+  });
 });
