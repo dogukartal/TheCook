@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 06-03-PLAN.md
-last_updated: "2026-03-14T17:12:51.842Z"
-last_activity: 2026-03-14 — Phase 5 Plan 03 Tasks 1-2 complete; full cooking view with PagerView, resume banner on feed, session persistence
+status: executing
+stopped_at: Completed 07-01-PLAN.md
+last_updated: "2026-03-17T15:34:10Z"
+last_activity: 2026-03-17 — Phase 7 Plan 01 complete; hard filter SQL + DB v5 migration + profile extension
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 6
-  total_plans: 28
-  completed_plans: 28
-  percent: 100
+  total_plans: 31
+  completed_plans: 29
+  percent: 94
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** The user must never feel like the app gave them a recipe and walked away — every interaction, from ingredient input to the last step, must feel like having a knowledgeable friend in the kitchen.
-**Current focus:** Phase 5 - Guided Cooking Mode (checkpoint: human verification)
+**Current focus:** Phase 7 - Foundation Pivot (hard filters, feed sections, serving scaler)
 
 ## Current Position
 
-Phase: 5 of 5 (Guided Cooking Mode)
-Plan: 3 of 3 — Plan 03 Tasks 1-2 complete, Task 3 awaiting human verification
-Status: Checkpoint — full cooking mode assembled, awaiting human verification
-Last activity: 2026-03-14 — Phase 5 Plan 03 Tasks 1-2 complete; full cooking view with PagerView, resume banner on feed, session persistence
+Phase: 7 of 7 (Foundation Pivot)
+Plan: 1 of 3 complete — Plan 01 done, Plan 02 next
+Status: Executing
+Last activity: 2026-03-17 — Phase 7 Plan 01 complete; hard filter SQL + DB v5 migration + profile extension
 
-Progress: [██████████] 100% (25/25 plans complete)
+Progress: [█████████░] 94% (29/31 plans complete)
 
 ## Performance Metrics
 
@@ -79,6 +79,7 @@ Progress: [██████████] 100% (25/25 plans complete)
 | Phase 06-equipment-discovery-wiring P01 | 3 | 2 tasks | 5 files |
 | Phase 06-equipment-discovery-wiring P02 | 5 | 1 tasks | 1 files |
 | Phase 06-equipment-discovery-wiring P03 | checkpoint | 3 tasks | 5 files |
+| Phase 07-foundation-pivot P01 | 7 | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -163,6 +164,10 @@ Recent decisions affecting current work:
 - [Phase 06-equipment-discovery-wiring]: JS-sort-after-fetch pattern for equipment de-prioritization — SQL WHERE for hard exclusion (allergens), JS sort for soft ordering (equipment)
 - [Phase 06-equipment-discovery-wiring]: Badge uses .some() (at least one missing) while sort uses .every() (fully compatible) — distinct intents, both correct
 - [Phase 06-equipment-discovery-wiring]: My Kitchen does not sort saved recipes by equipment compatibility — bookmark recency order preserved; badge informs without reordering
+- [Phase 07-foundation-pivot]: HardFilter is a plain interface (not Zod schema) for internal use between DB layer and screens
+- [Phase 07-foundation-pivot]: Equipment exclusion uses NOT EXISTS + json_each SQL pattern (same as allergen exclusion)
+- [Phase 07-foundation-pivot]: sortByEquipmentCompatibility removed entirely — hard SQL exclusion replaces soft JS sort
+- [Phase 07-foundation-pivot]: getBookmarkedRecipes centralizes inline SQL from my-kitchen.tsx into recipes.ts with hard filter support
 
 ### Pending Todos
 
@@ -176,6 +181,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T17:06:23.873Z
-Stopped at: Completed 06-03-PLAN.md
+Last session: 2026-03-17T15:34:10Z
+Stopped at: Completed 07-01-PLAN.md
 Resume file: None

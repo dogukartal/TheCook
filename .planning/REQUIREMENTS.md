@@ -19,7 +19,7 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 - [x] **DISC-02**: User can browse a curated feed of recipes without ingredient input, ordered by skill level match
 - [ ] **DISC-03**: User can filter recipes by craving/mood (cuisine type, cooking time, dish type — breakfast / soup / main / etc.)
 - [x] **DISC-04**: User can bookmark recipes to a personal saved list and return to them later
-- [ ] **DISC-05**: Allergen-incompatible recipes are automatically filtered out from all discovery surfaces
+- [x] **DISC-05**: Allergen-incompatible recipes are automatically filtered out from all discovery surfaces
 
 ### Cooking Mode
 
@@ -55,9 +55,9 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 
 ### Profile Evolution (v1 — Phase 7+)
 
-- [ ] **PROF-01**: Skill level is a hard filter — recipes above user's skill ceiling never surface on any screen
-- [ ] **PROF-02**: Kitchen tools are a hard filter — recipes requiring unselected tools never surface on any screen
-- [ ] **PROF-03**: User can declare cuisine preferences and app goals; these feed AI ranking and feed weighting as soft preferences
+- [x] **PROF-01**: Skill level is a hard filter — recipes above user's skill ceiling never surface on any screen
+- [x] **PROF-02**: Kitchen tools are a hard filter — recipes requiring unselected tools never surface on any screen
+- [x] **PROF-03**: User can declare cuisine preferences and app goals; these feed AI ranking and feed weighting as soft preferences
 
 ### Feed & Navigation (v1 — Phase 7-8)
 
@@ -110,14 +110,14 @@ Updated during roadmap creation.
 | DISC-02 | Phase 4 | Complete |
 | DISC-03 | Phase 9 | Pending |
 | DISC-04 | Phase 4 | Complete |
-| DISC-05 | Phase 7 | Pending |
+| DISC-05 | Phase 7 | Complete |
 | COOK-01 | Phase 5 | Complete |
 | COOK-02 | Phase 5 | Complete |
 | COOK-03 | Phase 5 | Complete |
 | COOK-04 | Phase 5 | Complete |
-| PROF-01 | Phase 7 | Pending |
-| PROF-02 | Phase 7 | Pending |
-| PROF-03 | Phase 7 | Pending |
+| PROF-01 | Phase 7 | Complete |
+| PROF-02 | Phase 7 | Complete |
+| PROF-03 | Phase 7 | Complete |
 | NAV-01 | Phase 7 | Pending |
 | FEED-01 | Phase 8 | Pending |
 | FEED-02 | Phase 8 | Pending |
