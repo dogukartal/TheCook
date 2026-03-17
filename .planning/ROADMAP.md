@@ -197,6 +197,12 @@ Plans:
   4. Swapped ingredients reflect in step copy via dynamic variables (not hardcoded strings)
   5. Step preview shows step titles as read-only inline list
   6. Start Cooking accessible from both main screen and ingredients bottom sheet
+**Plans**: 3 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Schema extension (alternatives, scalable) + DB migration v7 (session adaptation columns) + test stubs (Wave 1)
+- [ ] 10-02-PLAN.md — useRecipeAdaptation hook (scaling, swaps, variable resolution) + useRecipeDetailScreen hook + ServingStepper component (TDD, Wave 2)
+- [ ] 10-03-PLAN.md — Wire adaptation into detail + cooking screens + update 3 sample recipes + human verification (Wave 3)
 
 ### Phase 11: Cooking Mode Evolution
 **Goal**: Elevate cooking mode with step images, checkpoint/warning fields, celebration screen, rating, and completion logging to Gecmis
@@ -239,6 +245,6 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 7. Foundation Pivot | 3/3 | Complete   | 2026-03-17 |
 | 8. Feed Redesign | 3/3 | Complete   | 2026-03-17 |
 | 9. Search & Category Redesign | 3/3 | Complete   | 2026-03-17 |
-| 10. Recipe Detail Evolution | 0/0 | Pending | — |
+| 10. Recipe Detail Evolution | 0/3 | Planned | — |
 | 11. Cooking Mode Evolution | 0/0 | Pending | — |
 | 12. Şef'im (AI Companion) | 0/0 | Pending | — |
