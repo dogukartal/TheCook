@@ -215,6 +215,12 @@ Plans:
   4. Post-cook star rating is submitted and stored with recipe ID and timestamp
   5. Completion writes to Geçmiş — partial cooks are not logged
   6. Exit triggers confirmation modal; nav bar hidden during cooking
+**Plans**: 3 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Schema extension (checkpoint, warning) + StepContent image rendering + checkpoint/warning callouts (Wave 1)
+- [ ] 11-02-PLAN.md — CompletionScreen star rating + completion logging + exit confirmation modal (Wave 1)
+- [ ] 11-03-PLAN.md — Update 3 sample recipes with checkpoint/warning content + human verification (Wave 2)
 
 ### Phase 12: Sef'im (AI Companion)
 **Goal**: Build the AI chef companion that lives inside cooking mode — context-aware, always one tap away, with pre-loaded answers and live AI fallback
@@ -246,5 +252,5 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 8. Feed Redesign | 3/3 | Complete   | 2026-03-17 |
 | 9. Search & Category Redesign | 3/3 | Complete   | 2026-03-17 |
 | 10. Recipe Detail Evolution | 3/3 | Complete    | 2026-03-17 |
-| 11. Cooking Mode Evolution | 0/0 | Pending | — |
+| 11. Cooking Mode Evolution | 0/3 | In Progress | — |
 | 12. Şef'im (AI Companion) | 0/0 | Pending | — |
