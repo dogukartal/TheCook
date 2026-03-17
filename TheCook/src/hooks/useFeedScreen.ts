@@ -7,8 +7,62 @@ import { useProfileDb } from '@/src/db/profile';
 import { getActiveSession, clearSession, CookingSession } from '@/src/db/cooking-session';
 
 import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem, DiscoveryFilter, HardFilter } from '@/src/types/discovery';
+import type { RecipeListItem, DiscoveryFilter, HardFilter, FeedSection } from '@/src/types/discovery';
 import type { Category } from '@/src/types/recipe';
+
+// ---------------------------------------------------------------------------
+// Pure functions (exported for testability)
+// ---------------------------------------------------------------------------
+
+const SKILL_ORDER: Record<string, number> = {
+  beginner: 1,
+  intermediate: 2,
+  advanced: 3,
+};
+
+/**
+ * Sorts recipes by cuisine preference match then skill level proximity.
+ * Does not mutate the input array.
+ */
+export function rankByProfile(recipes: RecipeListItem[], profile: Profile): RecipeListItem[] {
+  const cuisinePrefs = profile.cuisinePreferences
+    ? profile.cuisinePreferences.split(',').map((c) => c.trim().toLocaleLowerCase('tr'))
+    : [];
+
+  const userSkill = SKILL_ORDER[profile.skillLevel ?? 'beginner'] ?? 1;
+
+  return [...recipes].sort((a, b) => {
+    // Primary: cuisine preference match (preferred first)
+    const aMatch = cuisinePrefs.length > 0 && cuisinePrefs.includes(a.cuisine.toLocaleLowerCase('tr')) ? 0 : 1;
+    const bMatch = cuisinePrefs.length > 0 && cuisinePrefs.includes(b.cuisine.toLocaleLowerCase('tr')) ? 0 : 1;
+    if (aMatch !== bMatch) return aMatch - bMatch;
+
+    // Secondary: skill level proximity (closer to user's level = higher)
+    const aSkill = SKILL_ORDER[a.skillLevel ?? 'beginner'] ?? 1;
+    const bSkill = SKILL_ORDER[b.skillLevel ?? 'beginner'] ?? 1;
+    return Math.abs(aSkill - userSkill) - Math.abs(bSkill - userSkill);
+  });
+}
+
+/**
+ * Builds the 4 feed sections from a single recipe fetch.
+ * Filters out sections with zero results.
+ */
+export function buildFeedSections(
+  allRecipes: RecipeListItem[],
+  cookedIds: Set<string>,
+  profile: Profile
+): { sections: FeedSection[]; allEmpty: boolean } {
+  const raw: FeedSection[] = [
+    { key: 'trending', title: 'Su an trend', data: allRecipes },
+    { key: 'quick', title: '30 dakikada bitir', data: allRecipes.filter((r) => (r.prepTime + r.cookTime) <= 30) },
+    { key: 'personal', title: 'Sana ozel', data: rankByProfile(allRecipes, profile) },
+    { key: 'untried', title: 'Denemediklerin', data: allRecipes.filter((r) => !cookedIds.has(r.id)) },
+  ];
+
+  const sections = raw.filter((s) => s.data.length > 0);
+  return { sections, allEmpty: sections.length === 0 };
+}
 
 // ---------------------------------------------------------------------------
 // Types
