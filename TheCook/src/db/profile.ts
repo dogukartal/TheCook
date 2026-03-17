@@ -25,6 +25,8 @@ export function useProfileDb() {
       equipment: JSON.parse(row.equipment as string),
       onboardingCompleted: Boolean(row.onboarding_completed),
       accountNudgeShown: Boolean(row.account_nudge_shown),
+      cuisinePreferences: row.cuisine_preferences ?? null,
+      appGoals: row.app_goals ?? null,
     });
   }
 
@@ -50,6 +52,14 @@ export function useProfileDb() {
     if (profile.accountNudgeShown !== undefined) {
       fields.push("account_nudge_shown = ?");
       values.push(profile.accountNudgeShown ? 1 : 0);
+    }
+    if (profile.cuisinePreferences !== undefined) {
+      fields.push("cuisine_preferences = ?");
+      values.push(profile.cuisinePreferences);
+    }
+    if (profile.appGoals !== undefined) {
+      fields.push("app_goals = ?");
+      values.push(profile.appGoals);
     }
     if (fields.length === 0) return;
     await db.runAsync(
@@ -124,6 +134,14 @@ export async function saveProfileToDb(
   if (profile.accountNudgeShown !== undefined) {
     fields.push("account_nudge_shown = ?");
     values.push(profile.accountNudgeShown ? 1 : 0);
+  }
+  if (profile.cuisinePreferences !== undefined) {
+    fields.push("cuisine_preferences = ?");
+    values.push(profile.cuisinePreferences);
+  }
+  if (profile.appGoals !== undefined) {
+    fields.push("app_goals = ?");
+    values.push(profile.appGoals);
   }
   if (fields.length === 0) return;
   await db.runAsync(

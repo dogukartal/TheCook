@@ -53,6 +53,32 @@ describe("ProfileSchema", () => {
   it("rejects invalid equipment", () => {
     expect(() => ProfileSchema.parse({ equipment: ["microwave"] })).toThrow();
   });
+
+  it("cuisinePreferences defaults to null", () => {
+    const result = ProfileSchema.parse({});
+    expect(result.cuisinePreferences).toBeNull();
+  });
+
+  it("appGoals defaults to null", () => {
+    const result = ProfileSchema.parse({});
+    expect(result.appGoals).toBeNull();
+  });
+
+  it("accepts cuisinePreferences as a string", () => {
+    const result = ProfileSchema.parse({ cuisinePreferences: "Turk,Italyan" });
+    expect(result.cuisinePreferences).toBe("Turk,Italyan");
+  });
+
+  it("accepts appGoals as a string", () => {
+    const result = ProfileSchema.parse({ appGoals: "learn_cooking" });
+    expect(result.appGoals).toBe("learn_cooking");
+  });
+
+  it("accepts cuisinePreferences and appGoals as null", () => {
+    const result = ProfileSchema.parse({ cuisinePreferences: null, appGoals: null });
+    expect(result.cuisinePreferences).toBeNull();
+    expect(result.appGoals).toBeNull();
+  });
 });
 
 describe("BookmarkSchema", () => {

@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-const DB_VERSION = 4;
+const DB_VERSION = 5;
 
 export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const result = await db.getFirstAsync<{ user_version: number }>(
@@ -85,6 +85,13 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
         ingredient_checks TEXT NOT NULL DEFAULT '[]',
         session_started_at TEXT NOT NULL
       );
+    `);
+  }
+
+  if (currentVersion < 5) {
+    await db.execAsync(`
+      ALTER TABLE profile ADD COLUMN cuisine_preferences TEXT;
+      ALTER TABLE profile ADD COLUMN app_goals TEXT;
     `);
   }
 

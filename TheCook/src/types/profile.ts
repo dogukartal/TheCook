@@ -7,6 +7,8 @@ export const ProfileSchema = z.object({
   equipment: z.array(EquipmentEnum).default(["fırın", "tava"]),
   onboardingCompleted: z.boolean().default(false),
   accountNudgeShown: z.boolean().default(false),
+  cuisinePreferences: z.string().nullable().default(null),
+  appGoals: z.string().nullable().default(null),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 
