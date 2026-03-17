@@ -20,6 +20,7 @@ import {
   clearSession,
   CookingSession,
 } from '@/src/db/cooking-session';
+import { logCookingCompletion } from '@/src/db/cooking-history';
 import { useCookingTimer } from '@/src/hooks/useCookingTimer';
 import { useRecipeAdaptation } from '@/src/hooks/useRecipeAdaptation';
 
@@ -337,8 +338,22 @@ export default function CookingScreen() {
     }, 150);
   }
 
-  function handleCompletion() {
+  async function handleCompletion(rating: number | null) {
+    if (id) {
+      await logCookingCompletion(db, id as string, rating ?? undefined);
+    }
     router.replace('/(tabs)');
+  }
+
+  function handleExitPress() {
+    Alert.alert(
+      'Pisirmeden cikiyorsun',
+      'Ilerlemen kaydedilecek. Sonra devam edebilirsin.',
+      [
+        { text: 'Devam et', style: 'cancel' },
+        { text: 'Cik', style: 'destructive', onPress: () => router.back() },
+      ]
+    );
   }
 
   function handleAskChef() {
@@ -373,7 +388,7 @@ export default function CookingScreen() {
         <CompletionScreen
           recipeName={recipe.title}
           totalCookingTime={elapsedMinutes}
-          onBackToRecipes={handleCompletion}
+          onComplete={handleCompletion}
         />
       </SafeAreaView>
     );
@@ -397,7 +412,7 @@ export default function CookingScreen() {
       <View style={styles.topBar}>
         <View style={styles.topBarButtons}>
           <Pressable
-            onPress={() => router.back()}
+            onPress={handleExitPress}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             accessibilityRole="button"
             accessibilityLabel="Kapat"
@@ -455,7 +470,7 @@ export default function CookingScreen() {
             totalCookingTime={Math.round(
               (Date.now() - new Date(sessionStartedAt).getTime()) / 60000
             )}
-            onBackToRecipes={handleCompletion}
+            onComplete={handleCompletion}
           />
         </View>
       </PagerView>
