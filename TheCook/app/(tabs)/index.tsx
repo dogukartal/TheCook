@@ -5,53 +5,54 @@ import {
   Pressable,
   StyleSheet,
   SafeAreaView,
+  ScrollView,
   RefreshControl,
 } from 'react-native';
-import { FlashList } from '@shopify/flash-list';
 
 import { useFeedScreen } from '@/src/hooks/useFeedScreen';
-import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
+import { FeedSection } from '@/components/ui/feed-section';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
-import { CategoryFilter } from '@/components/discovery/category-filter';
 import { ResumeBanner } from '@/components/cooking/resume-banner';
+import { router } from 'expo-router';
 
 // ---------------------------------------------------------------------------
-// Feed screen — Kesfet tab (index)
+// Feed screen — horizontal sections feed (redesigned)
 // ---------------------------------------------------------------------------
 
 export default function FeedScreen() {
   const {
     profile,
     profileLoaded,
-    recipes,
+    sections,
+    allEmpty,
     loading,
-    activeTab,
-    selectedCategory,
     bookmarkedIds,
     resumeSession,
     resumeRecipeName,
     resumeTotalSteps,
     refreshing,
-    filter,
-    setActiveTab,
-    setSelectedCategory,
     handleBookmarkToggle,
     handleRefresh,
     handleResume,
     handleDismissResume,
     handleRecipePress,
-    loadRecipes,
-    setFilter,
   } = useFeedScreen();
 
   // Don't render until profile is loaded (prevents allergen flash)
   if (!profileLoaded) {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.skeletonGrid}>
-          {[0, 1, 2, 3].map((i) => (
-            <View key={i} style={styles.skeletonItem}>
-              <SkeletonCard variant="grid" />
+        <View style={styles.scrollContent}>
+          {[0, 1].map((i) => (
+            <View key={i} style={styles.sectionSkeleton}>
+              <View style={styles.skeletonTitleBar} />
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
+                {[0, 1, 2].map((j) => (
+                  <View key={j} style={styles.skeletonCardWrapper}>
+                    <SkeletonCard variant="grid" />
+                  </View>
+                ))}
+              </ScrollView>
             </View>
           ))}
         </View>
@@ -61,95 +62,72 @@ export default function FeedScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Resume banner */}
-      {resumeSession && (
-        <ResumeBanner
-          recipeName={resumeRecipeName}
-          currentStep={resumeSession.currentStep}
-          totalSteps={resumeTotalSteps}
-          onResume={handleResume}
-          onDismiss={handleDismissResume}
-        />
-      )}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            tintColor="#E07B39"
+          />
+        }
+      >
+        {/* Resume banner */}
+        {resumeSession && (
+          <ResumeBanner
+            recipeName={resumeRecipeName}
+            currentStep={resumeSession.currentStep}
+            totalSteps={resumeTotalSteps}
+            onResume={handleResume}
+            onDismiss={handleDismissResume}
+          />
+        )}
 
-      {/* Top tabs */}
-      <View style={styles.tabRow}>
-        <Pressable
-          style={[styles.tabButton, activeTab === 'trending' && styles.tabButtonActive]}
-          onPress={() => setActiveTab('trending')}
-          accessibilityRole="tab"
-          accessibilityState={{ selected: activeTab === 'trending' }}
-        >
-          <Text style={[styles.tabLabel, activeTab === 'trending' && styles.tabLabelActive]}>
-            Keşfet
-          </Text>
-          {activeTab === 'trending' && <View style={styles.tabUnderline} />}
-        </Pressable>
-        <Pressable
-          style={[styles.tabButton, activeTab === 'for-you' && styles.tabButtonActive]}
-          onPress={() => setActiveTab('for-you')}
-          accessibilityRole="tab"
-          accessibilityState={{ selected: activeTab === 'for-you' }}
-        >
-          <Text style={[styles.tabLabel, activeTab === 'for-you' && styles.tabLabelActive]}>
-            Sizin İçin
-          </Text>
-          {activeTab === 'for-you' && <View style={styles.tabUnderline} />}
-        </Pressable>
-      </View>
-
-      {/* Category filter */}
-      <View style={styles.filterContainer}>
-        <CategoryFilter
-          selectedCategory={selectedCategory}
-          onCategoryChange={(cat) => {
-            setSelectedCategory(cat);
-            setFilter((prev) => ({ ...prev, category: cat }));
-          }}
-          filter={filter}
-          onFilterChange={setFilter}
-        />
-      </View>
-
-      {/* Recipe list or skeleton */}
-      {loading ? (
-        <View style={styles.skeletonGrid}>
-          {[0, 1, 2, 3].map((i) => (
-            <View key={i} style={styles.skeletonItem}>
-              <SkeletonCard variant="grid" />
+        {/* Loading skeleton */}
+        {loading ? (
+          [0, 1].map((i) => (
+            <View key={i} style={styles.sectionSkeleton}>
+              <View style={styles.skeletonTitleBar} />
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
+                {[0, 1, 2].map((j) => (
+                  <View key={j} style={styles.skeletonCardWrapper}>
+                    <SkeletonCard variant="grid" />
+                  </View>
+                ))}
+              </ScrollView>
             </View>
-          ))}
-        </View>
-      ) : (
-        <FlashList
-          data={recipes}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <View style={styles.cardWrapper}>
-              <RecipeCardGrid
-                recipe={item}
-                isBookmarked={bookmarkedIds.has(item.id)}
-                onBookmarkToggle={handleBookmarkToggle}
-                onPress={handleRecipePress}
-                userEquipment={profile?.equipment ?? []}
-              />
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-          ListEmptyComponent={
-            <View style={styles.emptyState}>
-              <Text style={styles.emptyText}>Bu kategoride tarif bulunamadı.</Text>
-              <Pressable onPress={loadRecipes} style={styles.retryButton}>
-                <Text style={styles.retryText}>Tekrar dene</Text>
-              </Pressable>
-            </View>
-          }
-          contentContainerStyle={{ padding: 8 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#E07B39" />
-          }
-        />
-      )}
+          ))
+        ) : allEmpty ? (
+          /* All sections empty — suggest profile update */
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyTitle}>Henüz tarif bulunamadı</Text>
+            <Text style={styles.emptyText}>
+              Alerjen, ekipman ve beceri seviyeni Profil sekmesinden güncelleyerek sana özel tarifler keşfedebilirsin.
+            </Text>
+            <Pressable
+              style={styles.profileButton}
+              onPress={() => router.push('/(tabs)/profile' as never)}
+              accessibilityRole="button"
+              accessibilityLabel="Profilini güncelle"
+            >
+              <Text style={styles.profileButtonText}>Profilini güncelle</Text>
+            </Pressable>
+          </View>
+        ) : (
+          /* Feed sections */
+          sections.map((section) => (
+            <FeedSection
+              key={section.key}
+              title={section.title}
+              data={section.data}
+              bookmarkedIds={bookmarkedIds}
+              userEquipment={profile?.equipment ?? []}
+              onRecipePress={handleRecipePress}
+              onBookmarkToggle={handleBookmarkToggle}
+            />
+          ))
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -163,75 +141,59 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  tabRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+  scrollContent: {
+    paddingTop: 16,
+    paddingBottom: 32,
   },
-  tabButton: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 12,
-    position: 'relative',
-  },
-  tabButtonActive: {},
-  tabLabel: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#9CA3AF',
-  },
-  tabLabelActive: {
-    color: '#E07B39',
-    fontWeight: '600',
-  },
-  tabUnderline: {
-    position: 'absolute',
-    bottom: 0,
-    left: '20%',
-    right: '20%',
-    height: 2,
-    backgroundColor: '#E07B39',
-    borderRadius: 1,
-  },
-  filterContainer: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  skeletonGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 8,
-  },
-  skeletonItem: {
-    width: '50%',
-    padding: 4,
-  },
-  cardWrapper: {
-    flex: 1,
-    padding: 4,
-  },
+  // Empty state
   emptyState: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 40,
   },
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F2937',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
   emptyText: {
     fontSize: 15,
     color: '#6B7280',
     textAlign: 'center',
     marginBottom: 16,
+    lineHeight: 22,
   },
-  retryButton: {
+  profileButton: {
     backgroundColor: '#E07B39',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
   },
-  retryText: {
+  profileButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
+  },
+  // Skeleton loading
+  sectionSkeleton: {
+    marginBottom: 24,
+  },
+  skeletonTitleBar: {
+    width: 140,
+    height: 18,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 6,
+    marginBottom: 12,
+    marginHorizontal: 16,
+  },
+  skeletonRow: {
+    paddingHorizontal: 16,
+  },
+  skeletonCardWrapper: {
+    width: 180,
+    marginRight: 12,
   },
 });
