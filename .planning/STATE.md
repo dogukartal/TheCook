@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 10-02-PLAN.md
+stopped_at: Completed 10-03-PLAN.md
 last_updated: "2026-03-17T18:45:21.211Z"
 last_activity: 2026-03-17 — Phase 10 Plan 02 complete; adaptation hook, detail screen hook, ServingStepper
 progress:
   total_phases: 12
   completed_phases: 9
   total_plans: 40
-  completed_plans: 39
-  percent: 98
+  completed_plans: 40
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 10 of 12 (Recipe Detail Evolution)
-Plan: 2 of 3 complete
-Status: In Progress
-Last activity: 2026-03-17 — Phase 10 Plan 02 complete; adaptation hook, detail screen hook, ServingStepper
+Plan: 3 of 3 complete
+Status: Phase Complete
+Last activity: 2026-03-17 — Phase 10 Plan 03 complete; adaptation UI wiring, swap buttons, dynamic variables in 3 recipes
 
-Progress: [██████████] 98% (39/40 plans complete)
+Progress: [██████████] 100% (40/40 plans complete)
 
 ## Performance Metrics
 
@@ -90,6 +90,7 @@ Progress: [██████████] 98% (39/40 plans complete)
 | Phase 09-search-category-redesign P03 | checkpoint | 2 tasks | 3 files |
 | Phase 10-recipe-detail-evolution P01 | 3 | 2 tasks | 7 files |
 | Phase 10-recipe-detail-evolution P02 | 3 | 2 tasks | 4 files |
+| Phase 10-recipe-detail-evolution P03 | 7 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -200,6 +201,9 @@ Recent decisions affecting current work:
 - [Phase 10-recipe-detail-evolution]: Unicode-safe regex [^.}]+ for Turkish ingredient names in variable resolution
 - [Phase 10-recipe-detail-evolution]: Pure adaptation functions exported separately from hook for direct unit testing
 - [Phase 10-recipe-detail-evolution]: useRecipeDetailScreen composes useRecipeAdaptation and persists adaptation state to session
+- [Phase 10-recipe-detail-evolution]: Swap button uses 'Elimde yok' label for natural Turkish UX; single-alternative swaps execute immediately, multi-alternative shows Alert picker
+- [Phase 10-recipe-detail-evolution]: scalable: false for spice/seasoning ingredients (Tuz, Karabiber, Kimyon) that should not scale with servings
+- [Phase 10-recipe-detail-evolution]: Only 3 recipes updated with alternatives/variables; remaining 27 use backward-compatible defaults
 
 ### Pending Todos
 
@@ -213,6 +217,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T18:45:21.209Z
-Stopped at: Completed 10-02-PLAN.md
+Last session: 2026-03-17T18:53:30Z
+Stopped at: Completed 10-03-PLAN.md
 Resume file: None
