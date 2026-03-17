@@ -123,7 +123,7 @@ function buildHardFilterClauses(filter: HardFilter): {
 // Allergen filter helper — extract ingredient names from ingredient_groups JSON
 // ---------------------------------------------------------------------------
 
-function extractIngredientNames(ingredientGroupsJson: string): string[] {
+export function extractIngredientNames(ingredientGroupsJson: string): string[] {
   try {
     const groups: IngredientGroup[] = JSON.parse(ingredientGroupsJson);
     const names: string[] = [];
