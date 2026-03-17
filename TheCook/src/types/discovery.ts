@@ -48,3 +48,18 @@ export interface HardFilter {
   skillLevel: string | null;
   equipment: string[];
 }
+
+// Cooking history entry from cooking_history table
+export interface CookingHistoryEntry {
+  id: number;
+  recipeId: string;
+  cookedAt: string;
+  rating: number | null;
+}
+
+// Feed section for the redesigned feed screen
+export interface FeedSection {
+  key: "trending" | "quick" | "personal" | "untried";
+  title: string;
+  data: RecipeListItem[];
+}
