@@ -134,7 +134,7 @@ Plans:
 ### Phase 7: Foundation Pivot
 **Goal**: Restructure the app for the evolved product vision and enable parallel frontend/backend development — hard filters, 4-tab navigation, screen data hooks extraction, and new profile schema
 **Depends on**: Phase 6
-**Requirements**: DISC-05
+**Requirements**: DISC-05, PROF-01, PROF-02, PROF-03, NAV-01
 **Gap Closure:** Fixes DISC-05 (allergen exclusion on Cookbook bookmarks). DISC-03 deferred to Phase 9 (superseded by new search/feed design).
 **Success Criteria** (what must be TRUE):
   1. Screen data orchestration extracted into typed hooks (`useFeedScreen`, `useSearchScreen`, `useCookbookScreen`) — screens are thin shells calling hook + rendering components
@@ -147,7 +147,7 @@ Plans:
 ### Phase 8: Feed Redesign
 **Goal**: Replace the current vertical feed with 4 horizontal sections that surface recipes based on trending, speed, personalization, and novelty
 **Depends on**: Phase 7
-**Requirements**: DISC-02
+**Requirements**: DISC-02, FEED-01, FEED-02
 **Success Criteria** (what must be TRUE):
   1. Feed displays 4 horizontal sections: Şu an trend, 30 dakikada bitir, Sana özel, Denemediklerin
   2. Each section scrolls horizontally with recipe cards
@@ -171,7 +171,7 @@ Plans:
 ### Phase 10: Recipe Detail Evolution
 **Goal**: Add serving size scaling, ingredient substitution, and step preview to the recipe detail page — all adaptation happens before cooking starts
 **Depends on**: Phase 8
-**Requirements**: (new functionality, no existing requirement ID)
+**Requirements**: ADAPT-01, ADAPT-02, ADAPT-03
 **Success Criteria** (what must be TRUE):
   1. Serving size scaler (inline stepper) proportionally adjusts all ingredient quantities
   2. Adjusted serving size carries forward into Cooking Mode
@@ -181,9 +181,9 @@ Plans:
   6. Start Cooking accessible from both main screen and ingredients bottom sheet
 
 ### Phase 11: Cooking Mode Evolution
-**Goal**: Elevate cooking mode with step images, checkpoint/warning fields, celebration screen, rating, and completion logging to Geçmiş
+**Goal**: Elevate cooking mode with step images, checkpoint/warning fields, celebration screen, rating, and completion logging to Gecmis
 **Depends on**: Phase 10
-**Requirements**: COOK-01, COOK-02, COOK-03
+**Requirements**: COOKX-01, COOKX-02, COOKX-03
 **Success Criteria** (what must be TRUE):
   1. Each step displays an image (AI-generated process shot) with fallback color block
   2. Each step shows Böyle görünmeli (checkpoint) and Dikkat et! (warning) fields
@@ -192,10 +192,10 @@ Plans:
   5. Completion writes to Geçmiş — partial cooks are not logged
   6. Exit triggers confirmation modal; nav bar hidden during cooking
 
-### Phase 12: Şef'im (AI Companion)
+### Phase 12: Sef'im (AI Companion)
 **Goal**: Build the AI chef companion that lives inside cooking mode — context-aware, always one tap away, with pre-loaded answers and live AI fallback
 **Depends on**: Phase 11
-**Requirements**: (new functionality)
+**Requirements**: COOKX-04, COOKX-05
 **Success Criteria** (what must be TRUE):
   1. Each step has 3 pre-loaded question-answer chips (stored at recipe creation time)
   2. Tapping Şef'im opens a bottom sheet showing recipe + step context

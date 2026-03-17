@@ -39,20 +39,40 @@ Requirements for initial release. No AI features in v1 — AI personalization an
 - [x] **AUTH-02**: User can optionally create an account; doing so syncs their profile and bookmarks across devices
 - [x] **AUTH-03**: User can log in and out; local data syncs on sign-in
 
+### Recipe Adaptation (v1 — Phases 10+)
+
+- [ ] **ADAPT-01**: User can adjust serving size on recipe detail; all ingredient quantities scale proportionally and carry into cooking mode
+- [ ] **ADAPT-02**: User can swap a missing ingredient for a pre-defined alternative ("Elimde yok"); substitution reflected in step copy via dynamic variables
+- [ ] **ADAPT-03**: Step copy uses dynamic variables for ingredient references — quantities and names resolve to active state (scaled/substituted) at cook time
+
+### Cooking Experience (v1 — Phases 11-12)
+
+- [ ] **COOKX-01**: Each cooking step displays an AI-generated process image with fallback colour block
+- [ ] **COOKX-02**: Each step shows Boyle gorunmeli (checkpoint) and Dikkat et! (warning) — max one line each
+- [ ] **COOKX-03**: Completing a recipe logs to Gecmis with date and optional star rating; partial cooks not logged
+- [ ] **COOKX-04**: Sef'im AI companion available in every cooking step — 3 pre-loaded Q&A chips (instant) plus open text/voice (live AI call)
+- [ ] **COOKX-05**: Sef'im is context-aware (recipe, step, skill level, ingredient swaps) and pulses when user lingers beyond average step duration
+
+### Profile Evolution (v1 — Phase 7+)
+
+- [ ] **PROF-01**: Skill level is a hard filter — recipes above user's skill ceiling never surface on any screen
+- [ ] **PROF-02**: Kitchen tools are a hard filter — recipes requiring unselected tools never surface on any screen
+- [ ] **PROF-03**: User can declare cuisine preferences and app goals; these feed AI ranking and feed weighting as soft preferences
+
+### Feed & Navigation (v1 — Phase 7-8)
+
+- [ ] **NAV-01**: App has 4 tabs: Feed, Search, Cookbook, Profile. Nav bar hidden during Cooking Mode.
+- [ ] **FEED-01**: Feed displays 4 horizontal sections (Su an trend, 30 dakikada bitir, Sana ozel, Denemediklerin) all respecting hard filters
+- [ ] **FEED-02**: Sections with zero results after filtering are hidden silently; if all sections empty, prompt to update profile
+
 ## v2 Requirements
 
-Deferred to a future AI-integration milestone. Not in current roadmap.
+Deferred to a future milestone. Not in current roadmap.
 
 ### AI Personalization
 
 - **AIPER-01**: Goal-aware recipe adaptation — dietary goal declared at onboarding; recipes enhanced silently (extra egg for muscle gain, reduced carbs for weight loss)
-- **AIPER-02**: AI ingredient normalization — LLM handles Turkish morphology to match "soğanı" to "soğan" in ingredient search
-- **AIPER-03**: Profile-aware substitution — user taps "I don't have this" and gets a substitute that respects their allergens and goal
-
-### AI Cooking Assistance
-
-- **AICOOK-01**: Real-time mid-cook error recovery chat — user can ask "I think I burned this, can I save it?" and get an AI response
-- **AICOOK-02**: Step-level clarification — user can tap "I don't understand this step" and get a plain-language AI explanation
+- **AIPER-02**: AI ingredient normalization — LLM handles Turkish morphology to match "soganı" to "sogan" in ingredient search
 
 ### Content Scaling
 
@@ -95,13 +115,28 @@ Updated during roadmap creation.
 | COOK-02 | Phase 5 | Complete |
 | COOK-03 | Phase 5 | Complete |
 | COOK-04 | Phase 5 | Complete |
+| PROF-01 | Phase 7 | Pending |
+| PROF-02 | Phase 7 | Pending |
+| PROF-03 | Phase 7 | Pending |
+| NAV-01 | Phase 7 | Pending |
+| FEED-01 | Phase 8 | Pending |
+| FEED-02 | Phase 8 | Pending |
+| ADAPT-01 | Phase 10 | Pending |
+| ADAPT-02 | Phase 10 | Pending |
+| ADAPT-03 | Phase 10 | Pending |
+| COOKX-01 | Phase 11 | Pending |
+| COOKX-02 | Phase 11 | Pending |
+| COOKX-03 | Phase 11 | Pending |
+| COOKX-04 | Phase 12 | Pending |
+| COOKX-05 | Phase 12 | Pending |
 
 **Coverage:**
-- v1 requirements: 17 total
-- Mapped to phases: 17
+- v1 requirements: 31 total (17 original + 14 new from product evolution)
+- Mapped to phases: 31
 - Unmapped: 0
-- Pending (gap closure): 2 (DISC-05 → Phase 7, DISC-03 → Phase 9)
+- Complete: 17
+- Pending: 14 (Phases 7–12)
 
 ---
 *Requirements defined: 2026-03-08*
-*Last updated: 2026-03-08 after roadmap creation — all 17 requirements mapped*
+*Last updated: 2026-03-17 — product vision evolved, 14 new requirements added for Phases 7–12*
