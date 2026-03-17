@@ -31,6 +31,7 @@ export interface SearchScreenState {
   showDropdown: boolean;
   selectedCategory: Category | null;
   showFilterPanel: boolean;
+  showFilters: boolean;
   skillFilter: SkillLevel | null;
   equipmentFilter: string[];
 }
@@ -354,6 +355,7 @@ export function useSearchScreen(): SearchScreenState & SearchScreenActions {
     showDropdown,
     selectedCategory,
     showFilterPanel,
+    showFilters,
     skillFilter,
     equipmentFilter,
     // Actions

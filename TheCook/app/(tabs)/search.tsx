@@ -9,11 +9,14 @@ import {
   Pressable,
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useSearchScreen } from '@/src/hooks/useSearchScreen';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { RecipeCardRow } from '@/components/ui/recipe-card-row';
 import { IngredientChips } from '@/components/discovery/ingredient-chips';
+import { CategoryStrip } from '@/src/components/search/CategoryStrip';
+import { FilterPanel } from '@/src/components/search/FilterPanel';
 
 // ---------------------------------------------------------------------------
 // Search screen — Ara tab
@@ -32,12 +35,21 @@ export default function SearchScreen() {
     showDropdown,
     searchLoading,
     ingredientChips,
+    selectedCategory,
+    showFilterPanel,
+    showFilters,
+    skillFilter,
+    equipmentFilter,
     handleSelectIngredient,
     handleRemoveChip,
     handleRecipePress,
     handleBookmarkToggle,
     handleQueryChange,
     setDropdownOpen,
+    handleCategorySelect,
+    handleSkillFilterChange,
+    handleEquipmentFilterChange,
+    handleToggleFilterPanel,
   } = useSearchScreen();
 
   return (
@@ -93,9 +105,41 @@ export default function SearchScreen() {
         </View>
       )}
 
+      {/* Category strip — always visible */}
+      <CategoryStrip selected={selectedCategory} onSelect={handleCategorySelect} />
+
+      {/* Filter toggle button — only when category is active and no ingredient chips */}
+      {showFilterPanel && (
+        <View style={styles.filterButtonRow}>
+          <Pressable
+            style={[styles.filterButton, showFilters && styles.filterButtonActive]}
+            onPress={handleToggleFilterPanel}
+          >
+            <MaterialCommunityIcons
+              name="filter-variant"
+              size={18}
+              color={showFilters ? '#FFFFFF' : '#E07B39'}
+            />
+            <Text style={[styles.filterButtonText, showFilters && styles.filterButtonTextActive]}>
+              Filtrele
+            </Text>
+          </Pressable>
+        </View>
+      )}
+
+      {/* Filter panel — visible when filter button toggled ON */}
+      <FilterPanel
+        visible={showFilterPanel && showFilters}
+        skillFilter={skillFilter}
+        equipmentFilter={equipmentFilter}
+        userEquipment={profile?.equipment ?? []}
+        onSkillChange={handleSkillFilterChange}
+        onEquipmentChange={handleEquipmentFilterChange}
+      />
+
       {/* Results area */}
       {isIdle ? (
-        // Idle state: show recent views
+        // Idle state: no category, no query, no chips — show recent views
         recentViews.length > 0 ? (
           <View style={styles.resultsArea}>
             <Text style={styles.sectionLabel}>Son Görüntülenenler</Text>
@@ -140,6 +184,12 @@ export default function SearchScreen() {
           contentContainerStyle={{ padding: 8 }}
           keyboardShouldPersistTaps="handled"
         />
+      ) : selectedCategory && !searchLoading ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyText}>
+            Bu kategoride tarif bulunamadı.
+          </Text>
+        </View>
       ) : (
         <View style={styles.emptyState}>
           <Text style={styles.emptyText}>
@@ -235,6 +285,35 @@ const styles = StyleSheet.create({
   chipsContainer: {
     paddingHorizontal: 12,
     paddingVertical: 4,
+  },
+  filterButtonRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+  },
+  filterButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E07B39',
+    backgroundColor: '#FFFFFF',
+  },
+  filterButtonActive: {
+    backgroundColor: '#E07B39',
+  },
+  filterButtonText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#E07B39',
+  },
+  filterButtonTextActive: {
+    color: '#FFFFFF',
   },
   resultsArea: {
     flex: 1,
