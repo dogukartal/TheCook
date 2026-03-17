@@ -231,7 +231,7 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
 | 6. Wire Equipment to Recipe Discovery | 3/3 | Complete   | 2026-03-14 |
 | 7. Foundation Pivot | 3/3 | Complete   | 2026-03-17 |
-| 8. Feed Redesign | 0/3 | In Progress | — |
+| 8. Feed Redesign | 3/3 | Complete   | 2026-03-17 |
 | 9. Search & Category Redesign | 0/0 | Pending | — |
 | 10. Recipe Detail Evolution | 0/0 | Pending | — |
 | 11. Cooking Mode Evolution | 0/0 | Pending | — |
