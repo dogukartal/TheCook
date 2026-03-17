@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Completed 11-01-PLAN.md
-last_updated: "2026-03-17T19:00:10.066Z"
-last_activity: 2026-03-17 — Phase 11 Plan 01 complete; StepSchema checkpoint/warning fields, step image rendering, compact callouts
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-03-17T19:45:00Z"
+last_activity: 2026-03-17 — Phase 11 Plan 02 complete; star rating on CompletionScreen, cooking_history logging, exit confirmation
 progress:
   total_phases: 12
   completed_phases: 10
   total_plans: 40
-  completed_plans: 41
-  percent: 95
+  completed_plans: 42
+  percent: 97
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 11 of 12 (Cooking Mode Evolution)
-Plan: 1 of 3 complete
+Plan: 2 of 3 complete
 Status: In Progress
-Last activity: 2026-03-17 — Phase 11 Plan 01 complete; StepSchema checkpoint/warning fields, step image rendering, compact callouts
+Last activity: 2026-03-17 — Phase 11 Plan 02 complete; star rating on CompletionScreen, cooking_history logging, exit confirmation
 
-Progress: [██████████] 100% (41/43 plans complete)
+Progress: [█████████░] 97% (42/43 plans complete)
 
 ## Performance Metrics
 
@@ -92,6 +92,7 @@ Progress: [██████████] 100% (41/43 plans complete)
 | Phase 10-recipe-detail-evolution P02 | 3 | 2 tasks | 4 files |
 | Phase 10-recipe-detail-evolution P03 | 7 | 2 tasks | 7 files |
 | Phase 11-cooking-mode-evolution P01 | 2 | 2 tasks | 4 files |
+| Phase 11-cooking-mode-evolution P02 | 5 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -207,6 +208,9 @@ Recent decisions affecting current work:
 - [Phase 10-recipe-detail-evolution]: Only 3 recipes updated with alternatives/variables; remaining 27 use backward-compatible defaults
 - [Phase 11-cooking-mode-evolution]: checkpoint and warning fields use nullable defaults for backward compat with 30 existing recipes
 - [Phase 11-cooking-mode-evolution]: Compact callout pattern (icon + text in colored row) for one-liner step annotations
+- [Phase 11-cooking-mode-evolution]: StarRating is internal (not exported) to completion-screen.tsx — no separate component file needed
+- [Phase 11-cooking-mode-evolution]: Rating defaults to 0, passed as null to onComplete when no stars selected
+- [Phase 11-cooking-mode-evolution]: Exit confirmation uses Alert.alert with destructive 'Cik' button and cancel 'Devam et'
 
 ### Pending Todos
 
