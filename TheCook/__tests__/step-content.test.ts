@@ -45,6 +45,7 @@ const mockStep: RecipeStep = {
   timerSeconds: null,
   checkpoint: null,
   warning: null,
+  sefimQA: [],
 };
 
 describe('StepContent', () => {

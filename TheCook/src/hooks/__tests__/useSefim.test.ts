@@ -95,7 +95,7 @@ const sampleRecipe = {
   id: "menemen-001",
   title: "Menemen",
   cuisine: "Turk",
-  category: "kahvalti" as const,
+  category: "kahvaltı" as const,
   mealType: "breakfast" as const,
   skillLevel: "beginner" as const,
   prepTime: 5,
@@ -103,7 +103,7 @@ const sampleRecipe = {
   servings: 2,
   coverImage: null,
   allergens: [],
-  equipment: ["tava"],
+  equipment: ["tava" as const],
   ingredientGroups: [
     {
       label: null,
@@ -259,7 +259,7 @@ describe("useSefim hook", () => {
   });
 
   it("linger resets to false on step index change", () => {
-    const { result, rerender } = renderHook(
+    const { result, rerender } = renderHook<ReturnType<typeof useSefim>, { stepIndex: number }>(
       ({ stepIndex }) => useSefim(sampleRecipe, stepIndex, "beginner", {}, 2),
       { initialProps: { stepIndex: 0 } }
     );
