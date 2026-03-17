@@ -111,6 +111,8 @@ export const StepSchema = z.object({
   stepImage: z.string().nullable().default(null),
   // positive() ensures non-zero timers; null means no timer (Hira can leave null; Phase 5 uses it)
   timerSeconds: z.number().int().positive().nullable().default(null),
+  checkpoint: z.string().nullable().default(null),  // "Boyle gorunmeli" one-liner
+  warning: z.string().nullable().default(null),     // "Dikkat et!" one-liner
 });
 
 // ---------------------------------------------------------------------------

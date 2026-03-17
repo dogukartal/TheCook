@@ -1,5 +1,5 @@
 // Plan 02 — full schema test suite (replaces Wave 0 stubs)
-import { RecipeSchema, IngredientSchema, SubstitutionSchema } from "../src/types/recipe";
+import { RecipeSchema, StepSchema, IngredientSchema, SubstitutionSchema } from "../src/types/recipe";
 
 // ---------------------------------------------------------------------------
 // Fixture: a complete valid menemen recipe
@@ -174,6 +174,82 @@ describe("RecipeSchema", () => {
     };
     const result = RecipeSchema.safeParse(recipe);
     expect(result.success).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// StepSchema — Phase 11 fields (checkpoint, warning)
+// ---------------------------------------------------------------------------
+
+describe("StepSchema — Phase 11 fields", () => {
+  const baseStep = {
+    title: "Soğanları kavurun",
+    instruction: "Zeytinyağını tavada kızdırın.",
+    why: "Soğanların karamelize olması tatlılık katar.",
+    looksLikeWhenDone: "Soğanlar şeffaf ve hafif altın rengi.",
+    commonMistake: "Soğanları çok yüksek ateşte yakmak.",
+    recovery: "Ocağı kısın ve yarım çay bardağı su ekleyin.",
+    stepImage: null,
+    timerSeconds: null,
+  };
+
+  it("parses step with checkpoint string — checkpoint is preserved", () => {
+    const result = StepSchema.safeParse({
+      ...baseStep,
+      checkpoint: "Köpürmeli ve hafif kızarmış olmalı",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.checkpoint).toBe("Köpürmeli ve hafif kızarmış olmalı");
+    }
+  });
+
+  it("parses step with warning string — warning is preserved", () => {
+    const result = StepSchema.safeParse({
+      ...baseStep,
+      warning: "Çok kızdırmayın, yanar!",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.warning).toBe("Çok kızdırmayın, yanar!");
+    }
+  });
+
+  it("parses step without checkpoint/warning — both default to null", () => {
+    const result = StepSchema.safeParse(baseStep);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.checkpoint).toBeNull();
+      expect(result.data.warning).toBeNull();
+    }
+  });
+
+  it("parses step with checkpoint: null and warning: null — both are null", () => {
+    const result = StepSchema.safeParse({
+      ...baseStep,
+      checkpoint: null,
+      warning: null,
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.checkpoint).toBeNull();
+      expect(result.data.warning).toBeNull();
+    }
+  });
+
+  it("existing step fixtures (validStep, validStep2) still parse successfully (backward compat)", () => {
+    const r1 = StepSchema.safeParse(validStep);
+    const r2 = StepSchema.safeParse(validStep2);
+    expect(r1.success).toBe(true);
+    expect(r2.success).toBe(true);
+    if (r1.success) {
+      expect(r1.data.checkpoint).toBeNull();
+      expect(r1.data.warning).toBeNull();
+    }
+    if (r2.success) {
+      expect(r2.data.checkpoint).toBeNull();
+      expect(r2.data.warning).toBeNull();
+    }
   });
 });
 
