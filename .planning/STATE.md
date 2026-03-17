@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 10-03-PLAN.md
+status: in_progress
+stopped_at: Completed 11-01-PLAN.md
 last_updated: "2026-03-17T19:00:10.066Z"
-last_activity: 2026-03-17 — Phase 10 Plan 03 complete; adaptation UI wiring, swap buttons, dynamic variables in 3 recipes
+last_activity: 2026-03-17 — Phase 11 Plan 01 complete; StepSchema checkpoint/warning fields, step image rendering, compact callouts
 progress:
   total_phases: 12
   completed_phases: 10
   total_plans: 40
-  completed_plans: 40
-  percent: 100
+  completed_plans: 41
+  percent: 95
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 
 ## Current Position
 
-Phase: 10 of 12 (Recipe Detail Evolution)
-Plan: 3 of 3 complete
-Status: Phase Complete
-Last activity: 2026-03-17 — Phase 10 Plan 03 complete; adaptation UI wiring, swap buttons, dynamic variables in 3 recipes
+Phase: 11 of 12 (Cooking Mode Evolution)
+Plan: 1 of 3 complete
+Status: In Progress
+Last activity: 2026-03-17 — Phase 11 Plan 01 complete; StepSchema checkpoint/warning fields, step image rendering, compact callouts
 
-Progress: [██████████] 100% (40/40 plans complete)
+Progress: [██████████] 100% (41/43 plans complete)
 
 ## Performance Metrics
 
@@ -91,6 +91,7 @@ Progress: [██████████] 100% (40/40 plans complete)
 | Phase 10-recipe-detail-evolution P01 | 3 | 2 tasks | 7 files |
 | Phase 10-recipe-detail-evolution P02 | 3 | 2 tasks | 4 files |
 | Phase 10-recipe-detail-evolution P03 | 7 | 2 tasks | 7 files |
+| Phase 11-cooking-mode-evolution P01 | 2 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -204,6 +205,8 @@ Recent decisions affecting current work:
 - [Phase 10-recipe-detail-evolution]: Swap button uses 'Elimde yok' label for natural Turkish UX; single-alternative swaps execute immediately, multi-alternative shows Alert picker
 - [Phase 10-recipe-detail-evolution]: scalable: false for spice/seasoning ingredients (Tuz, Karabiber, Kimyon) that should not scale with servings
 - [Phase 10-recipe-detail-evolution]: Only 3 recipes updated with alternatives/variables; remaining 27 use backward-compatible defaults
+- [Phase 11-cooking-mode-evolution]: checkpoint and warning fields use nullable defaults for backward compat with 30 existing recipes
+- [Phase 11-cooking-mode-evolution]: Compact callout pattern (icon + text in colored row) for one-liner step annotations
 
 ### Pending Todos
 
@@ -217,6 +220,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T18:53:30Z
-Stopped at: Completed 10-03-PLAN.md
+Last session: 2026-03-17T19:39:35Z
+Stopped at: Completed 11-01-PLAN.md
 Resume file: None
