@@ -101,6 +101,13 @@ steps:
     recovery: Eğer ıslattıysanız suyunu tamamen süzün ve devam edin.
     stepImage: null
     timerSeconds: null
+    sefimQA:
+      - question: "Mercimegi ne kadar yikamam lazim?"
+        answer: "Su berraklasana kadar 3-4 kez durula. Bulanik su nista demek, cok yikamaya gerek yok ama berrak olsun."
+      - question: "Sebzeleri neden iri dograyim?"
+        answer: "Nasil olsa blenderdan gececek, o yuzden zamanini ince dograma ile harcama. Kabaca dogra ve devam et."
+      - question: "Kirmizi mercimek yerine yesil kullanabilir miyim?"
+        answer: "Yesil mercimek cok daha gec piser ve farkli kivam verir. Kirmizi mercimek corba icin idealdir, degistirme."
   - title: Soğan ve havucu kavurun
     instruction: >-
       Tencereye {{Zeytinyağı.amount}} {{Zeytinyağı.unit}} {{Zeytinyağı.name}} alın ve orta ateşte ısıtın.
@@ -114,6 +121,13 @@ steps:
     timerSeconds: 300
     checkpoint: "Soganlar seffaf, havuc hafif yumusamis"
     warning: "Sogani yakmayin — aci tat corbayi bozar"
+    sefimQA:
+      - question: "Soganlar ne zaman hazir?"
+        answer: "Seffaflasmaya basladiginda ve kenarlari hafif altin rengi aldiginda tamam. 3-4 dakika surmeli."
+      - question: "Sarimsakla sogani ayni anda atabilir miyim?"
+        answer: "Hayir, sarimsak cok cabuk yanar. Once sogani kavur, 2 dakika sonra sarimsagi ekle."
+      - question: "Yag kizarinca ne yapayim?"
+        answer: "Sogani hemen at. Yag hafif dalgalaniyorsa hazirdir. Dumanliyorsa cok sicak — biraz bekle."
   - title: Salça ve mercimek ekleyin
     instruction: Domates salçasını ekleyin, 1 dakika kavurun. Ardından yıkanmış mercimekleri, kimyon ve karabiberi ekleyip karıştırın. Üzerine su veya et suyunu dökün.
     why: Salçayı kısaca kavurmak çiğ tadını giderir. Baharatları bu aşamada eklemek yağda çözünen aroma maddelerini suya geçmesini sağlar.
@@ -122,6 +136,13 @@ steps:
     recovery: Eğer doğrudan eklediyseniz, pişirme süresi sonunda biraz daha kavurunca tat dengelenir.
     stepImage: null
     timerSeconds: 60
+    sefimQA:
+      - question: "Salcayi neden kavuruyoruz?"
+        answer: "Kavurma salcanin cig tadini giderir ve tatliligini ortaya cikarir. 1 dakika yeterli, yakmamaya dikkat et."
+      - question: "Ne kadar su koymaliyim?"
+        answer: "Mercimeklerin 4-5 cm ustunu kapatacak kadar. Az koyarsan sonra eklersin, ama bastan cok koyarsan corba sulu olur."
+      - question: "Et suyu yerine ne kullanabilirim?"
+        answer: "Sicak su gayet olur. Bir tutam tuz ve yarim limon suyu ekleyerek lezzeti artirabilirsin."
   - title: Kısık ateşte pişirin
     instruction: Tencereyi kapağı kapalı olarak kaynatın. Kaynadıktan sonra ateşi kısın ve 20-25 dakika kısık ateşte pişirin. Mercimekler tamamen dağılmış olmalı.
     why: Kısık ateşte yavaş pişirmek mercimeklerin tamamen yumuşamasını sağlar. Çok yüksek ateşte mercimek dışı pişer içi sert kalabilir.
@@ -132,6 +153,13 @@ steps:
     timerSeconds: 1500
     checkpoint: "Mercimekler tamamen dagilmis, kasikla eziliyor"
     warning: "Az pisen mercimek blenderda puturlu kalir"
+    sefimQA:
+      - question: "Mercimek ne zaman pismis olur?"
+        answer: "Kasikla bastirdiginda kolayca eziliyorsa hazirdir. Tamamen dagilmis ve sari renkli olmali."
+      - question: "Corba cok koyulasti, ne yapayim?"
+        answer: "Sicak su ekle ve karistir. Her seferinde yarim su bardagi ekle, istedigin kivami yakalayana kadar."
+      - question: "Kapagi acik mi kapali mi pisirmeli?"
+        answer: "Kapali pisir. Kapak buhari icerde tutar ve mercimekler daha cabuk yumusar. Tasarsa kapagi aralik birak."
   - title: Blenderdan geçirin
     instruction: Tencereyi ocaktan alın ve 5 dakika bekleyin. Çorbayı dikkatlice blenderdan geçirin; ya daldırma blender kullanın ya da küçük partiler hâlinde standart blendere alın. Tuz ekleyip tadına bakın.
     why: Sıcak sıvı blenderde basınç oluşturur; beklemek ya da küçük partilerde işlemek kapağın fırlamasını önler. Blenderlama pürüzsüz, kadifemsi bir kıvam verir.
@@ -142,6 +170,13 @@ steps:
     timerSeconds: null
     checkpoint: "Corba puruzsuz, ipeksi ve homojen renkte"
     warning: "Sicak corbayi kapali blendere doldurmak tehlikeli"
+    sefimQA:
+      - question: "Daldirma blender yoksa ne yapayim?"
+        answer: "Normal blender kullanabilirsin ama kucuk parcalar halinde koy ve kapagi hafif aralik birak. Sicak siviyla kapak firlar!"
+      - question: "Corba ne kadar puruzsuz olmali?"
+        answer: "Tamamen puruzsuz ve ipeksi olmali. Parca kaldiysa biraz daha blend et. Suzgecten gecirirsen ekstra kadifemssi olur."
+      - question: "Tuzu ne zaman eklemeliyim?"
+        answer: "Blenderdan gecirdikten sonra ekle ve tadina bak. Pisirme sirasinda tuz eklersen yogunlasinca cok tuzlu olabilir."
   - title: Naneli tereyağı ekleyin
     instruction: İsterseniz küçük bir tavada tereyağını eritin ve kuru kırmızı biberi ekleyip 30 saniye kızdırın. Bu kırmızı yağı kaselere döktüğünüz çorbanın üzerine gezdirin. Hemen servis edin.
     why: Kızdırılmış tereyağı ve biber çorbaya geleneksel sunum görünümü ve ekstra aroma kazandırır. Sıcak servis kıvamın en iyi hissettirdiği andır.
@@ -150,3 +185,10 @@ steps:
     recovery: Yanmış yağı atın ve yeniden yapın; bu adım atlanabilir, çorba yine de lezzetlidir.
     stepImage: null
     timerSeconds: 30
+    sefimQA:
+      - question: "Bu adimi atlayabilir miyim?"
+        answer: "Evet, bu tamamen opsiyonel. Corba zaten lezzetli. Ama naneli tereyagi sunum ve lezzet icin gercekten fark yaratir."
+      - question: "Biber ne kadar kavurmaliyim?"
+        answer: "30 saniye yeter, daha fazla yapma. Biber yanarsa aci olur. Yag kopurmeye basladiginda biberi at ve hemen ocaktan al."
+      - question: "Nane ekleyebilir miyim?"
+        answer: "Evet! Kuru nane cok yakisir. Tereyagini ocaktan aldiktan sonra yarim tatli kasigi kuru nane ekle ve karistir."

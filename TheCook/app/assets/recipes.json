@@ -96,7 +96,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Harcı yoğurup dinlendirin",
@@ -108,7 +109,8 @@
         "stepImage": null,
         "timerSeconds": 4200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Şekil verip pişirin",
@@ -120,7 +122,8 @@
         "stepImage": null,
         "timerSeconds": 480,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -255,7 +258,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Buğday ve baklagilleri pişirin",
@@ -267,7 +271,8 @@
         "stepImage": null,
         "timerSeconds": 4200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Meyve ve şeker ekleyin",
@@ -279,7 +284,8 @@
         "stepImage": null,
         "timerSeconds": 600,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Servis için hazırlayın",
@@ -291,7 +297,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -390,7 +397,8 @@
         "stepImage": null,
         "timerSeconds": 1080,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Alt yufkaları dizin",
@@ -402,7 +410,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "İç harcı yerleştirin",
@@ -414,7 +423,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Kesin ve fırına verin",
@@ -426,7 +436,8 @@
         "stepImage": null,
         "timerSeconds": 2700,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Şerbeti dökün",
@@ -438,7 +449,8 @@
         "stepImage": null,
         "timerSeconds": 7200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -562,7 +574,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": "Peynir iri ufalanmis, tepsi yaglanmis",
-        "warning": "Peyniri macun haline getirmeyin"
+        "warning": "Peyniri macun haline getirmeyin",
+        "sefimQA": [
+          {
+            "question": "Firini onceden isitmak sart mi?",
+            "answer": "Evet, sart. Soguk firina koyarsan borek esit pismez — alt cig kalir, ust yanar. 180 dereceye ulasmasini bekle."
+          },
+          {
+            "question": "Peyniri nasil ufalamam lazim?",
+            "answer": "Parmaklarinla iri iri ufala. Rende veya blender kullanma — macun olursa borekte hava kalmaz ve agir olur."
+          },
+          {
+            "question": "Lor peyniri mi beyaz peynir mi?",
+            "answer": "Ikisi de olur. Beyaz peynir (ezine) daha tuzlu ve lezzetli olur. Lor daha hafif ve yumusak bir sonuc verir."
+          }
+        ]
       },
       {
         "title": "Sütlü sosu yapın",
@@ -574,7 +600,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": "Sos homojen, acik sari ve hafif kopuklu",
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Sosu neden yapiyoruz?",
+            "answer": "Sos yufkalarin nemli ve yumusak kalmasini saglar. Sos olmazsa yufka kuru ve sert piser, borek dagılır."
+          },
+          {
+            "question": "Sut yerine ne kullanabilirim?",
+            "answer": "Sut yerine ayni miktarda yogurt-su karisimi (yarim yarim) kullanabilirsin. Lezzeti biraz degisir ama olur."
+          },
+          {
+            "question": "Sos ne kivamda olmali?",
+            "answer": "Sivi ve akici olmali, kremali degil. Cirparak homojen hale getir — yumurta, sut ve yag iyice karissin."
+          }
+        ]
       },
       {
         "title": "Alt yufkaları serin",
@@ -586,7 +626,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Yufka yirtilirsa ne yapayim?",
+            "answer": "Sorun degil! Yirtik yeri ust yufkayla kapatirsin. Kat kat oldugu icin farkedilmez."
+          },
+          {
+            "question": "Yufkalar tasiyorsa ne yapayim?",
+            "answer": "Tassin, sorun degil. Tasan kisimlar sonra iceri katlanacak. Tepsiden buyuk yufka aslinda daha iyi."
+          },
+          {
+            "question": "Her yufkaya ne kadar sos dokmeli?",
+            "answer": "Her yufkaya 2-3 yemek kasigi yeter. Cok dokme, hafif nemli olmasi yeterli. Islanmis ama sulanti olmamali."
+          }
+        ]
       },
       {
         "title": "Orta katmanı doldurun",
@@ -598,7 +652,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Harci nasil esit dagitabilirim?",
+            "answer": "Kenarlardan basla, ortaya dogru ilerle. Spatula veya kasik arkasi ile yay. Koselere ozellikle dikkat et."
+          },
+          {
+            "question": "Harci iki katmana bolsem olur mu?",
+            "answer": "Hayir, tum harci tek katmana koy. Iki katmana bolersen her kat cok ince olur ve lezzet kaybolur."
+          },
+          {
+            "question": "Yumurtayi harce eklemeli miyim?",
+            "answer": "Opsiyonel ama tavsiye ederim. Yumurta harci birbirine baglar ve borekte dagılmasını onler."
+          }
+        ]
       },
       {
         "title": "Üst yufkaları kapatın",
@@ -610,7 +678,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Tasan kenarlari nasil katlayim?",
+            "answer": "Kenarlari iceri dogru katla, ust yufkanin altina sok. Siki olmasi onemli degil, sadece kapali olmasi yeterli."
+          },
+          {
+            "question": "Sos bittiyse ne yapayim?",
+            "answer": "Uzerine biraz zeytinyagi veya eritilmis tereyagi sur. Ust yufkanin kuru kalmamasi en onemli sey."
+          },
+          {
+            "question": "Ust yufkaya yumurta sureyim mi?",
+            "answer": "Istersen bir yumurta sarisi surebilirsin, altın rengi daha guzel olur. Ama sart degil, sos de yeterli."
+          }
+        ]
       },
       {
         "title": "Fırında pişirin",
@@ -622,7 +704,21 @@
         "stepImage": null,
         "timerSeconds": 2400,
         "checkpoint": "Ust yuzey altin sarisi, kenarlar kabarik",
-        "warning": "Sicakken kesmeyin — ic harc dagilir"
+        "warning": "Sicakken kesmeyin — ic harc dagilir",
+        "sefimQA": [
+          {
+            "question": "Borek ne zaman pismis olur?",
+            "answer": "Ust yuzey altin sarisi olunca ve kenarlar hafif kabardiysa hazir. Genelde 35-40 dakika surer."
+          },
+          {
+            "question": "Neden 10 dakika bekliyoruz?",
+            "answer": "Sicak peynir akici olur ve kesince dagilir. 10 dakika bekleyince harç yerine oturur ve duzgun dilimlenebilir."
+          },
+          {
+            "question": "Nasil dilimlemeliyim?",
+            "answer": "Keskin bir bicakla kare veya dikdortgen seklinde kes. Once uzunlamasina 3 sira, sonra enlemesine 4 sira — 12 porsiyon cikar."
+          }
+        ]
       }
     ]
   },
@@ -765,7 +861,8 @@
         "stepImage": null,
         "timerSeconds": 900,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Harcı yoğurun",
@@ -777,7 +874,8 @@
         "stepImage": null,
         "timerSeconds": 900,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Otları ekleyip servis edin",
@@ -789,7 +887,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -899,7 +998,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Soğanı hazırlayın",
@@ -911,7 +1011,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Karıştırıp servis edin",
@@ -923,7 +1024,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1069,7 +1171,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "İç harcı kavurun",
@@ -1081,7 +1184,8 @@
         "stepImage": null,
         "timerSeconds": 480,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Yaprakları hazırlayın",
@@ -1093,7 +1197,8 @@
         "stepImage": null,
         "timerSeconds": 900,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Dolmaları sarın",
@@ -1105,7 +1210,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tencerede pişirin",
@@ -1117,7 +1223,8 @@
         "stepImage": null,
         "timerSeconds": 2700,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1227,7 +1334,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Baharatlayıp dinlendirin",
@@ -1239,7 +1347,8 @@
         "stepImage": null,
         "timerSeconds": 1200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1340,7 +1449,8 @@
         "stepImage": null,
         "timerSeconds": 1200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "İç harcı hazırlayın",
@@ -1352,7 +1462,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Hamuruı açıp doldurun",
@@ -1364,7 +1475,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tavada pişirin",
@@ -1376,7 +1488,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1464,7 +1577,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Unu kavurun",
@@ -1476,7 +1590,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Sıvıyı ekleyin",
@@ -1488,7 +1603,8 @@
         "stepImage": null,
         "timerSeconds": 1080,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Kıvama getirip şekil verin",
@@ -1500,7 +1616,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1603,7 +1720,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Blenderdan geçirin",
@@ -1615,7 +1733,8 @@
         "stepImage": null,
         "timerSeconds": 180,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tatlandırıp servis edin",
@@ -1627,7 +1746,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1745,7 +1865,8 @@
         "stepImage": null,
         "timerSeconds": 1200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Patlıcanları kavurun",
@@ -1757,7 +1878,8 @@
         "stepImage": null,
         "timerSeconds": 420,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "İç harcı hazırlayın",
@@ -1769,7 +1891,8 @@
         "stepImage": null,
         "timerSeconds": 720,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Patlıcanları doldurun",
@@ -1781,7 +1904,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Fırında pişirin",
@@ -1793,7 +1917,8 @@
         "stepImage": null,
         "timerSeconds": 2100,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -1905,7 +2030,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Sebzeleri pişirin",
@@ -1917,7 +2043,8 @@
         "stepImage": null,
         "timerSeconds": 1200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Ispanak ekleyip blenderlayın",
@@ -1929,7 +2056,8 @@
         "stepImage": null,
         "timerSeconds": 240,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Servis için hazırlayın",
@@ -1941,7 +2069,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -2069,7 +2198,8 @@
         "stepImage": null,
         "timerSeconds": 1200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Patlıcanları kızartın",
@@ -2081,7 +2211,8 @@
         "stepImage": null,
         "timerSeconds": 540,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Kıyma harcını pişirin",
@@ -2093,7 +2224,8 @@
         "stepImage": null,
         "timerSeconds": 360,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Patlıcanları doldurun",
@@ -2105,7 +2237,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Fırında pişirin",
@@ -2117,7 +2250,8 @@
         "stepImage": null,
         "timerSeconds": 1800,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -2205,7 +2339,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Muhallebiyi pişirin",
@@ -2217,7 +2352,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tabanı karamelize edin",
@@ -2229,7 +2365,8 @@
         "stepImage": null,
         "timerSeconds": 180,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Soğutup servis edin",
@@ -2241,7 +2378,8 @@
         "stepImage": null,
         "timerSeconds": 7200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -2384,7 +2522,8 @@
         "stepImage": null,
         "timerSeconds": 900,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Salça ve baharatlı yoğurun",
@@ -2396,7 +2535,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Taze ot ekleyip bitirin",
@@ -2408,7 +2548,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -2528,7 +2669,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Harcı yoğurun",
@@ -2540,7 +2682,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Köftelere şekil verin",
@@ -2552,7 +2695,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Izgarada pişirin",
@@ -2564,7 +2708,8 @@
         "stepImage": null,
         "timerSeconds": 480,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -2704,7 +2849,8 @@
         "stepImage": null,
         "timerSeconds": 600,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "İç harcı hazırlayın",
@@ -2716,7 +2862,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Sarmaları yuvarlayın",
@@ -2728,7 +2875,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tencerede pişirin",
@@ -2740,7 +2888,8 @@
         "stepImage": null,
         "timerSeconds": 3000,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -2850,7 +2999,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": "Domates kupler 1-2 cm boyutunda",
-        "warning": "Cok buyuk dograma pisirme suresini uzatir"
+        "warning": "Cok buyuk dograma pisirme suresini uzatir",
+        "sefimQA": [
+          {
+            "question": "Domatesi nasil soyarim?",
+            "answer": "Domatesin altina carpraz cizik at, kaynar suya 30 saniye at, sonra soguk suya al. Kabuk kolayca cikar."
+          },
+          {
+            "question": "Ne kadar kucuk dograyim?",
+            "answer": "Yaklasik 1-2 cm kupler ideal. Cok kucuk olursa eriyip kaybolur, cok buyuk olursa pisirme suresi uzar."
+          },
+          {
+            "question": "Domates yerine ne kullanabilirim?",
+            "answer": "Taze domates yoksa konserve domates (1 kutu) veya domates salcasi (2 yemek kasigi) suyla inceltilmis olarak kullanabilirsin."
+          }
+        ]
       },
       {
         "title": "Soğan ve biberi kavurun",
@@ -2862,7 +3025,21 @@
         "stepImage": null,
         "timerSeconds": 180,
         "checkpoint": "Soganlar seffaf, biberler parlak yesil",
-        "warning": "Ates cok yuksekse tereyagi yanar"
+        "warning": "Ates cok yuksekse tereyagi yanar",
+        "sefimQA": [
+          {
+            "question": "Orta ates ne demek?",
+            "answer": "Ocagin tam ortasi. Elinizi tavanin 10 cm ustunde tutarsan 3-4 saniye dayanabilmelisin. Cok sicaksa kis, soguksa ac."
+          },
+          {
+            "question": "Tereyagi yerine zeytinyagi kullanabilir miyim?",
+            "answer": "Evet, ayni miktarda zeytinyagi kullanabilirsin. Lezzet biraz degisir ama sonuc gayet guzel olur."
+          },
+          {
+            "question": "Sogani ne zaman atmaliyim?",
+            "answer": "Tereyagi eriyip kopurmesi durdugundan hemen sonra at. Kopurme devam ediyorsa yag henuz hazir degil."
+          }
+        ]
       },
       {
         "title": "Domatesi pişirin",
@@ -2874,7 +3051,21 @@
         "stepImage": null,
         "timerSeconds": 420,
         "checkpoint": "Sos kasik izini tutacak kivamda",
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Domates ne zaman hazir olur?",
+            "answer": "Kasikla karistirdiginda iz birakiyorsa hazirdir. Tava dibinde su birikmemeli. Genelde 5-7 dakika surer."
+          },
+          {
+            "question": "Neden bu kadar uzun pisiriyoruz?",
+            "answer": "Domatesin fazla suyunun buharlasmasi lazim. Sulu kalirsa yumurta dagılır ve menemen civik olur."
+          },
+          {
+            "question": "Domates cok asitli oldu, ne yapayim?",
+            "answer": "Yarim tatli kasigi seker ekle. Asitligi dengeler ve lezzeti bozmaz."
+          }
+        ]
       },
       {
         "title": "Yumurtaları kırın",
@@ -2886,7 +3077,21 @@
         "stepImage": null,
         "timerSeconds": 120,
         "checkpoint": "Yumurta beyazlari donmus, sarilari akiskan",
-        "warning": "Cok karistirma — yumurtalar parcalanir"
+        "warning": "Cok karistirma — yumurtalar parcalanir",
+        "sefimQA": [
+          {
+            "question": "Yumurtayi karistirmali miyim?",
+            "answer": "Tercihe bagli. Karistirmazsan buyuk parcali olur, hafif karistirirsan kremsi olur. Cok karistirma yeter — 2-3 tur yeterli."
+          },
+          {
+            "question": "Yumurtanin pistigini nasil anlarim?",
+            "answer": "Beyazlar tamamen donmali, sarilar hala hafif titrek olmali. Tavada pismeye devam edecegi icin erken kapat."
+          },
+          {
+            "question": "Kac dakika pisirmem lazim?",
+            "answer": "Yaklasik 2 dakika yeter. Yumurtayi kirdiktan sonra fazla bekleme, yoksa sertlesir."
+          }
+        ]
       },
       {
         "title": "Peynirle servis edin",
@@ -2898,7 +3103,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Peynir sart mi?",
+            "answer": "Hayir, peynir tamamen istege bagli. Peynir eklemesen de menemen cok lezzetli olur."
+          },
+          {
+            "question": "Ne tur peynir kullanmaliyim?",
+            "answer": "Klasik beyaz peynir (ezine tipi) en iyisi. Lor peyniri de olur. Kasar kullanma, erir ve kivami bozar."
+          },
+          {
+            "question": "Menemen sogursa ne olur?",
+            "answer": "Yumurta sertlesir ve lezzeti duser. Hemen sicak servis et. Sogursa tavada 30 saniye kisik ateste isit."
+          }
+        ]
       }
     ]
   },
@@ -3038,7 +3257,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Mercimegi ne kadar yikamam lazim?",
+            "answer": "Su berraklasana kadar 3-4 kez durula. Bulanik su nista demek, cok yikamaya gerek yok ama berrak olsun."
+          },
+          {
+            "question": "Sebzeleri neden iri dograyim?",
+            "answer": "Nasil olsa blenderdan gececek, o yuzden zamanini ince dograma ile harcama. Kabaca dogra ve devam et."
+          },
+          {
+            "question": "Kirmizi mercimek yerine yesil kullanabilir miyim?",
+            "answer": "Yesil mercimek cok daha gec piser ve farkli kivam verir. Kirmizi mercimek corba icin idealdir, degistirme."
+          }
+        ]
       },
       {
         "title": "Soğan ve havucu kavurun",
@@ -3050,7 +3283,21 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": "Soganlar seffaf, havuc hafif yumusamis",
-        "warning": "Sogani yakmayin — aci tat corbayi bozar"
+        "warning": "Sogani yakmayin — aci tat corbayi bozar",
+        "sefimQA": [
+          {
+            "question": "Soganlar ne zaman hazir?",
+            "answer": "Seffaflasmaya basladiginda ve kenarlari hafif altin rengi aldiginda tamam. 3-4 dakika surmeli."
+          },
+          {
+            "question": "Sarimsakla sogani ayni anda atabilir miyim?",
+            "answer": "Hayir, sarimsak cok cabuk yanar. Once sogani kavur, 2 dakika sonra sarimsagi ekle."
+          },
+          {
+            "question": "Yag kizarinca ne yapayim?",
+            "answer": "Sogani hemen at. Yag hafif dalgalaniyorsa hazirdir. Dumanliyorsa cok sicak — biraz bekle."
+          }
+        ]
       },
       {
         "title": "Salça ve mercimek ekleyin",
@@ -3062,7 +3309,21 @@
         "stepImage": null,
         "timerSeconds": 60,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Salcayi neden kavuruyoruz?",
+            "answer": "Kavurma salcanin cig tadini giderir ve tatliligini ortaya cikarir. 1 dakika yeterli, yakmamaya dikkat et."
+          },
+          {
+            "question": "Ne kadar su koymaliyim?",
+            "answer": "Mercimeklerin 4-5 cm ustunu kapatacak kadar. Az koyarsan sonra eklersin, ama bastan cok koyarsan corba sulu olur."
+          },
+          {
+            "question": "Et suyu yerine ne kullanabilirim?",
+            "answer": "Sicak su gayet olur. Bir tutam tuz ve yarim limon suyu ekleyerek lezzeti artirabilirsin."
+          }
+        ]
       },
       {
         "title": "Kısık ateşte pişirin",
@@ -3074,7 +3335,21 @@
         "stepImage": null,
         "timerSeconds": 1500,
         "checkpoint": "Mercimekler tamamen dagilmis, kasikla eziliyor",
-        "warning": "Az pisen mercimek blenderda puturlu kalir"
+        "warning": "Az pisen mercimek blenderda puturlu kalir",
+        "sefimQA": [
+          {
+            "question": "Mercimek ne zaman pismis olur?",
+            "answer": "Kasikla bastirdiginda kolayca eziliyorsa hazirdir. Tamamen dagilmis ve sari renkli olmali."
+          },
+          {
+            "question": "Corba cok koyulasti, ne yapayim?",
+            "answer": "Sicak su ekle ve karistir. Her seferinde yarim su bardagi ekle, istedigin kivami yakalayana kadar."
+          },
+          {
+            "question": "Kapagi acik mi kapali mi pisirmeli?",
+            "answer": "Kapali pisir. Kapak buhari icerde tutar ve mercimekler daha cabuk yumusar. Tasarsa kapagi aralik birak."
+          }
+        ]
       },
       {
         "title": "Blenderdan geçirin",
@@ -3086,7 +3361,21 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": "Corba puruzsuz, ipeksi ve homojen renkte",
-        "warning": "Sicak corbayi kapali blendere doldurmak tehlikeli"
+        "warning": "Sicak corbayi kapali blendere doldurmak tehlikeli",
+        "sefimQA": [
+          {
+            "question": "Daldirma blender yoksa ne yapayim?",
+            "answer": "Normal blender kullanabilirsin ama kucuk parcalar halinde koy ve kapagi hafif aralik birak. Sicak siviyla kapak firlar!"
+          },
+          {
+            "question": "Corba ne kadar puruzsuz olmali?",
+            "answer": "Tamamen puruzsuz ve ipeksi olmali. Parca kaldiysa biraz daha blend et. Suzgecten gecirirsen ekstra kadifemssi olur."
+          },
+          {
+            "question": "Tuzu ne zaman eklemeliyim?",
+            "answer": "Blenderdan gecirdikten sonra ekle ve tadina bak. Pisirme sirasinda tuz eklersen yogunlasinca cok tuzlu olabilir."
+          }
+        ]
       },
       {
         "title": "Naneli tereyağı ekleyin",
@@ -3098,7 +3387,21 @@
         "stepImage": null,
         "timerSeconds": 30,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": [
+          {
+            "question": "Bu adimi atlayabilir miyim?",
+            "answer": "Evet, bu tamamen opsiyonel. Corba zaten lezzetli. Ama naneli tereyagi sunum ve lezzet icin gercekten fark yaratir."
+          },
+          {
+            "question": "Biber ne kadar kavurmaliyim?",
+            "answer": "30 saniye yeter, daha fazla yapma. Biber yanarsa aci olur. Yag kopurmeye basladiginda biberi at ve hemen ocaktan al."
+          },
+          {
+            "question": "Nane ekleyebilir miyim?",
+            "answer": "Evet! Kuru nane cok yakisir. Tereyagini ocaktan aldiktan sonra yarim tatli kasigi kuru nane ekle ve karistir."
+          }
+        ]
       }
     ]
   },
@@ -3177,7 +3480,8 @@
         "stepImage": null,
         "timerSeconds": 1800,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tereyağında şehriye kavurun",
@@ -3189,7 +3493,8 @@
         "stepImage": null,
         "timerSeconds": 180,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Pirinci kavurun",
@@ -3201,7 +3506,8 @@
         "stepImage": null,
         "timerSeconds": 180,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Suyunu ekleyip pişirin",
@@ -3213,7 +3519,8 @@
         "stepImage": null,
         "timerSeconds": 1200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Demlenmeye bırakın",
@@ -3225,7 +3532,8 @@
         "stepImage": null,
         "timerSeconds": 600,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -3364,7 +3672,8 @@
         "stepImage": null,
         "timerSeconds": 2700,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Harcı doldurup şekil verin",
@@ -3376,7 +3685,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Fırında pişirin",
@@ -3388,7 +3698,8 @@
         "stepImage": null,
         "timerSeconds": 1500,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -3479,7 +3790,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Yufkaları sarın",
@@ -3491,7 +3803,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Yağda kızartın",
@@ -3503,7 +3816,8 @@
         "stepImage": null,
         "timerSeconds": 240,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -3625,7 +3939,8 @@
         "stepImage": null,
         "timerSeconds": 3600,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Halka şekli verin",
@@ -3637,7 +3952,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Pekmeze daldırıp pişirin",
@@ -3649,7 +3965,8 @@
         "stepImage": null,
         "timerSeconds": 1500,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -3712,7 +4029,8 @@
         "stepImage": null,
         "timerSeconds": 120,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Yumurtaları pişirin",
@@ -3724,7 +4042,8 @@
         "stepImage": null,
         "timerSeconds": 240,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -3812,7 +4131,8 @@
         "stepImage": null,
         "timerSeconds": 1080,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Sütü kaynatın",
@@ -3824,7 +4144,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Nişasta ekleyip koyulaştırın",
@@ -3836,7 +4157,8 @@
         "stepImage": null,
         "timerSeconds": 720,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Fırında üstünü kızartın",
@@ -3848,7 +4170,8 @@
         "stepImage": null,
         "timerSeconds": 240,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Soğutup servis edin",
@@ -3860,7 +4183,8 @@
         "stepImage": null,
         "timerSeconds": 7200,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -3955,7 +4279,8 @@
         "stepImage": null,
         "timerSeconds": 600,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tarator sosunu yapın",
@@ -3967,7 +4292,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Servis için hazırlayın",
@@ -3979,7 +4305,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -4066,7 +4393,8 @@
         "stepImage": null,
         "timerSeconds": 600,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Çorbayı pişirin",
@@ -4078,7 +4406,8 @@
         "stepImage": null,
         "timerSeconds": 900,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Naneli tereyağı ekleyin",
@@ -4090,7 +4419,8 @@
         "stepImage": null,
         "timerSeconds": 10,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -4215,7 +4545,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Tavuğu kızartın",
@@ -4227,7 +4558,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Sebzeleri kavurun",
@@ -4239,7 +4571,8 @@
         "stepImage": null,
         "timerSeconds": 420,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Domates sosla pişirin",
@@ -4251,7 +4584,8 @@
         "stepImage": null,
         "timerSeconds": 720,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   },
@@ -4355,7 +4689,8 @@
         "stepImage": null,
         "timerSeconds": 900,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Yoğurdu hazırlayın",
@@ -4367,7 +4702,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Yoğurdu temperlayın",
@@ -4379,7 +4715,8 @@
         "stepImage": null,
         "timerSeconds": null,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       },
       {
         "title": "Naneli tereyağı ekleyin",
@@ -4391,7 +4728,8 @@
         "stepImage": null,
         "timerSeconds": 300,
         "checkpoint": null,
-        "warning": null
+        "warning": null,
+        "sefimQA": []
       }
     ]
   }

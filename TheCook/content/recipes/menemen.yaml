@@ -78,6 +78,13 @@ steps:
     timerSeconds: null
     checkpoint: "Domates kupler 1-2 cm boyutunda"
     warning: "Cok buyuk dograma pisirme suresini uzatir"
+    sefimQA:
+      - question: "Domatesi nasil soyarim?"
+        answer: "Domatesin altina carpraz cizik at, kaynar suya 30 saniye at, sonra soguk suya al. Kabuk kolayca cikar."
+      - question: "Ne kadar kucuk dograyim?"
+        answer: "Yaklasik 1-2 cm kupler ideal. Cok kucuk olursa eriyip kaybolur, cok buyuk olursa pisirme suresi uzar."
+      - question: "Domates yerine ne kullanabilirim?"
+        answer: "Taze domates yoksa konserve domates (1 kutu) veya domates salcasi (2 yemek kasigi) suyla inceltilmis olarak kullanabilirsin."
   - title: Soğan ve biberi kavurun
     instruction: >-
       Tavayı orta ateşte ısıtın ve {{Tereyağı.amount}} {{Tereyağı.unit}} {{Tereyağı.name}} ekleyin.
@@ -91,6 +98,13 @@ steps:
     timerSeconds: 180
     checkpoint: "Soganlar seffaf, biberler parlak yesil"
     warning: "Ates cok yuksekse tereyagi yanar"
+    sefimQA:
+      - question: "Orta ates ne demek?"
+        answer: "Ocagin tam ortasi. Elinizi tavanin 10 cm ustunde tutarsan 3-4 saniye dayanabilmelisin. Cok sicaksa kis, soguksa ac."
+      - question: "Tereyagi yerine zeytinyagi kullanabilir miyim?"
+        answer: "Evet, ayni miktarda zeytinyagi kullanabilirsin. Lezzet biraz degisir ama sonuc gayet guzel olur."
+      - question: "Sogani ne zaman atmaliyim?"
+        answer: "Tereyagi eriyip kopurmesi durdugundan hemen sonra at. Kopurme devam ediyorsa yag henuz hazir degil."
   - title: Domatesi pişirin
     instruction: Domatesleri tavaya ekleyin ve orta ateşte, ara ara karıştırarak 5-7 dakika pişirin. Suyunu çekip koyulaşana kadar bekleyin.
     why: Fazla suyun buharlaşması gerekir, aksi hâlde menemen sulu ve cıvık olur. Koyulaşan domates sosun içinde yumurta şekil tutabilir.
@@ -101,6 +115,13 @@ steps:
     timerSeconds: 420
     checkpoint: "Sos kasik izini tutacak kivamda"
     warning: null
+    sefimQA:
+      - question: "Domates ne zaman hazir olur?"
+        answer: "Kasikla karistirdiginda iz birakiyorsa hazirdir. Tava dibinde su birikmemeli. Genelde 5-7 dakika surer."
+      - question: "Neden bu kadar uzun pisiriyoruz?"
+        answer: "Domatesin fazla suyunun buharlasmasi lazim. Sulu kalirsa yumurta dagılır ve menemen civik olur."
+      - question: "Domates cok asitli oldu, ne yapayim?"
+        answer: "Yarim tatli kasigi seker ekle. Asitligi dengeler ve lezzeti bozmaz."
   - title: Yumurtaları kırın
     instruction: >-
       Tuz ve karabiber ekleyip karıştırın. {{Yumurta.amount}} {{Yumurta.unit}} {{Yumurta.name}} kırın,
@@ -114,6 +135,13 @@ steps:
     timerSeconds: 120
     checkpoint: "Yumurta beyazlari donmus, sarilari akiskan"
     warning: "Cok karistirma — yumurtalar parcalanir"
+    sefimQA:
+      - question: "Yumurtayi karistirmali miyim?"
+        answer: "Tercihe bagli. Karistirmazsan buyuk parcali olur, hafif karistirirsan kremsi olur. Cok karistirma yeter — 2-3 tur yeterli."
+      - question: "Yumurtanin pistigini nasil anlarim?"
+        answer: "Beyazlar tamamen donmali, sarilar hala hafif titrek olmali. Tavada pismeye devam edecegi icin erken kapat."
+      - question: "Kac dakika pisirmem lazim?"
+        answer: "Yaklasik 2 dakika yeter. Yumurtayi kirdiktan sonra fazla bekleme, yoksa sertlesir."
   - title: Peynirle servis edin
     instruction: İsterseniz üzerine ufalanmış beyaz peynir serpin. Hemen tavadan servis edin.
     why: Sıcak menemenin üzerine eklenen peynir hafifçe eriyerek kremsi bir lezzet katmanı oluşturur. Bekletilirse yumurta sertleşir.
@@ -122,3 +150,10 @@ steps:
     recovery: Soğumuşsa tavayı tekrar kısık ateşe alın ve 30 saniye ısıtın.
     stepImage: null
     timerSeconds: null
+    sefimQA:
+      - question: "Peynir sart mi?"
+        answer: "Hayir, peynir tamamen istege bagli. Peynir eklemesen de menemen cok lezzetli olur."
+      - question: "Ne tur peynir kullanmaliyim?"
+        answer: "Klasik beyaz peynir (ezine tipi) en iyisi. Lor peyniri de olur. Kasar kullanma, erir ve kivami bozar."
+      - question: "Menemen sogursa ne olur?"
+        answer: "Yumurta sertlesir ve lezzeti duser. Hemen sicak servis et. Sogursa tavada 30 saniye kisik ateste isit."

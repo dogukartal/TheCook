@@ -5,7 +5,7 @@ import { Recipe } from "../types/recipe";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const recipesJson: Recipe[] = require("../../app/assets/recipes.json");
 
-const SEED_VERSION = "3.0.0";
+const SEED_VERSION = "4.0.0";
 
 export async function seedIfNeeded(db: SQLiteDatabase): Promise<void> {
   const existing = await db.getFirstAsync<{ version: string } | null>(

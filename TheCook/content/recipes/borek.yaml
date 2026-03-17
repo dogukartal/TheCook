@@ -90,6 +90,13 @@ steps:
     timerSeconds: null
     checkpoint: "Peynir iri ufalanmis, tepsi yaglanmis"
     warning: "Peyniri macun haline getirmeyin"
+    sefimQA:
+      - question: "Firini onceden isitmak sart mi?"
+        answer: "Evet, sart. Soguk firina koyarsan borek esit pismez — alt cig kalir, ust yanar. 180 dereceye ulasmasini bekle."
+      - question: "Peyniri nasil ufalamam lazim?"
+        answer: "Parmaklarinla iri iri ufala. Rende veya blender kullanma — macun olursa borekte hava kalmaz ve agir olur."
+      - question: "Lor peyniri mi beyaz peynir mi?"
+        answer: "Ikisi de olur. Beyaz peynir (ezine) daha tuzlu ve lezzetli olur. Lor daha hafif ve yumusak bir sonuc verir."
   - title: Sütlü sosu yapın
     instruction: >-
       Sosu hazırlamak için {{Yumurta.amount}} {{Yumurta.unit}} yumurtayı derin bir kaseye kırın,
@@ -103,6 +110,13 @@ steps:
     timerSeconds: null
     checkpoint: "Sos homojen, acik sari ve hafif kopuklu"
     warning: null
+    sefimQA:
+      - question: "Sosu neden yapiyoruz?"
+        answer: "Sos yufkalarin nemli ve yumusak kalmasini saglar. Sos olmazsa yufka kuru ve sert piser, borek dagılır."
+      - question: "Sut yerine ne kullanabilirim?"
+        answer: "Sut yerine ayni miktarda yogurt-su karisimi (yarim yarim) kullanabilirsin. Lezzeti biraz degisir ama olur."
+      - question: "Sos ne kivamda olmali?"
+        answer: "Sivi ve akici olmali, kremali degil. Cirparak homojen hale getir — yumurta, sut ve yag iyice karissin."
   - title: Alt yufkaları serin
     instruction: İlk iki yufkayı tepsiye serin. Her birini, hazırladığınız sostan 2-3 yemek kaşığı dökerek ıslatın. Yufkalar üst üste binebilir, tepsi kenarlarından taşabilir.
     why: İlk katman taban görevi görür ve nem tutması için bol sos ister. Kenarlardan taşan yufkalar sonradan içe kıvrılarak böreği kapatır.
@@ -111,6 +125,13 @@ steps:
     recovery: Sosu elinizle veya fırçayla yufkanın her köşesine yayın.
     stepImage: null
     timerSeconds: null
+    sefimQA:
+      - question: "Yufka yirtilirsa ne yapayim?"
+        answer: "Sorun degil! Yirtik yeri ust yufkayla kapatirsin. Kat kat oldugu icin farkedilmez."
+      - question: "Yufkalar tasiyorsa ne yapayim?"
+        answer: "Tassin, sorun degil. Tasan kisimlar sonra iceri katlanacak. Tepsiden buyuk yufka aslinda daha iyi."
+      - question: "Her yufkaya ne kadar sos dokmeli?"
+        answer: "Her yufkaya 2-3 yemek kasigi yeter. Cok dokme, hafif nemli olmasi yeterli. Islanmis ama sulanti olmamali."
   - title: Orta katmanı doldurun
     instruction: Üçüncü ve dördüncü yufkayı üst üste serip sosla ıslatın. Tüm iç harcı bu katmanın üzerine eşit biçimde dağıtın.
     why: Orta katman en kritik kısımdır; eşit yayılmış harç böreğin her diliminde aynı lezzeti verir. İki yufka arasına koymak harcın hem alttan hem üstten nemlenip yumuşamasını sağlar.
@@ -119,6 +140,13 @@ steps:
     recovery: Bir kaşık veya spatula ile harcı kenarlardan başlayarak yeniden dağıtın.
     stepImage: null
     timerSeconds: null
+    sefimQA:
+      - question: "Harci nasil esit dagitabilirim?"
+        answer: "Kenarlardan basla, ortaya dogru ilerle. Spatula veya kasik arkasi ile yay. Koselere ozellikle dikkat et."
+      - question: "Harci iki katmana bolsem olur mu?"
+        answer: "Hayir, tum harci tek katmana koy. Iki katmana bolersen her kat cok ince olur ve lezzet kaybolur."
+      - question: "Yumurtayi harce eklemeli miyim?"
+        answer: "Opsiyonel ama tavsiye ederim. Yumurta harci birbirine baglar ve borekte dagılmasını onler."
   - title: Üst yufkaları kapatın
     instruction: Beşinci ve altıncı yufkayı üste serin ve kalan sosla tamamen ıslatın. Taşan yufka kenarlarını içe kıvrarak tepsiyi kapatın. Kalan sosu varsa üzerine dökün.
     why: Üst kapak yufkaları alt katmanların fazla nemini emerek homojen bir kıvam oluşturur. Kıvrılan kenarlar kenarlardan peynirin dışarı akmasını önler.
@@ -127,6 +155,13 @@ steps:
     recovery: Fırına girmeden önce fırçayla zeytinyağı veya kalan sosu üzerine sürün.
     stepImage: null
     timerSeconds: null
+    sefimQA:
+      - question: "Tasan kenarlari nasil katlayim?"
+        answer: "Kenarlari iceri dogru katla, ust yufkanin altina sok. Siki olmasi onemli degil, sadece kapali olmasi yeterli."
+      - question: "Sos bittiyse ne yapayim?"
+        answer: "Uzerine biraz zeytinyagi veya eritilmis tereyagi sur. Ust yufkanin kuru kalmamasi en onemli sey."
+      - question: "Ust yufkaya yumurta sureyim mi?"
+        answer: "Istersen bir yumurta sarisi surebilirsin, altın rengi daha guzel olur. Ama sart degil, sos de yeterli."
   - title: Fırında pişirin
     instruction: Önceden ısıtılmış 180 derece fırına verin. 35-40 dakika, üstü altın sarısı ve kabarık görünene kadar pişirin. Fırından çıkarın ve servis etmeden önce 10 dakika bekleyin.
     why: 180 derece orta sıcaklıkta dengeli pişirir; yüksek sıcaklık dışını yakar içini çiğ bırakır. Beklemek iç harcın yerleşmesini sağlar, böylece dağılmadan dilimlenebilir.
@@ -137,3 +172,10 @@ steps:
     timerSeconds: 2400
     checkpoint: "Ust yuzey altin sarisi, kenarlar kabarik"
     warning: "Sicakken kesmeyin — ic harc dagilir"
+    sefimQA:
+      - question: "Borek ne zaman pismis olur?"
+        answer: "Ust yuzey altin sarisi olunca ve kenarlar hafif kabardiysa hazir. Genelde 35-40 dakika surer."
+      - question: "Neden 10 dakika bekliyoruz?"
+        answer: "Sicak peynir akici olur ve kesince dagilir. 10 dakika bekleyince harç yerine oturur ve duzgun dilimlenebilir."
+      - question: "Nasil dilimlemeliyim?"
+        answer: "Keskin bir bicakla kare veya dikdortgen seklinde kes. Once uzunlamasina 3 sira, sonra enlemesine 4 sira — 12 porsiyon cikar."
