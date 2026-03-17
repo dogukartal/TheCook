@@ -161,6 +161,12 @@ Plans:
   4. Geçmiş (cooking history) table exists and feeds Denemediklerin exclusion
   5. Sana özel uses rule-based ranking from profile data (AI ranking deferred)
   6. All sections respect hard filters (skill, tools, dietary restrictions)
+**Plans**: 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — DB migration v6 (cooking_history table) + cooking-history.ts module + types + test stubs (Wave 1)
+- [ ] 08-02-PLAN.md — Rewrite useFeedScreen hook for 4-section model + rankByProfile + fill feed-section tests (Wave 2)
+- [ ] 08-03-PLAN.md — FeedSection UI component + rewrite feed screen with horizontal sections + human verification (Wave 3)
 
 ### Phase 9: Search & Category Redesign
 **Goal**: Rebuild search with category strip, dietary-only filtering on search results, and optional skill/tool filter panel on category results
@@ -225,7 +231,7 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 5. Guided Cooking Mode | 3/3 | Complete   | 2026-03-14 |
 | 6. Wire Equipment to Recipe Discovery | 3/3 | Complete   | 2026-03-14 |
 | 7. Foundation Pivot | 3/3 | Complete   | 2026-03-17 |
-| 8. Feed Redesign | 0/0 | Pending | — |
+| 8. Feed Redesign | 0/3 | In Progress | — |
 | 9. Search & Category Redesign | 0/0 | Pending | — |
 | 10. Recipe Detail Evolution | 0/0 | Pending | — |
 | 11. Cooking Mode Evolution | 0/0 | Pending | — |
