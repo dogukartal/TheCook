@@ -1,108 +1,110 @@
 # Phase 7: Foundation Pivot - Research
 
 **Researched:** 2026-03-17
-**Domain:** React Native app restructuring (hooks extraction, navigation changes, hard filters, DB schema extension)
+**Domain:** React Native / Expo app restructuring, SQLite schema migration, data hook extraction, hard filter architecture
 **Confidence:** HIGH
 
 ## Summary
 
-Phase 7 is a structural refactoring phase, not a feature-building phase. The codebase currently has three tab screens (Feed/Search/My Kitchen) where each screen file mixes data orchestration (useEffect, fetch, state management) with JSX rendering. This phase extracts data logic into dedicated hooks (`useFeedScreen`, `useSearchScreen`, `useCookbookScreen`), renames/reorganizes tabs to a 4-tab layout (Feed/Search/Cookbook/Profile), converts skill level and equipment from soft-sort to hard-filter, applies allergen exclusion to Cookbook bookmarks (DISC-05), and extends the profile DB schema with two new nullable columns.
+Phase 7 is a structural refactoring phase, not a feature-building phase. The codebase has three tab screens (Feed/Search/My Kitchen) with data orchestration embedded directly in screen components. This phase extracts that orchestration into typed hooks, renames My Kitchen to Cookbook, adds a Profile tab (4th), converts equipment and skill level from soft sort/badge to hard SQL-level filters, applies allergen exclusion to bookmark queries (DISC-05), extends the profile schema with two new nullable columns, and extracts inline SQL from my-kitchen.tsx into recipes.ts.
 
-The work is entirely within the existing tech stack (Expo Router, expo-sqlite, Zod, React Native). No new libraries are needed. The primary risk is regression during the extraction refactor -- each screen has complex data loading patterns with useFocusEffect, cancellation tokens, and multiple interleaved state updates. The refactor must preserve exact behavior while splitting files.
+The technical risk is low -- all changes are within the existing Expo/SQLite/Zod stack. The highest-impact change is converting equipment from JS-sort-after-fetch to SQL WHERE exclusion, which affects every query function in recipes.ts. The hooks extraction is mechanical but touches all three screen files and creates three new files in src/hooks/.
 
-**Primary recommendation:** Execute as incremental, testable steps -- extract hooks first (pure refactor, no behavior change), then change navigation/naming, then upgrade filter logic, then fix DISC-05, then extend DB schema. Each step should be independently verifiable.
+**Primary recommendation:** Start with DB migration (version 5) and hard filter SQL changes, then extract screen hooks, then restructure tabs -- this order prevents double-touching files.
 
 <phase_requirements>
 ## Phase Requirements
 
 | ID | Description | Research Support |
 |----|-------------|-----------------|
-| DISC-05 | Allergen-incompatible recipes are automatically filtered out from all discovery surfaces | Currently Feed and Search apply allergen exclusion via SQL `ALLERGEN_EXCLUSION` clause, but Cookbook (my-kitchen.tsx) uses raw `SELECT ... WHERE id IN (?)` with NO allergen filtering. Fix requires adding allergen exclusion to the bookmarks query in the Cookbook hook. |
+| DISC-05 | Allergen-incompatible recipes filtered from all discovery surfaces | Currently missing from bookmark query in my-kitchen.tsx (lines 81-97 do batch SELECT with no allergen exclusion). Add ALLERGEN_EXCLUSION WHERE clause to bookmark hydration query. |
+| PROF-01 | Skill level is a hard filter -- recipes above ceiling never surface | Currently skill is only used for sort order in getFeedRecipes(). Must add SQL WHERE clause: `r.skill_level IN (?)` based on allowed levels at or below user's level. |
+| PROF-02 | Kitchen tools are a hard filter -- recipes requiring unselected tools never surface | Currently equipment is JS-sort only (sortByEquipmentCompatibility). Must convert to SQL-level JSON exclusion or JS hard filter (remove, not sort). |
+| PROF-03 | Cuisine preferences and app goals stored in profile | New nullable columns `cuisine_preferences TEXT` and `app_goals TEXT` on profile table. No UI needed -- schema-only change for future phases. |
+| NAV-01 | App has 4 tabs: Feed, Search, Cookbook, Profile | Current _layout.tsx has 3 tabs (index/search/my-kitchen). Rename my-kitchen to cookbook, add profile tab. Move account/settings content from my-kitchen.tsx to profile screen. |
 </phase_requirements>
 
 ## Standard Stack
 
-### Core (Already in Project)
+### Core (already in project)
 | Library | Version | Purpose | Why Standard |
 |---------|---------|---------|--------------|
-| expo-router | ~4.x (Expo 54) | File-based routing, tabs | Already used for all navigation |
-| expo-sqlite | v2 API | Local DB, SQLiteProvider + useSQLiteContext | All data persistence |
-| zod | v4 | Schema validation, type inference | All types derived from Zod schemas |
-| @shopify/flash-list | 2.0.2 | Performant lists | Feed and Search screens |
+| expo-sqlite | ~16.0.10 | Local DB, all queries | Already wired, SQLiteProvider + useSQLiteContext pattern |
+| expo-router | ~6.0.23 | Tab navigation, file-based routing | Already wired, Tabs component in _layout.tsx |
+| zod | ^4.3.6 | Schema validation, type inference | z.infer pattern used throughout for Profile, Recipe, etc. |
+| react-native | 0.81.5 | UI framework | Current version |
+| expo | ~54.0.33 | Build toolchain | Current version |
 
-### No New Libraries Needed
+### No New Dependencies Required
 
-This phase is purely structural refactoring within the existing stack. No new npm installs required.
+This phase requires zero new npm packages. All changes use existing expo-sqlite, expo-router, and zod.
 
 ## Architecture Patterns
 
-### Current Project Structure (Relevant Files)
+### Recommended Project Structure (after Phase 7)
 ```
-app/
-  (tabs)/
-    _layout.tsx          # 3-tab layout: Feed / Search / My Kitchen
-    index.tsx            # Feed screen (~367 lines, mixes data + JSX)
-    search.tsx           # Search screen (~428 lines, mixes data + JSX)
-    my-kitchen.tsx       # My Kitchen screen (~431 lines, mixes data + JSX)
-  settings.tsx           # Settings sub-screen (standalone route)
-  _layout.tsx            # Root layout with SQLiteProvider + SessionProvider
-src/
-  db/
-    recipes.ts           # Recipe DB queries + useRecipesDb hook
-    profile.ts           # Profile DB queries + useProfileDb hook
-    client.ts            # DB migrations (DB_VERSION=4)
-    cooking-session.ts   # Cooking session persistence
-  types/
-    profile.ts           # ProfileSchema, BookmarkSchema
-    recipe.ts            # RecipeSchema, all enums
-    discovery.ts         # RecipeListItem, DiscoveryFilter
-  auth/
-    sync.ts              # Cloud sync (Supabase)
-    useSession.tsx       # Auth session context
-```
-
-### Target Project Structure After Phase 7
-```
-app/
-  (tabs)/
-    _layout.tsx          # 4-tab layout: Feed / Search / Cookbook / Profile
-    index.tsx            # Feed screen (thin shell: calls useFeedScreen + renders)
-    search.tsx           # Search screen (thin shell: calls useSearchScreen + renders)
-    cookbook.tsx          # Cookbook screen (thin shell, renamed from my-kitchen.tsx)
-    profile.tsx          # Profile screen (new, extracts account/settings from my-kitchen)
-  settings.tsx           # Settings sub-screen (unchanged)
-  _layout.tsx            # Root layout (unchanged)
 src/
   hooks/
-    useFeedScreen.ts     # All Feed data orchestration
-    useSearchScreen.ts   # All Search data orchestration
-    useCookbookScreen.ts # All Cookbook data orchestration
+    useFeedScreen.ts       # NEW - data orchestration for Feed tab
+    useSearchScreen.ts     # NEW - data orchestration for Search tab
+    useCookbookScreen.ts   # NEW - data orchestration for Cookbook tab
+    useCookingTimer.ts     # existing
   db/
-    recipes.ts           # Recipe DB queries (+ inline SQL extracted from my-kitchen.tsx)
-    profile.ts           # Profile DB queries (+ new columns support)
-    client.ts            # DB migrations (DB_VERSION=5, new columns)
+    client.ts              # MODIFIED - DB_VERSION 4 -> 5
+    recipes.ts             # MODIFIED - hard filters, bookmark allergen exclusion
+    profile.ts             # MODIFIED - cuisine_preferences, app_goals
+    cooking-session.ts     # unchanged
+    seed.ts                # unchanged
+    schema.sql             # UPDATED reference
   types/
-    profile.ts           # ProfileSchema extended with cuisine_preferences, app_goals
+    recipe.ts              # unchanged
+    profile.ts             # MODIFIED - new fields
+    discovery.ts           # unchanged
+app/
+  (tabs)/
+    _layout.tsx            # MODIFIED - 4 tabs
+    index.tsx              # MODIFIED - thin shell calling useFeedScreen
+    search.tsx             # MODIFIED - thin shell calling useSearchScreen
+    cookbook.tsx            # NEW (renamed from my-kitchen.tsx, thin shell)
+    profile.tsx            # NEW - profile/settings screen as tab
+  settings.tsx             # REMOVED or repurposed (content moves to profile tab)
 ```
 
 ### Pattern 1: Screen Data Hook Extraction
-**What:** Move all useState, useEffect, useFocusEffect, and data-fetching logic from screen files into a custom hook that returns typed state and action handlers.
-**When to use:** Every tab screen in this phase.
-**Example:**
+**What:** Move all useState, useEffect, useFocusEffect, data fetching, and state management from screen files into a dedicated hook. Screen becomes a thin rendering shell.
+**When to use:** Every tab screen in the app.
+**Why:** Enables parallel frontend/backend development. Backend developer owns src/hooks/ and src/db/. Frontend developer owns components/ and screen JSX.
+
+**Before (current index.tsx pattern):**
+```typescript
+// Screen file has 15+ state variables, multiple useEffects, data loading, etc.
+export default function FeedScreen() {
+  const db = useSQLiteContext();
+  const { getAllRecipesForFeed, getFeedRecipes, filterRecipesByCategory } = useRecipesDb();
+  const { getProfile, getBookmarks, addBookmark, removeBookmark } = useProfileDb();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  // ... 10+ more state variables, multiple useEffects, callbacks
+  return <SafeAreaView>...</SafeAreaView>;
+}
+```
+
+**After (extracted hook pattern):**
 ```typescript
 // src/hooks/useFeedScreen.ts
 export interface FeedScreenState {
   profile: Profile | null;
-  profileLoaded: boolean;
   recipes: RecipeListItem[];
   loading: boolean;
   activeTab: FeedTab;
   selectedCategory: Category | null;
   bookmarkedIds: Set<string>;
-  refreshing: boolean;
   resumeSession: CookingSession | null;
   resumeRecipeName: string;
   resumeTotalSteps: number;
+  refreshing: boolean;
+  profileLoaded: boolean;
 }
 
 export interface FeedScreenActions {
@@ -112,292 +114,313 @@ export interface FeedScreenActions {
   handleRefresh: () => Promise<void>;
   handleResume: () => void;
   handleDismissResume: () => Promise<void>;
+  handleRecipePress: (id: string) => void;
 }
 
 export function useFeedScreen(): FeedScreenState & FeedScreenActions {
-  // All existing useState, useFocusEffect, useCallback logic moves here
-  // Screen file becomes: const state = useFeedScreen(); return <JSX using state />;
+  // All state, effects, data loading, callbacks live here
+}
+
+// app/(tabs)/index.tsx — thin shell
+export default function FeedScreen() {
+  const state = useFeedScreen();
+  return <FeedScreenView {...state} />;
 }
 ```
 
-### Pattern 2: Hard Filter Implementation
-**What:** Change skill level and equipment from soft-sort to hard exclusion in SQL WHERE clauses.
-**When to use:** Feed and Search queries.
-**Current behavior:**
-- Equipment: JS sort (`sortByEquipmentCompatibility`) -- compatible recipes first, incompatible still shown
-- Skill level: JS sort (`getFeedRecipes`) -- sorted by skill proximity, all shown
+### Pattern 2: Hard Filter SQL Architecture
+**What:** Skill level and equipment filtering at the SQL query level, not JS post-processing.
+**When to use:** All recipe query functions (getAllRecipesForFeed, getAllRecipesForSearch, queryRecipesByFilter, bookmark hydration).
 
-**Target behavior:**
-- Equipment: SQL WHERE excludes recipes requiring equipment user doesn't have
-- Skill level: SQL WHERE excludes recipes above user's skill ceiling (beginner sees only beginner; intermediate sees beginner + intermediate; advanced sees all)
+**Skill level hard filter approach:**
+```typescript
+// Map user skill to allowed levels
+const SKILL_CEILING: Record<string, string[]> = {
+  beginner: ['beginner'],
+  intermediate: ['beginner', 'intermediate'],
+  advanced: ['beginner', 'intermediate', 'advanced'],
+};
 
-**SQL approach for skill level hard filter:**
-```sql
--- Skill level ordering: beginner < intermediate < advanced
--- User at 'intermediate' sees beginner + intermediate only
-WHERE r.skill_level IN ('beginner', 'intermediate')
+// SQL: WHERE r.skill_level IN (?, ?, ?)
+// Use json_each or explicit IN clause with allowed levels
 ```
 
-**SQL approach for equipment hard filter:**
+**Equipment hard filter approach:**
+Equipment is stored as JSON array in the recipe row. A recipe should be excluded if it requires ANY equipment the user does not have. SQLite json_each can check this:
 ```sql
--- Exclude recipes that require equipment user doesn't own
--- A recipe with equipment=[] always passes (vacuous truth)
-WHERE NOT EXISTS (
+-- Exclude recipes requiring equipment user doesn't have
+NOT EXISTS (
   SELECT 1 FROM json_each(r.equipment) AS re
   WHERE re.value NOT IN (SELECT value FROM json_each(?))
 )
 ```
-Note: This reverses the current soft-sort pattern. The `sortByEquipmentCompatibility` function can be removed from Feed/Search paths (keep for any remaining soft-sort use).
+This is the same pattern already used for ALLERGEN_EXCLUSION but inverted -- allergens check for overlap (any match = exclude), equipment checks for requirement not met (any missing = exclude).
 
-### Pattern 3: Safe Tab Rename (Expo Router)
-**What:** Rename `my-kitchen.tsx` to `cookbook.tsx` and add `profile.tsx` as 4th tab.
-**When to use:** Tab navigation restructure.
-**Critical ordering (from Phase 4 decision):**
-1. Create new route files first (`cookbook.tsx`, `profile.tsx`)
-2. Update `_layout.tsx` to reference new routes
-3. Delete old route files (`my-kitchen.tsx`)
-This prevents 404 route errors during transition.
+**Alternative (JS hard filter):** Filter in JS after fetch -- simpler but less efficient. Given the dataset size (30-50 recipes), JS filter is acceptable. However, SQL is preferred for consistency with the allergen pattern and to establish the pattern for future scaling.
+
+**Recommendation:** Use SQL WHERE clause for both, matching the existing ALLERGEN_EXCLUSION pattern. This is consistent and performant.
+
+### Pattern 3: Expo Router Tab Rename
+**What:** Safe tab rename following the established decision from Phase 4.
+**Safe order:**
+1. Create new tab file (cookbook.tsx) with content
+2. Update _layout.tsx to reference new tab name
+3. Delete old tab file (my-kitchen.tsx)
+4. Never have a state where _layout.tsx references a non-existent route file
 
 ### Anti-Patterns to Avoid
-- **Changing filter logic and extracting hooks simultaneously:** Do these in separate plans -- extract first (pure refactor, test behavior unchanged), then modify filter logic in the hooks.
-- **Moving account/settings UI into Profile tab without extracting first:** The my-kitchen.tsx has account card, profile summary, and saved recipes interleaved. Extract the hook first so the data layer is stable, then split the UI.
-- **Forgetting the inline SQL in my-kitchen.tsx:** Lines 80-115 of my-kitchen.tsx contain raw SQL for bookmark recipe hydration. This MUST move to `src/db/recipes.ts` as a named function (e.g., `getBookmarkRecipes`).
+- **Mixing data and UI in screen hooks:** The extracted hook should NOT return JSX or style objects. It returns typed state and action callbacks only.
+- **Re-exporting db functions from hooks:** Screen hooks should call db functions internally and manage state. They should NOT simply re-export the db layer.
+- **Breaking bookmark order in Cookbook:** Current my-kitchen.tsx preserves bookmark recency order via rowMap pattern. This must be maintained when extracting to hook.
+- **Forgetting null skillLevel:** Profile skillLevel can be null (not set). Hard filter with null skill should show all recipes (no ceiling applied). Same for empty equipment array.
 
 ## Don't Hand-Roll
 
 | Problem | Don't Build | Use Instead | Why |
 |---------|-------------|-------------|-----|
-| Skill level ordering | Custom comparator in every query | Lookup table or CASE expression | Already exists as `order` map in `getFeedRecipes`; convert to SQL |
-| Equipment compatibility check | Complex JS filtering | SQLite json_each NOT IN subquery | The `ALLERGEN_EXCLUSION` pattern already demonstrates this exact approach |
-| Tab navigation | Custom navigator | Expo Router `<Tabs>` with file-based routes | Already in use, just needs route files added |
+| JSON array querying in SQLite | Custom parsing/joins | `json_each()` with NOT EXISTS | Already proven in ALLERGEN_EXCLUSION pattern |
+| Tab navigation | Custom tab bar | expo-router Tabs component | Already wired, just add/rename screens |
+| Schema migration | Custom migration runner | PRAGMA user_version pattern | Already in client.ts, just bump to 5 |
+| Type-safe profile fields | Manual type definitions | z.infer<typeof ProfileSchema> | Existing Zod pattern |
 
 ## Common Pitfalls
 
-### Pitfall 1: useFocusEffect Cancellation Token Pattern
-**What goes wrong:** Extracted hooks lose the `cancelled` flag pattern, causing state updates on unmounted components.
-**Why it happens:** The current screens use `let cancelled = false; return () => { cancelled = true; }` inside useFocusEffect. When extracting to hooks, this pattern must be preserved exactly.
-**How to avoid:** Copy the exact useFocusEffect blocks into hooks; don't simplify the cancellation pattern.
-**Warning signs:** "Can't perform a React state update on an unmounted component" warning.
+### Pitfall 1: Equipment JSON Query Edge Cases
+**What goes wrong:** Empty equipment array in recipe (`[]`) or user (`[]`) causes unexpected filter behavior.
+**Why it happens:** `NOT EXISTS (SELECT 1 FROM json_each('[]'))` returns TRUE (no rows to check), which is correct -- a recipe requiring no equipment is always compatible. But if user equipment is empty, ALL recipes should still show (no hard filter applied).
+**How to avoid:** Guard the equipment WHERE clause: only add it when user has equipment declared. If user equipment is empty/null, skip the clause entirely (show all recipes).
+**Warning signs:** Recipes disappearing for users who haven't completed equipment onboarding.
 
-### Pitfall 2: Circular Hook Dependencies
-**What goes wrong:** `useFeedScreen` needs both `useRecipesDb()` and `useProfileDb()` which both call `useSQLiteContext()`. If the hook is placed outside the SQLiteProvider tree, it crashes.
-**Why it happens:** Custom hooks that call other hooks must be within the same provider tree.
-**How to avoid:** Screen data hooks go in `src/hooks/`, called from screen files which are already inside SQLiteProvider. The hooks can call `useSQLiteContext()` directly or receive db as parameter.
-**Recommendation:** Call `useSQLiteContext()` inside the hook (simpler API for screen files). All tab screens are already children of SQLiteProvider in `_layout.tsx`.
+### Pitfall 2: Skill Level NULL Handling
+**What goes wrong:** User has null skillLevel (never set during onboarding). Hard filter with null excludes all recipes.
+**Why it happens:** `WHERE r.skill_level IN (SELECT value FROM json_each(null))` returns no matches.
+**How to avoid:** When profile.skillLevel is null, skip the skill level WHERE clause entirely. Null means "no ceiling" -- show all recipes.
+**Warning signs:** Blank feed after onboarding if user skipped skill selection.
 
-### Pitfall 3: DISC-05 -- Bookmark Query Missing Allergen Filter
-**What goes wrong:** Cookbook/My Kitchen shows bookmarked recipes that contain user allergens.
-**Why it happens:** The current `my-kitchen.tsx` (line 82-97) does `SELECT ... WHERE id IN (${placeholders})` with NO allergen exclusion. Feed and Search both use `ALLERGEN_EXCLUSION` SQL, but bookmarks bypass it.
-**How to avoid:** Add the same `ALLERGEN_EXCLUSION` WHERE clause to the bookmarks recipe hydration query. This is the DISC-05 fix.
-**SQL fix:**
-```sql
-SELECT id, title, ... FROM recipes r
-WHERE r.id IN (?, ?, ...)
-AND NOT EXISTS (
-  SELECT 1 FROM json_each(r.allergens) AS ra
-  WHERE ra.value IN (SELECT value FROM json_each(?))
-)
-```
+### Pitfall 3: Route Name Mismatch During Tab Rename
+**What goes wrong:** 404 error when navigating to tab after renaming.
+**Why it happens:** _layout.tsx references a route name that doesn't match any file in (tabs)/.
+**How to avoid:** Follow the safe rename order: create new file first, update _layout.tsx, delete old file last. Established decision from Phase 4.
+**Warning signs:** White screen or "Route not found" error on tab press.
 
-### Pitfall 4: DB Migration Version Bump
-**What goes wrong:** Adding columns to profile table without incrementing DB_VERSION means existing installs never get the new columns.
-**Why it happens:** Forgetting to add a migration block in client.ts.
-**How to avoid:** Add `if (currentVersion < 5)` block with `ALTER TABLE profile ADD COLUMN cuisine_preferences TEXT DEFAULT NULL` and `ALTER TABLE profile ADD COLUMN app_goals TEXT DEFAULT NULL`. Bump `DB_VERSION` to 5.
-**Important:** SQLite ALTER TABLE ADD COLUMN is safe for nullable columns with DEFAULT NULL -- no data migration needed.
+### Pitfall 4: Profile Tab Duplicating Settings Content
+**What goes wrong:** Profile tab and settings.tsx both show account/preferences, creating two places to edit.
+**Why it happens:** Current my-kitchen.tsx has account card + profile summary that overlaps with settings.tsx content.
+**How to avoid:** Profile tab absorbs the settings content. Remove or repurpose settings.tsx. The Profile tab IS the settings screen.
+**Warning signs:** User confusion about where to change preferences.
 
-### Pitfall 5: Profile Screen Content Split
-**What goes wrong:** My Kitchen currently serves dual purpose (account management + saved recipes). Splitting into Cookbook + Profile requires careful decision on what goes where.
-**How to avoid:**
-- **Cookbook tab:** Only saved recipes (bookmarks list). No account card, no profile summary.
-- **Profile tab:** Account card, sign in/out, profile summary row, settings link. Essentially the top half of current my-kitchen.tsx.
-- **Settings screen:** Remains as standalone route (unchanged).
+### Pitfall 5: Breaking Existing Test Mocks
+**What goes wrong:** Changing function signatures in recipes.ts breaks mock patterns in discovery.test.ts and equipment-filter.test.ts.
+**Why it happens:** Tests mock db.getAllAsync return values. Adding new WHERE clauses changes what parameters are passed.
+**How to avoid:** Update test mocks to expect new parameters. Add new test cases for hard filter behavior. Keep backward compatibility where possible.
+**Warning signs:** Test failures after changing query functions.
 
-### Pitfall 6: Search Screen -- Hard Filters vs. Discovery Intent
-**What goes wrong:** Applying hard skill/equipment filters to Search results removes recipes the user explicitly searched for.
-**Per product pivot notes:** "Search results NOT filtered by skill/tools (deliberate). Only dietary restrictions as hard filter on search."
-**How to avoid:** Hard skill/equipment filters apply to Feed and Cookbook only. Search keeps only allergen hard filter (already implemented). Do NOT add skill/equipment hard filters to Search.
+### Pitfall 6: Bookmark Allergen Query Performance
+**What goes wrong:** Adding allergen exclusion to bookmark hydration query with batch SELECT IN and json_each causes slow queries.
+**Why it happens:** Combining `WHERE id IN (?, ?, ...)` with `NOT EXISTS (SELECT 1 FROM json_each(r.allergens)...)` on each row.
+**How to avoid:** With 30-50 recipes and max ~50 bookmarks, this is not a real performance concern. The query will remain fast. If needed, do JS filter after fetch (allergens are already parsed in mapRowToRecipeListItem).
+**How to avoid (preferred):** Use SQL for consistency. The dataset is small enough that performance is not a concern.
 
 ## Code Examples
 
-### DB Migration for New Profile Columns
+### DB Migration v4 to v5 (add profile columns)
 ```typescript
-// In client.ts, add before the final PRAGMA user_version update:
+// In client.ts, add after the currentVersion < 4 block:
 if (currentVersion < 5) {
   await db.execAsync(`
-    ALTER TABLE profile ADD COLUMN cuisine_preferences TEXT DEFAULT NULL;
-    ALTER TABLE profile ADD COLUMN app_goals TEXT DEFAULT NULL;
+    ALTER TABLE profile ADD COLUMN cuisine_preferences TEXT;
+    ALTER TABLE profile ADD COLUMN app_goals TEXT;
   `);
 }
-// Update: const DB_VERSION = 5;
+// Then update DB_VERSION to 5
 ```
 
-### ProfileSchema Extension
+### Equipment Hard Filter SQL
 ```typescript
-// In src/types/profile.ts:
-export const ProfileSchema = z.object({
-  allergens: z.array(AllergenTagEnum).default([]),
-  skillLevel: SkillLevelEnum.nullable().default(null),
-  equipment: z.array(EquipmentEnum).default(["firin", "tava"]),
-  onboardingCompleted: z.boolean().default(false),
-  accountNudgeShown: z.boolean().default(false),
-  cuisinePreferences: z.array(z.string()).nullable().default(null), // NEW -- no UI yet
-  appGoals: z.array(z.string()).nullable().default(null),           // NEW -- no UI yet
-});
+const EQUIPMENT_EXCLUSION = `
+  NOT EXISTS (
+    SELECT 1 FROM json_each(r.equipment) AS re
+    WHERE re.value NOT IN (SELECT value FROM json_each(?))
+  )
+`;
+
+// Usage in getAllRecipesForFeed:
+if (userEquipment.length > 0) {
+  conditions.push(EQUIPMENT_EXCLUSION);
+  params.push(JSON.stringify(userEquipment));
+}
 ```
 
-### Extracted Bookmark Recipes Query (Fix for DISC-05 + Inline SQL Extraction)
+### Skill Level Hard Filter SQL
 ```typescript
-// In src/db/recipes.ts -- new function:
-export async function getBookmarkRecipes(
+const SKILL_CEILING_MAP: Record<string, string[]> = {
+  beginner: ['beginner'],
+  intermediate: ['beginner', 'intermediate'],
+  advanced: ['beginner', 'intermediate', 'advanced'],
+};
+
+// Build the clause dynamically:
+if (userSkillLevel) {
+  const allowed = SKILL_CEILING_MAP[userSkillLevel] ?? ['beginner', 'intermediate', 'advanced'];
+  const placeholders = allowed.map(() => '?').join(', ');
+  conditions.push(`r.skill_level IN (${placeholders})`);
+  params.push(...allowed);
+}
+```
+
+### Bookmark Allergen Exclusion (DISC-05 fix)
+```typescript
+// In the bookmark hydration query (currently in my-kitchen.tsx, to be moved to recipes.ts):
+export async function getBookmarkedRecipes(
   db: SQLiteDatabase,
-  recipeIds: string[],
+  bookmarkIds: string[],
   userAllergens: string[],
+  userSkillLevel: string | null,
   userEquipment: string[]
 ): Promise<RecipeListItem[]> {
-  if (recipeIds.length === 0) return [];
+  if (bookmarkIds.length === 0) return [];
 
-  const placeholders = recipeIds.map(() => '?').join(', ');
-  const params: (string | number)[] = [...recipeIds];
+  const placeholders = bookmarkIds.map(() => '?').join(', ');
+  const conditions: string[] = [`r.id IN (${placeholders})`];
+  const params: (string | number)[] = [...bookmarkIds];
 
-  let sql = `SELECT ${SELECT_LIST_COLUMNS} FROM recipes r WHERE r.id IN (${placeholders})`;
-
-  // DISC-05: Apply allergen exclusion to bookmarked recipes
+  // Allergen hard filter
   if (userAllergens.length > 0) {
-    sql += ` AND ${ALLERGEN_EXCLUSION}`;
+    conditions.push(ALLERGEN_EXCLUSION);
     params.push(JSON.stringify(userAllergens));
   }
 
+  // Skill hard filter
+  if (userSkillLevel) {
+    const allowed = SKILL_CEILING_MAP[userSkillLevel] ?? ['beginner', 'intermediate', 'advanced'];
+    conditions.push(`r.skill_level IN (${allowed.map(() => '?').join(', ')})`);
+    params.push(...allowed);
+  }
+
+  // Equipment hard filter
+  if (userEquipment.length > 0) {
+    conditions.push(EQUIPMENT_EXCLUSION);
+    params.push(JSON.stringify(userEquipment));
+  }
+
+  const sql = `SELECT ${SELECT_LIST_COLUMNS} FROM recipes r WHERE ${conditions.join(' AND ')}`;
   const rows = await db.getAllAsync<RecipeRow>(sql, params);
 
   // Preserve bookmark order
   const rowMap = new Map(rows.map((r) => [r.id, r]));
-  return recipeIds
+  return bookmarkIds
     .map((id) => rowMap.get(id))
     .filter((r): r is RecipeRow => r !== undefined)
     .map(mapRowToRecipeListItem);
 }
 ```
 
-### Skill Level Hard Filter SQL Helper
+### Screen Hook Shape (useCookbookScreen example)
 ```typescript
-// In src/db/recipes.ts:
-function getSkillLevelCeiling(userLevel: string | null): string[] {
-  switch (userLevel) {
-    case 'beginner': return ['beginner'];
-    case 'intermediate': return ['beginner', 'intermediate'];
-    case 'advanced': return ['beginner', 'intermediate', 'advanced'];
-    default: return ['beginner']; // null defaults to beginner ceiling
-  }
+// src/hooks/useCookbookScreen.ts
+import { useState, useCallback } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useProfileDb } from '../db/profile';
+import { getBookmarkedRecipes } from '../db/recipes';
+import { useSession } from '../auth/useSession';
+import type { Profile } from '../types/profile';
+import type { RecipeListItem } from '../types/discovery';
+
+export interface CookbookScreenState {
+  profile: Profile | null;
+  savedRecipes: RecipeListItem[];
+  bookmarkedIds: Set<string>;
+  loading: boolean;
 }
 
-const SKILL_LEVEL_FILTER = (levels: string[]) =>
-  `r.skill_level IN (${levels.map(() => '?').join(', ')})`;
-```
+export interface CookbookScreenActions {
+  handleBookmarkToggle: (id: string) => Promise<void>;
+  handleRecipePress: (id: string) => void;
+}
 
-### Equipment Hard Filter SQL
-```typescript
-// In src/db/recipes.ts:
-const EQUIPMENT_HARD_FILTER = `
-  NOT EXISTS (
-    SELECT 1 FROM json_each(r.equipment) AS re
-    WHERE re.value NOT IN (SELECT value FROM json_each(?))
-  )
-`;
-// Pass JSON.stringify(userEquipment) as parameter
-// Note: recipes with empty equipment array always pass (json_each returns 0 rows)
-```
-
-### 4-Tab Layout
-```typescript
-// In app/(tabs)/_layout.tsx:
-<Tabs screenOptions={{ ... }}>
-  <Tabs.Screen name="index" options={{ title: 'Kesfet', tabBarIcon: ... }} />
-  <Tabs.Screen name="search" options={{ title: 'Ara', tabBarIcon: ... }} />
-  <Tabs.Screen name="cookbook" options={{ title: 'Tarif Defterim', tabBarIcon: ... }} />
-  <Tabs.Screen name="profile" options={{ title: 'Profil', tabBarIcon: ... }} />
-</Tabs>
+export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions {
+  // All state, effects, loading logic here
+  // Returns typed state + action callbacks
+}
 ```
 
 ## State of the Art
 
-| Old Approach (Current) | New Approach (Phase 7) | Impact |
-|------------------------|------------------------|--------|
-| Equipment soft-sort (JS) | Equipment hard-filter (SQL WHERE) | Incompatible recipes never shown on Feed/Cookbook |
-| Skill level soft-sort (JS) | Skill level hard-filter (SQL WHERE) | Over-ceiling recipes never shown on Feed/Cookbook |
-| Data + JSX in screen files | Hook + thin shell pattern | Enables parallel frontend/backend development |
-| 3 tabs (Feed/Search/My Kitchen) | 4 tabs (Feed/Search/Cookbook/Profile) | Cleaner separation of concerns |
-| Inline SQL in my-kitchen.tsx | Named function in recipes.ts | Testable, reusable, consistent with rest of DB layer |
+| Old Approach (Phases 1-6) | New Approach (Phase 7+) | Impact |
+|---------------------------|-------------------------|--------|
+| Equipment as soft sort (JS sort after fetch) | Equipment as hard filter (SQL WHERE exclusion) | Incompatible recipes never appear |
+| Skill level as sort order only | Skill level as hard ceiling filter | Recipes above ceiling never appear |
+| 3 tabs (Feed/Search/My Kitchen) | 4 tabs (Feed/Search/Cookbook/Profile) | Dedicated profile editing space |
+| Inline SQL in screen files | All SQL in src/db/recipes.ts | Single source of truth for queries |
+| Data logic embedded in screens | Extracted to src/hooks/use*Screen.ts | Parallel dev enabled |
+| No allergen filter on bookmarks | Allergen exclusion on bookmark query | DISC-05 closed |
 
 ## Open Questions
 
 1. **Profile tab content scope**
-   - What we know: Account card and profile summary move from My Kitchen to Profile tab. Settings link should be accessible from Profile.
-   - What's unclear: Should Profile tab also display a quick view of allergens/skill/equipment, or only link to Settings?
-   - Recommendation: Minimal Profile tab for Phase 7 -- account card, settings link. Additional profile display is a future enhancement.
+   - What we know: My-kitchen.tsx currently has account card, profile summary, and saved recipes. Settings.tsx has full allergen/skill/equipment editing.
+   - What's unclear: Should Profile tab show just the editable preferences (like settings.tsx) or also include account management? Should settings.tsx be deleted entirely?
+   - Recommendation: Profile tab absorbs ALL content from both my-kitchen.tsx (account card section) and settings.tsx (preference editing). Cookbook tab shows only saved recipes. Settings.tsx route is removed. This aligns with the 4-tab nav spec: Profile = identity/preferences, Cookbook = personal recipe space.
 
-2. **Cookbook tab naming -- Turkish label**
-   - What we know: Product pivot says "Cookbook replaces My Kitchen". Current My Kitchen label is "Mutfagim".
-   - What's unclear: Whether the Turkish tab label should be "Tarif Defterim" (My Recipe Book) or "Kitaplik" or another term.
-   - Recommendation: Use "Tarif Defterim" as it aligns with the Cookbook concept and feels natural in Turkish.
+2. **Hard filter function signature changes**
+   - What we know: getAllRecipesForFeed currently takes `(userAllergens, userEquipment)`. Adding skill level means a third parameter.
+   - What's unclear: Whether to pass individual params or a filter object.
+   - Recommendation: Pass a filter object `{ allergens: string[], skillLevel: string | null, equipment: string[] }` to all query functions. This is cleaner than 3+ individual params and future-proof for adding more filters.
 
-3. **Hard filter on Cookbook bookmarks -- skill and equipment**
-   - What we know: Success criteria says "recipes above skill ceiling or requiring missing tools never surface on any screen". DISC-05 specifically adds allergen exclusion to bookmarks.
-   - What's unclear: Should skill/equipment hard filters also apply to bookmarked recipes? A user may have bookmarked a recipe before changing their skill level.
-   - Recommendation: Apply all hard filters (allergen + skill + equipment) to Cookbook query. If a bookmarked recipe is now filtered out, it simply doesn't show. This matches "never surface on any screen" success criterion.
+3. **sortByEquipmentCompatibility removal**
+   - What we know: This function currently soft-sorts recipes by equipment compatibility.
+   - What's unclear: Whether to keep it as an additional sort within compatible recipes or remove entirely.
+   - Recommendation: Remove it. Hard filter means incompatible recipes are already excluded. No need to sort by compatibility within the filtered set. Simplifies the code.
 
 ## Validation Architecture
 
 ### Test Framework
 | Property | Value |
 |----------|-------|
-| Framework | Jest 29.7.0 + jest-expo ~54.0.17 |
-| Config file | package.json (jest section) or jest.config.js |
-| Quick run command | `npx jest --testPathPattern=<file> --no-coverage` |
+| Framework | Jest 29.7.0 with jest-expo ~54.0.17 |
+| Config file | package.json "jest" section |
+| Quick run command | `npx jest --testPathPattern="hard-filter\|cookbook\|hook" --no-coverage` |
 | Full suite command | `npx jest --no-coverage` |
 
-### Phase Requirements -> Test Map
+### Phase Requirements to Test Map
 | Req ID | Behavior | Test Type | Automated Command | File Exists? |
 |--------|----------|-----------|-------------------|-------------|
-| DISC-05 | Allergen-excluded bookmarks | unit | `npx jest __tests__/discovery.test.ts -x --no-coverage` | Partial (discovery.test.ts exists but no bookmark allergen test) |
-| SC-1 | useFeedScreen hook returns correct state | unit | `npx jest __tests__/hooks/useFeedScreen.test.ts -x --no-coverage` | Wave 0 |
-| SC-2 | Cookbook tab renders + renamed | smoke | Manual -- verify tab label and route | Manual-only (navigation test) |
-| SC-3 | Skill hard filter excludes over-ceiling | unit | `npx jest __tests__/equipment-filter.test.ts -x --no-coverage` | Partial (equipment-filter.test.ts exists, skill filter test needed) |
-| SC-4 | Equipment hard filter excludes missing tools | unit | `npx jest __tests__/equipment-filter.test.ts -x --no-coverage` | Partial (exists but tests soft-sort, not hard-filter) |
-| SC-5 | Profile schema has new columns | unit | `npx jest __tests__/migration.test.ts -x --no-coverage` | Partial (migration.test.ts exists, needs v5 migration test) |
-| SC-6 | Inline SQL extracted to recipes.ts | unit | `npx jest __tests__/discovery.test.ts -x --no-coverage` | Partial (needs getBookmarkRecipes test) |
+| DISC-05 | Allergen exclusion on bookmarks | unit | `npx jest __tests__/hard-filter.test.ts -t "allergen exclusion on bookmarks" -x` | No - Wave 0 |
+| PROF-01 | Skill level hard filter | unit | `npx jest __tests__/hard-filter.test.ts -t "skill level hard filter" -x` | No - Wave 0 |
+| PROF-02 | Equipment hard filter | unit | `npx jest __tests__/hard-filter.test.ts -t "equipment hard filter" -x` | No - Wave 0 |
+| PROF-03 | Profile schema has cuisine_preferences, app_goals | unit | `npx jest __tests__/profile.test.ts -t "cuisine_preferences\|app_goals" -x` | No - Wave 0 |
+| NAV-01 | 4-tab navigation | manual-only | Visual verification on device | N/A (UI layout) |
 
 ### Sampling Rate
-- **Per task commit:** `npx jest --testPathPattern=<changed-module> --no-coverage`
+- **Per task commit:** `npx jest --no-coverage`
 - **Per wave merge:** `npx jest --no-coverage`
 - **Phase gate:** Full suite green before `/gsd:verify-work`
 
 ### Wave 0 Gaps
-- [ ] `__tests__/hooks/useFeedScreen.test.ts` -- covers SC-1 (hook extraction correctness)
-- [ ] Add bookmark allergen filter test case to `__tests__/discovery.test.ts` -- covers DISC-05
-- [ ] Add skill hard filter test cases to `__tests__/equipment-filter.test.ts` or new `__tests__/hard-filters.test.ts`
-- [ ] Add DB migration v5 test case to `__tests__/migration.test.ts`
-- [ ] Add `getBookmarkRecipes` test to `__tests__/discovery.test.ts` -- covers SC-6
+- [ ] `__tests__/hard-filter.test.ts` -- covers DISC-05, PROF-01, PROF-02 (hard filter query logic)
+- [ ] `__tests__/profile.test.ts` -- extend with cuisine_preferences and app_goals column tests (PROF-03)
+- [ ] `__tests__/migration.test.ts` -- extend with DB_VERSION 5 migration test
+- [ ] No new framework install needed -- Jest already configured
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- Direct codebase inspection of all screen files, DB layer, types, and migrations
-- Product pivot memory notes (`project_v1_pivot.md`, `feedback_parallel_work.md`)
-- Phase 4 decisions on safe tab rename order
-- Phase 6 decisions on equipment filter patterns (every vs some, JS sort vs SQL WHERE)
+- Codebase inspection: all src/db/*.ts, src/types/*.ts, app/(tabs)/*.tsx, app/settings.tsx, app/_layout.tsx
+- Codebase inspection: __tests__/*.test.ts (test patterns, mock patterns)
+- .planning/PROJECT.md, REQUIREMENTS.md, ROADMAP.md (product decisions)
+- .planning/features/profile.md, navigation.md, cookbook.md (feature specs)
+- Memory files: project_v1_pivot.md, feedback_parallel_work.md (user decisions)
 
 ### Secondary (MEDIUM confidence)
-- expo-sqlite v2 API patterns (verified in codebase usage)
-- SQLite ALTER TABLE ADD COLUMN behavior (well-documented, nullable with DEFAULT NULL is safe)
-- json_each subquery pattern (already proven in ALLERGEN_EXCLUSION constant)
+- SQLite json_each() function behavior with empty arrays -- verified against existing ALLERGEN_EXCLUSION usage in recipes.ts
 
 ## Metadata
 
 **Confidence breakdown:**
-- Standard stack: HIGH - no new libraries, all patterns already in codebase
-- Architecture: HIGH - hook extraction is a well-understood refactor, codebase fully inspected
-- Pitfalls: HIGH - identified from direct code inspection of current behavior gaps
-- Filter logic: HIGH - SQL patterns already proven (ALLERGEN_EXCLUSION), just need extension
+- Standard stack: HIGH -- no new dependencies, all patterns established in codebase
+- Architecture: HIGH -- hooks extraction is mechanical, hard filter SQL follows proven ALLERGEN_EXCLUSION pattern
+- Pitfalls: HIGH -- identified from direct codebase inspection (null handling, route rename order, test mock breakage)
 
 **Research date:** 2026-03-17
-**Valid until:** 2026-04-17 (stable -- no external dependency changes expected)
+**Valid until:** 2026-04-17 (stable -- no dependency changes, internal refactoring only)
