@@ -233,6 +233,12 @@ Plans:
   4. Open text and voice input trigger live AI call with full context (recipe, step, skill, swaps)
   5. Pulse animation triggers when user lingers on a step beyond average duration
   6. Şef'im redirects off-topic questions back to the recipe
+**Plans**: 3 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Schema extension (sefimQA) + useSefim hook + Supabase Edge Function + tests (Wave 1)
+- [ ] 12-02-PLAN.md — SefimSheet bottom sheet + SefimPulse animation + wire into cooking screen (Wave 2)
+- [ ] 12-03-PLAN.md — Author Q&A content for 3 sample recipes + human verification (Wave 3)
 
 ## Progress
 
@@ -253,4 +259,4 @@ Phase 8 and Phase 9 can run in parallel (both depend on Phase 7 only).
 | 9. Search & Category Redesign | 3/3 | Complete   | 2026-03-17 |
 | 10. Recipe Detail Evolution | 3/3 | Complete    | 2026-03-17 |
 | 11. Cooking Mode Evolution | 3/3 | Complete    | 2026-03-17 |
-| 12. Şef'im (AI Companion) | 0/0 | Pending | — |
+| 12. Şef'im (AI Companion) | 0/3 | In Progress | — |
