@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,148 +7,35 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { router, useFocusEffect } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { useProfileDb } from '@/src/db/profile';
-import { useRecipesDb } from '@/src/db/recipes';
-import { useSession } from '@/src/auth/useSession';
+import { useCookbookScreen } from '@/src/hooks/useCookbookScreen';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
-
-import type { Profile } from '@/src/types/profile';
-import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
-
-// ---------------------------------------------------------------------------
-// Label maps (mirrors what was in settings.tsx before deletion)
-// ---------------------------------------------------------------------------
-
-const ALLERGEN_LABELS: Record<string, string> = {
-  gluten: 'Gluten',
-  dairy: 'Süt Ürünleri',
-  egg: 'Yumurta',
-  nuts: 'Kuruyemiş',
-  peanuts: 'Fıstık',
-  shellfish: 'Kabuklu Deniz Ürünleri',
-  fish: 'Balık',
-  soy: 'Soya',
-  sesame: 'Susam',
-  mustard: 'Hardal',
-  celery: 'Kereviz',
-  lupin: 'Acı Bakla',
-  molluscs: 'Yumuşakça',
-  sulphites: 'Sülfitler',
-};
-
-const SKILL_LEVEL_LABELS: Record<string, string> = {
-  beginner: 'Başlangıç',
-  intermediate: 'Orta',
-  advanced: 'İleri',
-};
 
 // ---------------------------------------------------------------------------
 // My Kitchen screen
 // ---------------------------------------------------------------------------
 
 export default function MyKitchenScreen() {
-  const { getProfile, getBookmarks, addBookmark, removeBookmark } = useProfileDb();
-  const { getBookmarkedRecipes } = useRecipesDb();
-  const { session, signOut } = useSession();
-
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
-  const [savedRecipes, setSavedRecipes] = useState<RecipeListItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Load profile + bookmarks + recipe data for bookmarks
-  const loadData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [p, bookmarks] = await Promise.all([getProfile(), getBookmarks()]);
-      setProfile(p);
-
-      const ids = bookmarks.map((b) => b.recipeId);
-      setBookmarkedIds(new Set(ids));
-
-      if (ids.length === 0) {
-        setSavedRecipes([]);
-        return;
-      }
-
-      // Fetch bookmarked recipes with hard filter exclusion (preserves bookmark order)
-      const hardFilter: HardFilter = {
-        allergens: p.allergens,
-        skillLevel: p.skillLevel,
-        equipment: p.equipment,
-      };
-      const ordered = await getBookmarkedRecipes(ids, hardFilter);
-      setSavedRecipes(ordered);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      loadData();
-    }, [loadData])
-  );
-
-  // Bookmark toggle
-  async function handleBookmarkToggle(id: string) {
-    if (bookmarkedIds.has(id)) {
-      await removeBookmark(id);
-      setBookmarkedIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-      setSavedRecipes((prev) => prev.filter((r) => r.id !== id));
-    } else {
-      await addBookmark(id, session?.user.id ?? null);
-      setBookmarkedIds((prev) => new Set([...prev, id]));
-      // Reload to get recipe data
-      loadData();
-    }
-  }
-
-  function handleRecipePress(id: string) {
-    router.push(`/recipe/${id}` as never);
-  }
-
-  function handleSettingsPress() {
-    router.push('/settings' as never);
-  }
-
-  // ---------------------------------------------------------------------------
-  // Profile summary row
-  // ---------------------------------------------------------------------------
-
-  function buildProfileSummary(): string {
-    if (!profile) return '';
-    const parts: string[] = [];
-    if (profile.skillLevel) {
-      parts.push(SKILL_LEVEL_LABELS[profile.skillLevel] ?? profile.skillLevel);
-    }
-    if (profile.allergens.length > 0) {
-      parts.push(`${profile.allergens.length} allerjen`);
-    }
-    if (profile.equipment.length > 0) {
-      parts.push(`${profile.equipment.length} ekipman`);
-    }
-    return parts.join(' • ');
-  }
-
-  // ---------------------------------------------------------------------------
-  // Render
-  // ---------------------------------------------------------------------------
+  const {
+    profile,
+    bookmarkedIds,
+    savedRecipes,
+    loading,
+    session,
+    profileSummary,
+    handleBookmarkToggle,
+    handleRecipePress,
+    handleSettingsPress,
+    handleSignOut,
+    handleSignIn,
+  } = useCookbookScreen();
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent} stickyHeaderIndices={[0]}>
-        {/* ------------------------------------------------------------------ */}
         {/* Header row */}
-        {/* ------------------------------------------------------------------ */}
         <View style={styles.headerRow}>
           <Text style={styles.screenTitle}>Mutfağım</Text>
           <Pressable
@@ -161,9 +48,7 @@ export default function MyKitchenScreen() {
           </Pressable>
         </View>
 
-        {/* ------------------------------------------------------------------ */}
         {/* Account card */}
-        {/* ------------------------------------------------------------------ */}
         {session ? (
           <View style={styles.accountCard}>
             <View style={styles.accountInfo}>
@@ -177,7 +62,7 @@ export default function MyKitchenScreen() {
             </View>
             <Pressable
               style={styles.signOutButton}
-              onPress={signOut}
+              onPress={handleSignOut}
               accessibilityRole="button"
             >
               <Text style={styles.signOutText}>Çıkış Yap</Text>
@@ -196,7 +81,7 @@ export default function MyKitchenScreen() {
             </View>
             <Pressable
               style={styles.createAccountButton}
-              onPress={() => router.push('/(auth)/sign-in' as never)}
+              onPress={handleSignIn}
               accessibilityRole="button"
             >
               <Text style={styles.createAccountText}>Hesap Oluştur</Text>
@@ -204,10 +89,8 @@ export default function MyKitchenScreen() {
           </View>
         )}
 
-        {/* ------------------------------------------------------------------ */}
         {/* Profile summary row */}
-        {/* ------------------------------------------------------------------ */}
-        {profile && buildProfileSummary().length > 0 && (
+        {profile && profileSummary.length > 0 && (
           <Pressable
             style={styles.profileSummaryRow}
             onPress={handleSettingsPress}
@@ -215,19 +98,15 @@ export default function MyKitchenScreen() {
             accessibilityLabel="Profil bilgilerini düzenle"
           >
             <MaterialCommunityIcons name="tune-vertical" size={16} color="#6B7280" />
-            <Text style={styles.profileSummaryText}>{buildProfileSummary()}</Text>
+            <Text style={styles.profileSummaryText}>{profileSummary}</Text>
             <MaterialCommunityIcons name="chevron-right" size={16} color="#9CA3AF" />
           </Pressable>
         )}
 
-        {/* ------------------------------------------------------------------ */}
         {/* Saved recipes section header */}
-        {/* ------------------------------------------------------------------ */}
         <Text style={styles.sectionHeader}>Kaydedilen Tarifler</Text>
 
-        {/* ------------------------------------------------------------------ */}
         {/* Saved recipes content */}
-        {/* ------------------------------------------------------------------ */}
         {loading ? (
           <View style={styles.skeletonGrid}>
             {[0, 1, 2, 3].map((i) => (
@@ -240,7 +119,7 @@ export default function MyKitchenScreen() {
           <View style={styles.emptyState}>
             <MaterialCommunityIcons name="heart-outline" size={48} color="#E07B39" />
             <Text style={styles.emptyText}>
-              {'Henüz kaydedilmiş tarifiniz yok.\nTariflerin üzerindeki ♡ ikonuna basın.'}
+              {'Henüz kaydedilmiş tarifiniz yok.\nTariflerin üzerindeki \u2661 ikonuna basın.'}
             </Text>
           </View>
         ) : (
