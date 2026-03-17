@@ -29,65 +29,65 @@ const ALL_EQUIPMENT = EquipmentEnum.options as Equipment[];
 
 const ALLERGEN_LABELS: Record<AllergenTag, string> = {
   gluten: 'Gluten',
-  dairy: 'S\u00FCt \u00DCr\u00FCnleri',
+  dairy: 'Süt Ürünleri',
   egg: 'Yumurta',
-  nuts: 'Kuruyemi\u015F',
-  peanuts: 'F\u0131st\u0131k',
-  shellfish: 'Kabuklu Deniz \u00DCr\u00FCnleri',
-  fish: 'Bal\u0131k',
+  nuts: 'Kuruyemiş',
+  peanuts: 'Fıstık',
+  shellfish: 'Kabuklu Deniz Ürünleri',
+  fish: 'Balık',
   soy: 'Soya',
   sesame: 'Susam',
   mustard: 'Hardal',
   celery: 'Kereviz',
-  lupin: 'Ac\u0131 Bakla',
-  molluscs: 'Yumu\u015Fak\u00E7a',
-  sulphites: 'S\u00FClfitler',
+  lupin: 'Acı Bakla',
+  molluscs: 'Yumuşakça',
+  sulphites: 'Sülfitler',
 };
 
 const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
-  beginner: 'Ba\u015Flang\u0131\u00E7',
+  beginner: 'Başlangıç',
   intermediate: 'Orta',
-  advanced: '\u0130leri',
+  advanced: 'İleri',
 };
 
 const SKILL_LEVEL_DESCRIPTIONS: Record<SkillLevel, string> = {
   beginner: 'Basit tarifleri tercih ederim',
-  intermediate: '\u00C7o\u011Fu tekni\u011Fi uygulayabilirim',
-  advanced: 'Karma\u015F\u0131k yemeklerden keyif al\u0131r\u0131m',
+  intermediate: 'Çoğu tekniği uygulayabilirim',
+  advanced: 'Karmaşık yemeklerden keyif alırım',
 };
 
 const EQUIPMENT_LABELS: Record<Equipment, string> = {
-  'f\u0131r\u0131n': 'F\u0131r\u0131n',
+  'fırın': 'Fırın',
   'blender': 'Blender',
-  'd\u00F6k\u00FCm tava': 'D\u00F6k\u00FCm Tava',
+  'döküm tava': 'Döküm Tava',
   'stand mixer': 'Hamur Makinesi',
   'wok': 'Wok',
-  'su \u0131s\u0131t\u0131c\u0131': 'Su Is\u0131t\u0131c\u0131',
-  '\u00E7\u0131rp\u0131c\u0131': '\u00C7\u0131rp\u0131c\u0131',
+  'su ısıtıcı': 'Su Isıtıcı',
+  'çırpıcı': 'Çırpıcı',
   'tencere': 'Tencere',
   'tava': 'Tava',
   'mikser': 'El Mikseri',
   'rende': 'Rende',
-  'b\u0131\u00E7ak seti': 'B\u0131\u00E7ak Seti',
-  'kesme tahtas\u0131': 'Kesme Tahtas\u0131',
+  'bıçak seti': 'Bıçak Seti',
+  'kesme tahtası': 'Kesme Tahtası',
 };
 
 type MCIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const EQUIPMENT_ICONS: Record<Equipment, MCIconName> = {
-  'f\u0131r\u0131n': 'stove',
+  'fırın': 'stove',
   'blender': 'blender',
-  'd\u00F6k\u00FCm tava': 'pot',
+  'döküm tava': 'pot',
   'stand mixer': 'chef-hat',
   'wok': 'pot-steam',
-  'su \u0131s\u0131t\u0131c\u0131': 'kettle',
-  '\u00E7\u0131rp\u0131c\u0131': 'silverware-fork-knife',
+  'su ısıtıcı': 'kettle',
+  'çırpıcı': 'silverware-fork-knife',
   'tencere': 'pot-steam-outline',
   'tava': 'pan',
   'mikser': 'silverware-variant',
   'rende': 'silverware-clean',
-  'b\u0131\u00E7ak seti': 'knife',
-  'kesme tahtas\u0131': 'silverware',
+  'bıçak seti': 'knife',
+  'kesme tahtası': 'silverware',
 };
 
 // ---------------------------------------------------------------------------
@@ -179,7 +179,7 @@ export default function ProfileScreen() {
               <MaterialCommunityIcons name="account-circle" size={40} color="#E07B39" />
               <View style={styles.accountText}>
                 <Text style={styles.accountEmail} numberOfLines={1}>
-                  {session.user.email ?? 'Giri\u015F yap\u0131ld\u0131'}
+                  {session.user.email ?? 'Giriş yapıldı'}
                 </Text>
                 <Text style={styles.accountProvider}>
                   {session.user.app_metadata?.provider ?? 'email'}
@@ -191,7 +191,7 @@ export default function ProfileScreen() {
               onPress={signOut}
               accessibilityRole="button"
             >
-              <Text style={styles.signOutText}>\u00C7\u0131k\u0131\u015F Yap</Text>
+              <Text style={styles.signOutText}>Çıkış Yap</Text>
             </Pressable>
           </View>
         ) : (
@@ -199,8 +199,8 @@ export default function ProfileScreen() {
             <View style={styles.accountInfo}>
               <MaterialCommunityIcons name="account-circle-outline" size={40} color="#9CA3AF" />
               <View style={styles.accountText}>
-                <Text style={styles.accountEmail}>Hesap olu\u015Fturulmad\u0131</Text>
-                <Text style={styles.accountProvider}>Tarif ge\u00E7mi\u015Finizi kaydedin</Text>
+                <Text style={styles.accountEmail}>Hesap oluşturulmadı</Text>
+                <Text style={styles.accountProvider}>Tarif geçmişinizi kaydedin</Text>
               </View>
             </View>
             <Pressable
@@ -208,7 +208,7 @@ export default function ProfileScreen() {
               onPress={() => router.push('/(auth)/sign-in' as never)}
               accessibilityRole="button"
             >
-              <Text style={styles.createAccountText}>Hesap Olu\u015Ftur</Text>
+              <Text style={styles.createAccountText}>Hesap Oluştur</Text>
             </Pressable>
           </View>
         )}
@@ -218,7 +218,7 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         <Text style={styles.sectionTitle}>Alerjenler</Text>
         <Text style={styles.sectionSubtitle}>
-          Se\u00E7ili alerjenler i\u00E7eren tarifler g\u00F6r\u00FCnmez.
+          Seçili alerjenler içeren tarifler görünmez.
         </Text>
         <View style={styles.chipGrid}>
           {ALL_ALLERGENS.map((allergen) => (
@@ -234,7 +234,7 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Skill level section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={styles.sectionTitle}>Pi\u015Firme Seviyesi</Text>
+        <Text style={styles.sectionTitle}>Pişirme Seviyesi</Text>
         <View style={styles.skillOptionList}>
           {ALL_SKILL_LEVELS.map((level) => {
             const isSelected = profile?.skillLevel === level;
@@ -265,9 +265,9 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Equipment grid section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={styles.sectionTitle}>Mutfak Ekipmanlar\u0131m</Text>
+        <Text style={styles.sectionTitle}>Mutfak Ekipmanlarım</Text>
         <Text style={styles.sectionSubtitle}>
-          Sahip olmad\u0131\u011F\u0131n\u0131z ekipman\u0131 se\u00E7imi kald\u0131r\u0131n.
+          Sahip olmadığınız ekipmanı seçimi kaldırın.
         </Text>
         <View style={styles.equipmentGrid}>
           {ALL_EQUIPMENT.map((item) => {
