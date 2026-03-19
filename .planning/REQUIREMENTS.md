@@ -69,32 +69,32 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| IMG-01 | — | Pending |
-| IMG-02 | — | Pending |
-| IMG-03 | — | Pending |
-| IMG-04 | — | Pending |
-| DISC-06 | — | Pending |
-| DISC-07 | — | Pending |
-| DISC-08 | — | Pending |
-| DISC-09 | — | Pending |
-| BOOK-01 | — | Pending |
-| BOOK-02 | — | Pending |
-| BOOK-03 | — | Pending |
-| BOOK-04 | — | Pending |
-| UX-01 | — | Pending |
-| UX-02 | — | Pending |
-| UX-03 | — | Pending |
-| UX-04 | — | Pending |
-| UX-05 | — | Pending |
-| UX-06 | — | Pending |
-| UX-07 | — | Pending |
-| UX-08 | — | Pending |
+| IMG-01 | Phase 15 | Pending |
+| IMG-02 | Phase 15 | Pending |
+| IMG-03 | Phase 15 | Pending |
+| IMG-04 | Phase 13 | Pending |
+| DISC-06 | Phase 16 | Pending |
+| DISC-07 | Phase 16 | Pending |
+| DISC-08 | Phase 16 | Pending |
+| DISC-09 | Phase 16 | Pending |
+| BOOK-01 | Phase 17 | Pending |
+| BOOK-02 | Phase 17 | Pending |
+| BOOK-03 | Phase 17 | Pending |
+| BOOK-04 | Phase 17 | Pending |
+| UX-01 | Phase 14 | Pending |
+| UX-02 | Phase 18 | Pending |
+| UX-03 | Phase 18 | Pending |
+| UX-04 | Phase 18 | Pending |
+| UX-05 | Phase 18 | Pending |
+| UX-06 | Phase 18 | Pending |
+| UX-07 | Phase 18 | Pending |
+| UX-08 | Phase 17 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 20 total
-- Mapped to phases: 0
-- Unmapped: 20 ⚠️
+- Mapped to phases: 20
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-19*
-*Last updated: 2026-03-19 after initial definition*
+*Last updated: 2026-03-19 after roadmap creation*
