@@ -51,7 +51,7 @@ export default function CookbookScreen() {
           </View>
         ) : savedRecipes.length === 0 ? (
           <View style={styles.emptyState}>
-            <MaterialCommunityIcons name="heart-outline" size={48} color="#E8834A" />
+            <MaterialCommunityIcons name="heart-outline" size={48} color={colors.tint} />
             <Text style={[styles.emptyText, { color: colors.textSub }]}>
               {'Hen\u00FCz kaydedilmi\u015F tarifiniz yok.\nTariflerin \u00FCzerindeki \u2661 ikonuna bas\u0131n.'}
             </Text>

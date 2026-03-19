@@ -60,9 +60,9 @@ export default function SearchScreen() {
       <View style={styles.searchBarWrapper}>
         <View style={styles.searchBarRow}>
           <TextInput
-            style={[styles.searchBar, { backgroundColor: isDark ? '#1E1E1C' : '#F5F4F0', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)', color: colors.text }]}
+            style={[styles.searchBar, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
             placeholder={hasChips ? 'Tarif adı ile filtrele...' : 'Malzeme veya tarif ara...'}
-            placeholderTextColor={isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)'}
+            placeholderTextColor={colors.placeholder}
             value={query}
             onChangeText={handleQueryChange}
             returnKeyType="search"
@@ -75,7 +75,7 @@ export default function SearchScreen() {
               onPress={() => handleQueryChange('')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              <Text style={[styles.clearButtonText, { color: isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)' }]}>{'\u2715'}</Text>
+              <Text style={[styles.clearButtonText, { color: colors.placeholder }]}>{'\u2715'}</Text>
             </Pressable>
           )}
         </View>
@@ -95,15 +95,19 @@ export default function SearchScreen() {
       {showFilterPanel && (
         <View style={styles.filterButtonRow}>
           <Pressable
-            style={[styles.filterButton, showFilters && styles.filterButtonActive]}
+            style={[
+              styles.filterButton,
+              { borderColor: colors.tint, backgroundColor: colors.background },
+              showFilters && { backgroundColor: colors.tint },
+            ]}
             onPress={handleToggleFilterPanel}
           >
             <MaterialCommunityIcons
               name="filter-variant"
               size={18}
-              color={showFilters ? '#FFFFFF' : '#E8834A'}
+              color={showFilters ? colors.onTint : colors.tint}
             />
-            <Text style={[styles.filterButtonText, showFilters && styles.filterButtonTextActive]}>
+            <Text style={[styles.filterButtonText, { color: colors.tint }, showFilters && { color: colors.onTint }]}>
               Filtrele
             </Text>
           </Pressable>
@@ -249,19 +253,11 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#E8834A',
-    backgroundColor: '#FFFFFF',
   },
-  filterButtonActive: {
-    backgroundColor: '#E8834A',
-  },
+  filterButtonActive: {},
   filterButtonText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#E8834A',
-  },
-  filterButtonTextActive: {
-    color: '#FFFFFF',
   },
   resultsArea: {
     flex: 1,

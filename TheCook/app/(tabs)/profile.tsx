@@ -30,69 +30,69 @@ const ALL_EQUIPMENT = EquipmentEnum.options as Equipment[];
 
 const ALLERGEN_LABELS: Record<AllergenTag, string> = {
   gluten: 'Gluten',
-  dairy: 'Süt Ürünleri',
+  dairy: 'S\u00fct \u00dcr\u00fcnleri',
   egg: 'Yumurta',
-  nuts: 'Kuruyemiş',
-  peanuts: 'Fıstık',
-  shellfish: 'Kabuklu Deniz Ürünleri',
-  fish: 'Balık',
+  nuts: 'Kuruyemi\u015f',
+  peanuts: 'F\u0131st\u0131k',
+  shellfish: 'Kabuklu Deniz \u00dcr\u00fcnleri',
+  fish: 'Bal\u0131k',
   soy: 'Soya',
   sesame: 'Susam',
   mustard: 'Hardal',
   celery: 'Kereviz',
-  lupin: 'Acı Bakla',
-  molluscs: 'Yumuşakça',
-  sulphites: 'Sülfitler',
+  lupin: 'Ac\u0131 Bakla',
+  molluscs: 'Yumu\u015fak\u00e7a',
+  sulphites: 'S\u00fclfitler',
 };
 
 const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
-  beginner: 'Başlangıç',
+  beginner: 'Ba\u015flang\u0131\u00e7',
   intermediate: 'Orta',
-  advanced: 'İleri',
+  advanced: '\u0130leri',
 };
 
 const SKILL_LEVEL_DESCRIPTIONS: Record<SkillLevel, string> = {
   beginner: 'Basit tarifleri tercih ederim',
-  intermediate: 'Çoğu tekniği uygulayabilirim',
-  advanced: 'Karmaşık yemeklerden keyif alırım',
+  intermediate: '\u00c7o\u011fu tekni\u011fi uygulayabilirim',
+  advanced: 'Karma\u015f\u0131k yemeklerden keyif al\u0131r\u0131m',
 };
 
 const EQUIPMENT_LABELS: Record<Equipment, string> = {
-  'fırın': 'Fırın',
+  'f\u0131r\u0131n': 'F\u0131r\u0131n',
   'blender': 'Blender',
-  'döküm tava': 'Döküm Tava',
+  'd\u00f6k\u00fcm tava': 'D\u00f6k\u00fcm Tava',
   'stand mixer': 'Hamur Makinesi',
   'wok': 'Wok',
-  'su ısıtıcı': 'Su Isıtıcı',
-  'çırpıcı': 'Çırpıcı',
+  'su \u0131s\u0131t\u0131c\u0131': 'Su Is\u0131t\u0131c\u0131',
+  '\u00e7\u0131rp\u0131c\u0131': '\u00c7\u0131rp\u0131c\u0131',
   'tencere': 'Tencere',
   'tava': 'Tava',
   'mikser': 'El Mikseri',
   'rende': 'Rende',
-  'bıçak seti': 'Bıçak Seti',
-  'kesme tahtası': 'Kesme Tahtası',
+  'b\u0131\u00e7ak seti': 'B\u0131\u00e7ak Seti',
+  'kesme tahtas\u0131': 'Kesme Tahtas\u0131',
 };
 
 type MCIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const EQUIPMENT_ICONS: Record<Equipment, MCIconName> = {
-  'fırın': 'stove',
+  'f\u0131r\u0131n': 'stove',
   'blender': 'blender',
-  'döküm tava': 'pot',
+  'd\u00f6k\u00fcm tava': 'pot',
   'stand mixer': 'chef-hat',
   'wok': 'pot-steam',
-  'su ısıtıcı': 'kettle',
-  'çırpıcı': 'silverware-fork-knife',
+  'su \u0131s\u0131t\u0131c\u0131': 'kettle',
+  '\u00e7\u0131rp\u0131c\u0131': 'silverware-fork-knife',
   'tencere': 'pot-steam-outline',
   'tava': 'pan',
   'mikser': 'silverware-variant',
   'rende': 'silverware-clean',
-  'bıçak seti': 'knife',
-  'kesme tahtası': 'silverware',
+  'b\u0131\u00e7ak seti': 'knife',
+  'kesme tahtas\u0131': 'silverware',
 };
 
 // ---------------------------------------------------------------------------
-// Profile tab screen — absorbs settings content as a tab
+// Profile tab screen -- absorbs settings content as a tab
 // ---------------------------------------------------------------------------
 
 export default function ProfileScreen() {
@@ -110,7 +110,7 @@ export default function ProfileScreen() {
   }, []);
 
   // ---------------------------------------------------------------------------
-  // Immediate-save logic — saves a partial profile update on every toggle
+  // Immediate-save logic -- saves a partial profile update on every toggle
   // ---------------------------------------------------------------------------
 
   const persistProfileChange = useCallback(
@@ -156,12 +156,12 @@ export default function ProfileScreen() {
         paddingHorizontal: 12,
         paddingVertical: 7,
         borderRadius: 20,
-        backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+        backgroundColor: colors.cardBorder,
         borderWidth: 1,
-        borderColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)',
+        borderColor: colors.border,
       }}
       accessibilityRole="button"
-      accessibilityLabel={isDark ? 'Açık temaya geç' : 'Koyu temaya geç'}
+      accessibilityLabel={isDark ? 'A\u00e7\u0131k temaya ge\u00e7' : 'Koyu temaya ge\u00e7'}
     >
       <MaterialCommunityIcons
         name={isDark ? 'white-balance-sunny' : 'moon-waning-crescent'}
@@ -179,12 +179,12 @@ export default function ProfileScreen() {
   if (loading) {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-        <View style={[styles.headerRow, { backgroundColor: colors.background, borderBottomColor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.08)' }]}>
+        <View style={[styles.headerRow, { backgroundColor: colors.background, borderBottomColor: colors.separator }]}>
           <Text style={[styles.headerTitle, { color: colors.text }]}>Profil</Text>
           {themeToggleButton}
         </View>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#E8834A" />
+          <ActivityIndicator size="large" color={colors.tint} />
         </View>
       </SafeAreaView>
     );
@@ -196,8 +196,8 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Header — tab style (no back arrow) */}
-      <View style={[styles.headerRow, { backgroundColor: colors.background, borderBottomColor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.08)' }]}>
+      {/* Header -- tab style (no back arrow) */}
+      <View style={[styles.headerRow, { backgroundColor: colors.background, borderBottomColor: colors.separator }]}>
         <Text style={[styles.headerTitle, { color: colors.text }]}>Profil</Text>
         {themeToggleButton}
       </View>
@@ -208,12 +208,12 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Hesap</Text>
         {session ? (
-          <View style={[styles.card, { backgroundColor: isDark ? '#161614' : '#F0EDE8', borderColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' }]}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.cardBorder }]}>
             <View style={styles.accountInfo}>
-              <MaterialCommunityIcons name="account-circle" size={40} color="#E8834A" />
+              <MaterialCommunityIcons name="account-circle" size={40} color={colors.tint} />
               <View style={styles.accountText}>
                 <Text style={[styles.accountEmail, { color: colors.text }]} numberOfLines={1}>
-                  {session.user.email ?? 'Giriş yapıldı'}
+                  {session.user.email ?? 'Giri\u015f yap\u0131ld\u0131'}
                 </Text>
                 <Text style={[styles.accountProvider, { color: colors.textSub }]}>
                   {session.user.app_metadata?.provider ?? 'email'}
@@ -221,28 +221,28 @@ export default function ProfileScreen() {
               </View>
             </View>
             <Pressable
-              style={[styles.signOutButton, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
+              style={[styles.signOutButton, { backgroundColor: colors.tintBg }]}
               onPress={signOut}
               accessibilityRole="button"
             >
-              <Text style={styles.signOutText}>Çıkış Yap</Text>
+              <Text style={[styles.signOutText, { color: colors.tint }]}>\u00c7\u0131k\u0131\u015f Yap</Text>
             </Pressable>
           </View>
         ) : (
-          <View style={[styles.card, { backgroundColor: isDark ? '#161614' : '#F0EDE8', borderColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' }]}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.cardBorder }]}>
             <View style={styles.accountInfo}>
-              <MaterialCommunityIcons name="account-circle-outline" size={40} color={isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)'} />
+              <MaterialCommunityIcons name="account-circle-outline" size={40} color={colors.placeholder} />
               <View style={styles.accountText}>
-                <Text style={[styles.accountEmail, { color: colors.text }]}>Hesap oluşturulmadı</Text>
-                <Text style={[styles.accountProvider, { color: colors.textSub }]}>Tarif geçmişinizi kaydedin</Text>
+                <Text style={[styles.accountEmail, { color: colors.text }]}>Hesap olu\u015fturulmad\u0131</Text>
+                <Text style={[styles.accountProvider, { color: colors.textSub }]}>Tarif ge\u00e7mi\u015finizi kaydedin</Text>
               </View>
             </View>
             <Pressable
-              style={styles.createAccountButton}
+              style={[styles.createAccountButton, { backgroundColor: colors.tint }]}
               onPress={() => router.push('/(auth)/sign-in' as never)}
               accessibilityRole="button"
             >
-              <Text style={styles.createAccountText}>Hesap Oluştur</Text>
+              <Text style={[styles.createAccountText, { color: colors.onTint }]}>Hesap Olu\u015ftur</Text>
             </Pressable>
           </View>
         )}
@@ -252,7 +252,7 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Alerjenler</Text>
         <Text style={[styles.sectionSubtitle, { color: colors.textSub }]}>
-          Seçili alerjenler içeren tarifler görünmez.
+          Se\u00e7ili alerjenler i\u00e7eren tarifler g\u00f6r\u00fcnmez.
         </Text>
         <View style={styles.chipGrid}>
           {ALL_ALLERGENS.map((allergen) => (
@@ -268,7 +268,7 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Skill level section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Pişirme Seviyesi</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Pi\u015firme Seviyesi</Text>
         <View style={styles.skillOptionList}>
           {ALL_SKILL_LEVELS.map((level) => {
             const isSelected = profile?.skillLevel === level;
@@ -278,12 +278,8 @@ export default function ProfileScreen() {
                 style={[
                   styles.skillOptionCard,
                   {
-                    backgroundColor: isSelected
-                      ? (isDark ? 'rgba(232,131,74,0.12)' : '#FEF3EC')
-                      : (isDark ? '#161614' : '#F0EDE8'),
-                    borderColor: isSelected
-                      ? '#E8834A'
-                      : (isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'),
+                    backgroundColor: isSelected ? colors.tintBg : colors.card,
+                    borderColor: isSelected ? colors.tint : colors.border,
                   },
                 ]}
                 onPress={() => selectSkillLevel(level)}
@@ -293,19 +289,19 @@ export default function ProfileScreen() {
                 <View style={styles.skillOptionLeft}>
                   <Text style={[
                     styles.skillOptionLabel,
-                    { color: isSelected ? (isDark ? '#E8834A' : '#92400E') : (isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)') },
+                    { color: isSelected ? colors.tint : colors.textSecondary },
                   ]}>
                     {SKILL_LEVEL_LABELS[level]}
                   </Text>
                   <Text style={[
                     styles.skillOptionDesc,
-                    { color: isSelected ? (isDark ? '#E8834A' : '#B45309') : (isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)') },
+                    { color: isSelected ? colors.tint : colors.placeholder },
                   ]}>
                     {SKILL_LEVEL_DESCRIPTIONS[level]}
                   </Text>
                 </View>
                 {isSelected && (
-                  <MaterialCommunityIcons name="check-circle" size={20} color="#E8834A" />
+                  <MaterialCommunityIcons name="check-circle" size={20} color={colors.tint} />
                 )}
               </Pressable>
             );
@@ -315,9 +311,9 @@ export default function ProfileScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Equipment grid section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Mutfak Ekipmanlarım</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Mutfak Ekipmanlar\u0131m</Text>
         <Text style={[styles.sectionSubtitle, { color: colors.textSub }]}>
-          Sahip olmadığınız ekipmanı seçimi kaldırın.
+          Sahip olmad\u0131\u011f\u0131n\u0131z ekipman\u0131 se\u00e7imi kald\u0131r\u0131n.
         </Text>
         <View style={styles.equipmentGrid}>
           {ALL_EQUIPMENT.map((item) => {
@@ -328,12 +324,8 @@ export default function ProfileScreen() {
                 style={[
                   styles.equipmentItem,
                   {
-                    backgroundColor: isSelected
-                      ? (isDark ? 'rgba(232,131,74,0.12)' : '#FEF3EC')
-                      : (isDark ? '#161614' : '#F0EDE8'),
-                    borderColor: isSelected
-                      ? '#E8834A'
-                      : (isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'),
+                    backgroundColor: isSelected ? colors.tintBg : colors.card,
+                    borderColor: isSelected ? colors.tint : colors.border,
                   },
                 ]}
                 onPress={() => toggleEquipment(item)}
@@ -343,9 +335,9 @@ export default function ProfileScreen() {
                 <MaterialCommunityIcons
                   name={EQUIPMENT_ICONS[item]}
                   size={28}
-                  color={isSelected ? '#D4572A' : (isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)')}
+                  color={isSelected ? colors.tint : colors.placeholder}
                 />
-                <Text style={[styles.equipmentLabel, { color: isSelected ? '#D4572A' : colors.textSub }]}>
+                <Text style={[styles.equipmentLabel, { color: isSelected ? colors.tint : colors.textSub }]}>
                   {EQUIPMENT_LABELS[item]}
                 </Text>
               </Pressable>
@@ -432,18 +424,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signOutText: {
-    color: '#E8834A',
     fontSize: 14,
     fontWeight: '600',
   },
   createAccountButton: {
-    backgroundColor: '#E8834A',
     borderRadius: 8,
     paddingVertical: 10,
     alignItems: 'center',
   },
   createAccountText: {
-    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
   },

@@ -30,65 +30,65 @@ const ALL_EQUIPMENT = EquipmentEnum.options as Equipment[];
 
 const ALLERGEN_LABELS: Record<AllergenTag, string> = {
   gluten: 'Gluten',
-  dairy: 'Süt Ürünleri',
+  dairy: 'S\u00fct \u00dcr\u00fcnleri',
   egg: 'Yumurta',
-  nuts: 'Kuruyemiş',
-  peanuts: 'Fıstık',
-  shellfish: 'Kabuklu Deniz Ürünleri',
-  fish: 'Balık',
+  nuts: 'Kuruyemi\u015f',
+  peanuts: 'F\u0131st\u0131k',
+  shellfish: 'Kabuklu Deniz \u00dcr\u00fcnleri',
+  fish: 'Bal\u0131k',
   soy: 'Soya',
   sesame: 'Susam',
   mustard: 'Hardal',
   celery: 'Kereviz',
-  lupin: 'Acı Bakla',
-  molluscs: 'Yumuşakça',
-  sulphites: 'Sülfitler',
+  lupin: 'Ac\u0131 Bakla',
+  molluscs: 'Yumu\u015fak\u00e7a',
+  sulphites: 'S\u00fclfitler',
 };
 
 const SKILL_LEVEL_LABELS: Record<SkillLevel, string> = {
-  beginner: 'Başlangıç',
+  beginner: 'Ba\u015flang\u0131\u00e7',
   intermediate: 'Orta',
-  advanced: 'İleri',
+  advanced: '\u0130leri',
 };
 
 const SKILL_LEVEL_DESCRIPTIONS: Record<SkillLevel, string> = {
   beginner: 'Basit tarifleri tercih ederim',
-  intermediate: 'Çoğu tekniği uygulayabilirim',
-  advanced: 'Karmaşık yemeklerden keyif alırım',
+  intermediate: '\u00c7o\u011fu tekni\u011fi uygulayabilirim',
+  advanced: 'Karma\u015f\u0131k yemeklerden keyif al\u0131r\u0131m',
 };
 
 const EQUIPMENT_LABELS: Record<Equipment, string> = {
-  'fırın': 'Fırın',
+  'f\u0131r\u0131n': 'F\u0131r\u0131n',
   'blender': 'Blender',
-  'döküm tava': 'Döküm Tava',
+  'd\u00f6k\u00fcm tava': 'D\u00f6k\u00fcm Tava',
   'stand mixer': 'Hamur Makinesi',
   'wok': 'Wok',
-  'su ısıtıcı': 'Su Isıtıcı',
-  'çırpıcı': 'Çırpıcı',
+  'su \u0131s\u0131t\u0131c\u0131': 'Su Is\u0131t\u0131c\u0131',
+  '\u00e7\u0131rp\u0131c\u0131': '\u00c7\u0131rp\u0131c\u0131',
   'tencere': 'Tencere',
   'tava': 'Tava',
   'mikser': 'El Mikseri',
   'rende': 'Rende',
-  'bıçak seti': 'Bıçak Seti',
-  'kesme tahtası': 'Kesme Tahtası',
+  'b\u0131\u00e7ak seti': 'B\u0131\u00e7ak Seti',
+  'kesme tahtas\u0131': 'Kesme Tahtas\u0131',
 };
 
 type MCIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const EQUIPMENT_ICONS: Record<Equipment, MCIconName> = {
-  'fırın': 'stove',
+  'f\u0131r\u0131n': 'stove',
   'blender': 'blender',
-  'döküm tava': 'pot',
+  'd\u00f6k\u00fcm tava': 'pot',
   'stand mixer': 'chef-hat',
   'wok': 'pot-steam',
-  'su ısıtıcı': 'kettle',
-  'çırpıcı': 'silverware-fork-knife',
+  'su \u0131s\u0131t\u0131c\u0131': 'kettle',
+  '\u00e7\u0131rp\u0131c\u0131': 'silverware-fork-knife',
   'tencere': 'pot-steam-outline',
   'tava': 'pan',
   'mikser': 'silverware-variant',
   'rende': 'silverware-clean',
-  'bıçak seti': 'knife',
-  'kesme tahtası': 'silverware',
+  'b\u0131\u00e7ak seti': 'knife',
+  'kesme tahtas\u0131': 'silverware',
 };
 
 // ---------------------------------------------------------------------------
@@ -110,7 +110,7 @@ export default function SettingsScreen() {
   }, []);
 
   // ---------------------------------------------------------------------------
-  // Immediate-save logic — saves a partial profile update on every toggle
+  // Immediate-save logic -- saves a partial profile update on every toggle
   // ---------------------------------------------------------------------------
 
   const persistProfileChange = useCallback(
@@ -162,7 +162,7 @@ export default function SettingsScreen() {
           <View style={styles.headerSpacer} />
         </View>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#E8834A" />
+          <ActivityIndicator size="large" color={colors.tint} />
         </View>
       </SafeAreaView>
     );
@@ -194,12 +194,12 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Hesap</Text>
         {session ? (
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }]}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={styles.accountInfo}>
-              <MaterialCommunityIcons name="account-circle" size={40} color="#E8834A" />
+              <MaterialCommunityIcons name="account-circle" size={40} color={colors.tint} />
               <View style={styles.accountText}>
                 <Text style={[styles.accountEmail, { color: colors.text }]} numberOfLines={1}>
-                  {session.user.email ?? 'Giriş yapıldı'}
+                  {session.user.email ?? 'Giri\u015f yap\u0131ld\u0131'}
                 </Text>
                 <Text style={[styles.accountProvider, { color: colors.textSub }]}>
                   {session.user.app_metadata?.provider ?? 'email'}
@@ -207,28 +207,28 @@ export default function SettingsScreen() {
               </View>
             </View>
             <Pressable
-              style={[styles.signOutButton, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
+              style={[styles.signOutButton, { backgroundColor: colors.tintBg }]}
               onPress={signOut}
               accessibilityRole="button"
             >
-              <Text style={styles.signOutText}>Çıkış Yap</Text>
+              <Text style={[styles.signOutText, { color: colors.tint }]}>\u00c7\u0131k\u0131\u015f Yap</Text>
             </Pressable>
           </View>
         ) : (
-          <View style={[styles.card, { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }]}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={styles.accountInfo}>
               <MaterialCommunityIcons name="account-circle-outline" size={40} color={colors.textMuted} />
               <View style={styles.accountText}>
-                <Text style={[styles.accountEmail, { color: colors.text }]}>Hesap oluşturulmadı</Text>
-                <Text style={[styles.accountProvider, { color: colors.textSub }]}>Tarif geçmişinizi kaydedin</Text>
+                <Text style={[styles.accountEmail, { color: colors.text }]}>Hesap olu\u015fturulmad\u0131</Text>
+                <Text style={[styles.accountProvider, { color: colors.textSub }]}>Tarif ge\u00e7mi\u015finizi kaydedin</Text>
               </View>
             </View>
             <Pressable
-              style={styles.createAccountButton}
+              style={[styles.createAccountButton, { backgroundColor: colors.tint }]}
               onPress={() => router.push('/(auth)/sign-in' as never)}
               accessibilityRole="button"
             >
-              <Text style={styles.createAccountText}>Hesap Oluştur</Text>
+              <Text style={[styles.createAccountText, { color: colors.onTint }]}>Hesap Olu\u015ftur</Text>
             </Pressable>
           </View>
         )}
@@ -238,7 +238,7 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Alerjenler</Text>
         <Text style={[styles.sectionSubtitle, { color: colors.textSub }]}>
-          Seçili alerjenler içeren tarifler görünmez.
+          Se\u00e7ili alerjenler i\u00e7eren tarifler g\u00f6r\u00fcnmez.
         </Text>
         <View style={styles.chipGrid}>
           {ALL_ALLERGENS.map((allergen) => (
@@ -254,7 +254,7 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Skill level chips section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>Pişirme Seviyesi</Text>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Pi\u015firme Seviyesi</Text>
         <View style={styles.skillOptionList}>
           {ALL_SKILL_LEVELS.map((level) => {
             const isSelected = profile?.skillLevel === level;
@@ -263,23 +263,25 @@ export default function SettingsScreen() {
                 key={level}
                 style={[
                   styles.skillOptionCard,
-                  { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
-                  isSelected && { borderColor: '#E8834A', backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+                  {
+                    backgroundColor: isSelected ? colors.tintBg : colors.card,
+                    borderColor: isSelected ? colors.tint : colors.border,
+                  },
                 ]}
                 onPress={() => selectSkillLevel(level)}
                 accessibilityRole="radio"
                 accessibilityState={{ checked: isSelected }}
               >
                 <View style={styles.skillOptionLeft}>
-                  <Text style={[styles.skillOptionLabel, { color: colors.textSub }, isSelected && styles.skillOptionLabelSelected]}>
+                  <Text style={[styles.skillOptionLabel, { color: isSelected ? colors.tint : colors.textSecondary }]}>
                     {SKILL_LEVEL_LABELS[level]}
                   </Text>
-                  <Text style={[styles.skillOptionDesc, { color: colors.textMuted }, isSelected && styles.skillOptionDescSelected]}>
+                  <Text style={[styles.skillOptionDesc, { color: isSelected ? colors.tint : colors.placeholder }]}>
                     {SKILL_LEVEL_DESCRIPTIONS[level]}
                   </Text>
                 </View>
                 {isSelected && (
-                  <MaterialCommunityIcons name="check-circle" size={20} color="#E8834A" />
+                  <MaterialCommunityIcons name="check-circle" size={20} color={colors.tint} />
                 )}
               </Pressable>
             );
@@ -289,9 +291,9 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Equipment grid section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>Mutfak Ekipmanlarım</Text>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Mutfak Ekipmanlar\u0131m</Text>
         <Text style={[styles.sectionSubtitle, { color: colors.textSub }]}>
-          Sahip olmadığınız ekipmanı seçimi kaldırın.
+          Sahip olmad\u0131\u011f\u0131n\u0131z ekipman\u0131 se\u00e7imi kald\u0131r\u0131n.
         </Text>
         <View style={styles.equipmentGrid}>
           {ALL_EQUIPMENT.map((item) => {
@@ -301,8 +303,10 @@ export default function SettingsScreen() {
                 key={item}
                 style={[
                   styles.equipmentItem,
-                  { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
-                  isSelected && { borderColor: '#E8834A', backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+                  {
+                    backgroundColor: isSelected ? colors.tintBg : colors.card,
+                    borderColor: isSelected ? colors.tint : colors.border,
+                  },
                 ]}
                 onPress={() => toggleEquipment(item)}
                 accessibilityRole="checkbox"
@@ -311,9 +315,9 @@ export default function SettingsScreen() {
                 <MaterialCommunityIcons
                   name={EQUIPMENT_ICONS[item]}
                   size={28}
-                  color={isSelected ? '#D4572A' : colors.textMuted}
+                  color={isSelected ? colors.tint : colors.textMuted}
                 />
-                <Text style={[styles.equipmentLabel, { color: colors.textSub }, isSelected && styles.equipmentLabelSelected]}>
+                <Text style={[styles.equipmentLabel, { color: isSelected ? colors.tint : colors.textSub }]}>
                   {EQUIPMENT_LABELS[item]}
                 </Text>
               </Pressable>
@@ -334,7 +338,6 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   headerRow: {
     flexDirection: 'row',
@@ -342,14 +345,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#F0EDE8',
-    backgroundColor: '#FFFFFF',
   },
   headerTitle: {
     flex: 1,
     fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A18',
     textAlign: 'center',
   },
   headerSpacer: {
@@ -367,22 +367,18 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1A1A18',
     marginBottom: 8,
     marginTop: 20,
   },
   sectionSubtitle: {
     fontSize: 13,
-    color: 'rgba(26,26,24,0.5)',
     marginBottom: 12,
     lineHeight: 18,
   },
   card: {
-    backgroundColor: '#F0EDE8',
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.08)',
     marginBottom: 4,
   },
   accountInfo: {
@@ -397,33 +393,27 @@ const styles = StyleSheet.create({
   accountEmail: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1A1A18',
   },
   accountProvider: {
     fontSize: 13,
-    color: 'rgba(26,26,24,0.5)',
     marginTop: 2,
     textTransform: 'capitalize',
   },
   signOutButton: {
-    backgroundColor: '#FEF3EC',
     borderRadius: 8,
     paddingVertical: 10,
     alignItems: 'center',
   },
   signOutText: {
-    color: '#E8834A',
     fontSize: 14,
     fontWeight: '600',
   },
   createAccountButton: {
-    backgroundColor: '#E8834A',
     borderRadius: 8,
     paddingVertical: 10,
     alignItems: 'center',
   },
   createAccountText: {
-    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -442,12 +432,6 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: 'rgba(0,0,0,0.08)',
-    backgroundColor: '#F0EDE8',
-  },
-  skillOptionCardSelected: {
-    borderColor: '#E8834A',
-    backgroundColor: '#FEF3EC',
   },
   skillOptionLeft: {
     flex: 1,
@@ -455,19 +439,11 @@ const styles = StyleSheet.create({
   skillOptionLabel: {
     fontSize: 15,
     fontWeight: '600',
-    color: 'rgba(26,26,24,0.65)',
     marginBottom: 2,
-  },
-  skillOptionLabelSelected: {
-    color: '#92400E',
   },
   skillOptionDesc: {
     fontSize: 12,
-    color: 'rgba(26,26,24,0.35)',
     lineHeight: 16,
-  },
-  skillOptionDescSelected: {
-    color: '#B45309',
   },
   equipmentGrid: {
     flexDirection: 'row',
@@ -480,26 +456,15 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: 'rgba(0,0,0,0.08)',
-    backgroundColor: '#F0EDE8',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
     gap: 6,
   },
-  equipmentItemSelected: {
-    borderColor: '#E8834A',
-    backgroundColor: '#FEF3EC',
-  },
   equipmentLabel: {
     fontSize: 11,
-    color: 'rgba(26,26,24,0.5)',
     textAlign: 'center',
     fontWeight: '500',
-  },
-  equipmentLabelSelected: {
-    color: '#D4572A',
-    fontWeight: '600',
   },
   bottomPad: {
     height: 40,

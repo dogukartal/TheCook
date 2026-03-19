@@ -48,7 +48,7 @@ export default function FeedScreen() {
         <View style={styles.scrollContent}>
           {[0, 1].map((i) => (
             <View key={i} style={styles.sectionSkeleton}>
-              <View style={[styles.skeletonTitleBar, { backgroundColor: isDark ? '#1E1E1B' : '#E8E4DC' }]} />
+              <View style={[styles.skeletonTitleBar, { backgroundColor: colors.skeleton }]} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
                 {[0, 1, 2].map((j) => (
                   <View key={j} style={styles.skeletonCardWrapper}>
@@ -65,7 +65,7 @@ export default function FeedScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.background, borderBottomColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)' }]}>
+      <View style={[styles.header, { backgroundColor: colors.background, borderBottomColor: colors.separator }]}>
         <Text style={[styles.headerTitle, { color: colors.text }]}>The Cook</Text>
       </View>
       <ScrollView
@@ -74,7 +74,7 @@ export default function FeedScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            tintColor="#E8834A"
+            tintColor={colors.tint}
           />
         }
       >
@@ -93,7 +93,7 @@ export default function FeedScreen() {
         {loading ? (
           [0, 1].map((i) => (
             <View key={i} style={styles.sectionSkeleton}>
-              <View style={[styles.skeletonTitleBar, { backgroundColor: isDark ? '#1E1E1B' : '#E8E4DC' }]} />
+              <View style={[styles.skeletonTitleBar, { backgroundColor: colors.skeleton }]} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
                 {[0, 1, 2].map((j) => (
                   <View key={j} style={styles.skeletonCardWrapper}>
@@ -111,12 +111,12 @@ export default function FeedScreen() {
               Alerjen, ekipman ve beceri seviyeni Profil sekmesinden güncelleyerek sana özel tarifler keşfedebilirsin.
             </Text>
             <Pressable
-              style={styles.profileButton}
+              style={[styles.profileButton, { backgroundColor: colors.tint }]}
               onPress={() => router.push('/(tabs)/profile' as never)}
               accessibilityRole="button"
               accessibilityLabel="Profilini güncelle"
             >
-              <Text style={styles.profileButtonText}>Profilini güncelle</Text>
+              <Text style={[styles.profileButtonText, { color: colors.onTint }]}>Profilini güncelle</Text>
             </Pressable>
           </View>
         ) : (
@@ -181,13 +181,11 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   profileButton: {
-    backgroundColor: '#E8834A',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 14,
   },
   profileButtonText: {
-    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
   },
