@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Visual Polish & Content Ready
-status: completed
-stopped_at: Completed 17-02-PLAN.md
-last_updated: "2026-03-19T19:29:16.606Z"
-last_activity: 2026-03-19 -- Phase 17 complete (cookbook saved/cooked tabs fully wired)
+status: in-progress
+stopped_at: Completed 18-01-PLAN.md
+last_updated: "2026-03-19T20:36:23Z"
+last_activity: 2026-03-19 -- Phase 18 plan 01 complete (tap feedback + bookmark animation)
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 12
-  completed_plans: 12
-  percent: 100
+  total_plans: 14
+  completed_plans: 13
+  percent: 93
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-19)
 
 **Core value:** The shortest path between "I want to make something different tonight" and a finished meal you are proud of.
-**Current focus:** Phase 17 complete -- ready for Phase 18
+**Current focus:** Phase 18 in progress -- tap feedback and bookmark animation done, sheet animations next
 
 ## Current Position
 
-Phase: 17 of 18 (Cookbook Saved/Cooked Tabs) -- fifth of 6 phases in v1.1
-Plan: 2 of 2 complete
-Status: Phase Complete
-Last activity: 2026-03-19 -- Phase 17 complete (cookbook saved/cooked tabs fully wired)
+Phase: 18 of 18 (UI Polish) -- sixth of 6 phases in v1.1
+Plan: 1 of 2 complete
+Status: In Progress
+Last activity: 2026-03-19 -- Phase 18 plan 01 complete (tap feedback + bookmark animation)
 
-Progress: [██████████] 100%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 47 (v1.0)
-- v1.1 plans completed: 12
-- Total execution time: 58min (v1.1)
+- v1.1 plans completed: 13
+- Total execution time: 66min (v1.1)
 
 **By Phase:**
 
@@ -48,6 +48,7 @@ Progress: [██████████] 100%
 | 15 Card Image Rendering | 3/3 | 14min | 5min |
 | 16 Feed See All + Discovery | 2/2 | 8min | 4min |
 | 17 Cookbook Saved/Cooked | 2/2 | 7min | 4min |
+| 18 UI Polish | 1/2 | 8min | 8min |
 
 ## Accumulated Context
 
@@ -85,6 +86,9 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Phase 17-02: getRecipesByIds added to recipes.ts for cooked tab (no hard filters -- user already cooked these)
 - Phase 17-02: Parallel loading of saved + cooked data on focus (single loadData call fetches both)
 - Phase 17-02: ActivityIndicator used for loading state instead of skeleton rows (simpler, consistent)
+- Phase 18-01: Animated.View wrapper + inner Pressable for ScalePressable (avoids TypeScript issues with Animated.createAnimatedComponent)
+- Phase 18-01: Haptic fires only on bookmark add (not remove) matching iOS system behavior
+- Phase 18-01: Icon-only buttons excluded from scale feedback per research anti-pattern guidance
 
 ### Pending Todos
 
@@ -96,6 +100,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-19T19:23:26Z
-Stopped at: Completed 17-02-PLAN.md
+Last session: 2026-03-19T20:36:23Z
+Stopped at: Completed 18-01-PLAN.md
 Resume file: None

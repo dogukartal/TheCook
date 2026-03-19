@@ -34,7 +34,7 @@
 - [x] **Phase 15: Card Image Rendering** - Show recipe images on cards, recipe detail, and cooking mode with blurhash placeholders (completed 2026-03-19)
 - [x] **Phase 16: Feed "See All" + Discovery Polish** - "See All" vertical list route, card peek hint, swipe animation, and section heading polish (completed 2026-03-19)
 - [x] **Phase 17: Cookbook Saved/Cooked Tabs** - Two-tab Cookbook with star ratings, re-rating, cook count, and row layout (completed 2026-03-19)
-- [ ] **Phase 18: UI Polish** - Haptics, press feedback, sheet transitions, filter chip icons, progress bar animation, and button feedback
+- [x] **Phase 18: UI Polish** - Haptics, press feedback, sheet transitions, filter chip icons, progress bar animation, and button feedback (completed 2026-03-19)
 
 ## Phase Details
 
@@ -126,7 +126,7 @@ Plans:
   4. Search filter chips display a small category icon next to their label
   5. The cooking mode progress bar animates smoothly when moving between steps instead of jumping
   6. Buttons across the app provide visual feedback on tap (scale or opacity change)
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 18-01-PLAN.md — ScalePressable and AnimatedHeart components, wire into cards and cooking buttons
@@ -156,4 +156,4 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 2/2 | Complete | 2026-03-19 |
 | 17. Cookbook Saved/Cooked Tabs | v1.1 | 2/2 | Complete | 2026-03-19 |
-| 18. UI Polish | v1.1 | 0/2 | Not started | - |
+| 18. UI Polish | 2/2 | Complete   | 2026-03-19 | - |
