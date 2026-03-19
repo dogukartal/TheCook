@@ -122,4 +122,18 @@ describe("feed section data logic", () => {
     expect(sections).toHaveLength(0);
     expect(allEmpty).toBe(true);
   });
+
+  test("each section exposes data.length for recipe count display", () => {
+    const { sections } = buildFeedSections(recipes, new Set(), baseProfile);
+    // All non-empty sections should have data.length accessible and > 0
+    for (const section of sections) {
+      expect(section.data.length).toBeGreaterThan(0);
+    }
+    // Trending should have all 4 recipes
+    const trending = sections.find((s) => s.key === "trending");
+    expect(trending!.data.length).toBe(4);
+    // Quick should have 2 recipes (totalTime <= 30)
+    const quick = sections.find((s) => s.key === "quick");
+    expect(quick!.data.length).toBe(2);
+  });
 });
