@@ -64,31 +64,27 @@ describe('AnimatedHeart', () => {
     expect(mockImpactAsync).not.toHaveBeenCalled();
   });
 
-  it('renders heart icon when bookmarked', () => {
-    const { getByTestId } = render(
+  it('shows "Favoriden cikar" label when bookmarked', () => {
+    const { getByLabelText } = render(
       React.createElement(AnimatedHeart, {
         isBookmarked: true,
         onToggle: jest.fn(),
         color: '#FFFFFF',
-        testID: 'animated-heart',
       }),
     );
 
-    const icon = getByTestId('animated-heart-icon');
-    expect(icon.props.name).toBe('heart');
+    expect(getByLabelText('Favoriden cikar')).toBeTruthy();
   });
 
-  it('renders heart-outline icon when not bookmarked', () => {
-    const { getByTestId } = render(
+  it('shows "Favoriye ekle" label when not bookmarked', () => {
+    const { getByLabelText } = render(
       React.createElement(AnimatedHeart, {
         isBookmarked: false,
         onToggle: jest.fn(),
         color: '#FFFFFF',
-        testID: 'animated-heart',
       }),
     );
 
-    const icon = getByTestId('animated-heart-icon');
-    expect(icon.props.name).toBe('heart-outline');
+    expect(getByLabelText('Favoriye ekle')).toBeTruthy();
   });
 });
