@@ -50,7 +50,6 @@ export function SefimSheet({
 }: SefimSheetProps) {
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const [chipsUsed, setChipsUsed] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   // -------------------------------------------------------------------------
@@ -93,7 +92,6 @@ export function SefimSheet({
 
   function handleChipPress(qa: SefimQA) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setChipsUsed(true);
     onChipTap(qa);
   }
 
@@ -125,7 +123,11 @@ export function SefimSheet({
   // Derived state
   // -------------------------------------------------------------------------
 
-  const showChips = chips.length > 0 && !chipsUsed && messages.length === 0;
+  const askedQuestions = new Set(
+    messages.filter((m) => m.role === 'user' && m.isChip).map((m) => m.text),
+  );
+  const availableChips = chips.filter((qa) => !askedQuestions.has(qa.question));
+  const showChips = availableChips.length > 0;
 
   // -------------------------------------------------------------------------
   // Render
@@ -165,7 +167,7 @@ export function SefimSheet({
               style={styles.chipsRow}
               contentContainerStyle={styles.chipsContent}
             >
-              {chips.map((qa, idx) => (
+              {availableChips.map((qa, idx) => (
                 <Pressable
                   key={idx}
                   style={styles.chip}
@@ -288,7 +290,8 @@ const styles = StyleSheet.create({
 
   // Chips
   chipsRow: {
-    maxHeight: 56,
+    height: 56,
+    flexShrink: 0,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
   },
