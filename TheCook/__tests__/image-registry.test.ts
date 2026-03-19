@@ -114,11 +114,13 @@ steps:
     expect(content).toContain("export function getRecipeImages");
   });
 
-  it("getRecipeImages returns { cover: null, steps: [] } for unknown recipe ID", () => {
+  it("fallback return includes blurhash fields", () => {
     const content = fs.readFileSync(tempRegistryPath, "utf8");
 
-    // The function definition should include the null fallback
-    expect(content).toContain("{ cover: null, steps: [] }");
+    // The function definition should include the full null fallback with blurhash fields
+    expect(content).toContain(
+      "{ cover: null, coverBlurhash: null, steps: [], stepBlurhashes: [] }"
+    );
   });
 
   it("getRecipeImages returns cover image source for recipe with images", () => {
@@ -137,5 +139,27 @@ steps:
     const content = fs.readFileSync(tempRegistryPath, "utf8");
     expect(content).toContain("export type ImageSource");
     expect(content).toContain("export interface RecipeImages");
+  });
+
+  it("registry includes coverBlurhash field", () => {
+    const content = fs.readFileSync(tempRegistryPath, "utf8");
+    expect(content).toContain("coverBlurhash: string | null;");
+  });
+
+  it("recipe with cover image has non-null coverBlurhash string", () => {
+    const content = fs.readFileSync(tempRegistryPath, "utf8");
+
+    // Extract the known-recipe block and verify it has a real blurhash string
+    const knownRecipeMatch = content.match(
+      /"known-recipe":\s*\{[\s\S]*?coverBlurhash:\s*"([^"]+)"/
+    );
+    expect(knownRecipeMatch).not.toBeNull();
+    // Blurhash strings are typically 20-30 characters
+    expect(knownRecipeMatch![1].length).toBeGreaterThanOrEqual(6);
+  });
+
+  it("registry includes stepBlurhashes field", () => {
+    const content = fs.readFileSync(tempRegistryPath, "utf8");
+    expect(content).toContain("stepBlurhashes: (string | null)[];");
   });
 });

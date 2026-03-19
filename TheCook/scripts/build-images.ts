@@ -8,6 +8,7 @@
 //   npx tsx scripts/build-images.ts --raw-dir ... --out-dir ... --registry-path ... --recipes-dir ...
 
 import sharp from "sharp";
+import { encode } from "blurhash";
 import * as fs from "fs";
 import * as path from "path";
 import { parse } from "yaml";
@@ -76,6 +77,22 @@ async function processImage(
   return result.size;
 }
 
+/** Generate a blurhash string from a source image */
+async function generateBlurhash(imagePath: string): Promise<string> {
+  const { data, info } = await sharp(imagePath)
+    .raw()
+    .ensureAlpha()
+    .resize(32, 32, { fit: "inside" })
+    .toBuffer({ resolveWithObject: true });
+  return encode(
+    new Uint8ClampedArray(data),
+    info.width,
+    info.height,
+    4, // componentX
+    3, // componentY
+  );
+}
+
 /** Read recipe YAML files and return array of { id, coverImage, stepCount } */
 function readRecipes(recipesDir: string): Array<{
   id: string;
@@ -118,7 +135,7 @@ async function main() {
   // Track which images were processed for registry generation
   const processedImages: Map<
     string,
-    { cover: string | null; steps: (string | null)[] }
+    { cover: string | null; coverBlurhash: string | null; steps: (string | null)[]; stepBlurhashes: (string | null)[] }
   > = new Map();
 
   for (const recipe of recipes) {
@@ -126,6 +143,7 @@ async function main() {
     const coverSource = findSourceImage(RAW_DIR, coverBaseName);
 
     let coverWebp: string | null = null;
+    let coverBlurhash: string | null = null;
 
     if (coverSource) {
       const outputFileName = `${recipe.id}-cover.webp`;
@@ -142,10 +160,12 @@ async function main() {
       }
 
       coverWebp = outputFileName;
+      coverBlurhash = await generateBlurhash(coverSource);
     }
 
     // Process step images
     const stepImages: (string | null)[] = [];
+    const stepBlurhashes: (string | null)[] = [];
     for (let i = 0; i < recipe.steps.length; i++) {
       const stepNum = String(i + 1).padStart(2, "0");
       const stepBaseName = `${recipe.id}-step-${stepNum}`;
@@ -166,12 +186,14 @@ async function main() {
         }
 
         stepImages.push(outputFileName);
+        stepBlurhashes.push(await generateBlurhash(stepSource));
       } else {
         stepImages.push(null);
+        stepBlurhashes.push(null);
       }
     }
 
-    processedImages.set(recipe.id, { cover: coverWebp, steps: stepImages });
+    processedImages.set(recipe.id, { cover: coverWebp, coverBlurhash, steps: stepImages, stepBlurhashes });
   }
 
   // Validate YAML coverImage references
@@ -209,7 +231,7 @@ async function main() {
 function generateRegistry(
   processedImages: Map<
     string,
-    { cover: string | null; steps: (string | null)[] }
+    { cover: string | null; coverBlurhash: string | null; steps: (string | null)[]; stepBlurhashes: (string | null)[] }
   >
 ) {
   const lines: string[] = [];
@@ -225,7 +247,9 @@ function generateRegistry(
   lines.push("");
   lines.push("export interface RecipeImages {");
   lines.push("  cover: ImageSource | null;");
+  lines.push("  coverBlurhash: string | null;");
   lines.push("  steps: (ImageSource | null)[];");
+  lines.push("  stepBlurhashes: (string | null)[];");
   lines.push("}");
   lines.push("");
   lines.push("const registry: Record<string, RecipeImages> = {");
@@ -239,6 +263,13 @@ function generateRegistry(
       );
     } else {
       lines.push("    cover: null,");
+    }
+
+    // coverBlurhash
+    if (images.coverBlurhash) {
+      lines.push(`    coverBlurhash: "${images.coverBlurhash}",`);
+    } else {
+      lines.push("    coverBlurhash: null,");
     }
 
     // Steps array
@@ -255,6 +286,20 @@ function generateRegistry(
       lines.push("    ],");
     }
 
+    // stepBlurhashes array
+    const blurhashEntries = images.stepBlurhashes.map((b) =>
+      b ? `"${b}"` : "null"
+    );
+    if (blurhashEntries.length === 0) {
+      lines.push("    stepBlurhashes: [],");
+    } else {
+      lines.push("    stepBlurhashes: [");
+      for (const entry of blurhashEntries) {
+        lines.push(`      ${entry},`);
+      }
+      lines.push("    ],");
+    }
+
     lines.push("  },");
   }
 
@@ -264,7 +309,7 @@ function generateRegistry(
     "export function getRecipeImages(recipeId: string): RecipeImages {"
   );
   lines.push(
-    '  return registry[recipeId] ?? { cover: null, steps: [] };'
+    '  return registry[recipeId] ?? { cover: null, coverBlurhash: null, steps: [], stepBlurhashes: [] };'
   );
   lines.push("}");
   lines.push("");
