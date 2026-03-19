@@ -17,9 +17,9 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 ### Discovery
 
 - [ ] **DISC-06**: User can tap "See All" on any feed section to view all recipes in that section as a vertical scrollable list
-- [ ] **DISC-07**: User sees a partial 3rd card peeking on feed sections, hinting at horizontal scrollability
-- [ ] **DISC-08**: User sees a subtle auto-animation on feed sections suggesting horizontal swipe
-- [ ] **DISC-09**: Feed section headings show recipe count and have elegant visual separators
+- [x] **DISC-07**: User sees a partial 3rd card peeking on feed sections, hinting at horizontal scrollability
+- [x] **DISC-08**: User sees a subtle auto-animation on feed sections suggesting horizontal swipe
+- [x] **DISC-09**: Feed section headings show recipe count and have elegant visual separators
 
 ### Cookbook
 
@@ -74,9 +74,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | IMG-03 | Phase 15 | Complete |
 | IMG-04 | Phase 13 | Complete |
 | DISC-06 | Phase 16 | Pending |
-| DISC-07 | Phase 16 | Pending |
-| DISC-08 | Phase 16 | Pending |
-| DISC-09 | Phase 16 | Pending |
+| DISC-07 | Phase 16 | Complete |
+| DISC-08 | Phase 16 | Complete |
+| DISC-09 | Phase 16 | Complete |
 | BOOK-01 | Phase 17 | Pending |
 | BOOK-02 | Phase 17 | Pending |
 | BOOK-03 | Phase 17 | Pending |
