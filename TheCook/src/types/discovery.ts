@@ -57,6 +57,14 @@ export interface CookingHistoryEntry {
   rating: number | null;
 }
 
+// Aggregated cooking metadata per recipe (for Cookbook "Cooked" tab)
+export interface CookedRecipeMeta {
+  recipeId: string;
+  cookCount: number;
+  latestRating: number | null;
+  lastCookedAt: string;
+}
+
 // Feed section for the redesigned feed screen
 export interface FeedSection {
   key: "trending" | "quick" | "personal" | "untried";
