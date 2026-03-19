@@ -114,12 +114,12 @@ export function IngredientsSheet({
       animationType="slide"
       onRequestClose={onClose}
     >
-      <View style={styles.overlay}>
+      <View style={[styles.overlay, { backgroundColor: colors.overlay }]}>
         <Pressable style={styles.overlayDismiss} onPress={onClose} />
-        <View style={[styles.sheetContainer, { backgroundColor: isDark ? '#161614' : '#FFFFFF' }]}>
+        <View style={[styles.sheetContainer, { backgroundColor: isDark ? colors.card : colors.background }]}>
           {/* Handle bar */}
           <View style={styles.handleBarRow}>
-            <View style={[styles.handleBar, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)' }]} />
+            <View style={[styles.handleBar, { backgroundColor: colors.border }]} />
           </View>
 
           {/* Header */}
@@ -140,7 +140,7 @@ export function IngredientsSheet({
             {flatItems.map((item, idx) => {
               if (item.type === 'header') {
                 return (
-                  <Text key={`h-${idx}`} style={[styles.groupLabel, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>
+                  <Text key={`h-${idx}`} style={[styles.groupLabel, { color: colors.textSecondary }]}>
                     {item.label}
                   </Text>
                 );
@@ -160,7 +160,7 @@ export function IngredientsSheet({
                     <MaterialCommunityIcons
                       name={checked ? 'checkbox-marked' : 'checkbox-blank-outline'}
                       size={22}
-                      color={checked ? colors.textMuted : '#E8834A'}
+                      color={checked ? colors.textMuted : colors.tint}
                     />
                   </Pressable>
 
@@ -168,7 +168,7 @@ export function IngredientsSheet({
                   <Text
                     style={[
                       styles.ingredientText,
-                      { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' },
+                      { color: colors.textSecondary },
                       checked && { color: colors.textMuted, textDecorationLine: 'line-through' },
                     ]}
                     numberOfLines={2}
@@ -180,17 +180,17 @@ export function IngredientsSheet({
                   {item.hasAlternatives && !item.isSwapped && (
                     <Pressable
                       onPress={() => handleSwapPress(item.ingredientName, item.alternatives)}
-                      style={styles.swapButton}
+                      style={[styles.swapButton, { borderColor: colors.tint }]}
                       accessibilityRole="button"
                       accessibilityLabel="Elimde yok"
                     >
-                      <Text style={styles.swapButtonText}>Elimde yok</Text>
+                      <Text style={[styles.swapButtonText, { color: colors.tint }]}>Elimde yok</Text>
                     </Pressable>
                   )}
                   {item.isSwapped && item.originalName && onResetSwap && (
                     <Pressable
                       onPress={() => onResetSwap(item.originalName!)}
-                      style={[styles.swapButton, styles.swapButtonActive, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
+                      style={[styles.swapButton, styles.swapButtonActive, { backgroundColor: colors.tintBg, borderColor: colors.border }]}
                       accessibilityRole="button"
                       accessibilityLabel="Geri al"
                     >
@@ -215,7 +215,6 @@ export function IngredientsSheet({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'flex-end',
   },
   overlayDismiss: {
@@ -279,16 +278,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: '#E8834A',
     borderRadius: 6,
   },
   swapButtonText: {
     fontSize: 12,
-    color: '#E8834A',
     fontWeight: '500',
   },
   swapButtonActive: {
-    borderColor: 'rgba(26,26,24,0.35)',
   },
   swapButtonActiveText: {
     fontSize: 12,

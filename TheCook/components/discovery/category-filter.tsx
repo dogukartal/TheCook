@@ -8,6 +8,7 @@ import {
   Animated,
 } from 'react-native';
 import { Chip } from '@/components/ui/chip';
+import { useAppTheme } from '@/contexts/ThemeContext';
 import type { Category } from '@/src/types/recipe';
 import type { DiscoveryFilter } from '@/src/types/discovery';
 
@@ -47,6 +48,7 @@ export function CategoryFilter({
 }: CategoryFilterProps) {
   const [panelOpen, setPanelOpen] = useState(false);
   const arrowRotation = useRef(new Animated.Value(0)).current;
+  const { colors } = useAppTheme();
 
   function togglePanel() {
     const toValue = panelOpen ? 0 : 1;
@@ -127,15 +129,15 @@ export function CategoryFilter({
           accessibilityLabel={panelOpen ? 'Filtreyi kapat' : 'Gelişmiş filtre'}
           accessibilityState={{ expanded: panelOpen }}
         >
-          <Animated.Text style={[styles.arrowText, arrowStyle]}>▼</Animated.Text>
+          <Animated.Text style={[styles.arrowText, arrowStyle, { color: colors.textMuted }]}>▼</Animated.Text>
         </Pressable>
       </View>
 
       {/* Advanced filter panel */}
       {panelOpen && (
-        <View style={styles.panel}>
+        <View style={[styles.panel, { borderColor: colors.border, backgroundColor: colors.surface }]}>
           {/* Section 1: Cuisine */}
-          <Text style={styles.sectionLabel}>Mutfak</Text>
+          <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Mutfak</Text>
           <View style={styles.chipGroup}>
             <Chip
               label="Türk"
@@ -150,7 +152,7 @@ export function CategoryFilter({
           </View>
 
           {/* Section 2: Cook time */}
-          <Text style={styles.sectionLabel}>Pişirme Süresi</Text>
+          <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Pişirme Süresi</Text>
           <View style={styles.chipGroup}>
             <Chip
               label="< 15 dk"
@@ -170,7 +172,7 @@ export function CategoryFilter({
           </View>
 
           {/* Section 3: Skill level */}
-          <Text style={styles.sectionLabel}>Zorluk</Text>
+          <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Zorluk</Text>
           <View style={styles.chipGroup}>
             <Chip
               label="Başlangıç"
@@ -214,20 +216,16 @@ const styles = StyleSheet.create({
   },
   arrowText: {
     fontSize: 12,
-    color: '#6B7280',
   },
   panel: {
     borderWidth: 1,
-    borderColor: '#E5E7EB',
     borderRadius: 12,
     padding: 16,
-    backgroundColor: '#F9FAFB',
     marginTop: 8,
   },
   sectionLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#374151',
     marginBottom: 4,
     marginTop: 8,
   },

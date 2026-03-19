@@ -456,7 +456,7 @@ export default function CookingScreen() {
             accessibilityLabel="Sef'im"
           >
             <SefimPulse active={sefim.lingerActive}>
-              <MaterialCommunityIcons name="chef-hat" size={24} color="#E8834A" />
+              <MaterialCommunityIcons name="chef-hat" size={24} color={colors.tint} />
             </SefimPulse>
           </Pressable>
         </View>
@@ -550,9 +550,9 @@ export default function CookingScreen() {
           <MaterialCommunityIcons
             name="format-list-checks"
             size={20}
-            color="#E8834A"
+            color={colors.tint}
           />
-          <Text style={styles.ingredientsButtonText}>Malzemeler</Text>
+          <Text style={[styles.ingredientsButtonText, { color: colors.tint }]}>Malzemeler</Text>
         </Pressable>
 
         <View style={styles.navButtons}>
@@ -568,12 +568,12 @@ export default function CookingScreen() {
           )}
 
           <Pressable
-            style={styles.nextButton}
+            style={[styles.nextButton, { backgroundColor: colors.tint }]}
             onPress={goToNextStep}
             accessibilityRole="button"
             accessibilityLabel={nextLabel}
           >
-            <Text style={styles.nextButtonText}>{nextLabel}</Text>
+            <Text style={[styles.nextButtonText, { color: colors.onTint }]}>{nextLabel}</Text>
           </Pressable>
         </View>
       </View>
@@ -638,7 +638,6 @@ const styles = StyleSheet.create({
   },
   ingredientsButtonText: {
     fontSize: 14,
-    color: '#E8834A',
     fontWeight: '600',
   },
   navButtons: {
@@ -655,13 +654,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   nextButton: {
-    backgroundColor: '#E8834A',
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 10,
   },
   nextButtonText: {
-    color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '700',
   },

@@ -8,18 +8,19 @@ import {
 } from 'react-native';
 import type { Category } from '../../types/recipe';
 import { useAppTheme } from '@/contexts/ThemeContext';
+import { CATEGORY_STRIP_COLORS } from '@/constants/palette';
 
 // ---------------------------------------------------------------------------
 // Category palette
 // ---------------------------------------------------------------------------
 
-const CATEGORIES: { key: Category; label: string; color: string }[] = [
-  { key: 'ana yemek', label: 'Ana Yemek', color: '#E8834A' },
-  { key: 'kahvaltı', label: 'Kahvaltı', color: '#D97706' },
-  { key: 'çorba', label: 'Çorbalar', color: '#0E7490' },
-  { key: 'tatlı', label: 'Tatlılar', color: '#DB2777' },
-  { key: 'salata', label: 'Salatalar', color: '#15803D' },
-  { key: 'aperatif', label: 'Aperatifler', color: '#6D28D9' },
+const CATEGORIES: { key: Category; label: string }[] = [
+  { key: 'ana yemek', label: 'Ana Yemek' },
+  { key: 'kahvaltı', label: 'Kahvaltı' },
+  { key: 'çorba', label: 'Çorbalar' },
+  { key: 'tatlı', label: 'Tatlılar' },
+  { key: 'salata', label: 'Salatalar' },
+  { key: 'aperatif', label: 'Aperatifler' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -47,6 +48,7 @@ export function CategoryStrip({ selected, onSelect }: CategoryStripProps) {
     >
       {CATEGORIES.map((cat) => {
         const isSelected = selected === cat.key;
+        const catColor = CATEGORY_STRIP_COLORS[cat.key]; // palette-exempt
 
         return (
           <Pressable
@@ -55,17 +57,17 @@ export function CategoryStrip({ selected, onSelect }: CategoryStripProps) {
             style={[
               styles.chip,
               isSelected
-                ? { backgroundColor: cat.color, borderColor: cat.color }
+                ? { backgroundColor: catColor, borderColor: catColor }
                 : {
-                    backgroundColor: isDark ? '#161614' : '#F0EDE8',
-                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
                   },
             ]}
           >
             <Text
               style={[
                 styles.label,
-                { color: isSelected ? '#FFFFFF' : colors.textSub },
+                { color: isSelected ? colors.onTint : colors.textSub },
               ]}
             >
               {cat.label}

@@ -10,7 +10,7 @@ interface ChipProps {
 }
 
 export function Chip({ label, selected, onPress, style }: ChipProps) {
-  const { isDark } = useAppTheme();
+  const { colors } = useAppTheme();
 
   return (
     <Pressable
@@ -18,13 +18,13 @@ export function Chip({ label, selected, onPress, style }: ChipProps) {
       style={[
         styles.chip,
         {
-          backgroundColor: isDark ? '#161614' : '#F0EDE8',
-          borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+          backgroundColor: colors.card,
+          borderColor: colors.border,
         },
-        selected && [
-          styles.selected,
-          { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
-        ],
+        selected && {
+          backgroundColor: colors.tintBg,
+          borderColor: colors.tint,
+        },
         style,
       ]}
       accessibilityRole="checkbox"
@@ -33,8 +33,8 @@ export function Chip({ label, selected, onPress, style }: ChipProps) {
       <Text
         style={[
           styles.label,
-          { color: isDark ? '#F0EDE6' : '#1A1A18' },
-          selected && styles.selectedLabel,
+          { color: colors.text },
+          selected && { color: colors.tint, fontWeight: '600' },
         ]}
       >
         {label}
@@ -49,20 +49,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1.5,
-    borderColor: 'rgba(0,0,0,0.1)',
-    backgroundColor: '#F0EDE8',
     margin: 4,
-  },
-  selected: {
-    borderColor: '#E8834A', // warm terracotta — brand color for The Cook
-    backgroundColor: '#FEF3EC',
   },
   label: {
     fontSize: 14,
-    color: '#1A1A18',
-  },
-  selectedLabel: {
-    color: '#E8834A',
-    fontWeight: '600',
   },
 });

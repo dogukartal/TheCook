@@ -97,9 +97,9 @@ export function CircularTimer({
     ? 'pause'
     : 'play';
 
-  const buttonColor = isComplete ? '#15803D' : '#E8834A';
+  const buttonColor = isComplete ? colors.success : colors.tint;
 
-  const trackColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+  const trackColor = colors.border;
 
   return (
     <View style={styles.container}>
@@ -119,7 +119,7 @@ export function CircularTimer({
             cx={CENTER}
             cy={CENTER}
             r={RADIUS}
-            stroke="#E8834A"
+            stroke={colors.tint}
             strokeWidth={STROKE_WIDTH}
             fill="none"
             strokeDasharray={CIRCUMFERENCE}

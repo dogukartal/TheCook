@@ -30,12 +30,11 @@ export function ServingStepper({
   const isModified = value !== originalValue;
   const canDecrease = value > min;
   const canIncrease = value < max;
-  const disabledColor = isDark ? 'rgba(255,255,255,0.15)' : '#D1D5DB';
 
   return (
     <View style={styles.container}>
       <Pressable
-        style={[styles.button, !canDecrease && [styles.buttonDisabled, { borderColor: disabledColor }]]}
+        style={[styles.button, { borderColor: colors.tint }, !canDecrease && { borderColor: colors.disabledIcon }]}
         onPress={() => canDecrease && onChange(Math.max(min, value - 1))}
         disabled={!canDecrease}
         accessibilityRole="button"
@@ -44,16 +43,16 @@ export function ServingStepper({
         <MaterialCommunityIcons
           name="minus"
           size={18}
-          color={canDecrease ? "#E8834A" : disabledColor}
+          color={canDecrease ? colors.tint : colors.disabledIcon}
         />
       </Pressable>
 
-      <Text style={[styles.valueText, { color: colors.text }, isModified && styles.valueTextModified]}>
+      <Text style={[styles.valueText, { color: colors.text }, isModified && { color: colors.tint }]}>
         {value} kisi
       </Text>
 
       <Pressable
-        style={[styles.button, !canIncrease && [styles.buttonDisabled, { borderColor: disabledColor }]]}
+        style={[styles.button, { borderColor: colors.tint }, !canIncrease && { borderColor: colors.disabledIcon }]}
         onPress={() => canIncrease && onChange(Math.min(max, value + 1))}
         disabled={!canIncrease}
         accessibilityRole="button"
@@ -62,7 +61,7 @@ export function ServingStepper({
         <MaterialCommunityIcons
           name="plus"
           size={18}
-          color={canIncrease ? "#E8834A" : disabledColor}
+          color={canIncrease ? colors.tint : colors.disabledIcon}
         />
       </Pressable>
     </View>
@@ -84,19 +83,11 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#E8834A",
     alignItems: "center",
     justifyContent: "center",
-  },
-  buttonDisabled: {
-    borderColor: "#D1D5DB",
   },
   valueText: {
     fontSize: 15,
     fontWeight: "600",
-    color: "#1A1A18",
-  },
-  valueTextModified: {
-    color: "#E8834A",
   },
 });

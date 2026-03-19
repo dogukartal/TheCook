@@ -11,22 +11,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { CircularTimer } from './circular-timer';
 import { useAppTheme } from '@/contexts/ThemeContext';
+import { STEP_PASTEL_BACKGROUNDS } from '@/constants/palette';
 import type { RecipeStep } from '@/src/types/recipe';
-
-// ---------------------------------------------------------------------------
-// Pastel palette for step image placeholders
-// ---------------------------------------------------------------------------
-
-const STEP_PASTEL_COLORS = [
-  '#FDE8D8',
-  '#D4F0E8',
-  '#E8DFF5',
-  '#FFF3CD',
-  '#D1ECF1',
-  '#F5D5D5',
-  '#E2F0CB',
-  '#FCE4EC',
-];
 
 // ---------------------------------------------------------------------------
 // Props
@@ -63,7 +49,7 @@ export function StepContent({
   const [whyExpanded, setWhyExpanded] = useState(false);
   const { isDark, colors } = useAppTheme();
 
-  const bgColor = isDark ? colors.card : STEP_PASTEL_COLORS[stepIndex % STEP_PASTEL_COLORS.length];
+  const bgColor = isDark ? colors.card : STEP_PASTEL_BACKGROUNDS[stepIndex % STEP_PASTEL_BACKGROUNDS.length];
 
   const hasTimer = step.timerSeconds != null;
 
@@ -103,43 +89,43 @@ export function StepContent({
 
       {/* Checkpoint callout (green) */}
       {step.checkpoint ? (
-        <View style={[styles.checkpointCallout, { backgroundColor: isDark ? 'rgba(22,163,74,0.12)' : '#F0FDF4' }]} testID="checkpoint-callout">
-          <MaterialCommunityIcons name="check-circle" size={16} color="#16A34A" />
-          <Text style={styles.checkpointText}>{step.checkpoint}</Text>
+        <View style={[styles.checkpointCallout, { backgroundColor: colors.successBg }]} testID="checkpoint-callout">
+          <MaterialCommunityIcons name="check-circle" size={16} color={colors.success} />
+          <Text style={[styles.checkpointText, { color: colors.success }]}>{step.checkpoint}</Text>
         </View>
       ) : null}
 
       {/* Warning callout (amber) */}
       {step.warning ? (
-        <View style={[styles.warningCallout, { backgroundColor: isDark ? 'rgba(217,119,6,0.12)' : '#FFFBEB' }]} testID="warning-callout">
-          <MaterialCommunityIcons name="alert" size={16} color="#D97706" />
-          <Text style={[styles.warningText, { color: isDark ? '#FBBF24' : '#92400E' }]}>{step.warning}</Text>
+        <View style={[styles.warningCallout, { backgroundColor: colors.warningBg }]} testID="warning-callout">
+          <MaterialCommunityIcons name="alert" size={16} color={colors.warning} />
+          <Text style={[styles.warningText, { color: colors.warning }]}>{step.warning}</Text>
         </View>
       ) : null}
 
       {/* Gormeli section */}
       <View style={styles.gormeliSection}>
         <Text style={[styles.gormeliLabel, { color: colors.textSub }]}>Gormeli (You should see)</Text>
-        <Text style={styles.gormeliText}>{step.looksLikeWhenDone}</Text>
+        <Text style={[styles.gormeliText, { color: colors.success }]}>{step.looksLikeWhenDone}</Text>
       </View>
 
       {/* Neden? tap-to-reveal */}
       <Pressable onPress={() => setWhyExpanded(!whyExpanded)}>
-        <Text style={styles.nedenLink}>Neden?</Text>
+        <Text style={[styles.nedenLink, { color: colors.tint }]}>Neden?</Text>
       </Pressable>
       {whyExpanded && (
-        <Text style={[styles.whyText, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{step.why}</Text>
+        <Text style={[styles.whyText, { color: colors.textSecondary }]}>{step.why}</Text>
       )}
 
       {/* Dikkat section */}
-      <View style={[styles.dikkatSection, { backgroundColor: isDark ? 'rgba(239,68,68,0.1)' : '#FEF2F2' }]}>
+      <View style={[styles.dikkatSection, { backgroundColor: colors.errorBg, borderLeftColor: colors.error }]}>
         <View style={styles.dikkatHeader}>
-          <MaterialCommunityIcons name="alert-circle" size={18} color="#DC2626" />
-          <Text style={styles.dikkatTitle}>Dikkat!</Text>
+          <MaterialCommunityIcons name="alert-circle" size={18} color={colors.error} />
+          <Text style={[styles.dikkatTitle, { color: colors.error }]}>Dikkat!</Text>
         </View>
-        <Text style={[styles.dikkatBody, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{step.commonMistake}</Text>
+        <Text style={[styles.dikkatBody, { color: colors.textSecondary }]}>{step.commonMistake}</Text>
         <Text style={[styles.recoveryLabel, { color: colors.textSub }]}>Ne yapmaliyim?</Text>
-        <Text style={[styles.recoveryText, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{step.recovery}</Text>
+        <Text style={[styles.recoveryText, { color: colors.textSecondary }]}>{step.recovery}</Text>
       </View>
 
       {/* Bottom spacing */}
@@ -209,7 +195,6 @@ const styles = StyleSheet.create({
   },
   checkpointText: {
     fontSize: 14,
-    color: '#15803D',
     flex: 1,
   },
   warningCallout: {
@@ -235,13 +220,11 @@ const styles = StyleSheet.create({
   },
   gormeliText: {
     fontSize: 15,
-    color: '#15803D',
     fontStyle: 'italic',
     lineHeight: 22,
   },
   nedenLink: {
     fontSize: 15,
-    color: '#E8834A',
     fontWeight: '600',
     paddingHorizontal: 16,
     marginBottom: 8,
@@ -256,7 +239,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginTop: 8,
     borderLeftWidth: 4,
-    borderLeftColor: '#EF4444',
     borderRadius: 8,
     padding: 14,
   },
@@ -269,7 +251,6 @@ const styles = StyleSheet.create({
   dikkatTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#DC2626',
   },
   dikkatBody: {
     fontSize: 14,

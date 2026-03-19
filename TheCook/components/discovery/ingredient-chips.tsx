@@ -17,7 +17,7 @@ interface IngredientChipsProps {
 // ---------------------------------------------------------------------------
 
 export function IngredientChips({ chips, onRemove }: IngredientChipsProps) {
-  const { isDark } = useAppTheme();
+  const { colors } = useAppTheme();
 
   if (chips.length === 0) {
     return null;
@@ -34,10 +34,10 @@ export function IngredientChips({ chips, onRemove }: IngredientChipsProps) {
           key={name}
           style={[
             styles.chip,
-            { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+            { backgroundColor: colors.tintBg, borderColor: colors.tint },
           ]}
         >
-          <Text style={[styles.chipText, { color: isDark ? '#E8834A' : '#D4572A' }]}>{name}</Text>
+          <Text style={[styles.chipText, { color: colors.tint }]}>{name}</Text>
           <Pressable
             onPress={() => onRemove(name)}
             hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
@@ -47,7 +47,7 @@ export function IngredientChips({ chips, onRemove }: IngredientChipsProps) {
             <MaterialCommunityIcons
               name="close-circle"
               size={16}
-              color="#D4572A"
+              color={colors.tint}
             />
           </Pressable>
         </View>
@@ -69,8 +69,6 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FEF3EC',
-    borderColor: '#E8834A',
     borderWidth: 1,
     borderRadius: 16,
     paddingHorizontal: 10,
@@ -78,7 +76,6 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   chipText: {
-    color: '#D4572A',
     fontSize: 13,
     marginRight: 4,
   },

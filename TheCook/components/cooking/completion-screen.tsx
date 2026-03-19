@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useAppTheme } from '@/contexts/ThemeContext';
+import { STAR_RATING_COLOR } from '@/constants/palette';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -19,7 +20,7 @@ export interface CompletionScreenProps {
 // ---------------------------------------------------------------------------
 
 function StarRating({ value, onChange }: { value: number; onChange: (n: number) => void }) {
-  const { isDark } = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <View style={styles.starRow}>
       {[1, 2, 3, 4, 5].map((star) => (
@@ -27,7 +28,7 @@ function StarRating({ value, onChange }: { value: number; onChange: (n: number) 
           <MaterialCommunityIcons
             name={star <= value ? 'star' : 'star-outline'}
             size={36}
-            color={star <= value ? '#F59E0B' : (isDark ? 'rgba(255,255,255,0.2)' : '#D1D5DB')}
+            color={star <= value ? STAR_RATING_COLOR : colors.disabledIcon}
           />
         </Pressable>
       ))}
@@ -50,10 +51,10 @@ export function CompletionScreen({
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Celebration icon */}
-      <MaterialCommunityIcons name="party-popper" size={72} color="#E8834A" />
+      <MaterialCommunityIcons name="party-popper" size={72} color={colors.tint} />
 
       {/* Title */}
-      <Text style={styles.title}>Afiyet olsun!</Text>
+      <Text style={[styles.title, { color: colors.tint }]}>Afiyet olsun!</Text>
 
       {/* Recipe name */}
       <Text style={[styles.recipeName, { color: colors.textSub }]}>{recipeName}</Text>
@@ -67,12 +68,12 @@ export function CompletionScreen({
 
       {/* Back to recipes button */}
       <Pressable
-        style={styles.button}
+        style={[styles.button, { backgroundColor: colors.tint }]}
         onPress={() => onComplete(rating > 0 ? rating : null)}
         accessibilityRole="button"
         accessibilityLabel="Tariflere Don"
       >
-        <Text style={styles.buttonText}>Tariflere Don</Text>
+        <Text style={[styles.buttonText, { color: colors.onTint }]}>Tariflere Don</Text>
       </Pressable>
     </View>
   );
@@ -92,7 +93,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '800',
-    color: '#E8834A',
     marginTop: 20,
     marginBottom: 8,
   },
@@ -116,13 +116,11 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   button: {
-    backgroundColor: '#E8834A',
     paddingHorizontal: 32,
     paddingVertical: 14,
     borderRadius: 12,
   },
   buttonText: {
-    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
   },

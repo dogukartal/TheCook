@@ -64,15 +64,15 @@ export function FilterPanel({
                 onPress={() => onSkillChange(isActive ? null : opt.key)}
                 style={[
                   styles.chip,
-                  { backgroundColor: isDark ? '#161614' : '#F0EDE8' },
-                  isActive && styles.chipActive,
+                  { backgroundColor: colors.card },
+                  isActive && { backgroundColor: colors.tint },
                 ]}
               >
                 <Text
                   style={[
                     styles.chipText,
-                    { color: isDark ? colors.textSub : 'rgba(26,26,24,0.65)' },
-                    isActive && styles.chipTextActive,
+                    { color: colors.textSecondary },
+                    isActive && { color: colors.onTint },
                   ]}
                 >
                   {opt.label}
@@ -96,15 +96,15 @@ export function FilterPanel({
                   onPress={() => toggleEquipment(item)}
                   style={[
                     styles.chip,
-                    { backgroundColor: isDark ? '#161614' : '#F0EDE8' },
-                    isActive && styles.chipActive,
+                    { backgroundColor: colors.card },
+                    isActive && { backgroundColor: colors.tint },
                   ]}
                 >
                   <Text
                     style={[
                       styles.chipText,
-                      { color: isDark ? colors.textSub : 'rgba(26,26,24,0.65)' },
-                      isActive && styles.chipTextActive,
+                      { color: colors.textSecondary },
+                      isActive && { color: colors.onTint },
                     ]}
                   >
                     {item}
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0,0,0,0.08)',
   },
   section: {
     marginBottom: 8,
@@ -136,7 +135,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: 'rgba(26,26,24,0.5)',
     marginBottom: 6,
   },
   chipRow: {
@@ -148,17 +146,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 20,
-    backgroundColor: '#F0EDE8',
-  },
-  chipActive: {
-    backgroundColor: '#E8834A',
   },
   chipText: {
     fontSize: 14,
     fontWeight: '500',
-    color: 'rgba(26,26,24,0.65)',
-  },
-  chipTextActive: {
-    color: '#FFFFFF',
   },
 });

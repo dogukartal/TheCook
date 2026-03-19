@@ -143,14 +143,14 @@ export function SefimSheet({
       onRequestClose={onClose}
     >
       <KeyboardAvoidingView
-        style={styles.overlay}
+        style={[styles.overlay, { backgroundColor: colors.overlay }]}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <Pressable style={styles.overlayDismiss} onPress={onClose} />
-        <View style={[styles.sheetContainer, { backgroundColor: isDark ? '#161614' : '#FFFFFF' }]}>
+        <View style={[styles.sheetContainer, { backgroundColor: isDark ? colors.card : colors.background }]}>
           {/* Handle bar */}
           <View style={styles.handleBarRow}>
-            <View style={[styles.handleBar, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)' }]} />
+            <View style={[styles.handleBar, { backgroundColor: colors.border }]} />
           </View>
 
           {/* Header */}
@@ -177,11 +177,11 @@ export function SefimSheet({
               {availableChips.map((qa, idx) => (
                 <Pressable
                   key={idx}
-                  style={[styles.chip, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
+                  style={[styles.chip, { backgroundColor: colors.tintBg, borderColor: colors.tint }]}
                   onPress={() => handleChipPress(qa)}
                   accessibilityRole="button"
                 >
-                  <Text style={styles.chipText}>{qa.question}</Text>
+                  <Text style={[styles.chipText, { color: colors.tint }]}>{qa.question}</Text>
                 </Pressable>
               ))}
             </ScrollView>
@@ -200,15 +200,15 @@ export function SefimSheet({
                 style={[
                   styles.messageBubble,
                   msg.role === 'user'
-                    ? styles.userBubble
-                    : [styles.assistantBubble, { backgroundColor: isDark ? colors.card : '#F0EDE8' }],
+                    ? [styles.userBubble, { backgroundColor: colors.tint }]
+                    : [styles.assistantBubble, { backgroundColor: colors.card }],
                 ]}
               >
                 <Text
                   style={[
                     styles.messageText,
                     { color: colors.text },
-                    msg.role === 'user' && styles.userMessageText,
+                    msg.role === 'user' && { color: colors.onTint },
                   ]}
                 >
                   {msg.text}
@@ -216,7 +216,7 @@ export function SefimSheet({
               </View>
             ))}
             {isLoading && (
-              <View style={[styles.messageBubble, styles.assistantBubble, { backgroundColor: isDark ? colors.card : '#F0EDE8' }]}>
+              <View style={[styles.messageBubble, styles.assistantBubble, { backgroundColor: colors.card }]}>
                 <Text style={[styles.loadingText, { color: colors.textSub }]}>Sef'im dusunuyor...</Text>
               </View>
             )}
@@ -225,7 +225,7 @@ export function SefimSheet({
           {/* Input row */}
           <View style={styles.inputRow}>
             <TextInput
-              style={[styles.textInput, { backgroundColor: isDark ? colors.surface : '#F0EDE8', borderColor: colors.border, color: colors.text }]}
+              style={[styles.textInput, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
               value={text}
               onChangeText={setText}
               placeholder="Bir soru sor..."
@@ -239,10 +239,10 @@ export function SefimSheet({
               accessibilityRole="button"
               accessibilityLabel="Gonder"
             >
-              <MaterialCommunityIcons name="send" size={22} color="#E8834A" />
+              <MaterialCommunityIcons name="send" size={22} color={colors.tint} />
             </Pressable>
             <Pressable
-              style={[styles.micButton, isRecording && styles.micButtonActive]}
+              style={[styles.micButton, isRecording && { backgroundColor: colors.error }]}
               onPress={handleMicPress}
               accessibilityRole="button"
               accessibilityLabel="Sesli soru"
@@ -250,7 +250,7 @@ export function SefimSheet({
               <MaterialCommunityIcons
                 name="microphone"
                 size={22}
-                color={isRecording ? '#FFFFFF' : '#E8834A'}
+                color={isRecording ? colors.onTint : colors.tint}
               />
             </Pressable>
           </View>
@@ -267,7 +267,6 @@ export function SefimSheet({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'flex-end',
   },
   overlayDismiss: {
@@ -316,14 +315,12 @@ const styles = StyleSheet.create({
   },
   chip: {
     borderWidth: 1,
-    borderColor: '#E8834A',
     borderRadius: 16,
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
   chipText: {
     fontSize: 13,
-    color: '#E8834A',
     fontWeight: '500',
   },
 
@@ -345,7 +342,6 @@ const styles = StyleSheet.create({
   },
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: '#E8834A',
   },
   assistantBubble: {
     alignSelf: 'flex-start',
@@ -353,9 +349,6 @@ const styles = StyleSheet.create({
   messageText: {
     fontSize: 14,
     lineHeight: 20,
-  },
-  userMessageText: {
-    color: '#FFFFFF',
   },
   loadingText: {
     fontSize: 14,
@@ -384,8 +377,5 @@ const styles = StyleSheet.create({
   micButton: {
     padding: 8,
     borderRadius: 20,
-  },
-  micButtonActive: {
-    backgroundColor: '#EF4444',
   },
 });
