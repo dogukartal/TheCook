@@ -93,7 +93,11 @@ Plans:
   2. A partial third card is visible at the right edge of each feed section, hinting that more content exists
   3. Feed sections show a subtle animation on first appearance that suggests horizontal scrolling
   4. Each feed section heading displays the recipe count (e.g., "Sana Ozel (8)") with a visual separator between sections
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 16-01-PLAN.md — FeedSection polish: card peek width, scroll hint animation, heading count, separator, See All button
+- [ ] 16-02-PLAN.md — See All screen: vertical grid route with hook and FlashList
 
 ### Phase 17: Cookbook Saved/Cooked Tabs
 **Goal**: Users can revisit their cooking history with ratings and see their saved recipes in a clean tabbed layout
@@ -139,9 +143,9 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 10. Recipe Detail | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 11. Cooking Evolution | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 12. Sef'im AI | v1.0 | 4/4 | Complete | 2026-03-17 |
-| 13. Image Pipeline Foundation | 2/2 | Complete    | 2026-03-19 | - |
-| 14. Color Token Sweep | 3/3 | Complete    | 2026-03-19 | - |
-| 15. Card Image Rendering | 3/3 | Complete    | 2026-03-19 | - |
-| 16. Feed "See All" + Discovery Polish | v1.1 | 0/0 | Not started | - |
+| 13. Image Pipeline Foundation | v1.1 | 2/2 | Complete | 2026-03-19 |
+| 14. Color Token Sweep | v1.1 | 3/3 | Complete | 2026-03-19 |
+| 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
+| 16. Feed "See All" + Discovery Polish | v1.1 | 0/2 | Not started | - |
 | 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/0 | Not started | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |
