@@ -30,7 +30,7 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 
 ### UI Polish
 
-- [ ] **UX-01**: Recipe cards have visible contrast against background in both dark and light mode
+- [x] **UX-01**: Recipe cards have visible contrast against background in both dark and light mode
 - [ ] **UX-02**: User feels haptic feedback and sees heart animation when bookmarking a recipe
 - [ ] **UX-03**: Recipe cards show subtle press-down scale feedback on tap
 - [ ] **UX-04**: Bottom sheet backdrop (Malzemeler, Sefim) fades in/out smoothly instead of sliding
@@ -81,7 +81,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOOK-02 | Phase 17 | Pending |
 | BOOK-03 | Phase 17 | Pending |
 | BOOK-04 | Phase 17 | Pending |
-| UX-01 | Phase 14 | Pending |
+| UX-01 | Phase 14 | Complete |
 | UX-02 | Phase 18 | Pending |
 | UX-03 | Phase 18 | Pending |
 | UX-04 | Phase 18 | Pending |

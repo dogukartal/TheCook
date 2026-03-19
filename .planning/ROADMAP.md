@@ -61,7 +61,7 @@ Plans:
   1. Zero hardcoded hex color values remain in component files outside theme.ts and intentional gradient palettes
   2. Recipe cards are clearly distinguishable from the background in dark mode (visible card boundary)
   3. Recipe cards are clearly distinguishable from the background in light mode
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 - [ ] 14-01-PLAN.md — Expand theme tokens, create palette.ts, create test infrastructure
@@ -135,7 +135,7 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 11. Cooking Evolution | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 12. Sef'im AI | v1.0 | 4/4 | Complete | 2026-03-17 |
 | 13. Image Pipeline Foundation | 2/2 | Complete    | 2026-03-19 | - |
-| 14. Color Token Sweep | v1.1 | 0/3 | Not started | - |
+| 14. Color Token Sweep | 1/3 | In Progress|  | - |
 | 15. Card Image Rendering | v1.1 | 0/0 | Not started | - |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 0/0 | Not started | - |
 | 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/0 | Not started | - |
