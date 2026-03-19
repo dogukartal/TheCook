@@ -41,3 +41,7 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Image pipeline: raw source images (large PNGs/JPGs, ~2MB each)
+# Optimized WebP outputs in app/assets/images/ are committed (Metro needs them at bundle time)
+content/images/raw/
