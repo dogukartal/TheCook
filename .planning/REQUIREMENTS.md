@@ -33,9 +33,9 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 - [x] **UX-01**: Recipe cards have visible contrast against background in both dark and light mode
 - [x] **UX-02**: User feels haptic feedback and sees heart animation when bookmarking a recipe
 - [x] **UX-03**: Recipe cards show subtle press-down scale feedback on tap
-- [ ] **UX-04**: Bottom sheet backdrop (Malzemeler, Sefim) fades in/out smoothly instead of sliding
-- [ ] **UX-05**: Search filter chips show small category icon/image
-- [ ] **UX-06**: Progress bar animates smoothly when navigating between cooking steps
+- [x] **UX-04**: Bottom sheet backdrop (Malzemeler, Sefim) fades in/out smoothly instead of sliding
+- [x] **UX-05**: Search filter chips show small category icon/image
+- [x] **UX-06**: Progress bar animates smoothly when navigating between cooking steps
 - [x] **UX-07**: Buttons provide visual tap feedback
 - [x] **UX-08**: Cookbook uses single-recipe-per-row layout (matching Recently Seen style)
 
@@ -84,9 +84,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-01 | Phase 14 | Complete |
 | UX-02 | Phase 18 | Complete |
 | UX-03 | Phase 18 | Complete |
-| UX-04 | Phase 18 | Pending |
-| UX-05 | Phase 18 | Pending |
-| UX-06 | Phase 18 | Pending |
+| UX-04 | Phase 18 | Complete |
+| UX-05 | Phase 18 | Complete |
+| UX-06 | Phase 18 | Complete |
 | UX-07 | Phase 18 | Complete |
 | UX-08 | Phase 17 | Complete |
 
