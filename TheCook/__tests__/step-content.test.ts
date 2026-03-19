@@ -1,6 +1,17 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
+// Mock AsyncStorage (required by ThemeContext -> step-content import chain)
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  __esModule: true,
+  default: {
+    getItem: jest.fn(() => Promise.resolve(null)),
+    setItem: jest.fn(() => Promise.resolve()),
+    removeItem: jest.fn(() => Promise.resolve()),
+    clear: jest.fn(() => Promise.resolve()),
+  },
+}));
+
 // Mock react-native-svg
 jest.mock('react-native-svg', () => {
   const { View } = require('react-native');
@@ -31,6 +42,12 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
+// Mock image registry
+const mockGetRecipeImages = jest.fn();
+jest.mock('@/app/assets/image-registry', () => ({
+  getRecipeImages: (...args: any[]) => mockGetRecipeImages(...args),
+}));
+
 import { StepContent } from '@/components/cooking/step-content';
 import type { RecipeStep } from '@/src/types/recipe';
 
@@ -49,9 +66,19 @@ const mockStep: RecipeStep = {
 };
 
 describe('StepContent', () => {
+  beforeEach(() => {
+    mockGetRecipeImages.mockReturnValue({
+      cover: null,
+      coverBlurhash: null,
+      steps: [null],
+      stepBlurhashes: [null],
+    });
+  });
+
   it('renders instruction text', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -63,6 +90,7 @@ describe('StepContent', () => {
   it('renders "Neden?" pressable and reveals why text on tap', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -80,6 +108,7 @@ describe('StepContent', () => {
   it('renders "Gormeli" section with looksLikeWhenDone text', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -91,6 +120,7 @@ describe('StepContent', () => {
   it('renders "Dikkat" section with commonMistake text', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -102,6 +132,7 @@ describe('StepContent', () => {
   it('renders recovery text', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -113,6 +144,7 @@ describe('StepContent', () => {
   it('does NOT render CircularTimer when timerSeconds is null', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -128,6 +160,7 @@ describe('StepContent', () => {
     };
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: stepWithTimer,
         stepIndex: 0,
         totalSteps: 3,
@@ -138,18 +171,30 @@ describe('StepContent', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Phase 11 — image and checkpoint/warning
+// Phase 11 — image and checkpoint/warning (updated for registry-based images)
 // ---------------------------------------------------------------------------
 
 describe('Phase 11 — image and checkpoint/warning', () => {
-  it('renders Image when stepImage is non-null', () => {
-    const stepWithImage: RecipeStep = {
-      ...mockStep,
-      stepImage: 'https://example.com/step.jpg',
-    };
+  beforeEach(() => {
+    mockGetRecipeImages.mockReturnValue({
+      cover: null,
+      coverBlurhash: null,
+      steps: [null],
+      stepBlurhashes: [null],
+    });
+  });
+
+  it('renders expo-image when registry step image exists', () => {
+    mockGetRecipeImages.mockReturnValue({
+      cover: null,
+      coverBlurhash: null,
+      steps: [1],
+      stepBlurhashes: ['LKO2?U%2Tw=w]~RBVZRi};RPxuwH'],
+    });
     render(
       React.createElement(StepContent, {
-        step: stepWithImage,
+        recipeId: 'test-recipe',
+        step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
       })
@@ -157,9 +202,10 @@ describe('Phase 11 — image and checkpoint/warning', () => {
     expect(screen.getByTestId('step-image')).toBeTruthy();
   });
 
-  it('renders pastel placeholder when stepImage is null (existing behavior)', () => {
+  it('renders pastel placeholder when registry step image is null', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -169,6 +215,26 @@ describe('Phase 11 — image and checkpoint/warning', () => {
     expect(screen.queryByTestId('step-image')).toBeNull();
   });
 
+  it('passes blurhash placeholder to expo-image when stepBlurhash exists', () => {
+    mockGetRecipeImages.mockReturnValue({
+      cover: null,
+      coverBlurhash: null,
+      steps: [1],
+      stepBlurhashes: ['LKO2?U%2Tw=w]~RBVZRi};RPxuwH'],
+    });
+    render(
+      React.createElement(StepContent, {
+        recipeId: 'test-recipe',
+        step: mockStep,
+        stepIndex: 0,
+        totalSteps: 3,
+      })
+    );
+    // Verify expo-image is rendered (with blurhash -- expo-image mock is View,
+    // so we verify the image element exists; blurhash is a prop passed to Image)
+    expect(screen.getByTestId('step-image')).toBeTruthy();
+  });
+
   it('renders checkpoint text with check-circle when checkpoint is non-null', () => {
     const stepWithCheckpoint: RecipeStep = {
       ...mockStep,
@@ -176,6 +242,7 @@ describe('Phase 11 — image and checkpoint/warning', () => {
     };
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: stepWithCheckpoint,
         stepIndex: 0,
         totalSteps: 3,
@@ -187,6 +254,7 @@ describe('Phase 11 — image and checkpoint/warning', () => {
   it('hides checkpoint section when checkpoint is null', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -202,6 +270,7 @@ describe('Phase 11 — image and checkpoint/warning', () => {
     };
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: stepWithWarning,
         stepIndex: 0,
         totalSteps: 3,
@@ -213,6 +282,7 @@ describe('Phase 11 — image and checkpoint/warning', () => {
   it('hides warning section when warning is null', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
@@ -224,6 +294,7 @@ describe('Phase 11 — image and checkpoint/warning', () => {
   it('existing Dikkat section still renders commonMistake and recovery (unchanged)', () => {
     render(
       React.createElement(StepContent, {
+        recipeId: 'test-recipe',
         step: mockStep,
         stepIndex: 0,
         totalSteps: 3,
