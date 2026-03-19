@@ -36,8 +36,9 @@ export function ScalePressable({
   }));
 
   return (
-    <Animated.View style={[style, animatedStyle]}>
+    <Animated.View style={animatedStyle}>
       <Pressable
+        style={style}
         {...rest}
         onPressIn={(e) => {
           scale.value = withSpring(scaleValue, { damping: 15, stiffness: 300 });

@@ -4,7 +4,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSequence,
-  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -39,8 +39,8 @@ export function AnimatedHeart({
     if (!isBookmarked) {
       // Only animate + haptic when bookmarking (adding), not removing
       scale.value = withSequence(
-        withSpring(1.4, { damping: 8, stiffness: 400 }),
-        withSpring(1, { damping: 12, stiffness: 200 }),
+        withTiming(1.35, { duration: 150 }),
+        withTiming(1, { duration: 200 }),
       );
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }

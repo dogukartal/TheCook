@@ -1,11 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  interpolateColor,
-} from 'react-native-reanimated';
 
 import { useAppTheme } from '@/contexts/ThemeContext';
 
@@ -16,36 +10,6 @@ import { useAppTheme } from '@/contexts/ThemeContext';
 export interface SegmentedProgressBarProps {
   totalSteps: number;
   currentStep: number;
-}
-
-// ---------------------------------------------------------------------------
-// AnimatedSegment sub-component (avoids hooks-in-map pitfall)
-// ---------------------------------------------------------------------------
-
-function AnimatedSegment({
-  active,
-  activeColor,
-  inactiveColor,
-}: {
-  active: boolean;
-  activeColor: string;
-  inactiveColor: string;
-}) {
-  const progress = useSharedValue(active ? 1 : 0);
-
-  useEffect(() => {
-    progress.value = withTiming(active ? 1 : 0, { duration: 300 });
-  }, [active]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      progress.value,
-      [0, 1],
-      [inactiveColor, activeColor],
-    ),
-  }));
-
-  return <Animated.View style={[styles.segment, animatedStyle]} />;
 }
 
 // ---------------------------------------------------------------------------
@@ -62,11 +26,12 @@ export function SegmentedProgressBar({
   return (
     <View style={styles.container}>
       {segments.map((idx) => (
-        <AnimatedSegment
+        <View
           key={idx}
-          active={idx <= currentStep}
-          activeColor={colors.tint}
-          inactiveColor={colors.border}
+          style={[
+            styles.segment,
+            { backgroundColor: idx <= currentStep ? colors.tint : colors.border },
+          ]}
         />
       ))}
     </View>

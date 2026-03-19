@@ -72,7 +72,7 @@ import { SefimSheet } from '@/components/cooking/sefim-sheet';
 // ---------------------------------------------------------------------------
 
 describe('Sheet backdrop animation', () => {
-  test('IngredientsSheet uses animationType="none"', () => {
+  test('IngredientsSheet uses animationType="slide"', () => {
     const { UNSAFE_root } = render(
       <IngredientsSheet
         ingredientGroups={[]}
@@ -86,10 +86,10 @@ describe('Sheet backdrop animation', () => {
     // Find the Modal component and check its animationType prop
     const modal = findModal(UNSAFE_root);
     expect(modal).toBeTruthy();
-    expect(modal.props.animationType).toBe('none');
+    expect(modal.props.animationType).toBe('slide');
   });
 
-  test('SefimSheet uses animationType="none"', () => {
+  test('SefimSheet uses animationType="slide"', () => {
     const { UNSAFE_root } = render(
       <SefimSheet
         visible={true}
@@ -104,7 +104,7 @@ describe('Sheet backdrop animation', () => {
 
     const modal = findModal(UNSAFE_root);
     expect(modal).toBeTruthy();
-    expect(modal.props.animationType).toBe('none');
+    expect(modal.props.animationType).toBe('slide');
   });
 
   test('IngredientsSheet calls onClose on backdrop press', () => {
