@@ -477,6 +477,7 @@ export default function CookingScreen() {
         {adaptation.adaptedSteps.map((step, idx) => (
           <View key={idx} style={styles.pageContainer}>
             <StepContent
+              recipeId={id as string}
               step={step}
               stepIndex={idx}
               totalSteps={recipe.steps.length}

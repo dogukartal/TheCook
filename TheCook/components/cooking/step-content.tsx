@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { CircularTimer } from './circular-timer';
+import { getRecipeImages } from '@/app/assets/image-registry';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { STEP_PASTEL_BACKGROUNDS } from '@/constants/palette';
 import type { RecipeStep } from '@/src/types/recipe';
@@ -19,6 +20,7 @@ import type { RecipeStep } from '@/src/types/recipe';
 // ---------------------------------------------------------------------------
 
 export interface StepContentProps {
+  recipeId: string;
   step: RecipeStep;
   stepIndex: number;
   totalSteps: number;
@@ -36,6 +38,7 @@ export interface StepContentProps {
 // ---------------------------------------------------------------------------
 
 export function StepContent({
+  recipeId,
   step,
   stepIndex,
   totalSteps,
@@ -51,14 +54,26 @@ export function StepContent({
 
   const bgColor = isDark ? colors.card : STEP_PASTEL_BACKGROUNDS[stepIndex % STEP_PASTEL_BACKGROUNDS.length];
 
+  const images = getRecipeImages(recipeId);
+  const stepImage = images.steps[stepIndex] ?? null;
+  const stepBlurhash = images.stepBlurhashes[stepIndex] ?? null;
+
   const hasTimer = step.timerSeconds != null;
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
       {/* Step image or pastel color placeholder with overlapping timer */}
       <View style={styles.imageWrapper}>
-        {step.stepImage ? (
-          <Image source={{ uri: step.stepImage }} style={styles.stepImage} resizeMode="cover" testID="step-image" />
+        {stepImage ? (
+          <Image
+            source={stepImage}
+            placeholder={stepBlurhash ? { blurhash: stepBlurhash } : undefined}
+            placeholderContentFit="cover"
+            contentFit="cover"
+            transition={200}
+            style={styles.stepImage}
+            testID="step-image"
+          />
         ) : (
           <View style={[styles.imagePlaceholder, { backgroundColor: bgColor }]} />
         )}
