@@ -24,9 +24,9 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 ### Cookbook
 
 - [ ] **BOOK-01**: User sees two tabs in Cookbook: Saved (bookmarked) and Cooked (cooking history)
-- [ ] **BOOK-02**: User sees star rating on each recipe in the Cooked tab
-- [ ] **BOOK-03**: User can tap to re-rate a recipe directly from the Cooked tab
-- [ ] **BOOK-04**: User sees cook count on cooked recipes (e.g. "3 kez pisirdin")
+- [x] **BOOK-02**: User sees star rating on each recipe in the Cooked tab
+- [x] **BOOK-03**: User can tap to re-rate a recipe directly from the Cooked tab
+- [x] **BOOK-04**: User sees cook count on cooked recipes (e.g. "3 kez pisirdin")
 
 ### UI Polish
 
@@ -37,7 +37,7 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 - [ ] **UX-05**: Search filter chips show small category icon/image
 - [ ] **UX-06**: Progress bar animates smoothly when navigating between cooking steps
 - [ ] **UX-07**: Buttons provide visual tap feedback
-- [ ] **UX-08**: Cookbook uses single-recipe-per-row layout (matching Recently Seen style)
+- [x] **UX-08**: Cookbook uses single-recipe-per-row layout (matching Recently Seen style)
 
 ## v1.2 Requirements
 
@@ -78,9 +78,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DISC-08 | Phase 16 | Complete |
 | DISC-09 | Phase 16 | Complete |
 | BOOK-01 | Phase 17 | Pending |
-| BOOK-02 | Phase 17 | Pending |
-| BOOK-03 | Phase 17 | Pending |
-| BOOK-04 | Phase 17 | Pending |
+| BOOK-02 | Phase 17 | Complete |
+| BOOK-03 | Phase 17 | Complete |
+| BOOK-04 | Phase 17 | Complete |
 | UX-01 | Phase 14 | Complete |
 | UX-02 | Phase 18 | Pending |
 | UX-03 | Phase 18 | Pending |
@@ -88,7 +88,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-05 | Phase 18 | Pending |
 | UX-06 | Phase 18 | Pending |
 | UX-07 | Phase 18 | Pending |
-| UX-08 | Phase 17 | Pending |
+| UX-08 | Phase 17 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 20 total

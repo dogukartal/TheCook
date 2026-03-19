@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Visual Polish & Content Ready
-status: completed
-stopped_at: Completed 16-02-PLAN.md
-last_updated: "2026-03-19T18:38:05.974Z"
-last_activity: 2026-03-19 -- Phase 16 complete (see all screen + discovery polish)
+status: in-progress
+stopped_at: Completed 17-01-PLAN.md
+last_updated: "2026-03-19T19:15:55Z"
+last_activity: 2026-03-19 -- Phase 17 plan 01 complete (cookbook data layer + UI components)
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 10
-  completed_plans: 10
-  percent: 100
+  total_plans: 12
+  completed_plans: 11
+  percent: 92
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-19)
 
 **Core value:** The shortest path between "I want to make something different tonight" and a finished meal you are proud of.
-**Current focus:** Phase 16 complete -- feed see all + discovery polish done
+**Current focus:** Phase 17 in progress -- cookbook saved/cooked tabs
 
 ## Current Position
 
-Phase: 16 of 18 (Feed See All + Discovery Polish) -- fourth of 6 phases in v1.1
-Plan: 2 of 2 complete
-Status: Phase Complete
-Last activity: 2026-03-19 -- Phase 16 complete (see all screen + discovery polish)
+Phase: 17 of 18 (Cookbook Saved/Cooked Tabs) -- fifth of 6 phases in v1.1
+Plan: 1 of 2 complete
+Status: In Progress
+Last activity: 2026-03-19 -- Phase 17 plan 01 complete (cookbook data layer + UI components)
 
-Progress: [██████████] 100%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 47 (v1.0)
-- v1.1 plans completed: 10
-- Total execution time: 51min (v1.1)
+- v1.1 plans completed: 11
+- Total execution time: 54min (v1.1)
 
 **By Phase:**
 
@@ -47,6 +47,7 @@ Progress: [██████████] 100%
 | 14 Color Token Sweep | 3/3 | 23min | 8min |
 | 15 Card Image Rendering | 3/3 | 14min | 5min |
 | 16 Feed See All + Discovery | 2/2 | 8min | 4min |
+| 17 Cookbook Saved/Cooked | 1/2 | 3min | 3min |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Phase 16-01: AsyncStorage mock added per-test file (consistent with Phase 15-03 project pattern)
 - [Phase 16]: Reused buildFeedSections pure function from useFeedScreen for consistent section logic across feed and See All screens
 - [Phase 16]: useFocusEffect for See All data loading ensures fresh data on every screen focus (handles allergen/filter changes)
+- Phase 17-01: StarRatingInline default size 20 (vs 36 in completion-screen) for inline row card use
+- Phase 17-01: Separate Pressable zone for star rating to prevent card navigation on star tap
+- Phase 17-01: Cook count text only shown when cookCount > 1 (single cook is implied)
 
 ### Pending Todos
 
@@ -89,6 +93,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-19T18:33:47.212Z
-Stopped at: Completed 16-02-PLAN.md
+Last session: 2026-03-19T19:15:55Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None
