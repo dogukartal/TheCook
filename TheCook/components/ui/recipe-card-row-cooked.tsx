@@ -9,6 +9,7 @@ import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
 import { getRecipeImages } from '@/app/assets/image-registry';
 import { StarRatingInline } from '@/components/ui/star-rating-inline';
+import { ScalePressable } from '@/components/ui/animated-pressable';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -40,7 +41,7 @@ export function RecipeCardRowCooked({
   const images = getRecipeImages(recipe.id);
 
   return (
-    <Pressable
+    <ScalePressable
       style={[
         styles.card,
         {
@@ -95,7 +96,7 @@ export function RecipeCardRowCooked({
           )}
         </View>
       </View>
-    </Pressable>
+    </ScalePressable>
   );
 }
 

@@ -8,6 +8,7 @@ import type { Category, SkillLevel } from '@/src/types/recipe';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
 import { getRecipeImages } from '@/app/assets/image-registry';
+import { ScalePressable } from '@/components/ui/animated-pressable';
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
   beginner: 'Başlangıç',
@@ -41,7 +42,7 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [], onBookmarkT
     recipe.equipment.some((e) => !userEquipment.includes(e));
 
   return (
-    <Pressable
+    <ScalePressable
       style={[
         styles.card,
         {
@@ -103,7 +104,7 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [], onBookmarkT
           </Pressable>
         )}
       </View>
-    </Pressable>
+    </ScalePressable>
   );
 }
 

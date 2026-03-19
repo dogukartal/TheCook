@@ -47,9 +47,11 @@ import type { DiscoveryFilter } from '@/src/types/discovery';
 // ---------------------------------------------------------------------------
 
 const defaultFilter: DiscoveryFilter = {
+  category: null,
   cookTimeBucket: null,
   cuisine: null,
   skillLevel: null,
+  equipment: [],
 };
 
 describe('Category chip icons', () => {

@@ -20,6 +20,8 @@ import { SkeletonCard } from '@/components/ui/skeleton-card';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT, STEP_PASTEL_BACKGROUNDS } from '@/constants/palette';
 import { getRecipeImages } from '@/app/assets/image-registry';
+import { AnimatedHeart } from '@/components/ui/animated-heart';
+import { ScalePressable } from '@/components/ui/animated-pressable';
 
 import type { SkillLevel, Category, Ingredient } from '@/src/types/recipe';
 
@@ -196,19 +198,14 @@ export default function RecipeDetailScreen() {
             </Pressable>
 
             {/* Bookmark button */}
-            <Pressable
-              style={styles.heroBookmarkButton}
-              onPress={handleBookmarkToggle}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              accessibilityRole="button"
-              accessibilityLabel={isBookmarked ? 'Favoriden cikar' : 'Favoriye ekle'}
-            >
-              <MaterialCommunityIcons
-                name={isBookmarked ? 'heart' : 'heart-outline'}
+            <View style={styles.heroBookmarkButton}>
+              <AnimatedHeart
+                isBookmarked={isBookmarked}
+                onToggle={handleBookmarkToggle}
                 size={24}
                 color="#FFFFFF" // palette-exempt
               />
-            </Pressable>
+            </View>
 
             {/* Title overlay */}
             <Text style={styles.heroTitle}>{recipe.title}</Text>
@@ -349,7 +346,7 @@ export default function RecipeDetailScreen() {
 
       {/* Start Cooking button -- fixed at bottom */}
       <View style={[styles.startCookingContainer, { backgroundColor: colors.background, borderTopColor: colors.separator }]}>
-        <Pressable
+        <ScalePressable
           style={[styles.startCookingButton, { backgroundColor: colors.tint }]}
           onPress={startCooking}
           accessibilityRole="button"
@@ -358,7 +355,7 @@ export default function RecipeDetailScreen() {
           <Text style={[styles.startCookingText, { color: colors.onTint }]}>
             {hasActiveSession ? 'Devam Et' : 'Pisirmeye Basla'}
           </Text>
-        </Pressable>
+        </ScalePressable>
       </View>
     </SafeAreaView>
   );

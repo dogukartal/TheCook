@@ -47,23 +47,31 @@ describe('ScalePressable', () => {
     expect(onPressOut).toHaveBeenCalledTimes(1);
   });
 
-  it('applies style prop', () => {
-    const { getByTestId } = render(
+  it('applies style prop to outer wrapper', () => {
+    const { toJSON } = render(
       React.createElement(ScalePressable, {
-        testID: 'scale-pressable',
         style: { backgroundColor: 'red' },
       },
         React.createElement(Text, null, 'Styled'),
       ),
     );
 
-    const element = getByTestId('scale-pressable');
-    // Style array should contain the user-provided style
-    const flatStyle = Array.isArray(element.props.style)
-      ? Object.assign({}, ...element.props.style.map((s: unknown) =>
-          typeof s === 'object' && s !== null ? s : {}
-        ))
-      : element.props.style;
-    expect(flatStyle.backgroundColor).toBe('red');
+    const tree = toJSON() as any;
+    // The outer Animated.View should have the style with backgroundColor
+    function findStyle(node: any): boolean {
+      if (!node || typeof node !== 'object') return false;
+      const styles = node.props?.style;
+      if (styles) {
+        const flat = Array.isArray(styles)
+          ? Object.assign({}, ...styles.filter((s: unknown) => typeof s === 'object' && s !== null))
+          : styles;
+        if (flat.backgroundColor === 'red') return true;
+      }
+      if (Array.isArray(node.children)) {
+        return node.children.some((c: any) => findStyle(c));
+      }
+      return false;
+    }
+    expect(findStyle(tree)).toBe(true);
   });
 });

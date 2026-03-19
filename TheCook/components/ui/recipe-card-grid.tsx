@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,6 +8,8 @@ import type { Category, SkillLevel } from '@/src/types/recipe';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
 import { getRecipeImages } from '@/app/assets/image-registry';
+import { ScalePressable } from '@/components/ui/animated-pressable';
+import { AnimatedHeart } from '@/components/ui/animated-heart';
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
   beginner: 'Başlangıç',
@@ -48,7 +50,7 @@ export function RecipeCardGrid({
     recipe.equipment.some((e) => !userEquipment.includes(e));
 
   return (
-    <Pressable
+    <ScalePressable
       style={[
         styles.card,
         {
@@ -89,19 +91,14 @@ export function RecipeCardGrid({
           {recipe.title}
         </Text>
         {/* Bookmark icon -- top-right */}
-        <Pressable
-          style={styles.bookmarkButton}
-          onPress={() => onBookmarkToggle(recipe.id)}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-          accessibilityRole="button"
-          accessibilityLabel={isBookmarked ? 'Favoriden \u00e7\u0131kar' : 'Favoriye ekle'}
-        >
-          <MaterialCommunityIcons
-            name={isBookmarked ? 'heart' : 'heart-outline'}
+        <View style={styles.bookmarkButton}>
+          <AnimatedHeart
+            isBookmarked={isBookmarked}
+            onToggle={() => onBookmarkToggle(recipe.id)}
             size={20}
             color="#FFFFFF" // on-gradient // palette-exempt
           />
-        </Pressable>
+        </View>
       </View>
 
       {/* Meta row -- skill badge + equipment warning + cook time */}
@@ -117,7 +114,7 @@ export function RecipeCardGrid({
         )}
         <Text style={[styles.cookTimeText, { color: colors.textSub }]}>{totalTime} dk</Text>
       </View>
-    </Pressable>
+    </ScalePressable>
   );
 }
 

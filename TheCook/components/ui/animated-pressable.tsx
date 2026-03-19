@@ -1,24 +1,20 @@
 import React from 'react';
-import { PressableProps, ViewStyle, StyleProp } from 'react-native';
+import { Pressable, PressableProps, ViewStyle, StyleProp } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
 
-const AnimatedPressable = Animated.createAnimatedComponent(
-  require('react-native').Pressable,
-);
-
 // ---------------------------------------------------------------------------
 // Props
 // ---------------------------------------------------------------------------
 
-interface ScalePressableProps extends PressableProps {
+interface ScalePressableProps extends Omit<PressableProps, 'style'> {
   /** Scale-down target on press (default 0.96) */
   scaleValue?: number;
   style?: StyleProp<ViewStyle>;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 // ---------------------------------------------------------------------------
@@ -40,19 +36,20 @@ export function ScalePressable({
   }));
 
   return (
-    <AnimatedPressable
-      {...rest}
-      style={[style, animatedStyle]}
-      onPressIn={(e: any) => {
-        scale.value = withSpring(scaleValue, { damping: 15, stiffness: 300 });
-        onPressIn?.(e);
-      }}
-      onPressOut={(e: any) => {
-        scale.value = withSpring(1, { damping: 15, stiffness: 300 });
-        onPressOut?.(e);
-      }}
-    >
-      {children}
-    </AnimatedPressable>
+    <Animated.View style={[style, animatedStyle]}>
+      <Pressable
+        {...rest}
+        onPressIn={(e) => {
+          scale.value = withSpring(scaleValue, { damping: 15, stiffness: 300 });
+          onPressIn?.(e);
+        }}
+        onPressOut={(e) => {
+          scale.value = withSpring(1, { damping: 15, stiffness: 300 });
+          onPressOut?.(e);
+        }}
+      >
+        {children}
+      </Pressable>
+    </Animated.View>
   );
 }

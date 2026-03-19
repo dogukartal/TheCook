@@ -34,6 +34,7 @@ import { SefimSheet } from '@/components/cooking/sefim-sheet';
 import { SefimPulse } from '@/components/cooking/sefim-pulse';
 import { TimerIndicator } from '@/components/cooking/timer-indicator';
 import { CompletionScreen } from '@/components/cooking/completion-screen';
+import { ScalePressable } from '@/components/ui/animated-pressable';
 
 import type { Recipe } from '@/src/types/recipe';
 
@@ -542,7 +543,7 @@ export default function CookingScreen() {
 
       {/* Bottom navigation bar */}
       <View style={[styles.bottomBar, { backgroundColor: colors.background, borderTopColor: colors.border }]}>
-        <Pressable
+        <ScalePressable
           style={[styles.ingredientsButton, { borderColor: colors.border }]}
           onPress={() => setShowIngredients(true)}
           accessibilityRole="button"
@@ -554,28 +555,28 @@ export default function CookingScreen() {
             color={colors.tint}
           />
           <Text style={[styles.ingredientsButtonText, { color: colors.tint }]}>Malzemeler</Text>
-        </Pressable>
+        </ScalePressable>
 
         <View style={styles.navButtons}>
           {!isFirstStep && (
-            <Pressable
+            <ScalePressable
               style={styles.prevButton}
               onPress={goToPreviousStep}
               accessibilityRole="button"
               accessibilityLabel="Geri"
             >
               <Text style={[styles.prevButtonText, { color: colors.textSub }]}>Geri</Text>
-            </Pressable>
+            </ScalePressable>
           )}
 
-          <Pressable
+          <ScalePressable
             style={[styles.nextButton, { backgroundColor: colors.tint }]}
             onPress={goToNextStep}
             accessibilityRole="button"
             accessibilityLabel={nextLabel}
           >
             <Text style={[styles.nextButtonText, { color: colors.onTint }]}>{nextLabel}</Text>
-          </Pressable>
+          </ScalePressable>
         </View>
       </View>
     </SafeAreaView>
