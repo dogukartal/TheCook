@@ -53,7 +53,7 @@ export default function CookbookScreen() {
           <View style={styles.emptyState}>
             <MaterialCommunityIcons name="heart-outline" size={48} color={colors.tint} />
             <Text style={[styles.emptyText, { color: colors.textSub }]}>
-              {'Hen\u00FCz kaydedilmi\u015F tarifiniz yok.\nTariflerin \u00FCzerindeki \u2661 ikonuna bas\u0131n.'}
+              {'Henüz kaydedilmiş tarifiniz yok.\nTariflerin üzerindeki \u2661 ikonuna basın.'}
             </Text>
           </View>
         ) : (

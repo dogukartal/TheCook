@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
@@ -54,33 +54,7 @@ export function FeedSection({
   isLast = false,
 }: FeedSectionProps) {
   const { colors } = useAppTheme();
-  const flatListRef = useRef<FlatList>(null);
-  const hasHinted = useRef(false);
-
   const cardWidth = calculateCardWidth(Dimensions.get('window').width);
-
-  // Scroll hint animation — fires once per section, staggered by index
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  useEffect(() => {
-    if (hasHinted.current || data.length <= 2) return;
-    hasHinted.current = true;
-
-    const delay = 600 + sectionIndex * 600;
-    const t1 = setTimeout(() => {
-      flatListRef.current?.scrollToOffset({ offset: 30, animated: true });
-      const t2 = setTimeout(() => {
-        flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-      }, 350);
-      timers.current.push(t2);
-    }, delay);
-    timers.current.push(t1);
-
-    return () => {
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
-    };
-  }, [data.length, sectionIndex]);
 
   function handleSeeAll() {
     router.push(`/feed/${sectionKey}` as never);
@@ -102,17 +76,16 @@ export function FeedSection({
             onPress={handleSeeAll}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             accessibilityRole="button"
-            accessibilityLabel="Tumunu Gor"
+            accessibilityLabel="Tümünü Gör"
           >
             <Text style={[styles.seeAllText, { color: colors.tint }]}>
-              Tumunu Gor &gt;
+              Tümünü Gör &gt;
             </Text>
           </Pressable>
         )}
       </View>
 
       <FlatList
-        ref={flatListRef}
         data={data}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -180,8 +153,9 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   separator: {
-    height: 1,
+    height: 3,
     marginHorizontal: 16,
     marginTop: 16,
+    borderRadius: 1.5,
   },
 });

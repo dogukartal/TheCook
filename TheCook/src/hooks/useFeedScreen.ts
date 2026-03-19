@@ -54,9 +54,9 @@ export function buildFeedSections(
   profile: Profile
 ): { sections: FeedSection[]; allEmpty: boolean } {
   const raw: FeedSection[] = [
-    { key: 'trending', title: 'Su an trend', data: allRecipes },
+    { key: 'trending', title: 'Şu an trend', data: allRecipes },
     { key: 'quick', title: '30 dakikada bitir', data: allRecipes.filter((r) => (r.prepTime + r.cookTime) <= 30) },
-    { key: 'personal', title: 'Sana ozel', data: rankByProfile(allRecipes, profile) },
+    { key: 'personal', title: 'Sana özel', data: rankByProfile(allRecipes, profile) },
     { key: 'untried', title: 'Denemediklerin', data: allRecipes.filter((r) => !cookedIds.has(r.id)) },
   ];
 

@@ -10,9 +10,9 @@ import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
 import { getRecipeImages } from '@/app/assets/image-registry';
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
-  beginner: 'Baslangi\u00e7',
+  beginner: 'Başlangıç',
   intermediate: 'Orta',
-  advanced: '\u0130leri',
+  advanced: 'İleri',
 };
 
 // ---------------------------------------------------------------------------
