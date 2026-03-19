@@ -2903,7 +2903,7 @@
     "prepTime": 10,
     "cookTime": 15,
     "servings": 2,
-    "coverImage": null,
+    "coverImage": "menemen-cover.webp",
     "allergens": [
       "egg",
       "dairy"

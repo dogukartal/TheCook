@@ -10,8 +10,9 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "validate-recipes": "tsx scripts/validate-recipes.ts",
+    "build-images": "tsx scripts/build-images.ts",
     "build-recipes": "tsx scripts/build-recipes.ts",
-    "prebuild": "npm run build-recipes",
+    "prebuild": "npm run build-images && npm run build-recipes",
     "expo:prebuild": "expo prebuild"
   },
   "dependencies": {
