@@ -1,11 +1,13 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RecipeListItem } from '@/src/types/discovery';
 import type { Category, SkillLevel } from '@/src/types/recipe';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
+import { getRecipeImages } from '@/app/assets/image-registry';
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
   beginner: 'Baslangi\u00e7',
@@ -38,6 +40,7 @@ export function RecipeCardGrid({
 }: RecipeCardGridProps) {
   const { isDark, colors } = useAppTheme();
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
+  const images = getRecipeImages(recipe.id);
   const totalTime = recipe.prepTime + recipe.cookTime;
 
   const hasMissingEquipment =
@@ -61,7 +64,26 @@ export function RecipeCardGrid({
     >
       {/* Gradient image area with overlaid title + bookmark */}
       <View style={styles.imageArea}>
-        <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
+        {images.cover ? (
+          <>
+            <Image
+              source={images.cover}
+              placeholder={images.coverBlurhash ? { blurhash: images.coverBlurhash } : undefined}
+              placeholderContentFit="cover"
+              contentFit="cover"
+              transition={200}
+              style={StyleSheet.absoluteFill}
+              testID="card-cover-image"
+            />
+            {/* Dark scrim for text readability over photo */}
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,0.55)']}
+              style={[StyleSheet.absoluteFill, { top: '50%' }]}
+            />
+          </>
+        ) : (
+          <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} testID="linear-gradient" />
+        )}
         {/* Title overlay -- bottom-left */}
         <Text style={styles.titleOverlay} numberOfLines={2} ellipsizeMode="tail">
           {recipe.title}

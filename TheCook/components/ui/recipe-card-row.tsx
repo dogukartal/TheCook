@@ -1,11 +1,13 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RecipeListItem } from '@/src/types/discovery';
 import type { Category, SkillLevel } from '@/src/types/recipe';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
+import { getRecipeImages } from '@/app/assets/image-registry';
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
   beginner: 'Baslangi\u00e7',
@@ -30,6 +32,7 @@ interface RecipeCardRowProps {
 export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCardRowProps) {
   const { isDark, colors } = useAppTheme();
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
+  const images = getRecipeImages(recipe.id);
   const totalTime = recipe.prepTime + recipe.cookTime;
 
   const hasMissingEquipment =
@@ -51,9 +54,21 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
       accessibilityRole="button"
       accessibilityLabel={recipe.title}
     >
-      {/* Left: gradient thumbnail */}
+      {/* Left: image / gradient thumbnail */}
       <View style={styles.thumbnailContainer}>
-        <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
+        {images.cover ? (
+          <Image
+            source={images.cover}
+            placeholder={images.coverBlurhash ? { blurhash: images.coverBlurhash } : undefined}
+            placeholderContentFit="cover"
+            contentFit="cover"
+            transition={200}
+            style={StyleSheet.absoluteFill}
+            testID="row-cover-image"
+          />
+        ) : (
+          <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} testID="linear-gradient" />
+        )}
       </View>
 
       {/* Right: title + meta */}

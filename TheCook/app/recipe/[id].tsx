@@ -9,6 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -18,6 +19,7 @@ import { formatAmount } from '@/src/hooks/useRecipeAdaptation';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT, STEP_PASTEL_BACKGROUNDS } from '@/constants/palette';
+import { getRecipeImages } from '@/app/assets/image-registry';
 
 import type { SkillLevel, Category, Ingredient } from '@/src/types/recipe';
 
@@ -149,6 +151,7 @@ export default function RecipeDetailScreen() {
   }
 
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
+  const images = getRecipeImages(id as string);
   const totalTime = recipe.prepTime + recipe.cookTime;
 
   // ---------------------------------------------------------------------------
@@ -158,9 +161,29 @@ export default function RecipeDetailScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Hero gradient with back + bookmark buttons */}
+        {/* Hero image/gradient with back + bookmark buttons */}
         <View style={styles.heroContainer}>
-          <LinearGradient colors={gradient} style={styles.heroGradient}>
+          {images.cover ? (
+            <>
+              <Image
+                source={images.cover}
+                placeholder={images.coverBlurhash ? { blurhash: images.coverBlurhash } : undefined}
+                placeholderContentFit="cover"
+                contentFit="cover"
+                transition={200}
+                style={StyleSheet.absoluteFill}
+                testID="hero-cover-image"
+              />
+              <LinearGradient
+                colors={['rgba(0,0,0,0.15)', 'rgba(0,0,0,0.65)']}
+                style={StyleSheet.absoluteFill}
+              />
+            </>
+          ) : (
+            <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} testID="linear-gradient" />
+          )}
+          {/* Overlay: buttons + title */}
+          <View style={styles.heroGradient}>
             {/* Back button */}
             <Pressable
               style={styles.heroBackButton}
@@ -189,7 +212,7 @@ export default function RecipeDetailScreen() {
 
             {/* Title overlay */}
             <Text style={styles.heroTitle}>{recipe.title}</Text>
-          </LinearGradient>
+          </View>
         </View>
 
         <View style={styles.contentContainer}>
