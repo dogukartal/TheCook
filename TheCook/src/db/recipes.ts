@@ -431,6 +431,28 @@ export async function getBookmarkedRecipes(
     .filter((item): item is RecipeListItem => item !== undefined);
 }
 
+/**
+ * Fetches recipes by IDs WITHOUT hard filter exclusion.
+ * Used for cooked recipes tab where user already cooked these recipes.
+ */
+export async function getRecipesByIds(
+  db: SQLiteDatabase,
+  ids: string[]
+): Promise<RecipeListItem[]> {
+  if (ids.length === 0) return [];
+
+  const placeholders = ids.map(() => "?").join(", ");
+  const sql = `SELECT ${SELECT_LIST_COLUMNS} FROM recipes r WHERE r.id IN (${placeholders})`;
+  const rows = await db.getAllAsync<RecipeRow>(sql, ids);
+  const items = rows.map(mapRowToRecipeListItem);
+
+  // Preserve input order
+  const rowMap = new Map(items.map((item) => [item.id, item]));
+  return ids
+    .map((id) => rowMap.get(id))
+    .filter((item): item is RecipeListItem => item !== undefined);
+}
+
 // ---------------------------------------------------------------------------
 // Bookmark CRUD — same signatures as profile.ts but accepting db directly
 // ---------------------------------------------------------------------------

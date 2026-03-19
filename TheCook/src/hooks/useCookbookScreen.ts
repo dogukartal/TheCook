@@ -1,9 +1,12 @@
 import { useState, useCallback } from 'react';
 import { router, useFocusEffect } from 'expo-router';
+import { useSQLiteContext } from 'expo-sqlite';
 import type { Session } from '@supabase/supabase-js';
 
 import { useProfileDb } from '@/src/db/profile';
 import { useRecipesDb } from '@/src/db/recipes';
+import { getRecipesByIds } from '@/src/db/recipes';
+import { getCookedRecipesWithMeta, updateLatestRating } from '@/src/db/cooking-history';
 import { useSession } from '@/src/auth/useSession';
 
 import type { Profile } from '@/src/types/profile';
@@ -15,30 +18,37 @@ import type { RecipeListItem, HardFilter } from '@/src/types/discovery';
 
 const ALLERGEN_LABELS: Record<string, string> = {
   gluten: 'Gluten',
-  dairy: 'Süt Ürünleri',
+  dairy: 'Sut Urunleri',
   egg: 'Yumurta',
-  nuts: 'Kuruyemiş',
-  peanuts: 'Fıstık',
-  shellfish: 'Kabuklu Deniz Ürünleri',
-  fish: 'Balık',
+  nuts: 'Kuruyemis',
+  peanuts: 'Fistik',
+  shellfish: 'Kabuklu Deniz Urunleri',
+  fish: 'Balik',
   soy: 'Soya',
   sesame: 'Susam',
   mustard: 'Hardal',
   celery: 'Kereviz',
-  lupin: 'Acı Bakla',
-  molluscs: 'Yumuşakça',
-  sulphites: 'Sülfitler',
+  lupin: 'Aci Bakla',
+  molluscs: 'Yumusakca',
+  sulphites: 'Sulfitler',
 };
 
 const SKILL_LEVEL_LABELS: Record<string, string> = {
-  beginner: 'Başlangıç',
+  beginner: 'Baslangic',
   intermediate: 'Orta',
-  advanced: 'İleri',
+  advanced: 'Ileri',
 };
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
+
+export type CookbookTab = 'saved' | 'cooked';
+
+export interface CookedRecipeDisplayItem extends RecipeListItem {
+  cookCount: number;
+  latestRating: number | null;
+}
 
 export interface CookbookScreenState {
   profile: Profile | null;
@@ -47,6 +57,9 @@ export interface CookbookScreenState {
   loading: boolean;
   session: Session | null;
   profileSummary: string;
+  activeTab: CookbookTab;
+  cookedRecipes: CookedRecipeDisplayItem[];
+  cookedLoading: boolean;
 }
 
 export interface CookbookScreenActions {
@@ -56,6 +69,8 @@ export interface CookbookScreenActions {
   handleSignOut: () => Promise<void>;
   handleSignIn: () => void;
   loadData: () => Promise<void>;
+  setActiveTab: (tab: CookbookTab) => void;
+  handleReRate: (recipeId: string, rating: number) => Promise<void>;
 }
 
 // ---------------------------------------------------------------------------
@@ -63,6 +78,7 @@ export interface CookbookScreenActions {
 // ---------------------------------------------------------------------------
 
 export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions {
+  const db = useSQLiteContext();
   const { getProfile, getBookmarks, addBookmark, removeBookmark } = useProfileDb();
   const { getBookmarkedRecipes } = useRecipesDb();
   const { session, signOut } = useSession();
@@ -71,6 +87,9 @@ export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
   const [savedRecipes, setSavedRecipes] = useState<RecipeListItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<CookbookTab>('saved');
+  const [cookedRecipes, setCookedRecipes] = useState<CookedRecipeDisplayItem[]>([]);
+  const [cookedLoading, setCookedLoading] = useState(true);
 
   // Build profile summary string
   function buildProfileSummary(): string {
@@ -90,31 +109,59 @@ export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions
 
   const profileSummary = buildProfileSummary();
 
-  // Load profile + bookmarks + recipe data for bookmarks
+  // Load profile + bookmarks + saved recipes + cooked recipes in parallel
   const loadData = useCallback(async () => {
     setLoading(true);
+    setCookedLoading(true);
     try {
-      const [p, bookmarks] = await Promise.all([getProfile(), getBookmarks()]);
+      const [p, bookmarks, cookedMeta] = await Promise.all([
+        getProfile(),
+        getBookmarks(),
+        getCookedRecipesWithMeta(db),
+      ]);
       setProfile(p);
 
       const ids = bookmarks.map((b) => b.recipeId);
       setBookmarkedIds(new Set(ids));
 
+      // --- Saved recipes (with hard filters) ---
       if (ids.length === 0) {
         setSavedRecipes([]);
-        return;
+      } else {
+        const hardFilter: HardFilter = {
+          allergens: p.allergens,
+          skillLevel: p.skillLevel,
+          equipment: p.equipment,
+        };
+        const ordered = await getBookmarkedRecipes(ids, hardFilter);
+        setSavedRecipes(ordered);
       }
 
-      // Fetch bookmarked recipes with hard filter exclusion (DISC-05)
-      const hardFilter: HardFilter = {
-        allergens: p.allergens,
-        skillLevel: p.skillLevel,
-        equipment: p.equipment,
-      };
-      const ordered = await getBookmarkedRecipes(ids, hardFilter);
-      setSavedRecipes(ordered);
+      // --- Cooked recipes (NO hard filters -- user already cooked these) ---
+      if (cookedMeta.length === 0) {
+        setCookedRecipes([]);
+      } else {
+        const cookedIds = cookedMeta.map((m) => m.recipeId);
+        const recipeDetails = await getRecipesByIds(db, cookedIds);
+
+        // Merge recipe details with cooking meta
+        const metaMap = new Map(cookedMeta.map((m) => [m.recipeId, m]));
+        const merged: CookedRecipeDisplayItem[] = recipeDetails
+          .map((recipe) => {
+            const meta = metaMap.get(recipe.id);
+            if (!meta) return null;
+            return {
+              ...recipe,
+              cookCount: meta.cookCount,
+              latestRating: meta.latestRating,
+            };
+          })
+          .filter((item): item is CookedRecipeDisplayItem => item !== null);
+        setCookedRecipes(merged);
+      }
     } finally {
       setLoading(false);
+      setCookedLoading(false);
     }
   }, []);
 
@@ -142,6 +189,18 @@ export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions
     }
   }
 
+  // Re-rate a cooked recipe (optimistic update + DB write)
+  async function handleReRate(recipeId: string, rating: number) {
+    // Optimistic update
+    setCookedRecipes((prev) =>
+      prev.map((item) =>
+        item.id === recipeId ? { ...item, latestRating: rating } : item
+      )
+    );
+    // Persist to DB
+    await updateLatestRating(db, recipeId, rating);
+  }
+
   function handleRecipePress(id: string) {
     router.push(`/recipe/${id}` as never);
   }
@@ -166,6 +225,9 @@ export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions
     loading,
     session,
     profileSummary,
+    activeTab,
+    cookedRecipes,
+    cookedLoading,
     // Actions
     handleBookmarkToggle,
     handleRecipePress,
@@ -173,5 +235,7 @@ export function useCookbookScreen(): CookbookScreenState & CookbookScreenActions
     handleSignOut,
     handleSignIn,
     loadData,
+    setActiveTab,
+    handleReRate,
   };
 }
