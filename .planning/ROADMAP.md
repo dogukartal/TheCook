@@ -109,7 +109,11 @@ Plans:
   3. User can tap a rating in the Cooked tab to change it and the new rating persists across app restarts
   4. Cooked recipes display a cook count (e.g., "3 kez pisirdin") when cooked more than once
   5. Cookbook uses a single-recipe-per-row layout with thumbnail, title, and metadata on each row
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 17-01-PLAN.md — Data layer: CookedRecipeMeta type, DB query functions, StarRatingInline and RecipeCardRowCooked components
+- [ ] 17-02-PLAN.md — Hook extension and cookbook screen rewrite with tab bar and row layout
 
 ### Phase 18: UI Polish
 **Goal**: Every interaction in the app feels responsive and polished through haptics, animations, and visual feedback
@@ -146,6 +150,6 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 13. Image Pipeline Foundation | v1.1 | 2/2 | Complete | 2026-03-19 |
 | 14. Color Token Sweep | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
-| 16. Feed "See All" + Discovery Polish | 2/2 | Complete    | 2026-03-19 | - |
-| 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/0 | Not started | - |
+| 16. Feed "See All" + Discovery Polish | v1.1 | 2/2 | Complete | 2026-03-19 |
+| 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/2 | Not started | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |
