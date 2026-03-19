@@ -23,13 +23,14 @@ interface RecipeCardRowProps {
   recipe: RecipeListItem;
   onPress: (id: string) => void;
   userEquipment?: string[];
+  onBookmarkToggle?: (id: string) => void;
 }
 
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
-export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCardRowProps) {
+export function RecipeCardRow({ recipe, onPress, userEquipment = [], onBookmarkToggle }: RecipeCardRowProps) {
   const { isDark, colors } = useAppTheme();
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
   const images = getRecipeImages(recipe.id);
@@ -88,6 +89,19 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
           )}
           <Text style={[styles.cookTimeText, { color: colors.textSub }]}>{totalTime} dk</Text>
         </View>
+        {onBookmarkToggle && (
+          <Pressable
+            style={styles.bookmarkButton}
+            onPress={(e) => {
+              e.stopPropagation();
+              onBookmarkToggle(recipe.id);
+            }}
+            accessibilityLabel="Kaydi kaldir"
+            hitSlop={8}
+          >
+            <MaterialCommunityIcons name="heart" size={20} color={colors.tint} />
+          </Pressable>
+        )}
       </View>
     </Pressable>
   );
@@ -153,5 +167,10 @@ const styles = StyleSheet.create({
   equipmentWarningText: {
     fontSize: 10,
     fontWeight: '500',
+  },
+  bookmarkButton: {
+    position: 'absolute',
+    top: 10,
+    right: 8,
   },
 });

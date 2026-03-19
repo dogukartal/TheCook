@@ -85,19 +85,19 @@ const mockAddBookmark = jest.fn(() => Promise.resolve());
 const mockRemoveBookmark = jest.fn(() => Promise.resolve());
 
 jest.mock('@/src/db/recipes', () => ({
-  getBookmarkedRecipes: (...args: any[]) => mockGetBookmarkedRecipes(...args),
+  getBookmarkedRecipes: jest.fn(),
   getRecipesByIds: jest.fn().mockResolvedValue([]),
   useRecipesDb: () => ({
     getBookmarkedRecipes: mockGetBookmarkedRecipes,
   }),
 }));
 
-const mockGetCookedRecipesWithMeta = jest.fn(() => Promise.resolve([]));
-const mockUpdateLatestRating = jest.fn(() => Promise.resolve());
+const mockGetCookedRecipesWithMeta = jest.fn<any, any[]>(() => Promise.resolve([]));
+const mockUpdateLatestRating = jest.fn<any, any[]>(() => Promise.resolve());
 
 jest.mock('@/src/db/cooking-history', () => ({
-  getCookedRecipesWithMeta: (...args: any[]) => mockGetCookedRecipesWithMeta(...args),
-  updateLatestRating: (...args: any[]) => mockUpdateLatestRating(...args),
+  getCookedRecipesWithMeta: (...args: any[]) => mockGetCookedRecipesWithMeta(args[0]),
+  updateLatestRating: (...args: any[]) => mockUpdateLatestRating(args[0], args[1], args[2]),
   getCookedRecipeIds: jest.fn(() => Promise.resolve(new Set<string>())),
 }));
 
