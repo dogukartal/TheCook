@@ -151,5 +151,5 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 14. Color Token Sweep | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 2/2 | Complete | 2026-03-19 |
-| 17. Cookbook Saved/Cooked Tabs | 2/2 | Complete   | 2026-03-19 | - |
+| 17. Cookbook Saved/Cooked Tabs | 2/2 | Complete    | 2026-03-19 | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |
