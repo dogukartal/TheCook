@@ -126,7 +126,11 @@ Plans:
   4. Search filter chips display a small category icon next to their label
   5. The cooking mode progress bar animates smoothly when moving between steps instead of jumping
   6. Buttons across the app provide visual feedback on tap (scale or opacity change)
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 18-01-PLAN.md — ScalePressable and AnimatedHeart components, wire into cards and cooking buttons
+- [ ] 18-02-PLAN.md — Sheet backdrop fade, category chip icons, progress bar animation
 
 ## Progress
 
@@ -151,5 +155,5 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 14. Color Token Sweep | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 2/2 | Complete | 2026-03-19 |
-| 17. Cookbook Saved/Cooked Tabs | 2/2 | Complete    | 2026-03-19 | - |
-| 18. UI Polish | v1.1 | 0/0 | Not started | - |
+| 17. Cookbook Saved/Cooked Tabs | v1.1 | 2/2 | Complete | 2026-03-19 |
+| 18. UI Polish | v1.1 | 0/2 | Not started | - |
