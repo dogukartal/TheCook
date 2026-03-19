@@ -40,6 +40,7 @@ export function CategoryStrip({ selected, onSelect }: CategoryStripProps) {
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
+      style={styles.scroll}
     >
       {CATEGORIES.map((cat) => {
         const isSelected = selected === cat.key;
@@ -75,6 +76,9 @@ export function CategoryStrip({ selected, onSelect }: CategoryStripProps) {
 // ---------------------------------------------------------------------------
 
 const styles = StyleSheet.create({
+  scroll: {
+    flexGrow: 0,
+  },
   container: {
     paddingHorizontal: 16,
     gap: 8,

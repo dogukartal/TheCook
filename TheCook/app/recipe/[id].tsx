@@ -260,11 +260,12 @@ export default function RecipeDetailScreen() {
               )}
               {group.items.map((item, itemIdx) => {
                 const hasAlts = item.alternatives && item.alternatives.length > 0;
-                const isSwapped = Boolean(adaptation.swaps[item.name]);
-                // Find the original ingredient name if swapped
-                const originalName = isSwapped
-                  ? Object.entries(adaptation.swaps).find(([, v]) => v === item.name)?.[0]
-                  : undefined;
+                // Check if this item's name is a swap VALUE (it was swapped TO this)
+                const swapEntry = Object.entries(adaptation.swaps).find(
+                  ([, v]) => v === item.name
+                );
+                const isSwapped = Boolean(swapEntry);
+                const originalName = swapEntry?.[0];
 
                 return (
                   <View key={itemIdx} style={styles.ingredientRow}>
@@ -304,51 +305,45 @@ export default function RecipeDetailScreen() {
             </View>
           ))}
 
-          {/* Start Cooking button inside ingredients section */}
-          <Pressable
-            style={styles.inlineStartCookingButton}
-            onPress={startCooking}
-            accessibilityRole="button"
-            accessibilityLabel={hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
-          >
-            <Text style={styles.inlineStartCookingText}>
-              {hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
-            </Text>
-          </Pressable>
-
           {/* Steps Preview section */}
           <Text style={styles.sectionHeader}>Adimlar</Text>
-          {adaptation.adaptedSteps.map((step, idx) => {
-            const bgColor = STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.stepsHorizontalContainer}
+          >
+            {adaptation.adaptedSteps.map((step, idx) => {
+              const bgColor = STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
 
-            return (
-              <View
-                key={idx}
-                style={[styles.stepPreviewBox, { backgroundColor: bgColor }]}
-              >
-                <View style={styles.stepPreviewHeader}>
-                  <View style={styles.stepPreviewNumberBadge}>
-                    <Text style={styles.stepPreviewNumber}>{idx + 1}</Text>
-                  </View>
-                  {step.timerSeconds != null && (
-                    <View style={styles.stepPreviewTimer}>
-                      <MaterialCommunityIcons
-                        name="clock-outline"
-                        size={13}
-                        color="#6B7280"
-                      />
-                      <Text style={styles.stepPreviewTimerText}>
-                        {formatDuration(step.timerSeconds)}
-                      </Text>
+              return (
+                <View
+                  key={idx}
+                  style={[styles.stepPreviewBox, { backgroundColor: bgColor }]}
+                >
+                  <View style={styles.stepPreviewHeader}>
+                    <View style={styles.stepPreviewNumberBadge}>
+                      <Text style={styles.stepPreviewNumber}>{idx + 1}</Text>
                     </View>
-                  )}
+                    {step.timerSeconds != null && (
+                      <View style={styles.stepPreviewTimer}>
+                        <MaterialCommunityIcons
+                          name="clock-outline"
+                          size={13}
+                          color="#6B7280"
+                        />
+                        <Text style={styles.stepPreviewTimerText}>
+                          {formatDuration(step.timerSeconds)}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text style={styles.stepPreviewTitle} numberOfLines={3}>
+                    {step.title || step.instruction.slice(0, 80) + (step.instruction.length > 80 ? '...' : '')}
+                  </Text>
                 </View>
-                <Text style={styles.stepPreviewTitle}>
-                  {step.title || step.instruction.slice(0, 60) + (step.instruction.length > 60 ? '...' : '')}
-                </Text>
-              </View>
-            );
-          })}
+              );
+            })}
+          </ScrollView>
 
           {/* Bottom padding for scroll */}
           <View style={styles.bottomPad} />
@@ -361,10 +356,10 @@ export default function RecipeDetailScreen() {
           style={styles.startCookingButton}
           onPress={startCooking}
           accessibilityRole="button"
-          accessibilityLabel={hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
+          accessibilityLabel={hasActiveSession ? 'Devam Et' : 'Pişirmeye Başla'}
         >
           <Text style={styles.startCookingText}>
-            {hasActiveSession ? 'Devam Et' : 'Pismek Baslat'}
+            {hasActiveSession ? 'Devam Et' : 'Pişirmeye Başla'}
           </Text>
         </Pressable>
       </View>
@@ -589,27 +584,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // Inline start cooking button (inside ingredients section)
-  inlineStartCookingButton: {
-    backgroundColor: '#E07B39',
-    height: 44,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
-    marginBottom: 4,
-  },
-  inlineStartCookingText: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '700',
-  },
-
   // Steps preview boxes
+  stepsHorizontalContainer: {
+    paddingRight: 16,
+    gap: 10,
+  },
   stepPreviewBox: {
     borderRadius: 12,
     padding: 14,
-    marginBottom: 10,
+    width: 180,
   },
   stepPreviewHeader: {
     flexDirection: 'row',

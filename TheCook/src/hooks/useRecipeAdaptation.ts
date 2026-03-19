@@ -113,8 +113,10 @@ export function useRecipeAdaptation(recipe: Recipe | null) {
 
   const adaptedGroups = useMemo(() => {
     if (!recipe) return [];
-    const scaled = scaleIngredientGroups(recipe.ingredientGroups, multiplier);
-    return applySwaps(scaled, swaps);
+    // Swap first (using original amounts), then scale — so alternative
+    // amounts are scaled correctly along with everything else.
+    const swapped = applySwaps(recipe.ingredientGroups, swaps);
+    return scaleIngredientGroups(swapped, multiplier);
   }, [recipe, multiplier, swaps]);
 
   const ingredientMap = useMemo(() => {
@@ -128,8 +130,16 @@ export function useRecipeAdaptation(recipe: Recipe | null) {
         });
       }
     }
+    // Also map original ingredient names to their swapped data so that
+    // step templates like {{Tereyağı.amount}} resolve to the substitute's values.
+    for (const [originalName, swappedName] of Object.entries(swaps)) {
+      const swappedData = map.get(swappedName);
+      if (swappedData) {
+        map.set(originalName, swappedData);
+      }
+    }
     return map;
-  }, [adaptedGroups]);
+  }, [adaptedGroups, swaps]);
 
   const adaptedSteps = useMemo(() => {
     if (!recipe) return [];

@@ -108,10 +108,38 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   }
 
   if (currentVersion < 7) {
-    await db.execAsync(`
-      ALTER TABLE cooking_sessions ADD COLUMN adapted_servings INTEGER;
-      ALTER TABLE cooking_sessions ADD COLUMN ingredient_swaps TEXT DEFAULT '{}';
-    `);
+    try {
+      await db.execAsync(
+        `ALTER TABLE cooking_sessions ADD COLUMN adapted_servings INTEGER`
+      );
+    } catch {
+      // Column already exists
+    }
+    try {
+      await db.execAsync(
+        `ALTER TABLE cooking_sessions ADD COLUMN ingredient_swaps TEXT DEFAULT '{}'`
+      );
+    } catch {
+      // Column already exists
+    }
+  }
+
+  // Self-heal: if DB claims v7+ but columns are missing (e.g. partial migration)
+  if (currentVersion >= 7) {
+    try {
+      await db.execAsync(
+        `ALTER TABLE cooking_sessions ADD COLUMN adapted_servings INTEGER`
+      );
+    } catch {
+      // Column already exists — expected
+    }
+    try {
+      await db.execAsync(
+        `ALTER TABLE cooking_sessions ADD COLUMN ingredient_swaps TEXT DEFAULT '{}'`
+      );
+    } catch {
+      // Column already exists — expected
+    }
   }
 
   await db.execAsync(`PRAGMA user_version = ${DB_VERSION}`);
