@@ -22,3 +22,13 @@ void (globalThis as Record<string, unknown>).URL;
 void (globalThis as Record<string, unknown>).URLSearchParams;
 void (globalThis as Record<string, unknown>).__ExpoImportMetaRegistry;
 void (globalThis as Record<string, unknown>).structuredClone;
+
+// expo-image has native code that crashes in jest without a mock.
+// Provide a lightweight substitute so downstream component tests can render.
+jest.mock('expo-image', () => {
+  const { View } = require('react-native');
+  return {
+    Image: View,
+    ImageBackground: View,
+  };
+});
