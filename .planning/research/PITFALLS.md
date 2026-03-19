@@ -1,310 +1,389 @@
-# Domain Pitfalls: The Cook
+# Domain Pitfalls: The Cook v1.1 — Visual Polish & Content Ready
 
-**Domain:** AI-powered mobile cooking companion (Turkish market)
-**Researched:** 2026-03-08
-**Confidence note:** WebSearch and Context7 tools unavailable in this session. All findings are drawn from training knowledge (cutoff August 2025) applied to the specific technical risks in PROJECT.md. Confidence levels reflect this. Flag for verification during phase planning.
+**Domain:** Adding recipe images, UI polish animations, cookbook tabs, and feed navigation to existing React Native cooking companion
+**Researched:** 2026-03-19
+**Milestone:** v1.1 Visual Polish & Content Ready
+**Existing stack:** Expo 54, React Native 0.81, expo-sqlite, expo-router, Reanimated v4, expo-image (installed, unused)
 
 ---
 
 ## Critical Pitfalls
 
-Mistakes that cause rewrites, user harm, or unit economics failure.
+Mistakes that cause rewrites, performance regressions, or broken existing features.
 
 ---
 
-### Pitfall 1: Real-Time AI Chat Latency Breaks Mid-Cook UX
+### Pitfall 1: Recipe Image Bundle Bloat Kills App Install Size
 
-**What goes wrong:** The AI chat feature is triggered at the worst possible moment — hands dirty, heat on, time-critical step in progress. If the round-trip to the LLM takes 3–6 seconds (standard for unoptimized Claude API calls), the user's window to act has already passed. The response arrives after they've already made the wrong call. This is not a minor annoyance — it destroys the core value proposition ("like having a knowledgeable friend in the kitchen").
+**What goes wrong:** Adding cover images and step images for 30 recipes (each with 3-7 steps) means 30 cover images + ~150 step images = ~180 images. If bundled via `require()` at average 200KB each (compressed JPEG), that is 36MB added to the app binary. Combined with the existing ~185KB recipes.json and app binary, this pushes the IPA/APK from manageable to over 100MB. Users on metered Turkish mobile data (the primary persona's reality) will abandon the download. Apple flags apps over 200MB for cellular download warnings.
 
-**Why it happens:** Teams optimize latency for demo conditions (fast wifi, short prompts, pre-warmed connections) and discover the real-world number is 2–3x worse on Turkish mobile networks (4G with variable signal, common in the 18–30 demographic cooking at home). Additionally, cold API connections on first chat message add 500ms–1s overhead that is invisible in testing.
+**Why it happens:** The YAML content pipeline currently has `coverImage: null` and `stepImage: null` on every recipe. The tempting path is to change these to `require('./images/menemen-cover.jpg')` and bundle everything statically. This works perfectly in development but the bundle size penalty is invisible until a production build.
 
 **Consequences:**
-- User abandons AI chat and defaults to Googling mid-cook (product fails its primary job)
-- Negative reviews citing "the app didn't help me in time"
-- If the user follows a late/wrong AI response, the dish is ruined — trust is lost permanently
+- App store rejection risk (Apple cellular download warning at 200MB)
+- 30-50% install abandonment on metered connections
+- Slower app startup as the JS bundle grows
+- Cannot add more recipes without re-releasing the entire binary
 
 **Prevention:**
-- Target P95 response time under 1.5 seconds as a hard engineering constraint, not a goal
-- Use streaming responses (SSE) so the user sees the first tokens within 300–500ms — perceived latency drops dramatically even if total time is the same
-- Pre-warm the API connection when the user enters cooking mode (a lightweight keepalive ping), not when they first type
-- Use shorter, pre-structured prompts for cooking chat — avoid building the full user profile + recipe context + conversation history into every message; cache what doesn't change
-- Test on Turkish mobile networks (Turkcell/Vodafone TR) with realistic signal conditions, not office wifi
+1. Use optimized images: WebP format, max 800px width for covers, 600px for step images. Target 30-80KB per image.
+2. Bundle ONLY cover images (30 images, ~1.5MB total). Step images can be deferred to cloud delivery in a future phase.
+3. Use expo-image (already in package.json but unused) instead of React Native `Image` -- it has built-in caching, blurhash placeholders, and progressive loading.
+4. Run `npx expo-optimize` or use `sharp` in the build pipeline to auto-compress images before bundling.
+5. Track bundle size in CI -- add a check that fails if the binary exceeds a threshold.
 
-**Warning signs:**
-- Average chat response time over 2 seconds in staging
-- First-message latency noticeably worse than subsequent messages
-- Latency spikes on longer recipes (larger context = slower)
+**Detection:** Build the production binary early (Phase 1 of milestone) and measure. If IPA > 50MB, images need further optimization or cloud migration.
 
-**Phase:** Address in the AI infrastructure phase, before cooking mode goes to user testing. Streaming must be in place before the first real user touches the app.
+**Confidence:** HIGH -- verified via Expo documentation on asset bundling and React Native image docs.
 
 ---
 
-### Pitfall 2: Allergen Substitution Errors — The Highest-Stakes Bug
+### Pitfall 2: 119 Hardcoded Hex Colors Break Dark Mode Polish
 
-**What goes wrong:** The goal-aware personalization system suggests an ingredient substitution that the user's allergen profile should have blocked. A user with a gluten allergy gets a suggestion to substitute with soy sauce (which contains wheat). A lactose-intolerant user gets a butter substitution that is technically dairy-free but cross-contaminated. The LLM does not know what it does not know — it confidently suggests unsafe swaps.
+**What goes wrong:** The codebase has 119 hardcoded hex color values across 17 component files (measured). Many components use inline hex values like `'#F0EDE8'`, `'#1A1A18'`, `'rgba(26,26,24,0.5)'` directly in StyleSheet.create or inline styles, bypassing the `colors` object from `useAppTheme()`. When dark mode contrast fixes are applied by updating `Colors.dark` in `theme.ts`, these hardcoded values remain unchanged, creating a patchwork of correct and incorrect contrast.
 
-**Why it happens:** LLMs are not reliable allergen safety checkers. They hallucinate ingredient compositions, miss hidden allergens (e.g., gluten in oats, soy in certain margarines), and do not have real-time knowledge of Turkish brand formulations. If allergen filtering is implemented by asking the LLM to "avoid X" in its system prompt, the LLM will comply most of the time — but not always. "Most of the time" is not acceptable for allergy safety.
+**Why it happens:** During v1.0's rapid 11-day development across 12 phases, hardcoded values crept in where `colors.textSub` or `colors.card` should have been used. The pattern is especially visible in:
+- `recipe-card-grid.tsx`: 17 hardcoded hex values (skill text, cook time text, gradients)
+- `recipe-card-row.tsx`: 16 hardcoded hex values (same duplication)
+- `sefim-sheet.tsx`: 12 hardcoded hex values (bubble colors, handle bar)
+- `step-content.tsx`: 20 hardcoded hex values (pastel palette, callout backgrounds)
+- `completion-screen.tsx`: 5 hardcoded hex values (star colors, title)
 
 **Consequences:**
-- Medical harm to the user — the worst possible outcome
-- Legal liability (Turkey has consumer protection law; health-related harm from digital products is actionable)
-- App store removal if Apple/Google receive allergen-related harm reports
-- Complete brand destruction; the content creator's personal brand (Hira) is attached to the product
+- Dark mode contrast fixes in `theme.ts` only partially propagate
+- Some text becomes invisible on dark backgrounds (white text on light surface, or dark text on dark background)
+- WCAG contrast ratio violations -- Turkish Gen Z users may use dark mode by default
+- Regression whack-a-mole: fixing one component reveals another
 
 **Prevention:**
-- Never rely solely on the LLM to filter allergens. Build a deterministic allergen blocklist at the data layer: every ingredient in every recipe is tagged with allergen categories at content creation time. The LLM cannot override these tags.
-- When the LLM suggests a substitution, route the suggestion through the allergen tag validator before displaying it to the user. If the suggested ingredient is not in the known-safe list for that user, reject it silently and ask the LLM to try again (or surface a generic "no safe substitution found" message).
-- Add a hard warning at the UI layer for any dish that contains the user's declared allergens, regardless of what the AI said
-- Add explicit legal disclaimer language: "Always verify ingredients if you have a severe allergy" — required for app store approval in health-adjacent categories
-- During recipe curation (Hira's content pipeline), every ingredient must be allergen-tagged before the recipe is published
+1. Before any dark mode contrast work, sweep ALL 17 component files and replace hardcoded hex values with `colors.*` tokens from `useAppTheme()`. This is a prerequisite task, not an optional polish item.
+2. Add missing semantic color tokens to `Colors` in `theme.ts` (e.g., `chipBackground`, `calloutGreen`, `calloutAmber`, `starActive`, `starInactive`).
+3. Use a lint rule or grep check: `grep -rn '#[0-9A-Fa-f]\{6\}' components/ app/` should return zero matches outside of `theme.ts` and gradient palettes.
+4. Category gradient colors are intentionally hardcoded (brand-level decision) -- exclude these from the sweep but ensure text overlaid on gradients always uses white with sufficient contrast.
 
-**Warning signs:**
-- LLM suggests substitutions for ingredients not in the verified ingredient database
-- Substitution feature bypasses the allergen tag check in any code path
-- Recipes published without complete allergen tagging
+**Detection:** After the color token sweep, toggle dark mode on every screen. Any remaining hardcoded value will be visually obvious as a wrong-color element.
 
-**Phase:** The allergen validation layer must be designed before any recipe goes into the database. This is a data model and content pipeline decision, not an afterthought. Phase: Recipe data model + content pipeline.
+**Confidence:** HIGH -- verified by direct codebase analysis (119 occurrences counted).
 
 ---
 
-### Pitfall 3: Turkish Ingredient NLP — Fuzzy Matching Failures Destroy Ingredient Input
+### Pitfall 3: Cookbook Tabs State Loss on Tab Switch
 
-**What goes wrong:** The user types their fridge contents in Turkish. They type "biber" (pepper — but which one? sivri biber, dolmalık biber, kırmızı biber, yeşil biber are different ingredients). They type "peynir" (cheese — but the recipe calls for beyaz peynir vs. kaşar vs. lor). They misspell "soğan" as "sogan". The ingredient matching either fails to find anything (too strict) or matches the wrong ingredient and suggests a recipe that doesn't work (too loose). Both outcomes break trust.
+**What goes wrong:** Adding Saved/Cooked tabs inside the Cookbook screen using local state (e.g., `useState<'saved' | 'cooked'>('saved')`) causes the selected tab to reset to 'saved' every time the user navigates away from the Cookbook bottom tab and returns. This is because expo-router's tab navigator unmounts or re-renders the screen component on focus changes, and `useFocusEffect` (already used in `useCookbookScreen`) triggers a full data reload.
 
-**Why it happens:** Turkish has agglutinative morphology — "domatesten" (from the tomato), "biberlerin" (of the peppers), "soğanı" (the onion, accusative). A simple string match on ingredient names fails for inflected forms. Turkish also has regional naming variations and colloquialisms (e.g., "çarliston" for çarliston biber, "roka" vs "rucola"). Generic NLP libraries trained on English are unreliable for Turkish morphological analysis.
+**Why it happens:** The current `useCookbookScreen` hook calls `loadData()` inside `useFocusEffect`, which sets `loading: true` and re-renders the entire screen. If the inner tab state is local to the component, it resets. Additionally, if the Cooked tab has its own data fetch (cooking history with ratings), a naive implementation will fetch both Saved and Cooked data on every focus, even when only one tab is visible.
 
 **Consequences:**
-- Fridge input returns no matches → user gives up and doesn't use the feature
-- Wrong ingredient matched → recipe recommended that can't actually be made → user frustrated mid-cook
-- The feature that differentiates the app becomes its biggest liability
+- User switches to Cooked tab, navigates to a recipe, returns -- lands on Saved tab instead of Cooked
+- Double data fetches slow down the Cookbook screen
+- Star rating edits on the Cooked tab get "lost" visually because the tab resets
 
 **Prevention:**
-- Do not use pure fuzzy string matching. Use a combination of: (1) a curated Turkish ingredient synonym dictionary covering common variants, regional names, and common misspellings for every ingredient in the recipe database; (2) LLM-powered ingredient normalization for free-text input — send the user's raw text to the LLM and ask it to return canonical ingredient names from the database vocabulary; (3) a disambiguation UI step when input is ambiguous ("Did you mean: sivri biber or dolmalık biber?")
-- The ingredient database vocabulary is the source of truth — the LLM normalizes to it, not to open-ended ingredient names
-- Turkish morphological stemming: use Zemberek-NLP (open source Turkish NLP library) or equivalent for stemming before matching, to handle inflected forms
-- Test with 50+ real Turkish user inputs before shipping — have Hira and her audience submit test inputs
-- Do not ship ingredient input without the synonym dictionary being substantially complete for the v1 recipe set
+1. Persist the active inner tab in the hook state (not just the component) or use a simple ref that survives re-renders.
+2. Use lazy loading for tab content: only fetch Cooked data when the user actually taps the Cooked tab for the first time.
+3. Avoid full `setLoading(true)` on tab switch -- use stale-while-revalidate pattern (show existing data, fetch in background, swap when ready).
+4. Consider `react-native-pager-view` (already installed in package.json) for swipeable tabs with preserved state, but measure whether it adds complexity.
 
-**Warning signs:**
-- Ingredient input returns empty results for common items ("domates", "soğan", "yağ")
-- Testing reveals users type ingredients in different forms than the database expects
-- Disambiguation UI feels like an error state rather than a helpful clarification
+**Detection:** Test cycle: Cookbook -> Cooked tab -> tap a recipe -> back button -> verify Cooked tab is still selected. If it resets, the state management is broken.
 
-**Phase:** Ingredient matching design and synonym dictionary must be built during the recipe content pipeline phase, not as a standalone feature phase. The dictionary is owned by Hira's content work.
+**Confidence:** HIGH -- verified by examining `useCookbookScreen` hook which uses `useFocusEffect(useCallback(() => { loadData(); }, [loadData]))`.
 
 ---
 
-### Pitfall 4: Offline Mode — Silent Failures Mid-Recipe
+### Pitfall 4: Feed "See All" Route Creates Navigation Stack Confusion
 
-**What goes wrong:** The user starts cooking with internet, loses connectivity (kitchen wifi dead zone, Turkish mobile network drop), and the app either crashes, shows a blank screen, shows a spinner forever, or — worst — shows the step they were on but silently fails to submit their AI chat question. They don't know if the app heard them. They are mid-cook, hands dirty, and the app has abandoned them.
+**What goes wrong:** Adding a "See All" button to each feed section that navigates to a vertical list of recipes creates ambiguity about where the user "is" in the navigation stack. If the See All screen is pushed onto the tab's stack, pressing the back button or switching tabs and returning has inconsistent behavior. If the user taps a recipe from the See All list, the back stack becomes: Feed -> See All (trending) -> Recipe Detail. The user expects "back" from Recipe Detail to go to the See All list, not the Feed.
 
-**Why it happens:** Teams implement offline mode as "cache the recipe" and consider it done. But cooking mode has dynamic state (which step, timers running, chat history) that must survive connectivity loss and resume cleanly. Most teams test offline by toggling airplane mode from a full-signal state — they don't test the degraded case (intermittent signal, slow responses, partial request failures).
-
-**Consequences:**
-- User burns food or makes an error because guidance was unavailable
-- The one situation where the app matters most (they're mid-cook and need help) is the one where it fails
-- The offline promise feels like a lie; organic word-of-mouth turns negative
-
-**Prevention:**
-- Define two clearly separate modes: "Offline Safe" (recipe steps, timers, common mistake tips — all pre-loaded, always work) and "Online Enhanced" (AI chat, substitution suggestions — require connectivity)
-- The offline safe mode must be indistinguishable in quality from online mode for the step-by-step experience. The AI chat is the only thing that degrades — and it must degrade gracefully with a clear UI message ("AI chat needs internet — here's the common mistake tip for this step instead")
-- Cache the full recipe (all steps, all annotations) the moment the user opens a recipe, not when they enter cooking mode
-- Timers must run on-device (not server-side) and survive app backgrounding
-- When AI chat fails due to connectivity, queue the message and attempt retry on reconnection — do not silently drop it
-- Test with simulated network degradation (not just airplane mode): 2G speeds, packet loss, request timeouts
-
-**Warning signs:**
-- Recipe steps only load progressively (not pre-cached)
-- Timers rely on server timestamps instead of device clock
-- AI chat shows a spinner with no timeout or error state
-- No UI difference between "loading" and "failed"
-
-**Phase:** Offline architecture must be decided in the core architecture phase. Retrofitting offline support onto an online-first data model is a rewrite. The caching strategy is a data flow decision, not a feature addition.
-
----
-
-### Pitfall 5: Recipe Data Model — Wrong Schema Is Painful to Migrate
-
-**What goes wrong:** The team ships a recipe schema that is flat or under-specified, then discovers mid-production that it cannot represent all the required step-level data (instruction, why, common mistake, what to do if wrong, substitutions, goal enhancements, allergen flags). They add fields ad hoc. By the time 30 recipes are curated, the schema is inconsistent, Hira's content pipeline is working around missing fields, and the AI prompts are compensating for schema gaps. A migration is now required across all recipes.
-
-**Why it happens:** Schema design is deferred ("we'll figure it out as we add recipes") because it feels like infrastructure, not product. But with hand-curated content, the schema IS the product — it defines what the AI can and cannot do.
+**Why it happens:** expo-router uses file-based routing. The See All route needs to be defined as a new route (e.g., `app/feed/[section].tsx` or `app/see-all/[section].tsx`). If placed outside the `(tabs)` group, it becomes a full-screen stack push that hides the tab bar. If placed inside `(tabs)`, it conflicts with the bottom tab structure. The existing `_layout.tsx` does not define any routes inside tabs beyond the 4 tab screens.
 
 **Consequences:**
-- Content migration cost grows linearly with the number of recipes curated before the schema is fixed
-- AI response quality is degraded where schema fields are missing
-- Hira's content creation workflow is disrupted by mid-stream schema changes
-- Goal enhancement and allergen filtering logic breaks on recipes created under the old schema
+- Tab bar disappears on See All screen (if routed outside tabs)
+- Back navigation returns to wrong screen
+- Deep linking to a specific section's See All page fails
+- See All -> Recipe Detail -> back -> unexpected screen
 
 **Prevention:**
-- Design the complete recipe schema before the first recipe is written. Every field listed in PROJECT.md requirements must be modeled: step.instruction, step.why, step.looks_like_when_done, step.common_mistake, step.recovery_if_wrong, step.substitutions (per ingredient), step.goal_enhancements (per dietary goal), step.allergen_flags, step.timer (optional)
-- Validate the schema against 2–3 recipes manually before committing — can Hira actually fill every field for menemen? What fields are always empty? Prune or make optional before locking
-- Use a structured content format (JSON schema or typed CMS schema) enforced at entry time, not validated retrospectively
-- Version the schema from day one — even if v1 never changes, the discipline of having a version number prevents future "where did this field come from?" confusion
+1. Define the See All route as a stack screen inside the root layout (outside tabs), which intentionally hides the tab bar -- this is the standard pattern for "drill-down" screens.
+2. Pass the section key and title as route params: `/feed/see-all?section=trending&title=Su%20an%20trend`.
+3. The See All screen should receive its own data-fetching hook (`useSeeAllScreen`) that accepts the section key and applies the same hard filters as the feed.
+4. Do NOT try to reuse `FeedSection` data from the feed hook -- the feed hook's data is already in memory but passing it via route params is fragile. Fetch fresh from the DB.
+5. Add a header with a back button and the section title on the See All screen.
 
-**Warning signs:**
-- Recipe fields being filled with "N/A" or left empty consistently
-- AI prompts referencing fields that don't exist in the data model
-- Hira creating recipes in a format (doc, spreadsheet) that requires manual conversion to app schema
+**Detection:** Navigate Feed -> See All -> Recipe -> Back -> Back -> verify landing on Feed tab with correct scroll position. Test all 4 sections.
 
-**Phase:** Recipe schema is a Phase 1 deliverable, not a Phase 2 improvement. No recipe content work begins before schema is finalized.
+**Confidence:** HIGH -- verified by examining existing route structure (`app/_layout.tsx`, `app/(tabs)/_layout.tsx`).
 
 ---
 
 ## Moderate Pitfalls
 
-Mistakes that cause significant rework or quality degradation, but are recoverable.
-
 ---
 
-### Pitfall 6: LLM Prompt Costs at Scale — Unoptimized Prompts Kill Unit Economics
+### Pitfall 5: Reanimated v4 Animation Performance on Low-End Android
 
-**What goes wrong:** Every AI interaction sends the full user profile (allergens, goal, skill level), the full recipe (all steps, all annotations), and the full conversation history to the LLM on every turn. With Claude Sonnet-level models, this can cost $0.015–0.05 per chat turn. At 10 turns per cooking session and 1,000 active users, monthly AI costs exceed what the product can afford with no monetization.
+**What goes wrong:** Adding micro-interactions (card press scale, bookmark heart animation, swipe peek hints, sheet backdrop fade) to every card in horizontal FlatLists creates dozens of simultaneous animated components on screen. On low-end Android devices (common in Turkey's 18-30 demographic), this causes frame drops below 60fps, making the app feel janky rather than polished.
 
-**Why it happens:** Prompts are built for correctness during development (include everything so nothing is missed). The cost optimization step is deferred. By the time monetization is designed, the cost per user is already baked into the product behavior.
+**Why it happens:** Reanimated v4 on the New Architecture (enabled by default in Expo SDK 53+) has known performance regressions with many simultaneous animated components. The recommendation is no more than 100 animated components for low-end Android. A single feed screen with 4 sections of 5-8 cards each, where each card has a scale animation + bookmark animation = 40-64 animated components, which is within limits individually but combined with sheet backdrop animations and scroll-based effects can breach the threshold.
 
 **Prevention:**
-- Audit prompt token counts before launch. Log input and output tokens per request from day one.
-- Use prompt caching (Anthropic supports prompt caching for repeated system prompt prefixes) — the user profile and recipe context qualify as cacheable prefix content. This reduces cost for multi-turn cooking sessions by 60–80%.
-- Separate the AI use cases by cost profile: substitution suggestions (one-off, can use a smaller/faster model) vs. real-time cooking chat (needs quality, use full model) vs. initial recipe personalization (batch-able, can run on recipe open rather than on every step)
-- Set a cost budget per user session (e.g., 50 cents maximum) and design graceful degradation when it's hit ("AI chat limit reached for this session — here are the pre-written tips for this step")
-- Use Claude Haiku or equivalent for structured extraction tasks (ingredient normalization, substitution lookup) where quality is less critical than cost
+1. Only animate transform and opacity properties -- never width, height, margin, or padding. Layout-affecting animations are 3-5x more expensive.
+2. Use `useAnimatedStyle` sparingly -- one per component, not multiple. Combine animations into a single style object.
+3. For card press feedback, use React Native's built-in `Pressable` opacity/scale rather than Reanimated for simple press effects. Reserve Reanimated for complex animations like peek hints and sheet transitions.
+4. Use `withSpring` with reduced `damping` for snappy feel, not `withTiming` with long durations -- shorter animations mean fewer frames to render.
+5. Profile on a real low-end Android device (not just simulator). Use Flipper's performance panel or React Native's built-in performance monitor.
+6. Batch animation triggers -- debounce scroll-driven animations to avoid per-frame worklet execution.
 
-**Warning signs:**
-- Average tokens per chat turn above 2,000 input tokens
-- Cost per daily active user exceeds $0.10/day without monetization offsetting it
-- Prompt construction includes full recipe text on every turn rather than caching it
+**Detection:** Run the app on a sub-$200 Android device with performance monitor enabled. If frames consistently drop below 55fps during scroll, animations need culling.
 
-**Phase:** Prompt architecture and cost instrumentation in the AI infrastructure phase. Cost measurement before any user-facing AI feature is shipped.
+**Confidence:** MEDIUM -- based on Reanimated v4 GitHub issues (#8250) about New Architecture performance and official performance docs. Exact thresholds depend on device.
+
+**Sources:**
+- [Reanimated Performance Guide](https://docs.swmansion.com/react-native-reanimated/docs/guides/performance/)
+- [Reanimated New Architecture Issue #8250](https://github.com/software-mansion/react-native-reanimated/issues/8250)
 
 ---
 
-### Pitfall 7: Turkish Language LLM Quality — Assuming Parity with English
+### Pitfall 6: Bottom Sheet Backdrop Animation Timing Mismatch
 
-**What goes wrong:** The team tests the AI in English during development and achieves excellent results. They add Turkish translation/localization late. In Turkish, the LLM outputs are grammatically awkward, miss culturally relevant cooking context (e.g., doesn't know what "çevirme" technique means in Turkish home cooking), or produces responses that feel machine-translated rather than natural. Users in the 18–30 Turkish demographic are extremely sensitive to unnatural digital Turkish — it signals inauthenticity.
+**What goes wrong:** The existing Sefim Sheet and Ingredients Sheet use React Native's `<Modal>` component with `animationType="slide"` and a manual `rgba(0,0,0,0.4)` overlay. When upgrading to smoother backdrop transitions (fade in/out synchronized with sheet open/close), the backdrop appears after the sheet animation completes, not simultaneously. This creates a jarring "flash" effect.
 
-**Why it happens:** Major LLMs (Claude, GPT-4, Gemini) are significantly better in English than Turkish due to training data distribution. Claude's Turkish quality is good but not equal to English — certain domain-specific terms, cooking idioms, and regional colloquialisms may not be well-represented. Testing in English hides this gap.
+**Why it happens:** React Native's `Modal` component has limited animation control -- `animationType` only supports 'none', 'slide', and 'fade', and there is no way to coordinate backdrop opacity with sheet position. The current overlay is a static `rgba(0,0,0,0.4)` Pressable that appears instantly when `visible={true}`, which means the backdrop "pops" rather than fading.
 
 **Consequences:**
-- AI responses feel robotic or formal in a product that promises a "knowledgeable friend" tone
-- Users lose trust in AI suggestions because the language signals low competence
-- The core differentiator (human-feeling AI guidance) fails at the language layer
+- Sheet open: dark overlay appears instantly, then sheet slides up = feels disconnected
+- Sheet close: sheet slides down, then backdrop disappears instantly = flash of un-darkened background
+- On slow devices, the timing gap is more noticeable
 
 **Prevention:**
-- All AI quality testing must happen in Turkish from the first prototype. Do not validate English behavior and assume Turkish transfers.
-- Write system prompts in Turkish (not translated English prompts) — prompts written natively in Turkish produce more natural outputs than translated prompts
-- Define a tone guide for AI responses: the voice is warm, direct, and uses everyday Turkish cooking vocabulary — not formal or clinical. Include 5–10 example exchanges in the tone guide that the LLM uses as few-shot examples
-- Test with Hira's review as the quality gate — she is the target voice and audience. If she finds an AI response unnatural, it fails quality review.
-- Maintain a list of cooking terms where LLM knowledge is uncertain (technique names, regional ingredient names) and pre-define those in the system prompt
+1. Replace `<Modal>` with a custom animated overlay approach: use `Animated.View` for the backdrop with `withTiming` opacity animation, and `Animated.View` with `translateY` for the sheet content.
+2. Alternatively, adopt `@gorhom/bottom-sheet` which handles backdrop synchronization natively. However, this adds a dependency and requires rewriting both sheets -- weigh the cost.
+3. If keeping `<Modal>`, switch `animationType` to `'fade'` and add a separate slide animation for the sheet content using Reanimated. The fade will handle the backdrop naturally.
+4. The simplest fix: wrap the overlay `Pressable` in an `Animated.View` and animate its opacity from 0 to 1 over 300ms when `visible` changes.
 
-**Warning signs:**
-- AI responses use formal Turkish ("gerçekleştirin" instead of "yapın") in conversational contexts
-- AI doesn't recognize common Turkish dish names or regional variants
-- Hira flags AI responses as "sounds weird" during quality review
+**Detection:** Record a screen capture at 60fps and step through frames. The backdrop and sheet should start animating on the same frame.
 
-**Phase:** Turkish language quality testing must begin in the AI prototype phase, not after UI is built. It is a core capability gate, not a localization task.
+**Confidence:** MEDIUM -- based on examining the current Modal implementation in `sefim-sheet.tsx` and `ingredients-sheet.tsx`, plus known Modal animation limitations.
 
 ---
 
-### Pitfall 8: App Store Health/Allergen Claims — Review Rejection Risk
+### Pitfall 7: Image Placeholder-to-Image Flash on Recipe Cards
 
-**What goes wrong:** The app makes implicit or explicit health claims ("This recipe is safe for people with gluten allergy") without the required disclaimers. Apple App Store reviewers flag the app under health and safety guidelines (Guideline 5.1.3 — health data; Guideline 1.4 — physical harm). Google Play has similar health-adjacent content policies. The rejection delays launch by 2–4 weeks and requires redesigning the copy.
+**What goes wrong:** Currently, recipe cards show a `LinearGradient` in the image area (since `coverImage` is null for all 30 recipes). When images are added, the transition from "no image" state to "image loaded" will cause a visible flash/pop as the gradient disappears and the image appears. This is especially noticeable in horizontal FlatList scrolling where cards enter the viewport.
 
-**Why it happens:** The allergen filtering feature is framed in product terms as a safety guarantee, and that framing leaks into the UI copy and app store description. App store reviewers search for health-adjacent language and apply strict standards.
-
-**Consequences:**
-- Launch delay of 2–4 weeks for redesign and resubmission
-- If the app is approved but later flagged by a user complaint, it can be removed retroactively
-- Forces post-launch copy changes that affect Hira's marketing narrative
+**Why it happens:** Standard `<Image>` loading is async -- the component renders with no source, then the source loads and triggers a re-render. Without a placeholder strategy, the card layout jumps or the image area flashes from gradient to photo. The existing gradient serves as a meaningful color-coded visual (category-based), so removing it entirely for images loses information.
 
 **Prevention:**
-- Frame allergen filtering as a "preference filter" not a "safety guarantee" in all UI copy and app store metadata. "Filters recipes to match your preferences" not "Safe for your allergies."
-- Add a persistent disclaimer in the allergen settings screen: "Always check ingredient labels if you have a severe allergy. This app is not a substitute for medical advice."
-- Review Apple's App Store Review Guidelines Section 5.1 and 1.4 before submitting. Have someone read the app description and in-app copy specifically looking for claim language.
-- Avoid any marketing language that implies medical-grade safety certification
+1. Use `expo-image` with `placeholder` prop -- pass a blurhash string generated at build time. The blurhash displays instantly, then crossfades to the real image.
+2. Generate blurhash strings in the `build-recipes.ts` script: for each image, compute a 4x3 blurhash and store it in the YAML/JSON as `coverImageBlurHash`.
+3. Keep the category gradient as the fallback for recipes that genuinely have no image (future-proofing for community-submitted recipes).
+4. Set `transition={{ duration: 300 }}` on `expo-image` for smooth crossfade from placeholder to loaded image.
+5. Set explicit `width` and `height` on the image container (already done: `height: 140` on `imageArea`) to prevent layout shifts.
 
-**Warning signs:**
-- UI copy uses the word "safe" in conjunction with allergen features
-- App store description mentions allergens without a disclaimer
-- Goal-aware personalization features are framed as nutritional recommendations
+**Detection:** Slow network simulation (React Native's network throttling) should show a smooth blurhash-to-image transition, not a flash.
 
-**Phase:** App store copy review is a pre-submission checklist item. Build the disclaimer language into the UI components from the beginning — retrofitting it after launch creates inconsistency.
+**Confidence:** HIGH -- `expo-image` with blurhash is the documented approach per Expo image documentation.
+
+**Sources:**
+- [expo-image Documentation](https://docs.expo.dev/versions/latest/sdk/image/)
+
+---
+
+### Pitfall 8: Star Rating Touch Targets Too Small in Cookbook Row Layout
+
+**What goes wrong:** Adding inline star ratings to the Cooked tab's recipe list rows (80px tall, per `recipe-card-row.tsx`) squeezes 5 star icons into a small horizontal space. If each star is the same 36px size as in `CompletionScreen`, the touch targets overlap or fall below the 44x44pt minimum recommended by Apple's HIG and Android's 48dp guideline. Users tap the wrong star or miss entirely.
+
+**Why it happens:** The completion screen has generous space (full-screen centered layout), but the cookbook row has only ~80px height with title + meta already competing for space. Fitting 5 tappable stars with proper spacing requires at minimum 5 * 44px = 220px width of touch area, which competes with the recipe title on a narrow phone screen.
+
+**Consequences:**
+- Users rate 3 when they meant 4 (frustrating for a "rate your cooking" feature)
+- VoiceOver/TalkBack cannot distinguish individual stars
+- Repeated mis-taps erode trust in the rating feature
+
+**Prevention:**
+1. Do NOT put editable star ratings inline on cookbook row cards. Instead, show the rating as read-only (small stars, no tap handler) and open an edit sheet or use the recipe detail screen for rating changes.
+2. If inline editing is required, use a compact rating display: show the numeric value (e.g., "4/5") with a single star icon, tap to open a bottom sheet with full-size editable stars.
+3. For the read-only display, use 14-16px star icons with `accessibilityLabel="4 out of 5 stars"` as a single element, not 5 separate touchable elements.
+4. Ensure minimum 44x44pt hit area on any interactive star element, using `hitSlop` if needed.
+
+**Detection:** Test with VoiceOver enabled. Each star should be independently selectable and announced. If stars merge into one accessible element, the interaction model is wrong.
+
+**Confidence:** HIGH -- based on Apple HIG touch target guidelines and examination of existing `recipe-card-row.tsx` (80px row height).
+
+---
+
+### Pitfall 9: Filter Chips with Images Cause Scroll Jank in Category Strip
+
+**What goes wrong:** Adding small category images to filter chips (e.g., a tiny food photo next to "Ana Yemek") in the search category strip creates async image loads inside a horizontal ScrollView. As chips scroll into view, images load and the chip width changes (text + image vs text-only), causing layout jumps. On slow devices, the scroll stutters as images decode.
+
+**Why it happens:** The existing `Chip` component is text-only with a fixed `paddingHorizontal: 14`. Adding an image changes the chip's intrinsic width depending on whether the image has loaded. If image width is not pre-specified, the chip expands when the image loads, pushing adjacent chips and causing the scroll position to shift.
+
+**Consequences:**
+- Category strip jumps horizontally as images load
+- User tapping a chip hits the wrong one because positions shifted
+- Visual flicker as chips resize
+
+**Prevention:**
+1. Use fixed-size chip layouts: define explicit width for chips with images, or use a fixed image placeholder size (24x24) that is present whether or not the image has loaded.
+2. Pre-load category images at app startup (only 6 categories = 6 tiny images) using `expo-image`'s `Image.prefetch()`.
+3. Use the `contentFit="cover"` prop on `expo-image` with a fixed container to prevent layout shifts.
+4. Consider using SF Symbols or MaterialCommunityIcons instead of photos for category chips -- icons load instantly and convey category meaning without network dependency.
+
+**Detection:** Scroll the category strip rapidly on a slow connection. If chips visibly resize or the strip jumps, the layout is not fixed-size.
+
+**Confidence:** MEDIUM -- based on general React Native image-in-list patterns. Exact impact depends on image size and count.
+
+---
+
+### Pitfall 10: YAML-to-DB Image Path Resolution Breaks on Production Builds
+
+**What goes wrong:** The YAML content pipeline (`build-recipes.ts`) currently outputs `coverImage: null` and `stepImage: null` into `recipes.json`. When images are added, the YAML will reference image paths (e.g., `coverImage: "menemen-cover.webp"`). The build script writes this string into `recipes.json`, which gets seeded into SQLite. At runtime, the app needs to resolve `"menemen-cover.webp"` to an actual asset reference. But in production builds, bundled assets accessed via `require()` return numeric IDs at compile time, not string paths. A string path stored in SQLite cannot be resolved to a bundled asset at runtime.
+
+**Why it happens:** React Native's Metro bundler resolves `require('./assets/menemen-cover.webp')` at compile time to a numeric asset ID. This ID is what `<Image source={require(...)} />` actually receives. But if the image path is a string stored in the database, there is no way to call `require()` dynamically at runtime -- `require()` must be statically analyzable.
+
+**Consequences:**
+- Images work in development (Metro dev server serves files by path) but fail silently in production builds
+- All recipe images show as broken/missing in the released app
+- Debugging is painful because the issue only manifests in release mode
+
+**Prevention:**
+1. Create a static image registry: a TypeScript file that maps recipe IDs to `require()` calls:
+   ```typescript
+   export const RECIPE_IMAGES: Record<string, number> = {
+     'menemen': require('../assets/images/recipes/menemen-cover.webp'),
+     'kofte': require('../assets/images/recipes/kofte-cover.webp'),
+     // ...
+   };
+   ```
+2. At runtime, look up the image by recipe ID from this registry, not from the database string.
+3. The YAML `coverImage` field becomes a flag/filename for the build script to verify the image exists, but the runtime lookup uses the registry.
+4. For step images (if bundled), use a nested registry: `STEP_IMAGES[recipeId][stepIndex]`.
+5. Alternative: store images in the app's local filesystem using `expo-file-system` and reference by file URI. This works for cloud-downloaded images but adds complexity for bundled ones.
+6. The build script should validate that every non-null `coverImage` in YAML has a corresponding entry in the image registry.
+
+**Detection:** Build a production release (`expo build` or `eas build`) early in the milestone and verify images load on a real device. Do not rely on Expo Go or dev builds for image verification.
+
+**Confidence:** HIGH -- this is a well-documented React Native limitation. The `require()` static analysis constraint is in the official React Native image docs.
+
+**Sources:**
+- [React Native Images Documentation](https://reactnative.dev/docs/images)
 
 ---
 
 ## Minor Pitfalls
 
-Issues worth knowing, but recoverable without major rework.
+---
+
+### Pitfall 11: Card Peek Hint Animation Conflicts with FlatList Scroll
+
+**What goes wrong:** Adding a "peek" animation (where the next card in a horizontal list slightly peeks into view to indicate scrollability) requires modifying the FlatList's `contentContainerStyle` padding or using `snapToInterval`. If the peek amount is miscalculated, the last card either clips or leaves awkward empty space. Worse, if the peek animation uses Reanimated scroll offset tracking, it can conflict with FlatList's internal scroll handling.
+
+**Prevention:**
+1. Use CSS-only peek: set `contentContainerStyle={{ paddingRight: 40 }}` on the FlatList and constrain card width to `screenWidth - 40 - 16` (16 for left padding). This reveals a sliver of the next card without any animation.
+2. Do NOT use `snapToInterval` with variable-width content -- it causes bounce-back glitches.
+3. If using scroll-driven animations for the peek, use `useAnimatedScrollHandler` but limit to opacity changes on edge cards, not position transforms.
+
+**Confidence:** MEDIUM -- standard FlatList pattern.
 
 ---
 
-### Pitfall 9: Step-by-Step UI — Scroll Regression Under Pressure
+### Pitfall 12: Cooking History Rating Column Allows Unbounded Values
 
-**What goes wrong:** The cooking mode is designed as one-step-at-a-time, but edge cases (long instructions, embedded timer, common mistake callout) cause the step card to overflow and require scrolling — exactly the behavior the design was meant to eliminate. On a phone with wet hands, scrolling a step card is a failure mode.
+**What goes wrong:** The `cooking_history` table has `rating INTEGER` with no constraints. When adding editable star ratings in the Cookbook Cooked tab, a bug could insert a rating of 0, 6, or -1. The existing `logCookingCompletion` function in `cooking-history.ts` accepts `rating?: number` without validation.
 
-**Prevention:** Set a hard character limit for step instructions during content creation (150–200 characters for the primary instruction). The "why" and "common mistake" are progressive disclosure — hidden by default, available on tap. Test every step card with the longest possible content before finalizing the UI.
+**Prevention:**
+1. Add Zod validation at the hook level: `z.number().int().min(1).max(5).nullable()`.
+2. Add a CHECK constraint in the next migration: `ALTER TABLE cooking_history ADD CONSTRAINT chk_rating CHECK (rating IS NULL OR (rating >= 1 AND rating <= 5))`. Note: SQLite supports CHECK constraints but only on table creation, not ALTER. Add it to a new migration that recreates the table or validates in application code.
+3. The `updateRating` function (to be created) should validate before writing.
 
-**Phase:** Content guidelines and UI component design, before recipe curation begins.
-
----
-
-### Pitfall 10: Goal Enhancement Feeling Preachy or Intrusive
-
-**What goes wrong:** The app silently adds a boiled egg to the user's menemen for muscle gain, but the user sees it as an unexpected change to a dish they know. Or the enhancement is surfaced with too much explanation ("We added extra protein because of your muscle gain goal") and feels like a lecture. The tone misses the "knowledgeable friend" bar.
-
-**Prevention:** Goal enhancements must be presented as suggestions or natural extensions, not modifications. "We added an extra egg — great for your goals" is better than a clinical explanation. Give users a one-tap way to dismiss the enhancement and cook the original. Never force an enhancement — the dish the user knows is always available.
-
-**Phase:** Goal personalization UI design phase.
+**Confidence:** HIGH -- verified by reading `cooking-history.ts` and `client.ts` migration code.
 
 ---
 
-### Pitfall 11: Cold Start — 30-Recipe Library Feels Thin for Discovery
+### Pitfall 13: Section Title Duplication Between Feed and See All
 
-**What goes wrong:** 30–50 recipes is the right size for validation but will feel sparse to users who open the browse feed without ingredients in mind. If the same 30 recipes appear in every browse session without meaningful surfacing logic, repeat visitors see nothing new.
+**What goes wrong:** Feed section titles ("Su an trend", "30 dakikada bitir", "Sana ozel", "Denemediklerin") are hardcoded in `buildFeedSections()` in `useFeedScreen.ts`. The See All screen will need these same titles. If the See All screen derives the title from the URL param, it needs to match exactly. Any mismatch (e.g., URL-safe encoding of Turkish characters) causes a blank or wrong title.
 
-**Prevention:** Invest in the browse surfacing logic before launch — skill-level filtering, goal filtering, and seasonal/contextual surfacing (breakfast vs. dinner) make 30 recipes feel like a curated menu rather than a short list. Do not launch browse with an unsorted flat list.
+**Prevention:**
+1. Extract section metadata (key, title, icon) into a shared constant:
+   ```typescript
+   export const FEED_SECTIONS = {
+     trending: { title: 'Su an trend', icon: 'fire' },
+     quick: { title: '30 dakikada bitir', icon: 'clock-fast' },
+     personal: { title: 'Sana ozel', icon: 'account-heart' },
+     untried: { title: 'Denemediklerin', icon: 'food-variant-off' },
+   } as const;
+   ```
+2. Both `useFeedScreen` and `useSeeAllScreen` reference this constant.
+3. Pass only the section key in the route param, never the title string.
 
-**Phase:** Recipe discovery and browse phase.
+**Confidence:** HIGH -- verified by reading `useFeedScreen.ts` `buildFeedSections()`.
+
+---
+
+### Pitfall 14: Haptic Feedback Overuse Creates Annoyance
+
+**What goes wrong:** Adding haptic feedback to every micro-interaction (card press, bookmark toggle, tab switch, chip selection, star tap, timer button, swipe) results in constant device vibration that users perceive as a buzzing, broken phone rather than premium feedback.
+
+**Prevention:**
+1. Limit haptics to meaningful state changes: bookmark toggle (add/remove), cooking step completion, timer start/finish, rating submission.
+2. Use `ImpactFeedbackStyle.Light` for most interactions, `Medium` only for significant actions (start cooking), `Heavy` never.
+3. Do NOT add haptics to scroll events, card presses (navigation is feedback enough), or tab switches.
+4. Provide a setting to disable haptics entirely (respect user preference).
+
+**Confidence:** HIGH -- UX best practice, not technology-specific.
+
+---
+
+### Pitfall 15: Dual Data Fetch on Cookbook Tab Initialization
+
+**What goes wrong:** The Cookbook screen with Saved/Cooked tabs may fetch both bookmarked recipes AND cooking history on mount, even though only one tab is visible. With 30 recipes and growing cooking history, this doubles the SQLite queries on every Cookbook focus.
+
+**Prevention:**
+1. Fetch only the active tab's data on mount. Defer the other tab's data until the user switches to it.
+2. Cache the fetched data in the hook state so switching back does not re-fetch unless the data is stale.
+3. Use a `dataLoaded` flag per tab to avoid redundant fetches.
+
+**Confidence:** HIGH -- standard lazy loading pattern.
 
 ---
 
 ## Phase-Specific Warnings
 
-| Phase Topic | Likely Pitfall | Mitigation |
-|-------------|---------------|------------|
-| Recipe schema design | Fields added ad hoc mid-curation, requiring migration | Lock schema before first recipe; validate against 2–3 test recipes |
-| Content pipeline (allergen tagging) | Tags incomplete or inconsistent; allergen filter unreliable | Allergen tags are required fields, validated at content entry |
-| AI infrastructure setup | Latency testing on office wifi, not Turkish mobile networks | Test on real networks with simulated degradation from day one |
-| Ingredient input feature | Turkish morphology breaks string matching | Synonym dictionary + LLM normalization + disambiguation UI |
-| Offline cooking mode | Recipe caching added as afterthought; timers server-dependent | Cache full recipe on open; timers run on device; decide offline architecture before building cooking mode |
-| AI cooking chat | Prompt costs not instrumented until scale | Log token counts from first API call; implement prompt caching before launch |
-| Turkish AI quality | Quality only tested in English | All AI quality gates run in Turkish from the first prototype |
-| Goal-aware personalization | LLM allergen filtering trusted for safety | Deterministic allergen blocklist at data layer; LLM suggestions validated against it |
-| App store submission | Health/allergen claim language triggers rejection | Review Guidelines 1.4 and 5.1 before writing any copy; no "safe for allergies" language |
-| Browse/discovery | 30 recipes feel thin without surfacing logic | Skill/goal/context filters make curation feel intentional |
+| Phase Topic | Likely Pitfall | Mitigation | Severity |
+|-------------|---------------|------------|----------|
+| Recipe image system | Bundle size bloat (#1) | WebP compression, cover-only bundling, measure binary early | Critical |
+| Recipe image system | Path resolution in production (#10) | Static require() registry, test with release build | Critical |
+| Recipe image system | Placeholder-to-image flash (#7) | expo-image + blurhash at build time | Moderate |
+| Dark mode contrast | Hardcoded hex colors (#2) | Sweep all 17 component files before any contrast work | Critical |
+| Cookbook Saved/Cooked tabs | Tab state resets on navigation (#3) | Persist active tab in hook, lazy-load tab data | Critical |
+| Cookbook Saved/Cooked tabs | Star rating touch targets (#8) | Read-only inline, edit in sheet or detail screen | Moderate |
+| Cookbook Saved/Cooked tabs | Dual data fetch (#15) | Lazy load per tab | Minor |
+| Cookbook Saved/Cooked tabs | Unbounded rating values (#12) | Zod validation, range check | Minor |
+| Feed "See All" navigation | Navigation stack confusion (#4) | Stack route outside tabs, fresh data fetch | Critical |
+| Feed "See All" navigation | Title duplication (#13) | Shared constant, key-based lookup | Minor |
+| UI animations | Reanimated perf on low-end Android (#5) | Transform/opacity only, limit count, real device testing | Moderate |
+| UI animations | Card peek scroll conflicts (#11) | CSS-only peek via padding, avoid snapToInterval | Minor |
+| UI animations | Haptic overuse (#14) | Limit to state changes, Light feedback only | Minor |
+| Bottom sheet transitions | Backdrop timing mismatch (#6) | Replace Modal with Reanimated overlay, or adopt @gorhom/bottom-sheet | Moderate |
+| Filter chips with images | Scroll jank (#9) | Fixed chip sizes, prefetch, consider icons over photos | Moderate |
 
----
+## Ordering Implications
 
-## Confidence Assessment
+Based on these pitfalls, the milestone phases should be ordered as follows:
 
-| Area | Confidence | Notes |
-|------|------------|-------|
-| Latency / streaming patterns | HIGH | Well-established LLM engineering pattern; applies directly |
-| Allergen safety architecture | HIGH | Deterministic vs. probabilistic safety is a well-documented pattern in health-adjacent AI products |
-| Turkish NLP / Zemberek | MEDIUM | Zemberek-NLP is real and actively maintained as of August 2025; verify current status before committing |
-| LLM prompt caching (Anthropic) | HIGH | Anthropic prompt caching is a documented, live feature as of mid-2024 |
-| Turkish LLM quality | MEDIUM | Directionally correct (English > Turkish for major LLMs) but Claude's Turkish quality may have improved; validate with prototype testing |
-| App store health claim policies | MEDIUM | Apple Guideline 1.4 and 5.1 are stable; always verify current guidelines at submission time |
-| Offline mobile architecture patterns | HIGH | React Native + SQLite/WatermelonDB offline-first is established pattern |
-| LLM cost per token estimates | MEDIUM | Token pricing changes frequently; verify current Anthropic pricing at project start |
-
----
+1. **Image infrastructure first** -- Solve the build pipeline (image registry, compression, YAML wiring) before any UI work touches images. Pitfalls #1 and #10 are showstoppers that are invisible until production build.
+2. **Color token sweep second** -- Replace 119 hardcoded hex values before any dark mode contrast adjustments. Pitfall #2 makes all subsequent dark mode work fragile if not addressed first.
+3. **Cookbook tabs and See All routes third** -- These require new routes and hook restructuring (Pitfalls #3, #4) that touch shared infrastructure.
+4. **Animation polish last** -- Micro-interactions, peek hints, and sheet transitions are additive and can be tuned without affecting data flow. Pitfalls #5, #6, #11 are performance tuning issues best addressed when the feature set is stable.
 
 ## Sources
 
-All findings are from training knowledge (cutoff August 2025) applied to the specific PROJECT.md context. No external verification was possible in this session due to tool restrictions.
-
-**Verify before implementing:**
-- Current Anthropic Claude API pricing and prompt caching documentation: https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
-- Apple App Store Review Guidelines (health and safety): https://developer.apple.com/app-store/review/guidelines/
-- Zemberek-NLP (Turkish NLP library): https://github.com/ahmetaa/zemberek-nlp
-- Google Play health content policies: https://support.google.com/googleplay/android-developer/answer/9876714
+- [Expo Image Documentation](https://docs.expo.dev/versions/latest/sdk/image/)
+- [Expo Assets Guide](https://docs.expo.dev/develop/user-interface/assets/)
+- [React Native Images Documentation](https://reactnative.dev/docs/images)
+- [Reanimated Performance Guide](https://docs.swmansion.com/react-native-reanimated/docs/guides/performance/)
+- [Reanimated New Architecture Issue #8250](https://github.com/software-mansion/react-native-reanimated/issues/8250)
+- [BottomSheet Backdrop Timing Issue #857](https://github.com/gorhom/react-native-bottom-sheet/issues/857)
+- [Apple HIG Touch Target Guidelines](https://developer.apple.com/design/human-interface-guidelines/accessibility)
+- [WCAG 2.2 Contrast Requirements](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum)
+- Direct codebase analysis of TheCook v1.0 (17 component files, 119 hardcoded hex values, 2 Modal-based sheets, 30 YAML recipes with null images)

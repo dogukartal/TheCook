@@ -1,269 +1,228 @@
 # Project Research Summary
 
-**Project:** The Cook — AI-powered mobile cooking companion
-**Domain:** Offline-first mobile app with LLM integration (Turkish market)
-**Researched:** 2026-03-08
-**Confidence:** MEDIUM
+**Project:** TheCook v1.1 — Visual Polish & Content Ready
+**Domain:** React Native cooking companion app (Turkish market, Expo SDK 54)
+**Researched:** 2026-03-19
+**Confidence:** HIGH
 
 ## Executive Summary
 
-The Cook is a Turkish-market cooking companion app targeting 18–30 year olds. Research across four domains converges on a single architectural truth: this product is an **offline-first mobile app with a thin, secure cloud layer for AI**. The recipe library and step-by-step cooking experience must work without internet; AI features degrade gracefully. The recommended implementation path is Expo (managed workflow) + React Native + Supabase (BaaS + Edge Functions as AI proxy) + SQLite (offline recipe store) + Claude API (Haiku for chat, Sonnet for personalization). This is a well-documented stack for this problem shape. The architectural decisions are high-confidence; version numbers should be confirmed at project init.
+TheCook v1.1 is a visual upgrade milestone, not an architectural one. The v1.0 codebase already has the right structure: screen hooks that encapsulate all data logic, Zod schemas as the source of type truth, SQLite with WAL mode, and expo-image and Reanimated v4 installed but unused. The entire v1.1 stack requires only one new package (`@gorhom/bottom-sheet`) — every other capability (image loading, haptics, animations, FlashList) is already in `package.json`. The research conclusion is clear: stop installing and start enabling what is already there.
 
-The competitive gap The Cook occupies is real and uncontested: no app combines curated Turkish recipe content with goal-aware silent personalization, per-step why/mistake annotations, and real-time contextual AI chat mid-cook. The v1 scope is correctly bounded. The 30–50 curated recipe library is the right size for validation — it is a content moat, not a tech moat. The AI features differentiate, but only if the underlying content schema and recipe data model are built correctly before a single recipe is authored. The recipe data schema is the highest-leverage early decision in this project.
+The recommended approach works in four sequential dependency layers. Image pipeline infrastructure comes first because it is a prerequisite for every visual feature. Before any dark mode polish, 119 hardcoded hex values must be swept from 17 component files and replaced with theme tokens — otherwise dark mode fixes in `theme.ts` only partially propagate. The Cookbook tab expansion and See All navigation are independent mid-tier features that can be built in parallel after images are in place. Animation and micro-interaction polish comes last, touching many files but changing no data flow.
 
-The three risks that require early, deliberate mitigation are: (1) allergen filtering must be deterministic and data-layer enforced — LLM output must never be the sole allergen gate; (2) AI chat latency must be treated as a hard constraint (P95 under 1.5s) with streaming responses and pre-warmed connections from day one; and (3) Turkish language quality of AI output must be validated in Turkish from the first prototype — not as a localization afterthought. The ordered build sequence from ARCHITECTURE.md (schema → local DB → profile → discovery → cooking mode → AI integration → personalization → chat → offline hardening) reflects real dependency chains and should be followed.
-
----
+Two non-obvious risks deserve special attention. First, image bundling can silently balloon the app binary: the menemen reference PNGs in `content/images/MENEMEN/` are 1.8MB each, and naively bundling 180 recipe images at that size produces a 36MB binary increase that will trigger App Store cellular download warnings. WebP at 30-80KB per image keeps the total under 5MB. Second, `require()` in Metro is statically analyzed at compile time — image path strings stored in SQLite cannot be resolved to bundled assets in production builds. A static TypeScript registry mapping recipe IDs to `require()` calls is mandatory, and this must be verified with an actual release build early in the milestone, not at the end.
 
 ## Key Findings
 
 ### Recommended Stack
 
-The stack centers on **Expo SDK 52 (managed workflow)** as the mobile shell, eliminating native toolchain complexity for a solo build. React Native 0.76 ships with the New Architecture (Fabric + JSI) enabled by default, which matters for timer and camera interactions. Expo Router v4 handles navigation with file-system routing and deep linking out of the box.
-
-**Supabase** handles auth, database (PostgreSQL), and — critically — Edge Functions (Deno) that serve as the AI proxy. This is the correct backend choice because: PostgreSQL's relational model enables ingredient-overlap queries that Firestore cannot do cleanly; Edge Functions proxy Claude API calls without exposing the API key to the client; and the free tier handles v1 scale. Claude API is called exclusively through Edge Functions — never from the mobile client.
-
-**SQLite via expo-sqlite** (or WatermelonDB for added sync complexity if needed later) is the offline database. The 30–50 curated recipes ship bundled inside the app binary as JSON, seeded into SQLite on first launch. This eliminates any cold-start network dependency. Zustand manages in-session state (current cooking step, timer state). MMKV handles fast synchronous storage for cooking session persistence across app kills.
+The v1.0 stack (Expo 54, RN 0.81, expo-sqlite, expo-router, Zod v4, Reanimated 4.1, Supabase) is fully validated and unchanged for v1.1. Only one new runtime dependency is justified: `@gorhom/bottom-sheet@^5.2.8`, which replaces hand-rolled `<Modal animationType="slide">` sheets with gesture-driven, snap-point-aware bottom sheets. Its peer dependency on Reanimated `>=4.0.0-` is officially satisfied by the installed v4.1.6, though real-world compatibility issues have been reported in GitHub issues #2546-#2600.
 
 **Core technologies:**
-- Expo SDK 52 (managed workflow): mobile shell, OTA updates, EAS Build — eliminates native toolchain
-- React Native 0.76: core framework, New Architecture on by default
-- Expo Router v4: file-system navigation with deep linking
-- Supabase: PostgreSQL + Auth + Edge Functions as AI proxy — one platform, free tier covers v1
-- expo-sqlite: offline recipe store (skip WatermelonDB for v1; 50 recipes is not a sync problem)
-- Zustand + MMKV: client state + fast persistent storage for cooking sessions
-- Claude Haiku: in-cook chat (fast, cheap, sufficient for single-turn Q&A)
-- Claude Sonnet: goal-aware personalization (richer reasoning for constraint handling)
-- i18next + expo-localization: Turkish UI localization; no translation layer needed for AI output (Claude handles Turkish natively)
-- FlashList: recipe feed rendering (10x faster than FlatList; use from day one)
-- expo-keep-awake: screen stays on during cooking — one line, critical UX
+- `expo-image@3.0.11` (installed, unused): Replace all `<Image>` and gradient placeholders — provides disk caching, blurhash placeholders, cross-dissolve transitions, and `recyclingKey` for FlashList compatibility. Supports both `require()` local sources and URL strings, making cloud migration a source swap rather than a code change.
+- `react-native-reanimated@4.1.6` (installed, underused in cards/navigation): Use `FadeInDown`, `SlideInRight`, and `useAnimatedStyle` for staggered card entrances, press feedback, and bookmark heart animations. No additional install.
+- `expo-haptics@15.0.8` (installed, single usage in sefim-sheet): Expand to bookmark toggle, star rating, timer completion, and cooking step transitions using Light/Medium/Success feedback patterns.
+- `@shopify/flash-list@2.0.2` (installed, unused): Use for "See All" vertical lists with `recyclingKey` coordinated with expo-image to prevent stale image flicker on scroll.
+- `@gorhom/bottom-sheet@^5.2.8` (to install): Replace current Modal sheets; requires `BottomSheetModalProvider` wrapper in `app/_layout.tsx`. Fallback is a Reanimated-powered custom overlay (~50 lines, documented in Reanimated examples).
 
-**Version note:** Claude model IDs change frequently. Verify at console.anthropic.com before coding. All library versions should be confirmed with `npm info [package] version` at project init.
+**Do not add:** `react-native-fast-image` (deprecated/unmaintained), `lottie-react-native` (2MB+ bundle cost for what Reanimated handles in 5 lines), `react-native-tab-view` (overkill for a 2-state in-screen toggle), `react-native-ratings` (250KB for a component already implemented in `completion-screen.tsx`), `moti` (unnecessary wrapper around Reanimated).
 
 ### Expected Features
 
-The Turkish 18–30 demographic expects all table-stakes features from any modern recipe app. Missing or broken table stakes = immediate churn.
-
 **Must have (table stakes):**
-- Recipe browsing with strong hero photos — text-only feels unfinished
-- Ingredient-based search with fuzzy matching — "I have eggs, tomato, onion" is the entry point
-- Allergen and dietary restriction filtering — set-once, always-applied, never re-prompted
-- Saved/favorited recipes with offline access
-- Step-by-step cooking mode — full-recipe scroll is considered poor UX since 2020
-- Built-in cooking timers — must survive screen lock and app backgrounding
-- Skill-level indication — silently matched to user profile
-- Offline recipe access — Turkish mobile network conditions and kitchen environments make this non-negotiable
-- Turkish-language content throughout — UI, recipe content, and AI responses
+- Recipe cover images — gradient placeholders signal "prototype"; food photography is the primary purchase signal in cooking apps. `cover_image TEXT` column and `coverImage` YAML field already exist; all 30 recipes currently set to `null`.
+- "See All" feed navigation — standard pattern in every horizontal-scroll content app (App Store, Netflix, Uber Eats); users hit a dead end without it.
+- Cookbook Saved/Cooked tabs — `cooking_history` table exists with ratings logged at cooking completion, but the data is invisible to users; the rating at completion feels pointless with no place to revisit it.
+- Star ratings visible in Cookbook — users rated recipes at completion; those ratings must be findable.
+- Dark mode card contrast fix — `card: '#161614'` on `background: '#0C0C0A'` is ~3% luminance difference; cards are effectively invisible in dark mode.
+- Horizontal scroll peek hint — without a partial card visible at the right edge, users do not know the feed section is scrollable.
 
-**Should have (competitive differentiators — The Cook's moat):**
-- Goal-aware silent personalization — adapt quantities/suggestions per goal (muscle gain, weight loss, maintenance) without showing a tracker UI; no competitor in Turkey does this
-- Real-time AI chat mid-cook with full context — current step + recipe ID + user profile injected per call; no dedicated app does this
-- Per-step "why" annotations — reasons behind instructions at step level, not just instructions
-- Per-step common-mistake warnings — pre-emptive error prevention for beginners
-- Profile-aware ingredient substitutions — checks allergens + goal + skill simultaneously
-- Curated Turkish recipe library with deep annotations — culturally relevant content moat
+**Should have (differentiators):**
+- Editable star rating in Cookbook cooked tab — re-rating from the cooked list makes the cookbook feel alive rather than archival.
+- Bookmark heart animation with haptics — springy scale + haptic pulse on heart toggle; ~30 lines using existing Reanimated + expo-haptics.
+- Cook count display ("3 kez pisirdin") — emotionally resonant relationship indicator, simple `GROUP BY` query on `cooking_history`.
+- Blurhash placeholders — eliminates gradient-to-photo flash on image load; requires a build-time blurhash generation step added to `build-recipes.ts`.
+- Section heading with count badge ("Sana Ozel (8)") — builds trust that personalization is working; `data.length` already available in FeedSection props.
+- Card press feedback (0.97x scale spring) — tactile-feeling tap response using existing Reanimated.
+- Filter chip category icons — MaterialCommunityIcons (already installed) mapped to categories; instant, no async loading.
 
-**Defer (v2+):**
-- Meal planning and weekly schedules — out of scope by design; "tonight" mindset
-- Social features — external platforms (TikTok, Instagram) are the social layer for GTM
-- Video content — drives app discovery externally; keep production costs out of the app
-- AI-generated recipe expansion — quality risk; validate curation model first
-- Grocery list / shopping cart — separate product problem
-- Offline AI responses — LLM on-device adds cost and complexity without proven need
-- Push notification campaigns — need behavioral data before building triggers
-- User-submitted recipes (UGC) — quality and moderation burden; Hira owns content pipeline for v1
+**Defer to v1.2+:**
+- Blurhash placeholders (requires build pipeline change; gradient fallback works acceptably for locally-bundled images that load fast).
+- Editable star rating (the post-completion rating is visible in the Cooked tab; re-rating is a convenience, not a gap).
+- Filter chip category icons (incremental improvement, not a UX gap).
+- Cloud image hosting (Supabase Storage / CDN) — architecture is cloud-ready via expo-image; wait until recipe count justifies it.
+- User image upload, social ratings, image carousels, animated page transitions — explicitly out of scope per v1.1 definition.
 
 ### Architecture Approach
 
-The Cook follows an **offline-first architecture with a secure AI proxy layer**. All recipe content ships bundled in the app binary (JSON, ~200KB estimated for 50 recipes) and is seeded into a local SQLite database on first launch — zero cold-start network dependency. The network is used for: initial profile sync to Supabase, background recipe version checks, and all AI calls (which route through Supabase Edge Functions, never directly from client). The client authenticates to Supabase with a per-user JWT; the Edge Function holds the Claude API key.
+The v1.0 layered architecture (YAML → build pipeline → recipes.json → SQLite → DB functions → screen hooks → UI components) is extended, not replaced. Images add a parallel data channel: a build-time auto-generated `image-manifest.ts` maps recipe IDs to `require()` calls, which is merged with SQLite data at the hook/component level. SQLite stores the image path string (or null) for reference; the manifest handles the actual asset resolution.
 
-The AI call strategy is: **AI is a last resort, not a first resort.** Recipe discovery, allergen filtering, step display, and timers are all fully local. AI fires only for goal enhancement (when no pre-authored enhancement exists for that recipe+goal combo), AI-assisted substitution (when local substitutions don't cover the case), and explicit mid-cook chat. This design controls cost, improves perceived performance, and ensures offline mode is genuinely functional rather than a degraded fallback.
+The Cookbook screen adds a controlled `activeTab: 'saved' | 'cooked'` state variable inside the existing `useCookbookScreen` hook — not nested expo-router tabs, which would create tab-in-tab navigation confusion and URL structure complexity. The See All screen becomes a stack route registered in the root layout (outside `(tabs)`) that intentionally hides the tab bar, which is the standard drill-down pattern in expo-router.
 
-**Major components:**
-1. Mobile App (React Native/Expo) — UI, navigation, step state machine, timers, offline recipe access
-2. Local DB (expo-sqlite) — offline store for recipes, user profile, cooking session state, cached AI enhancements
-3. Supabase Auth + PostgreSQL — canonical user profile, usage analytics, recipe version metadata
-4. Supabase Edge Functions (Deno) — AI proxy: builds prompts with server-side profile context, calls Claude, streams responses, caches results
-5. Anthropic Claude API — goal-aware personalization, real-time chat, substitution reasoning; accessed only via Edge Functions
-6. Bundled Recipe JSON — 30–50 curated recipes shipped with app binary; no network required for initial library
+**New components:**
+1. `scripts/optimize-images.ts` — build-time WebP compression, runs as a separate `prebuild` script before `build-recipes.ts`.
+2. `app/assets/image-manifest.ts` — auto-generated static require() registry; the production-safe resolution bridge between YAML paths and bundled assets.
+3. `app/feed/[section].tsx` + `src/hooks/useSeeAllScreen.ts` — vertical recipe list screen reusing the existing `buildFeedSections()` pure function export from `useFeedScreen.ts`.
+4. `components/cookbook/tab-bar.tsx`, `cooked-recipe-card.tsx`, `editable-star-rating.tsx` — Cookbook cooked tab UI. `EditableStarRating` is extracted from `CompletionScreen`'s internal component.
+5. New DB functions in `src/db/cooking-history.ts`: `getCookingHistoryWithRecipes()` (JOIN with recipes) and `updateCookingRating()` — no schema migration needed; all columns exist.
 
-**The recipe data schema is the most critical architectural decision.** A flat schema cannot support goal enhancements, allergen flags, step-level metadata, and substitution lookups. The full schema (see ARCHITECTURE.md) must be designed and validated against 2–3 test recipes before any recipe content work begins.
+**Patterns to follow strictly:**
+- Every image render has a working gradient fallback. The image system is additive — removing all images must reproduce the v1.0 experience exactly.
+- Screen hooks contain all data logic; screen components are pure render.
+- Build-time image processing only; no runtime downloading for content that ships with the app.
+- Reuse `buildFeedSections()` pure function in `useSeeAllScreen` rather than duplicating section filtering logic.
+- No nested expo-router tabs for the Cookbook toggle; use controlled state.
 
 ### Critical Pitfalls
 
-1. **AI Chat Latency Breaks Mid-Cook UX** — Unoptimized Claude API calls take 3–6s; Turkish mobile networks add 2–3x overhead vs. office wifi. Mitigation: SSE streaming (first tokens in 300–500ms), pre-warm API connection on cooking mode entry, structured/shorter prompts with Anthropic prompt caching for static context (system prompt + recipe). Treat P95 under 1.5s as a hard engineering constraint. Test on Turkish carrier networks, not wifi.
+1. **Image bundle bloat kills install size** — 180 recipe images at 1.8MB each (current menemen PNGs) = 36MB added to binary. Prevention: WebP at 30-80KB per image; bundle only cover images (30 images, ~1.5MB total) in v1.1; defer step images to cloud. Measure the production binary immediately after Phase 1, not at the end.
 
-2. **Allergen Substitution Errors — The Highest-Stakes Bug** — LLMs hallucinate ingredient compositions and miss hidden allergens. "Most of the time" is not acceptable for allergy safety. Mitigation: deterministic allergen blocklist at the data layer; every ingredient allergen-tagged at content creation time; LLM substitution suggestions routed through the blocklist validator before display; LLM output never trusted as sole allergen gate. Add UI disclaimer ("Always verify ingredients if you have a severe allergy").
+2. **Metro require() static analysis breaks production** — strings stored in SQLite cannot be resolved to bundled assets at runtime; `require()` must appear literally in source code. Prevention: generate `image-manifest.ts` with hardcoded `require()` calls at build time; look up by recipe ID at runtime. Verify with an actual release build (`eas build`) in Phase 1 before touching card components.
 
-3. **Turkish Ingredient NLP — Fuzzy Matching Failures** — Turkish agglutinative morphology (inflected forms like "domatesten", "biberlerin") breaks simple string matching. Regional naming variations compound the problem. Mitigation: curated Turkish ingredient synonym dictionary for every ingredient in the recipe set + LLM-powered ingredient normalization to canonical names + disambiguation UI for ambiguous input. Consider Zemberek-NLP for morphological stemming.
+3. **119 hardcoded hex values in 17 component files** — dark mode fixes in `theme.ts` only partially propagate until these are replaced with `colors.*` theme tokens. Prevention: complete a color token sweep as a prerequisite before any dark mode contrast work. Verification: `grep -rn '#[0-9A-Fa-f]\{6\}' components/ app/` returns zero matches outside `theme.ts` and intentional gradient palettes.
 
-4. **Offline Mode Silent Failures Mid-Recipe** — Recipe caching implemented as afterthought leaves users stranded mid-cook. Timers dependent on server timestamps fail on connectivity loss. Mitigation: cache full recipe (all steps, all annotations) the moment the user opens a recipe; timers run on device clock only; clear UI distinction between "Offline Safe" (steps, timers, pre-written tips) and "Online Enhanced" (AI chat). Never show a spinner with no timeout.
+4. **Cookbook tab state resets on navigation** — local `useState` for the active tab resets to 'saved' on every `useFocusEffect` reload cycle when users navigate away and return. Prevention: persist active tab in hook state; lazy-load per-tab data (only fetch Cooked data when user taps the Cooked tab for the first time); avoid `setLoading(true)` on tab switch.
 
-5. **Recipe Data Schema Migration Cost** — Flat or under-specified schema discovered mid-curation forces migration across all authored recipes. Mitigation: finalize the complete TypeScript recipe schema before the first recipe is written; validate against 2–3 test recipes manually; version the schema from day one; enforce schema at content entry time.
-
----
+5. **See All navigation stack confusion** — placing the route inside `(tabs)` creates tab-in-tab confusion; the route must be defined in the root layout Stack. Prevention: define `app/feed/[section].tsx` in root layout, pass only the section key in route params (not title string), use a shared `FEED_SECTIONS` constant for key-to-title lookup in both `useFeedScreen` and `useSeeAllScreen`.
 
 ## Implications for Roadmap
 
-Based on research, the architecture defines a clear dependency chain that should directly inform phase order. The schema must come first because everything else reads recipe data. The local DB and offline layer must come before AI because the AI layer is a thin enhancement on top of a complete local experience.
+The phase structure is dictated by hard dependencies. Three things must be done before downstream work can build on them safely: image infrastructure (the require() registry must exist before any component references images), color token sweep (must precede dark mode contrast tuning), and routing/tab architecture decisions (must be settled before feature screens are built).
 
-### Phase 1: Foundation — Recipe Schema and Content Pipeline
+### Phase 1: Image Pipeline Foundation
 
-**Rationale:** Schema is the highest-leverage early decision. Every other component depends on it. Starting here prevents costly migration later. Parallel work: local DB setup and user profile/onboarding can proceed once the schema is stable. This is also the phase where allergen tagging requirements must be baked into the content creation workflow — it cannot be retrofitted.
+**Rationale:** Every visual feature depends on images. More critically, the production Metro require() issue (Pitfall #2) is a silent showstopper that is invisible in development and only manifests in release builds. Catching it in Phase 1 costs hours; catching it in Phase 5 costs days of rework.
 
-**Delivers:** Finalized TypeScript recipe schema, 5–10 pilot recipes authored and fully annotated by Hira, allergen tags validated, content creation workflow established, Expo project bootstrapped with TypeScript and Expo Router.
+**Delivers:** `scripts/optimize-images.ts` (WebP compression using `sharp`), `content/images/{recipe-id}/cover.webp` convention established, `app/assets/image-manifest.ts` auto-generated by `build-recipes.ts`, YAML `coverImage` fields populated for initial recipe set, `SEED_VERSION` bumped to `"5.0.0"`, production binary measured for size.
 
-**Addresses features:** Core recipe data foundation for all subsequent features.
+**Addresses:** Recipe cover images (table stake foundation); bundle size constraint.
 
-**Avoids:** Pitfall 5 (schema migration cost), Pitfall 2 (allergen safety — tagging must be in from the start), Pitfall 9 (step card overflow — character limits set in content guidelines).
+**Avoids:** Pitfalls #1 (bundle bloat) and #2 (require() static analysis break in production).
 
-**Research flag:** Standard patterns. Schema design is straightforward given the TypeScript interface defined in ARCHITECTURE.md. No phase research needed — the schema is already specified.
+**Research flag:** No additional research needed. Metro require() registry is well-documented in React Native image docs. expo-image API verified against official documentation.
 
----
+### Phase 2: Color Token Sweep
 
-### Phase 2: Offline Core — Local DB, User Profile, and Recipe Discovery
+**Rationale:** The 119 hardcoded hex values create a moving target. Any dark mode contrast work applied before this sweep will only partially propagate, requiring another sweep later. This is a prerequisite task, not optional polish.
 
-**Rationale:** Build the complete offline experience before any cloud or AI work. This proves the core value (recipe access, ingredient-based discovery, allergen filtering) works without internet. It also establishes the local data layer that AI enhancements will cache into. User profile/onboarding must come before discovery because filtering depends on declared allergens and skill.
+**Delivers:** Zero hardcoded hex values outside `theme.ts` and intentional category gradient palettes. New semantic tokens in `Colors` (e.g., `chipBackground`, `calloutGreen`, `starActive`). Dark card color corrected (`#161614` → `#1C1C1A` or similar). Stale overridden values in `RecipeCardGrid`, `FeedSection`, and `StepContent` StyleSheets cleaned up.
 
-**Delivers:** expo-sqlite with seeding from bundled recipe JSON, Zustand + MMKV state setup, onboarding screens (goal, allergens, skill), ingredient-based recipe discovery with fuzzy matching and allergen/skill filtering, Supabase auth (email + OAuth), profile sync local-to-remote.
+**Addresses:** Dark mode card contrast (table stake).
 
-**Addresses features:** Ingredient search, allergen filtering, recipe browsing, offline recipe access, Turkish localization (i18next).
+**Avoids:** Pitfall #2 (hardcoded hex patchwork that resists theme changes).
 
-**Avoids:** Pitfall 4 (offline failures — offline architecture decided here, not retrofitted), Pitfall 3 (Turkish ingredient matching — synonym dictionary and LLM normalization strategy decided here), Anti-Pattern 2 (never fetch recipes from network on launch), Anti-Pattern 3 (allergen filtering must be client-side).
+**Research flag:** No research needed. Mechanical sweep with grep-based verification.
 
-**Research flag:** Needs `/gsd:research-phase`. Specifically: confirm expo-sqlite capabilities in current Expo SDK vs. WatermelonDB tradeoffs; evaluate Zemberek-NLP integration feasibility in React Native; confirm Supabase Edge Function SSE streaming support for React Native clients.
+### Phase 3: Card Image Rendering
 
----
+**Rationale:** Builds directly on Phase 1's image manifest. The most visible user-facing change in the milestone — transforms the app from prototype to product. Benefits from Phase 2's clean theme tokens for gradient scrim colors.
 
-### Phase 3: Guided Cooking Mode
+**Delivers:** expo-image integrated in `RecipeCardGrid`, `RecipeCardRow`, recipe detail hero (`app/recipe/[id].tsx`), and `StepContent`. Gradient scrim overlay on image-backed cards for title readability. Gradient fallback preserved for recipes without images. `recyclingKey={recipe.id}` set on expo-image for FlashList compatibility.
 
-**Rationale:** Guided cooking mode is the primary retention mechanic and the feature that gives mid-cook AI chat its context. It must exist before AI chat can be built. All inputs are local — this phase requires no cloud or AI work, so it can be thoroughly validated offline first.
+**Addresses:** Recipe cover images (table stake — completion), step images in cooking mode.
 
-**Delivers:** Step-by-step cooking mode with state machine (IDLE → RECIPE_SELECTED → COOKING(step) → COMPLETE), per-step display (instruction, why annotation, looks_like_when_done, common_mistake), built-in countdown timers with expo-notifications for background firing, expo-keep-awake (screen stays on), cooking session persistence via MMKV (resume on app kill), swipe gesture navigation between steps.
+**Avoids:** Pitfall #7 (placeholder-to-image flash) — expo-image `transition` prop and blurhash placeholder if generated.
 
-**Addresses features:** Step-by-step cooking mode, built-in timers, per-step why annotations, common-mistake warnings.
+**Research flag:** No research needed. expo-image API fully verified.
 
-**Avoids:** Pitfall 4 (timers device-clock only, full recipe pre-cached on open), Pitfall 9 (step card overflow — enforce content character limits), Anti-Pattern 5 (EAS Build from start — expo-notifications requires native build, not Expo Go).
+### Phase 4: Feed "See All" Navigation
 
-**Research flag:** Needs `/gsd:research-phase` for background timer behavior on iOS (app backgrounded with active timer — behavior differs between iOS versions and depends on expo-notifications configuration).
+**Rationale:** Independent of Cookbook tabs. Can be built in parallel with Phase 3 by a second developer. Closes the dead-end users encounter when scrolling horizontal feed sections to their end.
 
----
+**Delivers:** `app/feed/[section].tsx` stack route registered in root layout, `src/hooks/useSeeAllScreen.ts` reusing `buildFeedSections()`, "Tumunu Gor" pressable in FeedSection header, `FEED_SECTIONS` shared constant for key-to-title lookup, section count badge in header.
 
-### Phase 4: AI Integration — Infrastructure and Personalization
+**Addresses:** "See All" feed navigation (table stake), section heading count badge (differentiator).
 
-**Rationale:** AI features are built on top of a complete local experience. This phase sets up the Supabase Edge Functions AI proxy and implements goal-aware personalization (the highest-value AI feature after chat). Streaming infrastructure must be validated here before chat is built. Prompt cost instrumentation goes in from day one.
+**Avoids:** Pitfalls #4 (navigation stack confusion — route outside tabs is correct) and #13 (section title duplication — shared constant, key-only in route params).
 
-**Delivers:** Supabase Edge Functions project, Claude API proxy (streaming SSE), profile context injection pattern (server-side, from Supabase — not client-trusted), goal-aware recipe personalization (pre-authored enhancement served locally; AI fills gaps), structured AI output with JSON schema validation, Anthropic prompt caching for static context, token count logging per request, result caching in local DB (keyed: recipe_id + user_goal).
+**Research flag:** No research needed. expo-router stack-outside-tabs pattern is documented and consistent with existing `app/recipe/[id].tsx` structure.
 
-**Addresses features:** Goal-aware silent personalization, profile-aware ingredient substitutions.
+### Phase 5: Cookbook Saved/Cooked Tabs
 
-**Avoids:** Anti-Pattern 1 (direct client-to-LLM calls), Pitfall 1 (streaming from day one, latency tested on Turkish mobile networks), Pitfall 6 (prompt cost instrumentation before launch), Pitfall 2 (substitution suggestions routed through allergen blocklist before display), Anti-Pattern 4 (structured JSON output enforced via tool_use/schema, not free text).
+**Rationale:** Benefits from Phase 3 (cooked cards show recipe images). Requires new DB query functions and hook state expansion but no schema migration — all columns already exist in `cooking_history`. Self-contained feature.
 
-**Research flag:** Needs `/gsd:research-phase`. Verify: Claude tool_use / structured output current API state; Supabase Edge Function SSE streaming to React Native; Anthropic prompt caching current API and pricing; current Claude model IDs (haiku and sonnet).
+**Delivers:** `components/cookbook/tab-bar.tsx` (Pressable-based segmented control), `components/cookbook/cooked-recipe-card.tsx` (row with thumbnail, date, read-only stars), `components/cookbook/editable-star-rating.tsx` (extracted from CompletionScreen), `getCookingHistoryWithRecipes()` and `updateCookingRating()` added to `src/db/cooking-history.ts`, `useCookbookScreen` expanded with lazy tab data loading and active tab persistence.
 
----
+**Addresses:** Cookbook Saved/Cooked tabs (table stake), star ratings visible in Cookbook (table stake), cook count ("3 kez pisirdin") (differentiator), editable star rating (differentiator).
 
-### Phase 5: Real-Time AI Chat (Mid-Cook)
+**Avoids:** Pitfalls #3 (tab state resets — active tab in hook state, lazy load), #8 (star rating touch targets — read-only inline display; tap opens edit context with proper spacing), #12 (unbounded rating values — Zod validation at hook level), #15 (dual data fetch — lazy load per tab).
 
-**Rationale:** Chat is the highest-complexity feature and depends on all previous phases: it needs the cooking mode context (current step, recipe), the profile (from Phase 2), the Edge Function infrastructure (from Phase 4), and the streaming pipeline (from Phase 4). Building it last ensures all dependencies are battle-tested.
+**Research flag:** No research needed. All DB columns exist; established hook patterns apply directly.
 
-**Delivers:** Mid-cook streaming chat UI (token-by-token rendering via SSE), context assembly (current_step + recipe_id + user_profile injected server-side), offline degradation (graceful: shows pre-written step.common_mistake + looks_like_when_done when offline; never a dead-end), connection pre-warming on cooking mode entry, profile-aware substitution requests through chat, per-session cost budget enforcement.
+### Phase 6: UI Polish — Animations, Haptics, Bottom Sheets
 
-**Addresses features:** Real-time AI chat mid-cook with error recovery, profile-aware substitution (chat surface).
+**Rationale:** Last because it touches many files but changes no data flow. Each item is independent of the others. Animation choices are easier to tune once the feature set is stable and testable on real devices, including low-end Android.
 
-**Avoids:** Pitfall 1 (latency — streaming + pre-warmed connection), Pitfall 7 (Turkish AI quality — all quality testing in Turkish from first prototype; Hira reviews AI output as quality gate), Pitfall 6 (cost budget per session with graceful degradation), Pitfall 8 (allergen claim language in chat UI copy — "preference filter" not "safety guarantee").
+**Delivers:** Card press scale animation (Reanimated `withSpring(0.96)`) on `RecipeCardGrid` and `RecipeCardRow`, horizontal scroll peek gradient at right edge of FeedSection FlatList, staggered section heading entrance (`FadeInDown` with delay), `@gorhom/bottom-sheet` replacing Modal in `SefimSheet` and `IngredientsSheet` (or Reanimated-powered custom overlay as fallback), haptic feedback on bookmark toggle / star rating tap / timer completion, bookmark heart spring scale animation.
 
-**Research flag:** Needs `/gsd:research-phase` for Turkish LLM quality validation — test Claude's cooking domain Turkish output quality with native speaker review before committing to tone guide.
+**Addresses:** Bookmark heart animation (differentiator), card press feedback (differentiator), bottom sheet fade backdrop transition (differentiator), horizontal scroll peek hint (table stake — polish).
 
----
+**Avoids:** Pitfalls #5 (Reanimated perf on low-end Android — animate only transform/opacity; one `useAnimatedStyle` per component), #6 (backdrop timing mismatch — @gorhom handles synchronization natively), #11 (peek scroll conflicts — CSS-only via `contentContainerStyle` padding, no snapToInterval), #14 (haptic overuse — limit to meaningful state changes, Light feedback only).
 
-### Phase 6: Polish and App Store Submission
-
-**Rationale:** Final phase consolidates offline hardening, UX polish, app store compliance review, and EAS submission pipeline. By deferring store submission, all feature phases can iterate without App Store release cycles.
-
-**Delivers:** Offline degradation hardening (full test matrix with simulated network degradation), browse surfacing logic (skill/goal/context filtering to make 30 recipes feel curated), app store copy review (no "safe for allergies" language; allergen disclaimer UI; framed as preference filter), Apple/Google store metadata and screenshots, EAS Build pipeline for production, TestFlight/internal testing distribution.
-
-**Addresses features:** Browse discovery polish, final offline validation.
-
-**Avoids:** Pitfall 8 (app store rejection — Guideline 1.4 and 5.1 review before submission), Pitfall 11 (30-recipe library feels thin — surfacing logic required), Pitfall 4 (offline final validation with degraded network simulation).
-
-**Research flag:** Standard patterns for EAS Build/Submit. App store guidelines review is a checklist item, not research. No phase research needed.
-
----
+**Research flag:** @gorhom/bottom-sheet Reanimated v4 compatibility needs a smoke test before committing to sheet migration. Install and test with a minimal `BottomSheet` first. If broken, use the documented Reanimated custom overlay fallback (~50 lines). The current Modal sheets work — this is polish, not a blocker.
 
 ### Phase Ordering Rationale
 
-- Schema first because every component reads recipe data; a migration at Phase 3 costs days, at Phase 5 costs weeks.
-- Offline core before cloud because the local experience must be complete and testable in isolation; cloud is additive.
-- Cooking mode before AI because mid-cook chat requires cooking mode context to exist; building them together creates untestable dependencies.
-- AI personalization before chat because personalization establishes the Edge Function proxy, streaming pipeline, and cost instrumentation that chat depends on.
-- This ordering means the app is functionally usable (offline, no AI) after Phase 3 — useful for early content validation with Hira before AI costs are incurred.
+- Image pipeline before card rendering: Metro's static require() analysis means the image registry must exist in source before any component references it.
+- Color token sweep before dark mode polish: the 119 hardcoded values create a moving target; sweeping first means subsequent contrast adjustments in `theme.ts` fully propagate.
+- Phases 4 and 5 can run in parallel after Phase 3 is complete (or Phase 4 can run in parallel with Phase 3 for a two-developer team, since it touches different files).
+- UI polish is last: most file-scattered work with no data flow impact; should not add code review noise while feature work is in flight.
+- `SEED_VERSION` bump happens in Phase 1, consolidating all data pipeline changes in one place so downstream phases do not trigger additional re-seeds.
 
 ### Research Flags
 
-Phases needing `/gsd:research-phase` during planning:
+Phases needing deeper validation during implementation:
+- **Phase 6 (@gorhom/bottom-sheet):** Confirm Reanimated v4 compatibility with a minimal BottomSheet before committing to full sheet migration. GitHub issues #2546, #2547, #2600 indicate real-world problems despite official peer dependency claim of support. Document the fallback plan in the Phase 6 task card.
 
-- **Phase 2:** expo-sqlite vs. WatermelonDB current capability comparison; Zemberek-NLP React Native integration; Supabase Edge Function SSE support confirmation.
-- **Phase 4:** Claude structured output (tool_use) current API; Anthropic prompt caching current state and pricing; Supabase Edge Function streaming to React Native client confirmation; current Claude model IDs.
-- **Phase 5:** Turkish LLM quality validation with native speaker test — this is a capability gate, not a localization task.
-
-Phases with standard, well-documented patterns (skip research):
-
-- **Phase 1:** Recipe schema design follows the TypeScript interfaces already specified in ARCHITECTURE.md. Expo project bootstrap is standard. No unknowns.
-- **Phase 3:** Cooking mode state machine pattern is well-established in React Native. Expo notifications and expo-keep-awake are documented Expo packages. Background timer iOS behavior is the one exception (flagged above).
-- **Phase 6:** EAS Build/Submit is standard Expo workflow. App store guidelines review is a checklist.
-
----
+Phases with standard patterns (safe to skip additional research):
+- **Phase 1:** Metro require() image registry — well-documented React Native pattern. expo-image API verified.
+- **Phase 2:** Color token sweep — mechanical task with grep verification. No unknowns.
+- **Phase 3:** expo-image integration — API fully documented, library already installed and version-verified.
+- **Phase 4:** expo-router stack route outside tabs — consistent with existing `app/recipe/[id].tsx` structure.
+- **Phase 5:** Cookbook DB functions and hook expansion — all DB columns exist; no migration needed; hook pattern established.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | MEDIUM | Framework and architecture choices are HIGH confidence (well-validated for this use case). Library version numbers are MEDIUM — training data cutoff August 2025; verify at project init. Claude model IDs are LOW — verify at console.anthropic.com. |
-| Features | MEDIUM | Based on competitive analysis through August 2025 without live data verification. The Turkish market gap analysis is directionally correct but should be validated before roadmap lock. |
-| Architecture | MEDIUM | Offline-first + BaaS + LLM proxy patterns are HIGH confidence (established). Specific concerns: Supabase Edge Function SSE streaming to React Native (needs verification), expo-sqlite vs. WatermelonDB current capability comparison (SDK changes), Claude tool_use structured output current state. |
-| Pitfalls | HIGH | Allergen safety, latency patterns, offline architecture, and schema migration risks are well-established failure modes. Turkish NLP and LLM quality flags are directionally correct and confirmed by multiple convergent signals. App store health claim policies are stable. |
+| Stack | HIGH | All libraries verified via npm registry and official docs on 2026-03-19. Single new dependency (@gorhom/bottom-sheet) has a MEDIUM compatibility caveat — peer deps claim support, field reports say MAYBE. |
+| Features | HIGH | Table stakes validated via direct codebase analysis of existing components, DB schema, and YAML content pipeline. Feature priorities are opinionated and grounded in code inspection. |
+| Architecture | HIGH | Based on direct inspection of every integration point in the actual codebase. All file paths, function names, and DB columns verified. Component boundaries follow established v1.0 patterns. |
+| Pitfalls | HIGH | Critical pitfalls verified: 119 hardcoded hex values counted directly; require() static analysis constraint documented in React Native image docs; bundle size math confirmed via Expo asset bundling docs; cookbook useFocusEffect pattern verified in `useCookbookScreen.ts`. |
 
-**Overall confidence:** MEDIUM
+**Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Supabase Edge Function SSE streaming to React Native:** Confirmed as the right architecture but needs hands-on verification before Phase 4 begins. If SSE is problematic, WebSocket is the fallback (bidirectional, slightly higher complexity). Resolve in Phase 2 research.
-- **expo-sqlite vs. WatermelonDB in current Expo SDK:** ARCHITECTURE.md recommends WatermelonDB for query power; STACK.md recommends starting with expo-sqlite. Expo SDK 51+ improved expo-sqlite significantly. Resolve at project init by checking current expo-sqlite documentation against query requirements.
-- **Claude model IDs and pricing:** Model names and token pricing change frequently. Do not hardcode from this research. Check console.anthropic.com at Phase 4 start. Build model ID as a configuration constant, not a string literal in prompts.
-- **Turkish cooking vocabulary gaps in Claude:** Claude's Turkish quality is good but not validated for cooking domain terminology. Resolve by running 20–30 representative cooking chat scenarios in Turkish with Hira reviewing quality before Phase 5 ships.
-- **Zemberek-NLP React Native integration:** Library is real and actively maintained (August 2025) but its React Native packaging status is uncertain. If direct integration is impractical, the LLM normalization path (send raw input to Claude Haiku, return canonical ingredient name) is the fallback. Resolve in Phase 2.
-- **Competitive landscape currency:** Feature research is based on training data through August 2025. Verify no direct Turkish-market competitor has launched a similar product before roadmap finalization.
-
----
+- **@gorhom/bottom-sheet Reanimated v4 compatibility:** Peer dependencies claim support, but open issues suggest real-world problems on some setups. Resolution: smoke test in Phase 6 before rewriting both sheets. The fallback (Reanimated custom overlay) is documented and approximately 50 lines.
+- **WebP target file sizes:** The 30-80KB per image target is an estimate. Actual sizes depend on image complexity. Phase 1 must include a release build binary size check before Phase 3 begins.
+- **SEED_VERSION bump impact on existing user data:** Bumping to `"5.0.0"` forces a full re-seed on all user devices on update. Test case: install v1.0, create bookmarks and cooking history, upgrade to v1.1, verify all user data is preserved. The existing migration logic handles this, but the test must be explicit.
+- **Turkish character URL encoding in route params:** Feed section titles with Turkish characters should not appear in route params. The `FEED_SECTIONS` shared constant (key-only routing) eliminates this risk; verify with real device navigation that the key routing works correctly.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- `.planning/PROJECT.md` — authoritative project spec and constraints
-- React Native + Expo offline-first patterns — well-documented, stable, established
-- Allergen safety architecture — deterministic vs. probabilistic patterns, well-documented in health-adjacent AI product literature
-- Anthropic prompt caching documentation — documented live feature as of mid-2024
-- Offline mobile architecture (SQLite + WatermelonDB) — established React Native patterns
+- [expo-image documentation](https://docs.expo.dev/versions/latest/sdk/image/) — placeholder, transition, recyclingKey, cachePolicy, prefetch API
+- [expo-haptics documentation](https://docs.expo.dev/versions/latest/sdk/haptics/) — ImpactFeedbackStyle, NotificationFeedbackType, selectionAsync
+- [Reanimated entering/exiting animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/) — FadeIn, SlideIn, delay, springify
+- [Reanimated Performance Guide](https://docs.swmansion.com/react-native-reanimated/docs/guides/performance/) — animated component count thresholds
+- [React Native Images Documentation](https://reactnative.dev/docs/images) — require() static analysis constraint
+- [Expo Assets Guide](https://docs.expo.dev/develop/user-interface/assets/) — bundling strategy
+- [@gorhom/bottom-sheet npm](https://www.npmjs.com/package/@gorhom/bottom-sheet) — v5.2.8 peer dependencies verified 2026-03-19
+- Direct codebase analysis — all file paths, component APIs, DB schema, hook patterns, and color counts verified in `/Users/sado/Documents/Projects/TheCook/TheCook/TheCook/`
 
 ### Secondary (MEDIUM confidence)
-- Expo SDK 52 release notes (training data, August 2025) — framework versions
-- Supabase documentation (training data, August 2025) — Edge Function streaming, PostgreSQL capabilities
-- Competitive analysis: SideChef, Yummly, Mealime, PlantJammer, ChefGPT, Noodle, Flavorish (training data through August 2025) — feature landscape
-- Turkish mobile market characteristics — directionally correct, not live-verified
-- Zemberek-NLP Turkish NLP library (training data, August 2025) — active as of cutoff; verify current status
+- [@gorhom/bottom-sheet docs](https://gorhom.dev/react-native-bottom-sheet/) — BottomSheetModal, snap points, backdrop configuration
+- [Dark Mode UI Best Practices 2025 — Netguru](https://www.netguru.com/blog/tips-dark-mode-ui) — card elevation, contrast ratios in dark surfaces
+- [React Navigation Tab View](https://reactnavigation.org/docs/tab-view/) — evaluated and rejected for in-screen 2-state toggle
+- UX pattern research — "See All" / horizontal scroll peek conventions (UX Collective, Tubik Studio case study, App Store / Netflix pattern analysis)
+- [Apple HIG Touch Target Guidelines](https://developer.apple.com/design/human-interface-guidelines/accessibility) — 44x44pt minimum, star rating layout implications
 
-### Tertiary (LOW confidence)
-- Claude model IDs and current pricing — changes frequently; verify at console.anthropic.com before implementation
-- Current Turkish AI cooking app competitive landscape — may have shifted post-August 2025; verify before roadmap lock
-
-**Verify before implementing:**
-- Current Claude model IDs and prompt caching: https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
-- Supabase Edge Functions streaming docs: https://supabase.com/docs/guides/functions
-- Apple App Store Review Guidelines 1.4 and 5.1: https://developer.apple.com/app-store/review/guidelines/
-- Zemberek-NLP: https://github.com/ahmetaa/zemberek-nlp
-- Google Play health content policies: https://support.google.com/googleplay/android-developer/answer/9876714
+### Tertiary (MEDIUM-LOW confidence)
+- [Reanimated New Architecture Issue #8250](https://github.com/software-mansion/react-native-reanimated/issues/8250) — low-end Android perf regressions (real-world reports, not benchmarks)
+- [@gorhom/bottom-sheet issues #2546, #2547, #2600](https://github.com/gorhom/react-native-bottom-sheet/issues/2546) — Reanimated v4 compatibility field reports (peer deps say YES, some users say MAYBE)
 
 ---
-*Research completed: 2026-03-08*
+*Research completed: 2026-03-19*
 *Ready for roadmap: yes*

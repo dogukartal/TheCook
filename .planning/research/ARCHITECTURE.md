@@ -1,444 +1,701 @@
-# Architecture Patterns: The Cook
+# Architecture Patterns: v1.1 Visual Polish & Content Ready
 
-**Domain:** AI-powered mobile cooking assistant (cross-platform iOS + Android)
-**Researched:** 2026-03-08
-**Confidence:** MEDIUM — Architecture reasoning grounded in well-established patterns for offline-first mobile apps, BaaS, and LLM integration. External source verification unavailable in this session; flag for review before locking decisions.
-
----
-
-## Recommended Architecture
-
-The Cook is an **offline-first mobile app with a thin cloud layer**. The recipe library and cooking experience must work without internet; AI features degrade gracefully when offline. The backend is a BaaS (Supabase recommended) that handles auth, profile sync, and AI proxy. The LLM is never called directly from the client — all AI calls go through a server-side function to protect API keys and enable caching.
-
-```
-[Mobile App]
-     |
-     |── [Local SQLite / WatermelonDB]  ← recipes, user profile, cached AI responses
-     |
-     |── [Supabase]  ← auth, remote profile sync, usage events
-          |
-          |── [Edge Functions]  ← AI proxy, goal-aware personalization logic
-               |
-               |── [Anthropic Claude API]  ← chat, substitutions, error recovery
-```
+**Domain:** Recipe image integration, feed navigation, cookbook tabs, UI polish for Turkish cooking companion
+**Researched:** 2026-03-19
+**Confidence:** HIGH (based on direct codebase analysis of every integration point; all file references verified)
 
 ---
 
-## Component Boundaries
+## Current Architecture Summary
 
-| Component | Responsibility | Communicates With |
-|-----------|---------------|-------------------|
-| **Mobile App (React Native / Expo)** | UI, navigation, cooking mode, timer logic, offline recipe access | Local DB, Supabase Auth, AI Proxy |
-| **Local DB (WatermelonDB + SQLite)** | Offline storage: recipe library, user profile, cooking session state, cached AI responses | Mobile App only |
-| **Supabase Auth** | Anonymous and email/social sign-in, session tokens | Mobile App |
-| **Supabase DB (Postgres)** | Canonical user profile (goal, allergens, skill), app-wide recipe metadata, usage analytics | Edge Functions, Mobile App (sync) |
-| **Supabase Edge Functions** | AI proxy: constructs prompts, calls Claude, caches results, enforces allergen context | Mobile App (HTTPS), Claude API |
-| **Anthropic Claude API** | Goal-aware personalization, real-time chat, substitution reasoning, error recovery | Edge Functions only (never direct from client) |
-| **Recipe Content (bundled JSON)** | 30-50 curated recipes shipped with app binary; no network required | Mobile App reads on boot, seeds Local DB |
+The app follows a clean layered architecture established in v1.0:
 
----
-
-## Data Flow
-
-### Onboarding Flow
 ```
-User input (goal / allergens / skill)
-  → Mobile App stores locally (WatermelonDB)
-  → Supabase profile upsert (when online)
-  → Profile applied silently to all subsequent operations
-```
-
-### Recipe Discovery Flow
-```
-User enters available ingredients
-  → Mobile App queries Local DB (full-text or tag match on recipe.ingredients[])
-  → Filter by: allergen_flags NOT IN user.allergens, skill_level <= user.skill
-  → Rank by: ingredient coverage score
-  → Return ranked list (100% local, zero network)
+YAML recipes (content/recipes/*.yaml)
+    |  build-recipes.ts (Zod validation)
+    v
+recipes.json (app/assets/recipes.json)
+    |  require() at module level in seed.ts
+    v
+expo-sqlite (thecook.db, WAL mode, DB_VERSION=7)
+    |  migrateDb() + seedIfNeeded() on app launch
+    v
+DB access layer (src/db/*.ts)
+    |  useRecipesDb(), useProfileDb(), standalone functions
+    v
+Screen hooks (src/hooks/use*Screen.ts)
+    |  data fetching, state management, actions
+    v
+Screen components (app/(tabs)/*.tsx, app/recipe/*.tsx)
+    |  UI rendering, navigation
+    v
+Reusable components (components/ui/*.tsx, components/cooking/*.tsx)
 ```
 
-### Goal-Aware Personalization Flow
-```
-User taps recipe
-  → Mobile App checks: is personalized_version cached in Local DB? YES → show cached
-  → NO: send to Edge Function:
-      { recipe_id, recipe_data, user_profile }
-  → Edge Function builds prompt: "Adapt this recipe for [goal], no [allergens]"
-  → Claude returns structured JSON: { modified_ingredients[], goal_note }
-  → Edge Function caches result in Supabase DB (keyed: recipe_id + user_goal)
-  → Mobile App stores in Local DB, displays personalized version
-```
-
-### Guided Cooking Flow
-```
-User enters cooking mode
-  → Mobile App reads recipe steps from Local DB (offline-safe)
-  → Step state machine: current_step index stored locally
-  → Timer triggers: App-native countdown (no network)
-  → User asks "is this done?" → goes to AI Chat flow (below)
-```
-
-### AI Chat Flow (Real-Time, Mid-Cook)
-```
-User sends message
-  → Mobile App checks connectivity
-  → ONLINE: POST to Edge Function
-      { message, current_step, recipe_context, user_profile }
-      → Claude streams response (streaming via SSE)
-      → Edge Function forwards stream to client
-      → Mobile App renders tokens as they arrive
-  → OFFLINE: Mobile App shows fallback UI:
-      "Bağlantı yok — bu adım için yaygın sorunlar: [step.common_mistakes]"
-      (Offline fallback uses step-level pre-written content from recipe data)
-```
-
-### Substitution Flow
-```
-User requests substitution for ingredient X
-  → Mobile App checks Local DB: recipe.ingredients[X].substitutions[]
-  → If substitution exists AND is allergen-safe → show immediately (zero network)
-  → If not: send to Edge Function → Claude reasons substitution aligned to profile
-  → Result cached in Local DB for this recipe session
-```
+Key patterns already in place:
+- **Screen hooks** encapsulate all data logic; screens are pure render
+- **Zod schemas** are the single source of truth for types (no separate interfaces)
+- **Hard filters** (allergens, skill, equipment) applied at SQL level via `buildHardFilterClauses()`
+- **Gradient fallbacks** used everywhere images would go (cards, hero, step placeholders)
+- **expo-image** is installed (`expo-image@~3.0.11`) but unused; all current image rendering uses RN `Image` in `StepContent`
+- **Reanimated v4** is installed but unused in card/navigation components
+- `coverImage: z.string().nullable()` and `stepImage: z.string().nullable()` already exist in Zod schemas -- all 30 recipes currently have these as `null`
 
 ---
 
-## Recipe Data Structure
+## Integration Point 1: Recipe Image Pipeline
 
-This is the most critical architectural decision. A flat recipe schema cannot support goal enhancements, allergen flags, step-level metadata, and substitution lookups. Use a deeply nested JSON schema that ships bundled with the app.
+### Current State
+
+All 30 recipes have `coverImage: null` and `stepImage: null` in YAML. The Zod schema validates these fields. The build pipeline passes them through. The seed process writes `cover_image` to SQLite. The `RecipeListItem` type carries `coverImage`. Card components read it but always hit the `LinearGradient` fallback.
+
+One recipe (menemen) has 6 AI-generated PNG images in `content/images/MENEMEN/` at ~1.8MB each. These are reference images, not production-ready.
+
+### Required Changes
+
+#### A. Image Storage Convention
+
+```
+content/images/
+  {recipe-id}/           <- matches YAML id field exactly
+    cover.jpg            <- coverImage
+    step-1.jpg           <- stepImage for steps[0]
+    step-2.jpg           <- stepImage for steps[1]
+    ...
+```
+
+Use recipe `id` field as folder name (slug format: `menemen`, `adana-kebap`, `cig-kofte`).
+
+#### B. Build Pipeline Enhancement (build-recipes.ts)
+
+The build script needs two additions:
+
+1. **Image path resolution:** After Zod validation, resolve relative image references to require()-able paths. YAML references images as relative paths:
+
+```yaml
+coverImage: images/menemen/cover.jpg
+steps:
+  - stepImage: images/menemen/step-1.jpg
+```
+
+2. **Image optimization:** Current images are ~1.8MB PNG. Compress to JPEG at max 800px width, target ~80-120KB per image. Use `sharp` (Node.js build dependency) in a separate pre-build script.
+
+#### C. Asset Bundling Strategy
+
+**Recommended for v1.1: Metro require() bundling**
+
+Build script generates a manifest mapping recipe IDs to require() calls. Images ship with the app binary. Works offline immediately. Consistent with current `recipes.json` bundling pattern.
+
+Trade-off: app size grows ~3-4MB for 30 recipes at optimized sizes. Acceptable for v1.1 scale.
+
+**Cloud migration path (v1.2+):** Switch coverImage/stepImage values from local paths to Supabase Storage URLs. Use `expo-image` (already installed) with its built-in caching. The component-level fallback logic stays identical -- only the image source changes.
+
+#### D. Image Asset Manifest (NEW file: `app/assets/image-manifest.ts`)
+
+Auto-generated by build script:
 
 ```typescript
-interface Recipe {
-  id: string;                    // "menemen-001"
-  slug: string;                  // "menemen"
-  title: string;                 // "Menemen"
-  skill_level: "beginner" | "intermediate" | "advanced";
-  tags: string[];                // ["breakfast", "vegetarian", "egg"]
-
-  base_ingredients: Ingredient[];
-
-  goal_enhancements: {
-    lose_weight?: Enhancement;   // calorie-reduced swaps
-    gain_muscle?: Enhancement;   // protein additions (e.g., extra egg + feta)
-    maintain?: Enhancement;      // minor tweaks
-    // no_goal: no enhancement applied
-  };
-
-  steps: Step[];
-
-  allergen_flags: string[];      // ["gluten", "lactose", "egg"] — union of all ingredients
-
-  metadata: {
-    estimated_minutes: number;
-    serving_size: number;
-    curated_by: string;          // "Hira"
-    version: number;             // bump when content updated
-  };
-}
-
-interface Ingredient {
-  id: string;
-  name: string;                  // Turkish name
-  quantity: string;              // "2 adet"
-  unit: string | null;
-  allergens: string[];           // allergens this ingredient carries
-  substitutions: Substitution[]; // pre-written substitutes for this ingredient
-  optional: boolean;
-}
-
-interface Substitution {
-  ingredient_id: string;         // what to use instead
-  name: string;
-  note: string;                  // "Tadı hafif farklı olur ama tarif çalışır"
-  changes_dish_meaningfully: boolean;
-  allergens: string[];           // allergens the substitute carries
-}
-
-interface Enhancement {
-  additional_ingredients: Ingredient[];
-  modified_quantities: { ingredient_id: string; new_quantity: string }[];
-  goal_note: string;             // "Kas kazanımı için ekstra protein kaynağı eklendi"
-}
-
-interface Step {
-  index: number;
-  instruction: string;           // "Domatesleri küp küp doğrayın"
-  why: string;                   // "Küçük doğramak pişirme süresini kısaltır"
-  looks_like_when_done: string;  // "Domatesler sulanmaya başlamış olmalı"
-  common_mistake: string;        // "Çok erken karıştırmak — bekleyin"
-  has_timer: boolean;
-  timer_seconds: number | null;
-  requires_ai_check: boolean;    // hint: this step benefits from "is this done?" prompt
-}
+export const recipeImages: Record<string, {
+  cover: any;  // require() return type
+  steps: (any | null)[];
+}> = {
+  'menemen': {
+    cover: require('../../content/images/menemen/cover.jpg'),
+    steps: [
+      require('../../content/images/menemen/step-1.jpg'),
+      require('../../content/images/menemen/step-2.jpg'),
+      null,  // step without image
+      // ...
+    ],
+  },
+  // recipes without images omitted
+};
 ```
 
-**Why this structure:**
-- Allergen filtering is O(1): compare `recipe.allergen_flags` against `user.allergens` without inspecting every ingredient.
-- Goal enhancements are pre-authored per recipe, not hallucinated per-request. AI only handles cases not covered by authored content.
-- Step-level `common_mistake` and `why` fields power offline fallback for the AI chat (the app always has something useful to show, even without connectivity).
-- `substitutions` at ingredient level enables fully offline substitution for common swaps; AI is reserved for edge cases.
+#### E. Component Integration Points
+
+| Component | File | Current Behavior | Required Change |
+|-----------|------|-----------------|-----------------|
+| `RecipeCardGrid` | `components/ui/recipe-card-grid.tsx` | `<LinearGradient>` fills 140px `imageArea` | If `coverImage` exists and manifest has entry, render `<Image>` with dark gradient scrim for title readability; else existing gradient |
+| `RecipeCardRow` | `components/ui/recipe-card-row.tsx` | `<LinearGradient>` fills 80x80 `thumbnailContainer` | Same: image with gradient fallback |
+| Recipe detail hero | `app/recipe/[id].tsx` | 200px `<LinearGradient>` with title, back/bookmark | Full-width cover image with semi-transparent gradient scrim; existing gradient if no image |
+| `StepContent` | `components/cooking/step-content.tsx` | 200px pastel placeholder OR `<Image uri>` | Resolve from manifest by recipe ID + step index; keep pastel fallback |
+
+The rendering pattern for all components:
+
+```typescript
+const imageSource = recipeImages[recipe.id]?.cover;
+
+{imageSource ? (
+  <View style={styles.imageArea}>
+    <Image source={imageSource} style={StyleSheet.absoluteFill} resizeMode="cover" />
+    <LinearGradient
+      colors={['transparent', 'rgba(0,0,0,0.55)']}
+      style={StyleSheet.absoluteFill}
+    />
+    {/* overlaid title, bookmark, etc. */}
+  </View>
+) : (
+  <View style={styles.imageArea}>
+    <LinearGradient colors={categoryGradient} style={StyleSheet.absoluteFill} />
+    {/* existing gradient layout */}
+  </View>
+)}
+```
+
+#### F. Seed Version Bump
+
+Adding image paths to `recipes.json` changes recipe data. Bump `SEED_VERSION` in `seed.ts` from `"4.0.0"` to `"5.0.0"` to trigger re-seed.
 
 ---
 
-## AI Call Strategy
+## Integration Point 2: Feed "See All" Navigation
 
-**Principle: AI is a last resort, not a first resort.** Every feature that can be served from local data should be. AI fills the gaps.
+### Current State
 
-| Feature | First Path | AI Path | When AI Fires |
-|---------|-----------|---------|---------------|
-| Recipe discovery | Local SQLite query | — | Never — fully local |
-| Allergen filtering | Local field comparison | — | Never |
-| Goal enhancement | Pre-authored `goal_enhancements` field | Claude via Edge Function | Only if no authored enhancement for that recipe+goal combo |
-| Substitution | `ingredient.substitutions[]` local lookup | Claude via Edge Function | Only when local substitution not available or user asks open-ended question |
-| Guided step display | Local recipe step data | — | Never |
-| "Is this done?" / step check | Step `looks_like_when_done` shown first | Claude streaming chat | When user explicitly opens chat |
-| Mid-cook error recovery | Step `common_mistake` shown inline | Claude streaming chat | When user explicitly asks |
-| General chat | — | Claude streaming chat | Always — this is the feature |
+`FeedSection` renders a horizontal `FlatList` with a plain title. No "See All" button. The `FeedSection` component has no `sectionKey` or navigation props. Feed sections are typed as `"trending" | "quick" | "personal" | "untried"` in the `FeedSection` interface.
 
-**Streaming:** Claude chat responses stream via SSE (Server-Sent Events) through the Edge Function. This gives the "typing" feel appropriate for a cooking companion without waiting for full response before display.
+### Required Changes
 
-**Caching strategy:**
-- Goal-enhanced recipe versions: cached indefinitely (keyed: `recipe_id + goal`), invalidated only when recipe `version` bumps.
-- Chat responses: not cached — they are contextual, one-off.
-- Substitution AI responses: cached for session only (user may change context).
+#### A. New Route: `app/feed/[section].tsx`
 
-**Offline degradation hierarchy:**
-1. Serve from local data (always possible for recipe/step content)
-2. Serve from Local DB cache (possible for previously fetched AI enhancements)
-3. Show pre-written step-level fallback content (`common_mistake`, `looks_like_when_done`)
-4. Show "no connection" notice with specific next step instruction — never a dead end
+expo-router file-based routing auto-discovers this. The route receives the section key as a URL param:
+
+```
+/feed/trending    -> shows all trending recipes vertically
+/feed/quick       -> shows all "30 dakikada bitir" recipes
+/feed/personal    -> shows all "Sana ozel" recipes
+/feed/untried     -> shows all "Denemediklerin" recipes
+```
+
+The screen renders a vertical `FlatList` of `RecipeCardRow` components (already exists, currently unused in feeds).
+
+#### B. FeedSection Component Update
+
+Add `onSeeAll` callback and `sectionKey` to props:
+
+```typescript
+interface FeedSectionProps {
+  title: string;
+  data: RecipeListItem[];
+  sectionKey: string;              // NEW
+  bookmarkedIds: Set<string>;
+  userEquipment: string[];
+  onRecipePress: (id: string) => void;
+  onBookmarkToggle: (id: string) => void;
+  onSeeAll?: (sectionKey: string) => void;  // NEW
+}
+```
+
+Render "Tumunu Gor" button in the header row next to the title. Show only when `data.length > 0` and `onSeeAll` is provided.
+
+#### C. useFeedScreen Hook Update
+
+Add `handleSeeAll` to actions:
+
+```typescript
+function handleSeeAll(sectionKey: string) {
+  router.push(`/feed/${sectionKey}` as never);
+}
+```
+
+Pass `section.key` through to each `FeedSection` in the feed screen render.
+
+#### D. New Hook: `useSeeAllScreen.ts`
+
+Following the established hook pattern. Receives section key, loads profile, calls `buildFeedSections()` (already exported as a pure function from `useFeedScreen.ts`), extracts the matching section's data, returns it for vertical display.
+
+```typescript
+export function useSeeAllScreen(sectionKey: string): SeeAllScreenState & SeeAllScreenActions {
+  // Reuses getAllRecipesForFeed, getCookedRecipeIds, buildFeedSections
+  // Returns flat RecipeListItem[] for the specific section
+}
+```
+
+#### E. Route Registration in Root Layout
+
+Add to `app/_layout.tsx` Stack:
+
+```typescript
+<Stack.Screen name="feed" />
+```
+
+This renders the See All page as a stack push over tabs, with automatic back navigation via expo-router.
 
 ---
 
-## Backend Architecture Decision: Supabase over Firebase
+## Integration Point 3: Cookbook Saved/Cooked Tabs
 
-**Recommendation: Supabase**
+### Current State
 
-| Criterion | Supabase | Firebase |
-|-----------|----------|---------|
-| Database | Postgres (SQL, queryable) | Firestore (NoSQL, document) |
-| Edge Functions | Deno-based, deploy with CLI | Cloud Functions (more verbose setup) |
-| Auth | Built-in, anonymous + OAuth | Built-in, anonymous + OAuth |
-| Real-time | Postgres replication channels | Firestore real-time listeners |
-| Pricing (small scale) | Free tier generous | Free tier adequate |
-| Vendor lock-in | Lower — standard Postgres | Higher — Firestore query model is proprietary |
-| AI proxy suitability | Edge Functions handle streaming cleanly | Cloud Functions can stream but more complex |
-| Open source | Yes — self-hostable | No |
-| Turkish locale | No material difference | No material difference |
+`cookbook.tsx` shows only saved (bookmarked) recipes in a 2-column grid. `useCookbookScreen` hook fetches profile + bookmarks, returns `savedRecipes`. The `cooking_history` table exists (DB version 6) with columns: `id INTEGER PK`, `recipe_id TEXT`, `cooked_at TEXT`, `rating INTEGER nullable`. Currently only `logCookingCompletion()` and `getCookedRecipeIds()` functions exist.
 
-**Why Supabase for The Cook specifically:**
-- User profile is structured relational data (goal, allergens array, skill) — Postgres is a natural fit; Firestore array-in queries are awkward.
-- Edge Functions are the cleanest way to proxy streaming Claude responses on the BaaS tier.
-- Future recipe library expansion (AI-generated content) benefits from Postgres full-text search without an additional service.
-- Supabase's open-source nature means zero vendor lock-in risk for a bootstrapped project.
+### Required Changes
 
-Confidence: MEDIUM (based on known Supabase and Firebase capabilities as of mid-2025; verify current Edge Function streaming support in Supabase docs before committing).
+#### A. Tab UI Pattern -- Controlled State, NOT Nested Router
+
+Use a `Pressable`-based segment control at the top of the Cookbook screen. Two segments:
+
+- **Kaydedilenler** (Saved) -- current bookmark-based grid
+- **Pisirilmis** (Cooked) -- cooking history with ratings
+
+This is a controlled state variable (`activeTab: 'saved' | 'cooked'`), not nested expo-router tabs. Nested tabs would create confusing tab-in-tab navigation and unnecessary URL structure complexity.
+
+#### B. New DB Functions in `cooking-history.ts`
+
+```typescript
+// Fetch full history joined with recipe display data
+export async function getCookingHistoryWithRecipes(
+  db: SQLiteDatabase
+): Promise<CookingHistoryWithRecipe[]> {
+  const rows = await db.getAllAsync<{
+    history_id: number;
+    recipe_id: string;
+    cooked_at: string;
+    rating: number | null;
+    title: string;
+    category: string;
+    cover_image: string | null;
+    prep_time: number;
+    cook_time: number;
+  }>(`
+    SELECT h.id as history_id, h.recipe_id, h.cooked_at, h.rating,
+           r.title, r.category, r.cover_image, r.prep_time, r.cook_time
+    FROM cooking_history h
+    JOIN recipes r ON r.id = h.recipe_id
+    ORDER BY h.cooked_at DESC
+  `);
+  return rows.map(mapToCookingHistoryWithRecipe);
+}
+
+// Update rating for a specific history entry
+export async function updateCookingRating(
+  db: SQLiteDatabase,
+  historyId: number,
+  rating: number
+): Promise<void> {
+  await db.runAsync(
+    "UPDATE cooking_history SET rating = ? WHERE id = ?",
+    [rating, historyId]
+  );
+}
+```
+
+No DB migration needed -- the `cooking_history` table already has all required columns.
+
+#### C. Cookbook Hook Expansion
+
+Extend `useCookbookScreen` with:
+
+```typescript
+export interface CookbookScreenState {
+  // existing...
+  activeTab: 'saved' | 'cooked';           // NEW
+  cookedHistory: CookingHistoryWithRecipe[]; // NEW
+}
+
+export interface CookbookScreenActions {
+  // existing...
+  setActiveTab: (tab: 'saved' | 'cooked') => void;        // NEW
+  handleRatingUpdate: (historyId: number, rating: number) => Promise<void>;  // NEW
+}
+```
+
+Load cooking history on focus (same `useFocusEffect` pattern). Rating updates write to SQLite immediately via `updateCookingRating()`.
+
+#### D. New Components
+
+**`components/cookbook/tab-bar.tsx`** -- Segmented control with two buttons. Active state indicated by underline or background fill. Props: `activeTab`, `onTabChange`.
+
+**`components/cookbook/cooked-recipe-card.tsx`** -- Row-style card showing:
+- Recipe thumbnail (image or category gradient, 60x60)
+- Recipe title
+- Cooking date (formatted relative: "2 gun once", "Bugun")
+- Editable star rating (5 stars, tap to change)
+
+**`components/cookbook/editable-star-rating.tsx`** -- Extracted from `CompletionScreen`'s internal `StarRating` component. Made reusable with `value`, `onChange`, `size` props.
+
+#### E. Cookbook Screen Layout
+
+```
++----------------------------------+
+| Yemek Defterim                   |   <- sticky header (existing)
++----------------------------------+
+| [Kaydedilenler]  [Pisirilmis]    |   <- new tab bar
++----------------------------------+
+|                                  |
+|  Tab = 'saved':                  |
+|    (existing 2-column grid)      |
+|                                  |
+|  Tab = 'cooked':                 |
+|    (vertical list of             |
+|     CookedRecipeCard rows)       |
+|                                  |
++----------------------------------+
+```
 
 ---
 
-## Offline Architecture
+## Integration Point 4: UI Polish (Animations & Transitions)
 
-**Strategy: Bundle-first, sync-second**
+### Current State
 
-The 30-50 core recipes ship **inside the app bundle** as JSON files. On first launch, the app seeds WatermelonDB from these bundled files. There is no cold-start network dependency.
+- `react-native-reanimated@~4.1.1` installed, used only in custom components (not cards/navigation)
+- `react-native-gesture-handler@~2.28.0` installed
+- No entry/exit animations on cards or sections
+- Bottom sheets (`IngredientsSheet`, `SefimSheet`) use RN `Modal` with backdrop
+- No scroll peek hints on horizontal lists
+- Several hardcoded colors in StyleSheets that are overridden at render time (stale but harmless)
 
+### Component-Level Polish Plan
+
+#### A. Card Press Animation (RecipeCardGrid, RecipeCardRow)
+
+Wrap card content in `Animated.View` with scale spring on press:
+
+```typescript
+import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+
+const scale = useSharedValue(1);
+const animatedStyle = useAnimatedStyle(() => ({
+  transform: [{ scale: scale.value }],
+}));
+
+<Pressable
+  onPressIn={() => { scale.value = withSpring(0.96, { damping: 15 }); }}
+  onPressOut={() => { scale.value = withSpring(1, { damping: 15 }); }}
+>
+  <Animated.View style={animatedStyle}>
+    {/* card content */}
+  </Animated.View>
+</Pressable>
 ```
-App install
-  → Bundle includes: /assets/recipes/*.json  (30-50 files, ~200KB total estimated)
-  → First launch: seed WatermelonDB from bundle
-  → Subsequent launches: read from Local DB directly
 
-Background sync (when online):
-  → Check Supabase for recipe version bumps
-  → Fetch updated recipe JSON, re-seed changed records in Local DB
-  → Sync user profile (local → remote)
+Apply to both `RecipeCardGrid` and `RecipeCardRow`.
+
+#### B. Horizontal Scroll Peek Hint (FeedSection)
+
+Overlay a fade gradient at the right edge of the horizontal `FlatList` container to hint at more scrollable content:
+
+```typescript
+<View style={styles.listContainer}>
+  <FlatList horizontal ... />
+  <View style={styles.peekGradient} pointerEvents="none">
+    <LinearGradient
+      colors={['transparent', colors.background]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={StyleSheet.absoluteFill}
+    />
+  </View>
+</View>
 ```
 
-**WatermelonDB over AsyncStorage / MMKV:**
-- WatermelonDB uses SQLite under the hood, runs on a background thread — UI never blocks on DB operations.
-- Supports complex queries (multi-field filtering) that AsyncStorage (key-value only) cannot.
-- React Native native module — no Expo Go limitation (use Expo bare workflow or EAS Build).
+Hide the gradient once scrolled (track scroll position via `onScroll`). Pure UI addition, no data changes.
 
-**Cooking session persistence:**
-- Current step index stored in WatermelonDB `cooking_sessions` table.
-- App kill mid-cook → user returns to exact step. No network required.
-- Timers: use React Native background timer libraries; state persisted locally.
+#### C. Section Heading Entrance Animation
+
+Use Reanimated layout animations on feed section titles:
+
+```typescript
+import Animated, { FadeInDown } from 'react-native-reanimated';
+
+<Animated.Text entering={FadeInDown.duration(300).delay(sectionIndex * 80)}>
+  {title}
+</Animated.Text>
+```
+
+#### D. Sheet Backdrop Fade Transition
+
+Enhance `IngredientsSheet` and `SefimSheet` backdrop with animated opacity. Use Reanimated `FadeIn`/`FadeOut` for the backdrop overlay and `SlideInDown`/`SlideOutDown` for the sheet content panel.
+
+#### E. Dark Mode Contrast Fixes
+
+Identified stale hardcoded colors (harmless because overridden at render, but should be cleaned up):
+
+| Component | Issue | Fix |
+|-----------|-------|-----|
+| `RecipeCardGrid` styles | `cookTimeText` has hardcoded `rgba(26,26,24,0.5)` in StyleSheet | Remove from StyleSheet -- already using `colors.textSub` in render |
+| `FeedSection` styles | `title` has hardcoded `#1A1A18` | Remove -- already using `colors.text` in render |
+| `StepContent` | `gormeliText` hardcoded `#15803D` | Add dark mode variant via `colors` |
+
+#### F. Cookbook Row Layout Improvement
+
+Current cookbook uses same `RecipeCardGrid` in a 2-column grid. Consider adding a list/grid toggle, or adjusting card sizing for better visual density on the saved tab.
+
+---
+
+## Component Boundaries: New and Modified
+
+### New Components
+
+| Component | File | Responsibility | Dependencies |
+|-----------|------|---------------|-------------|
+| `CookbookTabBar` | `components/cookbook/tab-bar.tsx` | Saved/Cooked toggle UI | Theme context |
+| `CookedRecipeCard` | `components/cookbook/cooked-recipe-card.tsx` | History row with image + editable rating | Image manifest, EditableStarRating |
+| `EditableStarRating` | `components/cookbook/editable-star-rating.tsx` | Reusable star rating input | Theme context |
+| `SeeAllScreen` | `app/feed/[section].tsx` | Vertical recipe list for a feed section | `useSeeAllScreen` hook |
+
+### New Hooks
+
+| Hook | File | Responsibility |
+|------|------|---------------|
+| `useSeeAllScreen` | `src/hooks/useSeeAllScreen.ts` | Load + filter recipes for a specific feed section key |
+
+### New DB Functions
+
+| Function | File | Purpose |
+|----------|------|---------|
+| `getCookingHistoryWithRecipes` | `src/db/cooking-history.ts` | Full history joined with recipe display data |
+| `updateCookingRating` | `src/db/cooking-history.ts` | Edit rating for a completed cook |
+
+### New Build Tooling
+
+| File | Purpose |
+|------|---------|
+| `scripts/optimize-images.ts` | Resize/compress content images for Metro bundling |
+| `app/assets/image-manifest.ts` | Auto-generated require() map (generated, not hand-written) |
+
+### Modified Files (Risk Assessment)
+
+| File | What Changes | Risk Level |
+|------|-------------|------------|
+| `scripts/build-recipes.ts` | Generate image manifest alongside recipes.json | LOW -- additive, existing validation untouched |
+| `components/ui/recipe-card-grid.tsx` | Conditional image rendering with gradient scrim fallback | MEDIUM -- visual regression possible, needs screenshot testing |
+| `components/ui/recipe-card-row.tsx` | Same image support pattern | MEDIUM |
+| `app/recipe/[id].tsx` | Hero area: image with gradient scrim, or existing gradient | MEDIUM -- largest single screen, many visual elements |
+| `components/cooking/step-content.tsx` | Step image from manifest instead of URI | LOW -- fallback path preserved |
+| `components/ui/feed-section.tsx` | Add "Tumunu Gor" button + `sectionKey` + `onSeeAll` props | LOW -- purely additive |
+| `app/(tabs)/index.tsx` | Pass `sectionKey` + `onSeeAll` to each FeedSection | LOW |
+| `src/hooks/useFeedScreen.ts` | Add `handleSeeAll` action | LOW -- one function addition |
+| `app/(tabs)/cookbook.tsx` | Tab switcher UI, conditional rendering of saved/cooked | MEDIUM -- structural layout change |
+| `src/hooks/useCookbookScreen.ts` | Add `activeTab`, cooked history state, rating update | MEDIUM -- significant state expansion |
+| `src/db/cooking-history.ts` | Add `getCookingHistoryWithRecipes`, `updateCookingRating` | LOW -- new functions, no schema change |
+| `app/_layout.tsx` | Register `feed` route in Stack | LOW -- one line |
+| `src/db/seed.ts` | Bump `SEED_VERSION` to `"5.0.0"` | LOW -- but triggers re-seed for all users on update |
+
+---
+
+## Data Flow Changes
+
+### v1.0 Flow (current)
+```
+YAML -> build-recipes.ts -> recipes.json -> seed.ts -> SQLite -> hooks -> UI
+                                                                  (gradient fallbacks everywhere)
+```
+
+### v1.1 Flow (new)
+```
+YAML + content/images/
+    |                   |
+    v                   v
+build-recipes.ts    optimize-images.ts
+    |                   |
+    v                   v
+recipes.json      image-manifest.ts
+    |                   |
+    v                   v
+seed.ts          Metro require() map
+    |                   |
+    v                   v
+SQLite           Bundled image assets
+    |                   |
+    +--------+----------+
+             |
+             v
+  hooks (merge recipe data + image refs by recipe ID)
+             |
+             v
+  UI components (Image or gradient fallback)
+```
+
+The image manifest is a parallel data channel. SQLite stores `coverImage`/`stepImage` as string paths (or null). Components check the manifest by recipe ID and fall back to gradients if no image entry exists.
+
+### Cooking History Flow (expanded for cooked tab)
+```
+Cooking completion
+    -> logCookingCompletion(db, recipeId, rating)
+    -> cooking_history table
+         |
+    +----+----+
+    |         |
+    v         v
+getCookedRecipeIds()          getCookingHistoryWithRecipes()
+(feed "untried" section)      (cookbook "Pisirilmis" tab)
+    |                              |
+    v                              v
+useFeedScreen                 useCookbookScreen
+                                   |
+                              updateCookingRating()
+                              (editable star rating)
+```
 
 ---
 
 ## Patterns to Follow
 
-### Pattern 1: Profile Context Injection
+### Pattern 1: Graceful Image Degradation
 
-Every AI call receives the full user profile context, constructed in the Edge Function — never trusted from the client payload.
+Every component that renders an image MUST have a working gradient fallback. The image system is additive -- removing all images should produce the exact v1.0 experience.
 
 ```typescript
-// Edge Function: build_ai_context.ts
-async function buildPromptContext(userId: string, recipeId: string) {
-  const profile = await supabase
-    .from('user_profiles')
-    .select('goal, allergens, skill_level')
-    .eq('id', userId)
-    .single();
+// CORRECT: conditional rendering with fallback
+const imageSource = recipeImages[recipe.id]?.cover;
+{imageSource ? <Image source={imageSource} /> : <LinearGradient colors={gradient} />}
 
-  return {
-    system: `Sen bir yemek asistanısın. Kullanıcının hedefi: ${profile.goal}.
-             Alerjenleri: ${profile.allergens.join(', ')}.
-             Seviye: ${profile.skill_level}.
-             Yanıtlarında bu bilgileri sessizce uygula, açıkça belirtme.`,
-    // ... recipe context
-  };
+// WRONG: assuming image always exists
+<Image source={recipeImages[recipe.id].cover} />  // crashes if recipe has no images
+```
+
+### Pattern 2: Screen Hook Isolation
+
+All new screens follow the existing hook extraction pattern. No data fetching, no SQLite calls, no business logic in screen components:
+
+```typescript
+// app/feed/[section].tsx
+export default function SeeAllScreen() {
+  const { section } = useLocalSearchParams();
+  const { recipes, loading, ... } = useSeeAllScreen(section as string);
+  // pure render only
 }
 ```
 
-**Why:** User profile is the source of truth in Supabase, not in client-sent JSON. Prevents a client sending a spoofed profile to get different AI output.
+### Pattern 3: Additive DB Migrations
 
-### Pattern 2: Structured AI Output
+New columns or tables go in `if (currentVersion < N)` blocks in `client.ts`. Never modify existing blocks. For v1.1: no new DB schema changes needed -- `cooking_history` already has all required columns. Only new query functions.
 
-Goal enhancement and substitution calls request JSON output explicitly, validated before caching.
+### Pattern 4: Build-Time Image Processing
 
-```typescript
-// Edge Function response handling
-const response = await claude.messages.create({
-  model: "claude-3-5-sonnet-latest",
-  max_tokens: 1024,
-  messages: [{ role: "user", content: prompt }],
-  // Use tool_use or structured output to enforce schema
-});
+Images are optimized at build time, never at runtime. Extend the npm `prebuild` script:
 
-// Validate against Enhancement schema before caching
-const enhancement = validateEnhancement(response.content[0].text);
-if (!enhancement) throw new Error("AI returned invalid enhancement schema");
-await cacheEnhancement(recipeId, userGoal, enhancement);
+```json
+"prebuild": "npm run optimize-images && npm run build-recipes"
 ```
 
-### Pattern 3: Step State Machine
+### Pattern 5: Pure Function Reuse
 
-Cooking mode is a finite state machine, not a scroll view. State is local-only.
-
-```
-States: IDLE → RECIPE_SELECTED → COOKING(step_index) → COMPLETE
-Transitions: START, NEXT_STEP, PREV_STEP, TIMER_START, TIMER_END, FINISH
-Persistence: step_index written to WatermelonDB on every transition
-```
-
-This ensures the app can be killed and resumed without losing cooking progress.
+`buildFeedSections()` is already exported as a testable pure function from `useFeedScreen.ts`. The See All screen hook reuses it directly rather than duplicating the filtering logic.
 
 ---
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Direct Client-to-LLM Calls
+### Anti-Pattern 1: Runtime Image Downloading for Bundled Content
 
-**What:** Mobile app calls Claude API directly with the API key embedded in the app.
-**Why bad:** API key is extractable from app bundle. Unlimited cost exposure. No server-side caching possible.
-**Instead:** All Claude calls go through Supabase Edge Functions. Client sends authenticated request; Edge Function holds the key.
+**What:** Storing image URLs in SQLite and fetching them at runtime for content that ships with the app.
+**Why bad:** Defeats offline-first promise. First launch shows empty image placeholders. Network dependency for core content.
+**Instead:** Bundle images with the app via Metro require(). Reserve URL-based images for cloud-synced content in v1.2+.
 
-### Anti-Pattern 2: Fetching All Recipes from Network on Launch
+### Anti-Pattern 2: Nested Tab Navigator for Cookbook
 
-**What:** App calls Supabase on launch to fetch recipe list before showing anything.
-**Why bad:** Cooking without internet means the app shows a loading spinner or error. Destroys offline-first promise.
-**Instead:** Bundle recipes with the app. Network is for version updates only, fetched silently in the background.
+**What:** Using expo-router nested `(tabs)` layout for the Saved/Cooked toggle.
+**Why bad:** Creates tab-in-tab navigation confusion. Affects URL structure. Over-engineering for a two-state toggle.
+**Instead:** Controlled `activeTab` state variable with a simple `Pressable`-based tab bar component. No routing changes.
 
-### Anti-Pattern 3: Storing Allergen Logic Only on Server
+### Anti-Pattern 3: Image References as Binary in SQLite
 
-**What:** Allergen filtering happens in Supabase query; client just shows results.
-**Why bad:** Offline recipe discovery becomes impossible. If the server filters, offline shows nothing or shows unsafe results.
-**Instead:** `allergen_flags` is part of the bundled recipe schema. Client-side filtering is the primary path.
+**What:** Storing image blobs or complex manifests in the SQLite database.
+**Why bad:** Bloats database, makes migrations fragile, mixes data and asset concerns.
+**Instead:** SQLite stores the image path string (or null). A TypeScript manifest handles require() resolution. Joined at render time by recipe ID.
 
-### Anti-Pattern 4: Unstructured AI Responses for Goal Enhancement
+### Anti-Pattern 4: Monolithic Build Script
 
-**What:** Ask Claude "adapt this recipe" and render the text directly in the ingredients list.
-**Why bad:** Unparseable format means you can't reliably update quantities, mark new ingredients, or cache the result.
-**Instead:** Enforce a JSON schema in the prompt / via tool_use. Validate before display.
-
-### Anti-Pattern 5: Expo Go Dependency
-
-**What:** Build with libraries that require native modules (WatermelonDB, background timers) but rely on Expo Go for testing.
-**Why bad:** WatermelonDB requires a native build. Expo Go cannot load it.
-**Instead:** Use EAS Build from the start. Set up a development build on physical devices in Phase 1.
+**What:** Adding image optimization, manifest generation, and recipe validation all into `build-recipes.ts`.
+**Why bad:** Slow builds, hard to debug, single point of failure.
+**Instead:** Separate `optimize-images.ts` runs before `build-recipes.ts`. Each script has one job.
 
 ---
 
-## Suggested Build Order (Phase Dependencies)
+## Suggested Build Order
 
-Components have hard dependencies. Build in this order:
+Based on dependency analysis between the four integration points:
+
+### Phase 1: Image Pipeline Foundation
+1. Create `scripts/optimize-images.ts` -- image compression tooling
+2. Establish image naming convention (`content/images/{id}/cover.jpg`, `step-N.jpg`)
+3. Generate `app/assets/image-manifest.ts` in build script
+4. Update YAML files with image path references for pilot recipes
+5. Bump `SEED_VERSION`
+
+**Rationale:** Every visual feature depends on images being available. Must be built first.
+
+### Phase 2: Card Image Rendering
+6. `RecipeCardGrid` -- image with gradient scrim fallback
+7. `RecipeCardRow` -- same pattern
+8. Recipe detail hero (`app/recipe/[id].tsx`) -- image with gradient scrim
+9. `StepContent` -- step images from manifest with pastel fallback
+
+**Rationale:** Most visible user-facing change. Builds directly on Phase 1 manifest.
+
+### Phase 3: Feed "See All" Navigation
+10. Create `app/feed/[section].tsx` route
+11. Create `src/hooks/useSeeAllScreen.ts`
+12. Update `FeedSection` -- add "Tumunu Gor" button, `sectionKey` prop, `onSeeAll` callback
+13. Update `app/(tabs)/index.tsx` -- pass new props
+14. Register `feed` route in `app/_layout.tsx`
+
+**Rationale:** Independent feature. Can be built in parallel with Phase 2 by a second developer.
+
+### Phase 4: Cookbook Tabs
+15. Create `components/cookbook/tab-bar.tsx`
+16. Extract `components/cookbook/editable-star-rating.tsx` from CompletionScreen
+17. Create `components/cookbook/cooked-recipe-card.tsx`
+18. Add `getCookingHistoryWithRecipes()` + `updateCookingRating()` to `cooking-history.ts`
+19. Expand `useCookbookScreen` with tab state + history data
+20. Update `cookbook.tsx` layout with tab switcher
+
+**Rationale:** Benefits from Phase 2 (cooked cards show images). Self-contained feature.
+
+### Phase 5: UI Polish
+21. Card press scale animations (Reanimated) on RecipeCardGrid + RecipeCardRow
+22. Horizontal scroll peek gradient hints in FeedSection
+23. Section heading entrance animations
+24. Sheet backdrop fade transitions (IngredientsSheet, SefimSheet)
+25. Dark mode contrast fixes (remove stale hardcoded colors)
+
+**Rationale:** Polish is last because it touches many files but changes no data flow. Each item is independent.
+
+### Dependency Graph
 
 ```
-1. Recipe Data Schema + Bundled JSON
-   → Everything else reads recipe data. Must exist first.
-   → Define the TypeScript interfaces. Hira populates 5-10 pilot recipes.
+Phase 1 (Image Pipeline)
+    |
+    +---> Phase 2 (Card Images) ---> Phase 4 (Cookbook Tabs)
+    |
+    +---> Phase 3 (See All)  [can run parallel with Phase 2]
 
-2. Local DB Layer (WatermelonDB)
-   → Seeding from bundled JSON, querying for discovery
-   → Dependency: recipe schema must be final (or stable enough)
-
-3. User Profile (local storage + Supabase auth)
-   → Onboarding screens write to Local DB + Supabase
-   → Dependency: none from above (parallel with Local DB setup)
-
-4. Recipe Discovery (ingredient matching, allergen filter)
-   → Pure local query against Local DB
-   → Dependency: Local DB + recipe data + user profile
-
-5. Guided Cooking Mode
-   → Step state machine, timers, step display
-   → Dependency: Local DB (recipe steps), user profile (for personalized display)
-
-6. Supabase Edge Functions + Claude Integration
-   → AI proxy, goal enhancement, substitution
-   → Dependency: Supabase project, user profile (for context injection)
-
-7. Goal-Aware Personalization
-   → Calls Edge Function, caches result in Local DB
-   → Dependency: Edge Functions, Local DB
-
-8. Real-Time AI Chat (mid-cook)
-   → Streaming chat via Edge Function
-   → Dependency: Edge Functions, cooking mode context
-
-9. Offline Degradation Hardening
-   → Test all paths offline, verify fallback content displays
-   → Dependency: all above completed
+Phase 5 (UI Polish)  [independent, can start any time after Phase 1]
 ```
+
+### Parallel Work Opportunities
+
+Per the project's established pattern of screen hooks for parallel work:
+- **Developer A:** Phase 1 + Phase 2 (pipeline + card rendering)
+- **Developer B:** Phase 3 (See All, once route is registered) + Phase 4 hooks/DB
+- **Either:** Phase 5 items are independent micro-tasks
 
 ---
 
 ## Scalability Considerations
 
-| Concern | At 1K users | At 50K users | At 500K users |
-|---------|-------------|--------------|---------------|
-| Recipe delivery | Bundled — no server load | Same | Same (bundle updates via OTA or app store) |
-| AI call volume | Supabase Edge Functions free tier | Monitor Claude API costs; add response caching layer | Dedicated cache (Redis) for popular recipe+goal combos |
-| User profile sync | Supabase free tier adequate | Supabase Pro | Supabase Pro + read replicas |
-| AI chat latency | Streaming hides latency | Same | Rate limiting per user to control cost |
-| Content updates | Manual JSON update + app release or OTA | Consider CMS (Supabase Studio sufficient for Hira) | Headless CMS for content team |
+| Concern | At 30 recipes (v1.1) | At 100 recipes (v1.2) | At 500+ recipes (v2.0) |
+|---------|---------------------|----------------------|----------------------|
+| App bundle size | +3-4MB with images (acceptable) | +10-15MB (borderline) | Untenable -- switch to Supabase Storage URLs |
+| Build time | <5 seconds | ~15 seconds | Needs incremental image optimization |
+| SQLite seed time | <1 second | ~3 seconds | Needs delta seeds, not full re-seed |
+| Image manifest size | 30 entries | 100 entries | Lazy-load or code-split |
+| Cooking history | Few rows | Hundreds of rows | Add pagination to cooked tab |
 
-For v1 (target: validate concept, hundreds to low thousands of users), the free tiers of Supabase and Claude API usage are entirely sufficient. No over-engineering needed.
-
----
-
-## Open Questions / Flags for Phase Research
-
-| Question | Why It Matters | Phase to Resolve |
-|----------|---------------|-----------------|
-| Does Supabase Edge Functions support SSE streaming to React Native clients? | Streaming chat requires SSE or WebSocket from Edge Function | Phase: AI Integration |
-| WatermelonDB vs expo-sqlite (Expo SDK 51+ built-in) | expo-sqlite is now capable and simpler to set up in Expo; WatermelonDB is more powerful but heavier | Phase: Local DB |
-| Claude tool_use / structured output for recipe enhancement JSON | Structured output enforces schema; verify current API support | Phase: AI Integration |
-| Background timer behavior on iOS when app is backgrounded | Cooking timers must survive app backgrounding on iOS | Phase: Guided Cooking |
-| OTA update strategy for recipe content | Bundling recipes means app store release for content updates unless OTA (EAS Update) is used | Phase: Content Pipeline |
+The architecture is designed for current scale with a clear migration path.
 
 ---
 
 ## Sources
 
-Note: External web search was unavailable during this research session. Architecture recommendations are based on:
-
-- Established React Native + Expo offline-first patterns (confidence: HIGH — well-documented, stable patterns)
-- WatermelonDB documentation and known SQLite-backed offline capabilities (confidence: HIGH)
-- Supabase architecture documentation known through August 2025 (confidence: MEDIUM — verify current Edge Function streaming support)
-- Anthropic Claude API capabilities known through August 2025 (confidence: MEDIUM — verify structured output / tool_use current state)
-- General BaaS comparison patterns for small-team mobile apps (confidence: MEDIUM)
-- Firebase vs Supabase known tradeoffs as of mid-2025 (confidence: MEDIUM)
-
-**Verification recommended before locking:** Supabase Edge Function SSE support, expo-sqlite capabilities in current SDK, Claude tool_use schema enforcement.
+- Direct codebase analysis of every file referenced above (all paths verified in `/Users/sado/Documents/Projects/TheCook/TheCook/TheCook/`)
+- `expo-image@~3.0.11` already in package.json (unused but available)
+- `react-native-reanimated@~4.1.1` already in package.json (available for animations)
+- expo-router file-based routing conventions (verified against existing `app/` directory structure)
+- expo-sqlite migration pattern (verified against `src/db/client.ts`)
+- `buildFeedSections()` pure function export (verified in `src/hooks/useFeedScreen.ts` line 51)
+- Cooking history table schema (verified in `src/db/client.ts` migration version 6)

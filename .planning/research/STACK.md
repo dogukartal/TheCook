@@ -1,105 +1,203 @@
-# Technology Stack
+# Technology Stack: v1.1 Additions
 
-**Project:** The Cook — AI-powered mobile cooking companion
-**Researched:** 2026-03-08
-**Confidence note:** Web tools unavailable during this research session. All recommendations are based on training data (knowledge cutoff August 2025). Versions marked LOW confidence should be pinned by running `npx expo --version` and checking `npmjs.com` at project init time. Architecture-level decisions are HIGH confidence.
+**Project:** TheCook v1.1 -- Visual Polish & Content Ready
+**Researched:** 2026-03-19
+**Scope:** NEW libraries/patterns only. Existing stack (Expo 54, RN 0.81, expo-sqlite, expo-router, Zod v4, Supabase, Reanimated 4.1) is validated and not re-researched.
 
 ---
 
-## Recommended Stack
+## Executive Summary
 
-### Core Mobile Framework
+The v1.1 milestone needs surprisingly few new dependencies. Most capabilities (image loading, haptics, animations) are already installed but underutilized. The one significant addition is `@gorhom/bottom-sheet` to replace hand-rolled Modal-based sheets with proper gesture-driven bottom sheets. Everything else is about unlocking what is already in `package.json`.
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| Expo (managed workflow) | SDK 52.x | Cross-platform mobile shell, OTA updates, build pipeline | Managed workflow eliminates native toolchain complexity for a solo build. Expo Go for rapid iteration. EAS Build for App Store / Play Store delivery. New Architecture (Fabric + JSI) is on by default from SDK 52. |
-| React Native | 0.76.x (bundled by Expo SDK 52) | Core mobile framework | Ships with Expo SDK 52. New Architecture enabled by default — better performance for cooking timer / camera interactions. Largest community, best TypeScript support. |
-| TypeScript | 5.x | Language | Type safety across AI response shapes and recipe data structures. Required for a solo builder to catch errors at compile time. |
-| Expo Router | v4 (file-system routing) | Navigation | File-system routing matches web conventions. Deep linking for recipe share URLs. Built on React Navigation v7 under the hood. No manual route config. |
+---
 
-**Why not Flutter:** Flutter is a strong choice but Dart is a smaller ecosystem — fewer AI/LLM libraries, fewer Turkish i18n resources. For a solo build integrating Claude API with React-paradigm components, React Native / Expo wins on ecosystem fit. The performance gap is irrelevant for a recipe + chat app.
+## Recommended Stack Additions
 
-**Why not bare React Native workflow:** Managed Expo handles push notifications, OTA updates, and EAS Build for both stores without touching Xcode or Android Studio. Ejecting adds complexity with no benefit at this stage.
-
-### AI Integration
+### New Dependencies (1 library)
 
 | Technology | Version | Purpose | Why |
 |------------|---------|---------|-----|
-| Anthropic Claude API (claude-3-5-haiku or claude-3-5-sonnet) | Current API | Real-time cooking guidance, substitution suggestions, error recovery chat | Claude is already named in the project spec. Haiku for low-latency in-cook chat (fast, cheap). Sonnet for richer recipe adaptation and goal-aware personalization. Streaming responses via Server-Sent Events give the user visible progress during cooking queries. |
-| Backend API proxy (see Backend section) | — | Relay all AI calls | **Never call Claude API directly from the mobile client.** API key exposure is a critical security issue. All LLM calls go through the backend; the client sends a request and receives the stream. |
-| Streaming (SSE or chunked fetch) | — | Progressive AI response rendering | Cooking questions ("is this done?") feel instant with streaming. User sees the answer build word-by-word. Implement with `fetch` + `ReadableStream` on the client side, or a WebSocket if bidirectional signaling is needed. |
+| `@gorhom/bottom-sheet` | ^5.2.8 | Gesture-driven bottom sheets for Sef'im, ingredients, future sheets | Current sheets use `<Modal animationType="slide">` with no swipe-to-dismiss, no snap points, no backdrop fade. Gorhom provides all of this with Reanimated-powered 60fps animations. v5.2.8 officially supports Reanimated v4 (`peerDependencies: "react-native-reanimated": ">=3.16.0 \|\| >=4.0.0-"`). Already depends on `react-native-gesture-handler` which is installed. |
 
-**Model selection guidance:**
-- `claude-3-5-haiku-20241022`: Use for in-cook chat and substitution lookups. Fastest, cheapest. Sufficient for single-turn Q&A during cooking.
-- `claude-3-5-sonnet-20241022`: Use for recipe personalization (goal-aware adaptation at recipe selection time). Higher quality reasoning for complex dietary constraint handling.
+**Confidence:** HIGH -- verified v5.2.8 peer dependencies via npm registry on 2026-03-19.
 
-**Confidence:** MEDIUM — Model names are from training data. Verify current model IDs at `console.anthropic.com` before implementation.
+### Already Installed, Currently Underutilized
 
-### Backend
+| Library | Installed Version | Current Usage | v1.1 Expansion |
+|---------|-------------------|---------------|----------------|
+| `expo-image` | 3.0.11 | Not used anywhere (step-content.tsx uses RN `Image`) | Replace all `<Image>` and `<LinearGradient>` placeholders with `<Image>` from expo-image. Use `placeholder` prop with category-gradient colors, `transition` for cross-dissolve, `cachePolicy: 'disk'`, `contentFit: 'cover'`, and `recyclingKey` for FlashList recycling. |
+| `expo-haptics` | 15.0.8 | Used only in sefim-sheet.tsx chip tap | Add to bookmark toggle, star rating tap, cooking step swipe, timer completion, "Start Cooking" press. Use `ImpactFeedbackStyle.Light` for selections, `.Medium` for actions, `NotificationFeedbackType.Success` for completions. |
+| `react-native-reanimated` | 4.1.6 | Used in skeleton-card, circular-timer, sefim-pulse, category-filter | Add `entering`/`exiting` layout animations (`FadeIn`, `FadeInDown`, `SlideInRight`), spring-based bookmark heart animation, sheet backdrop opacity animation. All built-in to Reanimated -- no additional install. |
+| `react-native-gesture-handler` | ~2.28.0 | Installed as dependency, minimal direct use | Needed by `@gorhom/bottom-sheet`. No changes required. |
+| `@shopify/flash-list` | 2.0.2 | Not observed in current screens | Use for "See All" vertical recipe list (potentially hundreds of items). FlashList with `recyclingKey` on expo-image prevents image flicker during scroll recycling. |
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| Supabase | Latest (self-hosted or cloud) | PostgreSQL database, Auth, Storage, Edge Functions, Realtime | Single platform handles auth + DB + serverless functions. Row Level Security enforces user data isolation without custom middleware. Edge Functions (Deno) proxy all Claude API calls — this is where the API key lives. Free tier is sufficient for v1 scale. Turkish locale support is irrelevant at the DB layer (content is stored in Turkish). |
-| Supabase Auth | Bundled | Authentication | Email/password + OAuth (Google, Apple — required for App Store). Built-in JWT. No separate auth service needed. |
-| Supabase Edge Functions (Deno) | Bundled | AI proxy, recipe matching logic | Keeps Claude API key off the client. Also handles ingredient matching logic (fuzzy matching against recipe ingredient lists) server-side. |
-| PostgreSQL (via Supabase) | 15.x | Primary data store | User profiles, preferences, recipe catalog (30–50 curated recipes), cooking session history. RLS policies enforce per-user data access. |
+---
 
-**Why not Firebase:** Firebase is fine but Supabase gives you a real PostgreSQL database, which matters for recipe ingredient matching queries (e.g., "find recipes where ingredients overlap with user's list"). Firestore's document model makes that kind of query awkward.
+## Feature-to-Library Mapping
 
-**Why not a custom Node.js server:** Solo build. Supabase Edge Functions eliminate the need to manage a server, handle scaling, or configure CORS. Ship faster.
+### 1. Recipe Image System
 
-**Why not serverless (Vercel / AWS Lambda) separately:** Supabase Edge Functions are serverless, co-located with your database, and included in the Supabase free tier. No extra service to manage.
+**What:** Replace LinearGradient color fallbacks with actual food photos on cards, recipe detail hero, cooking step headers.
 
-### Offline Capability
+**Stack decision:** Use `expo-image` (already installed v3.0.11) -- NOT React Native's built-in `<Image>`.
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| expo-sqlite | Bundled (SQLite 3.x) | Local recipe and profile cache | Users cook without internet. The curated recipe library (30–50 recipes) must be available offline. expo-sqlite provides a proper relational store on-device. Syncs from Supabase on app open / when online. |
-| WatermelonDB | ~0.27.x | Reactive offline-first database layer on top of SQLite | Adds sync primitives, observable queries (auto-update UI when data changes), and a proper sync protocol. Overkill for v1 with 50 recipes — use only if sync complexity grows. |
-| Zustand | ~5.x | Client-side state management | Lightweight, TypeScript-first. Manages cooking session state (current step, timer state, chat history). Does not persist by default — combine with `zustand/middleware/persist` + AsyncStorage for profile/settings persistence. |
-| AsyncStorage (`@react-native-async-storage/async-storage`) | ~2.x | Key-value persistence for lightweight offline state | Profile preferences, onboarding completion flag, last viewed recipe. Not for recipe content (use SQLite for that). |
+**Why expo-image over RN Image:**
+- Built-in disk + memory caching (`cachePolicy: 'disk'` is default)
+- `placeholder` prop accepts a color string for graceful gradient-to-photo transition
+- `transition={{ duration: 200 }}` for cross-dissolve when image loads
+- `recyclingKey={recipe.id}` prevents stale images in FlashList/FlatList recycled views
+- `contentFit="cover"` (CSS-like, more intuitive than `resizeMode`)
+- BlurHash support built-in for future cloud images (generate at build time)
+- Prefetch API: `Image.prefetch(urls)` for preloading adjacent feed section images
 
-**Offline strategy:**
-1. On first launch (online): Download all 30–50 curated recipes into SQLite. Store as structured rows (recipe header, steps, ingredients).
-2. On subsequent launches (offline): Serve from SQLite. UI shows "offline mode" banner; AI features are disabled with a clear message ("AI assistant requires internet connection").
-3. Cooking mode: Fully offline once recipe is loaded. Timers, step-by-step navigation — no network needed.
-4. AI chat mid-cook: Requires internet. If offline, show "Connect to internet to ask the AI assistant."
+**Image storage approach (v1.1 -- local bundled):**
+- Store images in `assets/recipes/covers/` and `assets/recipes/steps/`
+- Reference via `require()` in the build pipeline -- expo-image supports `require()` sources
+- YAML `coverImage` field changes from `null` to a filename like `menemen.jpg`
+- Build script resolves filenames to require paths in the bundled JSON
+- This keeps the cloud-ready architecture: later swap `require()` for Supabase Storage URLs
 
-**Recommendation: Start with expo-sqlite + Zustand. Skip WatermelonDB for v1.** Fifty recipes is not a sync problem.
+**What NOT to add:**
+- Do NOT add `react-native-fast-image` -- deprecated, unmaintained, expo-image supersedes it
+- Do NOT add `expo-asset` separately -- expo-image handles asset loading internally
+- Do NOT add `react-native-blurhash` -- expo-image has built-in blurhash support
 
-### Localization (Turkish)
+**Confidence:** HIGH -- expo-image docs verified, already in package.json.
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| i18next + react-i18next | i18next ~23.x, react-i18next ~15.x | UI string localization | Industry standard. JSON translation files. Interpolation, pluralization, date formatting. Works with Expo. |
-| expo-localization | Bundled | Detect device locale | Detect if device is set to Turkish (`tr-TR`). Default to Turkish; fall back to English. No manual language picker needed for v1 (audience is Turkish). |
-| `date-fns` with `tr` locale | ~3.x | Turkish date/time formatting in UI | Recipe creation dates, timer display. `date-fns` is tree-shakeable and includes a Turkish locale module. |
+### 2. Bottom Sheet Transitions (Fade Backdrop, Swipe Dismiss)
 
-**AI responses in Turkish:** Claude handles Turkish natively. System prompt must instruct Claude to respond in Turkish. No translation layer needed on AI output. Include explicit instruction: "Sen bir yemek asistanısın. Her zaman Türkçe yanıt ver."
+**What:** Replace current `<Modal animationType="slide">` sheets (Sef'im, Ingredients) with gesture-driven bottom sheets that have backdrop fade, swipe-to-dismiss, and snap points.
 
-**Content:** Recipe content is authored directly in Turkish by Hira. No translation pipeline needed for content — source is already Turkish.
+**Stack decision:** Add `@gorhom/bottom-sheet@^5.2.8`.
 
-### Supporting Libraries
+**Why not keep current Modal approach:**
+- Current `<Modal>` has no swipe-to-dismiss (only tap-backdrop or X button)
+- `animationType="slide"` is a binary open/close with no partial states
+- No backdrop opacity animation tied to gesture position
+- No snap points for "peek" vs "full" sheet states
+- Users expect iOS/Android-native sheet behavior (swipe down to dismiss)
 
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| `react-native-mmkv` | ~3.x | Fast synchronous key-value store | Use for cooking session state that needs to survive app kills (e.g., which step the user was on). Faster than AsyncStorage (synchronous, native). |
-| `expo-notifications` | Bundled | Timer push notifications | Cooking timers that fire even if app is backgrounded. Required for step timers. |
-| `expo-av` | Bundled | Audio cues | Optional: play a sound when a timer completes. Better UX than silent push. |
-| `expo-camera` | Bundled | "Is this done?" photo input | If implementing visual AI check ("take a photo and I'll tell you if it looks right"), this is the camera primitive. Defer to post-MVP. |
-| `react-hook-form` + `zod` | rhf ~7.x, zod ~3.x | Form handling + validation | Ingredient input form, onboarding profile form. Zod schemas also validate AI response structures. |
-| `@shopify/flash-list` | ~1.7.x | High-performance list rendering | Recipe feed. Faster than FlatList for long lists. Use from day one — migrating later is painful. |
-| `react-native-reanimated` | ~3.x (bundled with Expo SDK 52) | Smooth step transitions, timer animations | Step-by-step cooking mode transitions. Built into Expo managed workflow. |
-| `react-native-gesture-handler` | ~2.x (bundled) | Swipe between steps | Swipe gestures in cooking mode (swipe right = next step). Already included with Expo Router. |
-| `expo-keep-awake` | Bundled | Prevent screen sleep during cooking | Screen must stay on while user is cooking. One-line implementation. Critical for UX. |
+**Why not build from scratch with Reanimated:**
+- Reanimated docs themselves recommend @gorhom/bottom-sheet over hand-rolling
+- Keyboard handling, ScrollView integration, and snap point math are non-trivial
+- Gorhom provides `BottomSheetScrollView`, `BottomSheetTextInput` -- critical for Sef'im's chat input
 
-### Development Tooling
+**Integration pattern:**
+```typescript
+// Wrap app root in BottomSheetModalProvider (in _layout.tsx)
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
-| Tool | Version | Purpose | Why |
-|------|---------|---------|-----|
-| EAS (Expo Application Services) | Current | Build + submit to App Store / Play Store | Managed cloud builds. No local Xcode/Android Studio required. OTA updates via `expo-updates`. |
-| ESLint + Prettier | Current | Code quality | Standard. Use `eslint-config-expo` as base. |
-| Bun | ~1.x | Package manager + task runner | Faster than npm/yarn for a solo build. Compatible with Expo. |
+// Replace Modal-based sheets:
+// Before: <Modal visible={visible} animationType="slide">
+// After:  <BottomSheetModal ref={bottomSheetRef} snapPoints={['50%', '80%']}>
+```
+
+**Migration risk:** LOW. The two existing sheets (SefimSheet, IngredientsSheet) have clean prop interfaces. Swap inner Modal wrapper, keep all content components unchanged.
+
+**Confidence:** HIGH -- peer dependencies verified via npm on 2026-03-19, Reanimated v4 support confirmed in peerDependencies field.
+
+### 3. UI Animations (Entering/Exiting, Micro-interactions)
+
+**What:** Card appear animations, feed section stagger, bookmark heart scale, "See All" list item entrance, swipe hint indicators.
+
+**Stack decision:** Use `react-native-reanimated` (already installed v4.1.6) built-in layout animations. NO additional libraries.
+
+**Specific animation patterns and their Reanimated APIs:**
+
+| Animation | Reanimated API | Usage |
+|-----------|---------------|-------|
+| Card appear on feed load | `entering={FadeInDown.delay(index * 50)}` | Staggered card entrance per feed section |
+| Bookmark heart pulse | `useAnimatedStyle` + `withSpring({ scale })` | Scale 1 -> 1.3 -> 1 on toggle |
+| Recipe card press feedback | `useAnimatedStyle` + `withTiming({ scale: 0.97 })` | Subtle press-in shrink |
+| "See All" list item entrance | `entering={FadeInRight.delay(index * 30)}` | Staggered list appearance |
+| Sheet backdrop fade | Handled by `@gorhom/bottom-sheet` automatically | No manual code needed |
+| Swipe hint arrow bounce | `useAnimatedStyle` + `withRepeat(withTiming)` | Horizontal arrow oscillation |
+| Tab switch cross-fade | `entering={FadeIn.duration(150)}` | Cookbook Saved/Cooked tab content swap |
+| Star rating scale | `useAnimatedStyle` + `withSpring` | Stars scale up on tap |
+
+**What NOT to add:**
+- Do NOT add `react-native-animatable` -- Reanimated v4 covers all needs natively
+- Do NOT add `lottie-react-native` -- overkill for these micro-interactions, adds 2MB+ to bundle
+- Do NOT add `moti` -- wrapper around Reanimated that adds abstraction without value here
+
+**Confidence:** HIGH -- Reanimated v4 layout animations API verified via official docs.
+
+### 4. Haptic Feedback Patterns
+
+**What:** Tactile feedback on bookmark, star rating, timer events, cooking step transitions.
+
+**Stack decision:** Use `expo-haptics` (already installed v15.0.8). NO additional libraries.
+
+**Recommended haptic mapping:**
+
+| User Action | Haptic Type | Method |
+|-------------|-------------|--------|
+| Bookmark toggle | Light impact | `Haptics.impactAsync(ImpactFeedbackStyle.Light)` |
+| Star rating tap | Light impact | `Haptics.impactAsync(ImpactFeedbackStyle.Light)` |
+| "Start Cooking" press | Medium impact | `Haptics.impactAsync(ImpactFeedbackStyle.Medium)` |
+| Timer completion | Success notification | `Haptics.notificationAsync(NotificationFeedbackType.Success)` |
+| Cooking step swipe | Selection change | `Haptics.selectionAsync()` |
+| Bottom sheet snap | Light impact | `Haptics.impactAsync(ImpactFeedbackStyle.Light)` |
+| Long-press action | Heavy impact | `Haptics.impactAsync(ImpactFeedbackStyle.Heavy)` |
+
+**What NOT to add:**
+- Do NOT add `react-native-haptic-feedback` -- expo-haptics is the Expo-native solution, works identically
+- Do NOT add `react-native-custom-haptics` -- custom patterns are unnecessary; system-standard patterns are what users recognize
+
+**Confidence:** HIGH -- expo-haptics already used in sefim-sheet.tsx, API verified.
+
+### 5. Star Rating Component (Cookbook Cooked Tab)
+
+**What:** Editable star rating in Cookbook cooked history, reusing the pattern from completion-screen.tsx.
+
+**Stack decision:** Build in-house. NO library needed.
+
+**Rationale:**
+- `completion-screen.tsx` already has a working `StarRating` component (lines 21-36)
+- It uses `MaterialCommunityIcons` star/star-outline with Pressable handlers
+- For v1.1: extract to `components/ui/star-rating.tsx`, add Reanimated spring scale on tap + haptic feedback
+- Total effort: ~30 lines of code. No library justified.
+
+**What NOT to add:**
+- Do NOT add `react-native-ratings` -- 250KB for a component we already have
+- Do NOT add `react-native-star-rating-widget` -- same reason
+
+**Confidence:** HIGH -- existing implementation verified in codebase.
+
+### 6. Tab Navigation Within Screens (Cookbook Saved/Cooked Tabs)
+
+**What:** Saved vs Cooked tab switcher inside the Cookbook screen, not a navigation-level tab bar.
+
+**Stack decision:** Build in-house with Pressable + Reanimated sliding indicator. NO library needed.
+
+**Rationale:**
+- This is a segmented control (2 tabs: "Kaydedilenler" / "Gecmis") inside a single screen
+- Does NOT warrant `react-native-tab-view` (designed for swipeable multi-screen navigation)
+- Implementation: a `<View>` row with two `<Pressable>` labels and an `Animated.View` underline that slides with `withTiming` on state change
+- Content area switches between saved recipes grid and cooked history list via conditional render with `FadeIn` entering animation
+- ~50 lines of UI code
+
+**What NOT to add:**
+- Do NOT add `react-native-tab-view` -- overkill for a 2-tab in-screen switcher
+- Do NOT add `react-native-pager-view` for this -- it is installed but meant for cooking mode's step navigation, not a simple tab
+
+**Confidence:** HIGH -- standard React Native pattern, no external dependency needed.
+
+### 7. "See All" Vertical Recipe List
+
+**What:** Tapping "See All" on a feed section navigates to a full vertical list of that section's recipes.
+
+**Stack decision:** Use `@shopify/flash-list` (already installed v2.0.2) for the list, with expo-image + `recyclingKey` for card images.
+
+**Why FlashList over FlatList:**
+- Feed sections could have 30+ recipes (the full recipe catalog)
+- FlashList's recycling is faster for image-heavy lists
+- `recyclingKey` on expo-image coordinates with FlashList's view recycling to prevent image flash
+
+**Route pattern:** `app/feed/[section].tsx` using expo-router dynamic segments.
+
+**Confidence:** HIGH -- FlashList already installed, standard pattern.
 
 ---
 
@@ -107,84 +205,138 @@
 
 | Category | Recommended | Alternative | Why Not |
 |----------|-------------|-------------|---------|
-| Mobile framework | Expo (managed) | Flutter | Dart ecosystem has fewer LLM/AI library integrations; solo build favors JS ecosystem depth |
-| Mobile framework | Expo (managed) | Bare React Native | Adds Xcode/Android Studio complexity with no v1 benefit |
-| Backend | Supabase | Firebase | Firestore document model is poor fit for ingredient-overlap queries; PostgreSQL is better |
-| Backend | Supabase | Custom Node.js API | Eliminates infrastructure overhead; solo build constraint |
-| Backend | Supabase | PocketBase | Supabase has better edge function support for LLM proxying; larger community |
-| State management | Zustand | Redux Toolkit | Redux is overkill for this data shape; Zustand is 1/10th the boilerplate |
-| State management | Zustand | React Context | Context re-renders are a problem in cooking mode with frequent timer updates |
-| Offline DB | expo-sqlite | WatermelonDB | WatermelonDB sync is unnecessary complexity for 50-recipe v1 library |
-| AI provider | Claude API | OpenAI GPT-4o | Project spec names Claude; Turkish language quality is comparable; no reason to deviate |
-| List rendering | FlashList | FlatList | FlashList is 10x faster for recipe feeds; no reason to use FlatList in 2025 |
-| Navigation | Expo Router | React Navigation (manual) | Expo Router is file-system-based, less config, deep linking built-in |
+| Image loading | expo-image (installed) | react-native-fast-image | Deprecated/unmaintained since 2023; expo-image is the official Expo solution |
+| Bottom sheets | @gorhom/bottom-sheet | Hand-rolled with Reanimated | Reanimated docs themselves recommend gorhom; keyboard + scroll handling is complex |
+| Bottom sheets | @gorhom/bottom-sheet | expo-router modal presentation | `presentation: 'formSheet'` is iOS-only, not a bottom sheet on Android |
+| Bottom sheets | @gorhom/bottom-sheet | Keep current `<Modal>` approach | No swipe-to-dismiss, no snap points, no gesture-tied backdrop fade |
+| Animations | Reanimated entering/exiting | moti | Unnecessary wrapper; Reanimated API is direct and we already use it |
+| Animations | Reanimated entering/exiting | react-native-animatable | Legacy library, not Reanimated-based, would add a second animation system |
+| Animations | Reanimated entering/exiting | lottie-react-native | 2MB+ bundle cost for micro-interactions that Reanimated handles in 5 lines |
+| Haptics | expo-haptics (installed) | react-native-haptic-feedback | Non-Expo library requiring manual native linking; expo-haptics is Expo-native |
+| Star rating | In-house component | react-native-ratings | 250KB for 30 lines of code we already have |
+| Tab switcher | In-house Pressable row | react-native-tab-view | Designed for swipeable multi-screen views; overkill for 2-state toggle |
+| Tab switcher | In-house Pressable row | react-native-segmented-control | iOS-only native look; we want custom styling matching our design system |
 
 ---
 
 ## Installation
 
 ```bash
-# Bootstrap project
-npx create-expo-app@latest the-cook --template blank-typescript
+# Single new dependency
+npx expo install @gorhom/bottom-sheet
 
-# Navigation
-npx expo install expo-router
-
-# State
-bun add zustand
-
-# Offline storage
-npx expo install expo-sqlite @react-native-async-storage/async-storage react-native-mmkv
-
-# Localization
-bun add i18next react-i18next date-fns
-npx expo install expo-localization
-
-# Forms and validation
-bun add react-hook-form zod @hookform/resolvers
-
-# Performance
-bun add @shopify/flash-list
-
-# Supabase
-bun add @supabase/supabase-js
-
-# Dev dependencies
-bun add -D typescript @types/react eslint prettier eslint-config-expo
+# Verify peer dependencies are met (they should be, all are installed):
+# - react-native-gesture-handler >=2.16.1  (installed: ~2.28.0)
+# - react-native-reanimated >=3.16.0 || >=4.0.0-  (installed: 4.1.6)
 ```
 
----
-
-## Architecture Notes for Stack
-
-**API key security:** Claude API key lives ONLY in Supabase Edge Function environment variables. Client authenticates to Supabase with a per-user JWT, then calls the Edge Function, which calls Claude. Zero API key exposure on client.
-
-**Offline boundary:** The SQLite layer is the offline boundary. Everything above SQLite (AI calls, Supabase sync) requires network. Everything at or below SQLite (recipe display, step navigation, timers, profile) works offline.
-
-**Turkish AI output:** Claude's multilingual capability means no translation layer. System prompt enforces Turkish output. Test with native Turkish speakers during development — model output quality should be validated, not assumed.
+**No other installs needed.** All other capabilities come from libraries already in `package.json`.
 
 ---
 
-## Confidence Assessment
+## Integration Points
 
-| Area | Confidence | Notes |
-|------|------------|-------|
-| Expo/React Native as framework choice | HIGH | Stable ecosystem choice, well-validated for this use case |
-| Expo SDK version (52.x) | MEDIUM | Based on training data (cutoff Aug 2025). Verify: `npx expo --version` |
-| React Native version (0.76.x) | MEDIUM | Bundled by Expo SDK 52 per training data. Confirm at project init |
-| Supabase as backend | HIGH | Well-established for mobile + auth + serverless, free tier fits v1 |
-| Claude API model names | LOW | Model IDs change frequently. Verify at `console.anthropic.com` before coding |
-| Library versions (zustand, zod, etc.) | MEDIUM | Verify with `npm info [package] version` at init time |
-| Offline strategy (SQLite + Zustand) | HIGH | Architecture-level decision, not version-dependent |
-| Turkish localization approach (i18next) | HIGH | Industry standard, stable |
+### App Root Setup (`app/_layout.tsx`)
+
+```typescript
+// Add BottomSheetModalProvider wrapper
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+// Existing GestureHandlerRootView should already be present
+// Add BottomSheetModalProvider inside it:
+<GestureHandlerRootView style={{ flex: 1 }}>
+  <BottomSheetModalProvider>
+    {/* existing providers and Stack */}
+  </BottomSheetModalProvider>
+</GestureHandlerRootView>
+```
+
+### expo-image Migration (Recipe Cards)
+
+```typescript
+// Before (recipe-card-grid.tsx):
+import { LinearGradient } from 'expo-linear-gradient';
+<LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
+
+// After:
+import { Image } from 'expo-image';
+{recipe.coverImage ? (
+  <Image
+    source={recipe.coverImage}
+    style={StyleSheet.absoluteFill}
+    contentFit="cover"
+    placeholder={{ thumbhash: recipe.thumbhash }}
+    transition={200}
+    recyclingKey={recipe.id}
+  />
+) : (
+  <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
+)}
+```
+
+### Build Pipeline Image Wiring
+
+The YAML `coverImage` field currently stores `null` for all 30 recipes. For v1.1:
+
+1. Add images to `assets/recipes/covers/{recipe-id}.jpg`
+2. Update YAML: `coverImage: menemen.jpg`
+3. Build script generates a require map: `{ "menemen.jpg": require("../../assets/recipes/covers/menemen.jpg") }`
+4. At runtime, resolve coverImage string to the require reference
+5. expo-image handles the rest (caching, sizing, placeholder)
+
+This approach is cloud-ready: when Supabase Storage URLs arrive later, simply swap the require map for URL strings. expo-image handles both source types identically.
+
+---
+
+## Version Compatibility Matrix
+
+| Library | Installed | Required By | Compatible |
+|---------|-----------|-------------|------------|
+| expo-image | 3.0.11 | Expo SDK 54 | YES |
+| expo-haptics | 15.0.8 | Expo SDK 54 | YES |
+| react-native-reanimated | 4.1.6 | Expo SDK 54 | YES |
+| react-native-gesture-handler | ~2.28.0 | @gorhom/bottom-sheet >=2.16.1 | YES |
+| @gorhom/bottom-sheet | 5.2.8 (to install) | reanimated >=4.0.0- | YES |
+| @shopify/flash-list | 2.0.2 | Expo SDK 54 | YES |
+
+---
+
+## What This Stack Does NOT Cover (Intentionally)
+
+| Excluded | Reason |
+|----------|--------|
+| Cloud image hosting (Supabase Storage, CDN) | v1.1 uses bundled local images; cloud is a future milestone |
+| Image compression/optimization tooling | Handle in content pipeline outside the app (e.g., `sharp` CLI) |
+| Video playback | Out of scope per PROJECT.md |
+| Advanced gesture library (react-native-gesture-handler v3) | v2.28 is sufficient and Expo SDK 54 compatible |
+| State management library (Zustand, Jotai) | Existing React context + hooks pattern is sufficient |
+| Navigation library changes | expo-router v6 handles all routing needs including new "See All" route |
+
+---
+
+## Risk: @gorhom/bottom-sheet and Reanimated v4
+
+**Status:** Open GitHub issues report compatibility problems between @gorhom/bottom-sheet and Reanimated v4 (issues #2546, #2547, #2600). However, v5.2.8's `peerDependencies` explicitly lists `>=4.0.0-` as supported.
+
+**Mitigation plan:**
+1. Install v5.2.8 and test with a minimal BottomSheet before migrating existing sheets
+2. If broken: fall back to upgrading the current `<Modal>` approach with Reanimated-powered custom backdrop fade + swipe gesture (the Reanimated docs show a ~50-line example)
+3. The current Modal sheets work -- this is a polish improvement, not a blocker
+
+**Confidence on this risk:** MEDIUM -- peer deps say yes, some users report issues. Test early.
 
 ---
 
 ## Sources
 
-- Expo documentation (training data, SDK 52 release notes)
-- React Native New Architecture announcement (0.74+)
-- Supabase documentation and Edge Functions reference
-- Anthropic Claude API documentation (models and streaming)
-- react-i18next documentation
-- Note: Web verification tools were unavailable during this research session. All version numbers should be re-confirmed at project initialization.
+- [expo-image documentation](https://docs.expo.dev/versions/latest/sdk/image/) -- props, caching, placeholder, transition API
+- [expo-haptics documentation](https://docs.expo.dev/versions/latest/sdk/haptics/) -- impact, notification, selection feedback types
+- [Reanimated entering/exiting animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/) -- FadeIn, SlideIn, duration, delay, springify
+- [Reanimated v4 guide](https://www.freecodecamp.org/news/how-to-create-fluid-animations-with-react-native-reanimated-v4/) -- CSS animations, backward compatibility
+- [@gorhom/bottom-sheet npm](https://www.npmjs.com/package/@gorhom/bottom-sheet) -- v5.2.8 peer dependencies verified
+- [@gorhom/bottom-sheet docs](https://gorhom.dev/react-native-bottom-sheet/) -- BottomSheetModal, snap points, backdrop
+- [Expo assets documentation](https://docs.expo.dev/develop/user-interface/assets/) -- require() for bundled images
+- [React Navigation Tab View](https://reactnavigation.org/docs/tab-view/) -- considered and rejected for in-screen tabs
+- [@gorhom/bottom-sheet Reanimated v4 issues](https://github.com/gorhom/react-native-bottom-sheet/issues/2546) -- compatibility investigation
+- [Reanimated bottom sheet example](https://docs.swmansion.com/react-native-reanimated/examples/bottomsheet/) -- fallback approach if gorhom fails
