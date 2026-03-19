@@ -5,25 +5,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RecipeListItem } from '@/src/types/discovery';
 import type { Category, SkillLevel } from '@/src/types/recipe';
 import { useAppTheme } from '@/contexts/ThemeContext';
-
-// ---------------------------------------------------------------------------
-// Gradient palette — category-based, anchored to brand terracotta #E8834A
-// ---------------------------------------------------------------------------
-
-const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
-  'ana yemek': ['#E8834A', '#D4572A'],
-  'kahvaltı':  ['#F59E0B', '#D97706'],
-  'çorba':     ['#0891B2', '#0E7490'],
-  'tatlı':     ['#EC4899', '#DB2777'],
-  'salata':    ['#16A34A', '#15803D'],
-  'aperatif':  ['#7C3AED', '#6D28D9'],
-};
-const DEFAULT_GRADIENT: [string, string] = ['#9CA3AF', '#6B7280'];
+import { CATEGORY_GRADIENTS, DEFAULT_GRADIENT } from '@/constants/palette';
 
 const SKILL_LABELS: Record<SkillLevel, string> = {
-  beginner: 'Başlangıç',
+  beginner: 'Baslangi\u00e7',
   intermediate: 'Orta',
-  advanced: 'İleri',
+  advanced: '\u0130leri',
 };
 
 // ---------------------------------------------------------------------------
@@ -51,7 +38,15 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
 
   return (
     <Pressable
-      style={[styles.card, { backgroundColor: colors.background }]}
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.card,
+          shadowColor: colors.shadow,
+          borderColor: colors.cardBorder,
+          borderWidth: isDark ? 1 : 0,
+        },
+      ]}
       onPress={() => onPress(recipe.id)}
       accessibilityRole="button"
       accessibilityLabel={recipe.title}
@@ -67,13 +62,13 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
           {recipe.title}
         </Text>
         <View style={styles.metaRow}>
-          <View style={[styles.skillBadge, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
-            <Text style={styles.skillText}>{SKILL_LABELS[recipe.skillLevel]}</Text>
+          <View style={[styles.skillBadge, { backgroundColor: colors.tintBg }]}>
+            <Text style={[styles.skillText, { color: colors.tint }]}>{SKILL_LABELS[recipe.skillLevel]}</Text>
           </View>
           {hasMissingEquipment && (
             <View style={styles.equipmentWarning}>
-              <MaterialCommunityIcons name="alert-circle-outline" size={12} color="#D97706" />
-              <Text style={styles.equipmentWarningText}>Ekipman eksik</Text>
+              <MaterialCommunityIcons name="alert-circle-outline" size={12} color={colors.warning} />
+              <Text style={[styles.equipmentWarningText, { color: colors.warning }]}>Ekipman eksik</Text>
             </View>
           )}
           <Text style={[styles.cookTimeText, { color: colors.textSub }]}>{totalTime} dk</Text>
@@ -91,11 +86,9 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     height: 80,
-    backgroundColor: '#FFFFFF',
     borderRadius: 14,
     overflow: 'hidden',
     // Shadow (iOS)
-    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06,
     shadowRadius: 3,
@@ -118,7 +111,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1A1A18',
     lineHeight: 20,
   },
   metaRow: {
@@ -127,18 +119,15 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   skillBadge: {
-    backgroundColor: '#FEF3EC',
     borderRadius: 10,
     paddingHorizontal: 8,
     paddingVertical: 2,
   },
   skillText: {
-    color: '#E8834A',
     fontSize: 11,
     fontWeight: '600',
   },
   cookTimeText: {
-    color: 'rgba(26,26,24,0.5)',
     fontSize: 11,
   },
   equipmentWarning: {
@@ -147,7 +136,6 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   equipmentWarningText: {
-    color: '#D97706',
     fontSize: 10,
     fontWeight: '500',
   },

@@ -18,7 +18,7 @@ interface SkeletonCardProps {
 }
 
 // ---------------------------------------------------------------------------
-// Shimmer block — opacity pulse between 0.4 and 1.0
+// Shimmer block -- opacity pulse between 0.4 and 1.0
 // ---------------------------------------------------------------------------
 
 function ShimmerBlock({ style, shimmerColor }: { style?: object; shimmerColor: string }) {
@@ -46,19 +46,17 @@ function ShimmerBlock({ style, shimmerColor }: { style?: object; shimmerColor: s
 // ---------------------------------------------------------------------------
 
 export function SkeletonCard({ variant }: SkeletonCardProps) {
-  const { isDark } = useAppTheme();
-  const shimmerColor = isDark ? '#1E1E1B' : '#E8E4DC';
-  const cardBg = isDark ? '#161614' : '#FFFFFF';
+  const { colors } = useAppTheme();
 
   if (variant === 'grid') {
     return (
-      <View style={[styles.gridCard, { backgroundColor: cardBg }]}>
+      <View style={[styles.gridCard, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
         {/* Image area placeholder */}
-        <ShimmerBlock style={styles.gridImageArea} shimmerColor={shimmerColor} />
+        <ShimmerBlock style={styles.gridImageArea} shimmerColor={colors.skeleton} />
         {/* Meta row placeholders */}
         <View style={styles.gridMetaRow}>
-          <ShimmerBlock style={styles.gridSkillBadge} shimmerColor={shimmerColor} />
-          <ShimmerBlock style={styles.gridCookTime} shimmerColor={shimmerColor} />
+          <ShimmerBlock style={styles.gridSkillBadge} shimmerColor={colors.skeleton} />
+          <ShimmerBlock style={styles.gridCookTime} shimmerColor={colors.skeleton} />
         </View>
       </View>
     );
@@ -66,16 +64,16 @@ export function SkeletonCard({ variant }: SkeletonCardProps) {
 
   // variant === 'row'
   return (
-    <View style={[styles.rowCard, { backgroundColor: cardBg }]}>
+    <View style={[styles.rowCard, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
       {/* Thumbnail placeholder */}
-      <ShimmerBlock style={styles.rowThumbnail} shimmerColor={shimmerColor} />
+      <ShimmerBlock style={styles.rowThumbnail} shimmerColor={colors.skeleton} />
       {/* Content placeholders */}
       <View style={styles.rowContent}>
-        <ShimmerBlock style={styles.rowTitleLine1} shimmerColor={shimmerColor} />
-        <ShimmerBlock style={styles.rowTitleLine2} shimmerColor={shimmerColor} />
+        <ShimmerBlock style={styles.rowTitleLine1} shimmerColor={colors.skeleton} />
+        <ShimmerBlock style={styles.rowTitleLine2} shimmerColor={colors.skeleton} />
         <View style={styles.rowMetaRow}>
-          <ShimmerBlock style={styles.rowSkillBadge} shimmerColor={shimmerColor} />
-          <ShimmerBlock style={styles.rowCookTime} shimmerColor={shimmerColor} />
+          <ShimmerBlock style={styles.rowSkillBadge} shimmerColor={colors.skeleton} />
+          <ShimmerBlock style={styles.rowCookTime} shimmerColor={colors.skeleton} />
         </View>
       </View>
     </View>
@@ -88,17 +86,14 @@ export function SkeletonCard({ variant }: SkeletonCardProps) {
 
 const styles = StyleSheet.create({
   shimmerBlock: {
-    backgroundColor: '#E8E4DC',
     borderRadius: 6,
   },
 
-  // Grid variant — matches RecipeCardGrid dimensions
+  // Grid variant -- matches RecipeCardGrid dimensions
   gridCard: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 14,
     overflow: 'hidden',
     flex: 1,
-    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
@@ -125,14 +120,12 @@ const styles = StyleSheet.create({
     height: 14,
   },
 
-  // Row variant — matches RecipeCardRow dimensions
+  // Row variant -- matches RecipeCardRow dimensions
   rowCard: {
     flexDirection: 'row',
     height: 80,
-    backgroundColor: '#FFFFFF',
     borderRadius: 14,
     overflow: 'hidden',
-    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06,
     shadowRadius: 3,
