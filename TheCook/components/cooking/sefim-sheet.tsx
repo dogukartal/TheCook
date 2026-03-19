@@ -10,7 +10,15 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Dimensions,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import {
@@ -51,8 +59,42 @@ export function SefimSheet({
 }: SefimSheetProps) {
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
   const { isDark, colors } = useAppTheme();
+
+  // Animation shared values
+  const translateY = useSharedValue(Dimensions.get('window').height);
+  const backdropOpacity = useSharedValue(0);
+
+  // -------------------------------------------------------------------------
+  // Sheet animation
+  // -------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (visible) {
+      setMounted(true);
+      backdropOpacity.value = withTiming(1, { duration: 250 });
+      translateY.value = withSpring(0, { damping: 20, stiffness: 200 });
+    } else {
+      backdropOpacity.value = withTiming(0, { duration: 200 });
+      translateY.value = withTiming(
+        Dimensions.get('window').height,
+        { duration: 250 },
+        () => {
+          runOnJS(setMounted)(false);
+        },
+      );
+    }
+  }, [visible]);
+
+  const backdropAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: backdropOpacity.value,
+  }));
+
+  const sheetAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
 
   // -------------------------------------------------------------------------
   // Auto-scroll to bottom when messages change
@@ -137,124 +179,126 @@ export function SefimSheet({
 
   return (
     <Modal
-      visible={visible}
+      visible={visible || mounted}
       transparent
-      animationType="slide"
+      animationType="none"
       onRequestClose={onClose}
     >
       <KeyboardAvoidingView
-        style={[styles.overlay, { backgroundColor: colors.overlay }]}
+        style={styles.kav}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <Pressable style={styles.overlayDismiss} onPress={onClose} />
-        <View style={[styles.sheetContainer, { backgroundColor: isDark ? colors.card : colors.background }]}>
-          {/* Handle bar */}
-          <View style={styles.handleBarRow}>
-            <View style={[styles.handleBar, { backgroundColor: colors.border }]} />
-          </View>
+        <Animated.View style={[styles.overlay, { backgroundColor: colors.overlay }, backdropAnimatedStyle]}>
+          <Pressable style={styles.overlayDismiss} onPress={onClose} />
+          <Animated.View style={[styles.sheetContainer, { backgroundColor: isDark ? colors.card : colors.background }, sheetAnimatedStyle]}>
+            {/* Handle bar */}
+            <View style={styles.handleBarRow}>
+              <View style={[styles.handleBar, { backgroundColor: colors.border }]} />
+            </View>
 
-          {/* Header */}
-          <View style={[styles.header, { borderBottomColor: colors.border }]}>
-            <Text style={[styles.headerTitle, { color: colors.text }]}>Sef'im</Text>
-            <Pressable
-              onPress={onClose}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              accessibilityRole="button"
-              accessibilityLabel="Kapat"
-            >
-              <MaterialCommunityIcons name="close" size={24} color={colors.textSub} />
-            </Pressable>
-          </View>
-
-          {/* Q&A chips */}
-          {showChips && (
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={[styles.chipsRow, { borderBottomColor: colors.border }]}
-              contentContainerStyle={styles.chipsContent}
-            >
-              {availableChips.map((qa, idx) => (
-                <Pressable
-                  key={idx}
-                  style={[styles.chip, { backgroundColor: colors.tintBg, borderColor: colors.tint }]}
-                  onPress={() => handleChipPress(qa)}
-                  accessibilityRole="button"
-                >
-                  <Text style={[styles.chipText, { color: colors.tint }]}>{qa.question}</Text>
-                </Pressable>
-              ))}
-            </ScrollView>
-          )}
-
-          {/* Messages area */}
-          <ScrollView
-            ref={scrollRef}
-            style={styles.messagesArea}
-            contentContainerStyle={styles.messagesContent}
-            showsVerticalScrollIndicator={false}
-          >
-            {messages.map((msg, idx) => (
-              <View
-                key={idx}
-                style={[
-                  styles.messageBubble,
-                  msg.role === 'user'
-                    ? [styles.userBubble, { backgroundColor: colors.tint }]
-                    : [styles.assistantBubble, { backgroundColor: colors.card }],
-                ]}
+            {/* Header */}
+            <View style={[styles.header, { borderBottomColor: colors.border }]}>
+              <Text style={[styles.headerTitle, { color: colors.text }]}>Sef'im</Text>
+              <Pressable
+                onPress={onClose}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                accessibilityRole="button"
+                accessibilityLabel="Kapat"
               >
-                <Text
+                <MaterialCommunityIcons name="close" size={24} color={colors.textSub} />
+              </Pressable>
+            </View>
+
+            {/* Q&A chips */}
+            {showChips && (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={[styles.chipsRow, { borderBottomColor: colors.border }]}
+                contentContainerStyle={styles.chipsContent}
+              >
+                {availableChips.map((qa, idx) => (
+                  <Pressable
+                    key={idx}
+                    style={[styles.chip, { backgroundColor: colors.tintBg, borderColor: colors.tint }]}
+                    onPress={() => handleChipPress(qa)}
+                    accessibilityRole="button"
+                  >
+                    <Text style={[styles.chipText, { color: colors.tint }]}>{qa.question}</Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            )}
+
+            {/* Messages area */}
+            <ScrollView
+              ref={scrollRef}
+              style={styles.messagesArea}
+              contentContainerStyle={styles.messagesContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {messages.map((msg, idx) => (
+                <View
+                  key={idx}
                   style={[
-                    styles.messageText,
-                    { color: colors.text },
-                    msg.role === 'user' && { color: colors.onTint },
+                    styles.messageBubble,
+                    msg.role === 'user'
+                      ? [styles.userBubble, { backgroundColor: colors.tint }]
+                      : [styles.assistantBubble, { backgroundColor: colors.card }],
                   ]}
                 >
-                  {msg.text}
-                </Text>
-              </View>
-            ))}
-            {isLoading && (
-              <View style={[styles.messageBubble, styles.assistantBubble, { backgroundColor: colors.card }]}>
-                <Text style={[styles.loadingText, { color: colors.textSub }]}>Sef'im dusunuyor...</Text>
-              </View>
-            )}
-          </ScrollView>
+                  <Text
+                    style={[
+                      styles.messageText,
+                      { color: colors.text },
+                      msg.role === 'user' && { color: colors.onTint },
+                    ]}
+                  >
+                    {msg.text}
+                  </Text>
+                </View>
+              ))}
+              {isLoading && (
+                <View style={[styles.messageBubble, styles.assistantBubble, { backgroundColor: colors.card }]}>
+                  <Text style={[styles.loadingText, { color: colors.textSub }]}>Sef'im dusunuyor...</Text>
+                </View>
+              )}
+            </ScrollView>
 
-          {/* Input row */}
-          <View style={styles.inputRow}>
-            <TextInput
-              style={[styles.textInput, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
-              value={text}
-              onChangeText={setText}
-              placeholder="Bir soru sor..."
-              placeholderTextColor={colors.textMuted}
-              returnKeyType="send"
-              onSubmitEditing={handleSend}
-            />
-            <Pressable
-              style={styles.sendButton}
-              onPress={handleSend}
-              accessibilityRole="button"
-              accessibilityLabel="Gonder"
-            >
-              <MaterialCommunityIcons name="send" size={22} color={colors.tint} />
-            </Pressable>
-            <Pressable
-              style={[styles.micButton, isRecording && { backgroundColor: colors.error }]}
-              onPress={handleMicPress}
-              accessibilityRole="button"
-              accessibilityLabel="Sesli soru"
-            >
-              <MaterialCommunityIcons
-                name="microphone"
-                size={22}
-                color={isRecording ? colors.onTint : colors.tint}
+            {/* Input row */}
+            <View style={styles.inputRow}>
+              <TextInput
+                style={[styles.textInput, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
+                value={text}
+                onChangeText={setText}
+                placeholder="Bir soru sor..."
+                placeholderTextColor={colors.textMuted}
+                returnKeyType="send"
+                onSubmitEditing={handleSend}
               />
-            </Pressable>
-          </View>
-        </View>
+              <Pressable
+                style={styles.sendButton}
+                onPress={handleSend}
+                accessibilityRole="button"
+                accessibilityLabel="Gonder"
+              >
+                <MaterialCommunityIcons name="send" size={22} color={colors.tint} />
+              </Pressable>
+              <Pressable
+                style={[styles.micButton, isRecording && { backgroundColor: colors.error }]}
+                onPress={handleMicPress}
+                accessibilityRole="button"
+                accessibilityLabel="Sesli soru"
+              >
+                <MaterialCommunityIcons
+                  name="microphone"
+                  size={22}
+                  color={isRecording ? colors.onTint : colors.tint}
+                />
+              </Pressable>
+            </View>
+          </Animated.View>
+        </Animated.View>
       </KeyboardAvoidingView>
     </Modal>
   );
@@ -265,6 +309,9 @@ export function SefimSheet({
 // ---------------------------------------------------------------------------
 
 const styles = StyleSheet.create({
+  kav: {
+    flex: 1,
+  },
   overlay: {
     flex: 1,
     justifyContent: 'flex-end',

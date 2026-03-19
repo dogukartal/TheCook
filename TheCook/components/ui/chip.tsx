@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, Text, View, StyleSheet, ViewStyle } from 'react-native';
 import { useAppTheme } from '@/contexts/ThemeContext';
 
 interface ChipProps {
@@ -7,9 +7,10 @@ interface ChipProps {
   selected: boolean;
   onPress: () => void;
   style?: ViewStyle;
+  icon?: React.ReactNode;
 }
 
-export function Chip({ label, selected, onPress, style }: ChipProps) {
+export function Chip({ label, selected, onPress, style, icon }: ChipProps) {
   const { colors } = useAppTheme();
 
   return (
@@ -30,15 +31,30 @@ export function Chip({ label, selected, onPress, style }: ChipProps) {
       accessibilityRole="checkbox"
       accessibilityState={{ checked: selected }}
     >
-      <Text
-        style={[
-          styles.label,
-          { color: colors.text },
-          selected && { color: colors.tint, fontWeight: '600' },
-        ]}
-      >
-        {label}
-      </Text>
+      {icon ? (
+        <View style={styles.iconRow}>
+          {icon}
+          <Text
+            style={[
+              styles.label,
+              { color: colors.text },
+              selected && { color: colors.tint, fontWeight: '600' },
+            ]}
+          >
+            {label}
+          </Text>
+        </View>
+      ) : (
+        <Text
+          style={[
+            styles.label,
+            { color: colors.text },
+            selected && { color: colors.tint, fontWeight: '600' },
+          ]}
+        >
+          {label}
+        </Text>
+      )}
     </Pressable>
   );
 }
@@ -53,5 +69,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
+  },
+  iconRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
 });

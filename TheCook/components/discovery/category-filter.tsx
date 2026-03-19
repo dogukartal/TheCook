@@ -1,12 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   ScrollView,
   StyleSheet,
   Pressable,
   Text,
-  Animated,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  interpolate,
+} from 'react-native-reanimated';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Chip } from '@/components/ui/chip';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import type { Category } from '@/src/types/recipe';
@@ -24,6 +30,19 @@ const CATEGORIES: Array<{ value: Category; label: string }> = [
   { value: 'salata',   label: 'Salata' },
   { value: 'aperatif', label: 'Aperatif' },
 ];
+
+// ---------------------------------------------------------------------------
+// Category icon map
+// ---------------------------------------------------------------------------
+
+const CATEGORY_ICONS: Record<string, string> = {
+  'ana yemek': 'silverware-fork-knife',
+  'kahvaltı': 'coffee',
+  'çorba': 'bowl-mix',
+  'tatlı': 'cupcake',
+  'salata': 'leaf',
+  'aperatif': 'food-apple',
+};
 
 // ---------------------------------------------------------------------------
 // Props
@@ -47,29 +66,22 @@ export function CategoryFilter({
   onFilterChange,
 }: CategoryFilterProps) {
   const [panelOpen, setPanelOpen] = useState(false);
-  const arrowRotation = useRef(new Animated.Value(0)).current;
+  const arrowRotation = useSharedValue(0);
   const { colors } = useAppTheme();
 
   function togglePanel() {
     const toValue = panelOpen ? 0 : 1;
-    Animated.timing(arrowRotation, {
-      toValue,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
+    arrowRotation.value = withTiming(toValue, { duration: 200 });
     setPanelOpen(!panelOpen);
   }
 
-  const arrowStyle = {
+  const arrowStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        rotate: arrowRotation.interpolate({
-          inputRange: [0, 1],
-          outputRange: ['0deg', '180deg'],
-        }),
+        rotate: `${interpolate(arrowRotation.value, [0, 1], [0, 180])}deg`,
       },
     ],
-  };
+  }));
 
   // Helper to toggle cook time bucket — deselects if already selected
   function handleCookTime(bucket: DiscoveryFilter['cookTimeBucket']) {
@@ -117,6 +129,13 @@ export function CategoryFilter({
               label={cat.label}
               selected={selectedCategory === cat.value}
               onPress={() => onCategoryChange(cat.value)}
+              icon={
+                <MaterialCommunityIcons
+                  name={CATEGORY_ICONS[cat.value] as any}
+                  size={14}
+                  color={selectedCategory === cat.value ? colors.tint : colors.textSub}
+                />
+              }
             />
           ))}
         </ScrollView>
@@ -126,10 +145,12 @@ export function CategoryFilter({
           style={styles.arrowButton}
           onPress={togglePanel}
           accessibilityRole="button"
-          accessibilityLabel={panelOpen ? 'Filtreyi kapat' : 'Gelişmiş filtre'}
+          accessibilityLabel={panelOpen ? 'Filtreyi kapat' : 'Geli\u015Fmi\u015F filtre'}
           accessibilityState={{ expanded: panelOpen }}
         >
-          <Animated.Text style={[styles.arrowText, arrowStyle, { color: colors.textMuted }]}>▼</Animated.Text>
+          <Animated.Text style={[styles.arrowText, arrowStyle, { color: colors.textMuted }]}>
+            {'\u25BC'}
+          </Animated.Text>
         </Pressable>
       </View>
 
@@ -140,19 +161,19 @@ export function CategoryFilter({
           <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Mutfak</Text>
           <View style={styles.chipGroup}>
             <Chip
-              label="Türk"
-              selected={filter.cuisine === 'Türk'}
-              onPress={() => handleCuisine('Türk')}
+              label="T\u00FCrk"
+              selected={filter.cuisine === 'T\u00FCrk'}
+              onPress={() => handleCuisine('T\u00FCrk')}
             />
             <Chip
-              label="Dünya"
-              selected={filter.cuisine === 'Dünya'}
-              onPress={() => handleCuisine('Dünya')}
+              label="D\u00FCnya"
+              selected={filter.cuisine === 'D\u00FCnya'}
+              onPress={() => handleCuisine('D\u00FCnya')}
             />
           </View>
 
           {/* Section 2: Cook time */}
-          <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Pişirme Süresi</Text>
+          <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Pi\u015Firme S\u00FCresi</Text>
           <View style={styles.chipGroup}>
             <Chip
               label="< 15 dk"
@@ -160,7 +181,7 @@ export function CategoryFilter({
               onPress={() => handleCookTime('under15')}
             />
             <Chip
-              label="15–30 dk"
+              label="15\u201330 dk"
               selected={filter.cookTimeBucket === '15to30'}
               onPress={() => handleCookTime('15to30')}
             />
@@ -175,7 +196,7 @@ export function CategoryFilter({
           <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>Zorluk</Text>
           <View style={styles.chipGroup}>
             <Chip
-              label="Başlangıç"
+              label="Ba\u015Flang\u0131\u00E7"
               selected={filter.skillLevel === 'beginner'}
               onPress={() => handleSkill('beginner')}
             />
@@ -185,7 +206,7 @@ export function CategoryFilter({
               onPress={() => handleSkill('intermediate')}
             />
             <Chip
-              label="İleri"
+              label="\u0130leri"
               selected={filter.skillLevel === 'advanced'}
               onPress={() => handleSkill('advanced')}
             />

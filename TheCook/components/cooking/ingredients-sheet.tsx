@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,15 @@ import {
   Modal,
   Alert,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { formatAmount } from '@/src/hooks/useRecipeAdaptation';
@@ -44,6 +52,36 @@ export function IngredientsSheet({
   swaps = {},
 }: IngredientsSheetProps) {
   const { isDark, colors } = useAppTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Shared values for animation
+  const translateY = useSharedValue(Dimensions.get('window').height);
+  const backdropOpacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (visible) {
+      setMounted(true);
+      backdropOpacity.value = withTiming(1, { duration: 250 });
+      translateY.value = withSpring(0, { damping: 20, stiffness: 200 });
+    } else {
+      backdropOpacity.value = withTiming(0, { duration: 200 });
+      translateY.value = withTiming(
+        Dimensions.get('window').height,
+        { duration: 250 },
+        () => {
+          runOnJS(setMounted)(false);
+        },
+      );
+    }
+  }, [visible]);
+
+  const backdropAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: backdropOpacity.value,
+  }));
+
+  const sheetAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
 
   // Flatten all ingredients with their group labels
   type FlatItem =
@@ -109,14 +147,14 @@ export function IngredientsSheet({
 
   return (
     <Modal
-      visible={visible}
+      visible={visible || mounted}
       transparent
-      animationType="slide"
+      animationType="none"
       onRequestClose={onClose}
     >
-      <View style={[styles.overlay, { backgroundColor: colors.overlay }]}>
+      <Animated.View style={[styles.overlay, { backgroundColor: colors.overlay }, backdropAnimatedStyle]}>
         <Pressable style={styles.overlayDismiss} onPress={onClose} />
-        <View style={[styles.sheetContainer, { backgroundColor: isDark ? colors.card : colors.background }]}>
+        <Animated.View style={[styles.sheetContainer, { backgroundColor: isDark ? colors.card : colors.background }, sheetAnimatedStyle]}>
           {/* Handle bar */}
           <View style={styles.handleBarRow}>
             <View style={[styles.handleBar, { backgroundColor: colors.border }]} />
@@ -202,8 +240,8 @@ export function IngredientsSheet({
             })}
             <View style={styles.listBottomPad} />
           </ScrollView>
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     </Modal>
   );
 }

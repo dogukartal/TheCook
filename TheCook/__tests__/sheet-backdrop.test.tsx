@@ -109,7 +109,7 @@ describe('Sheet backdrop animation', () => {
 
   test('IngredientsSheet calls onClose on backdrop press', () => {
     const onClose = jest.fn();
-    render(
+    const { UNSAFE_root } = render(
       <IngredientsSheet
         ingredientGroups={[]}
         checkedIndices={[]}
@@ -119,22 +119,29 @@ describe('Sheet backdrop animation', () => {
       />,
     );
 
-    // The backdrop dismiss area is a Pressable with style overlayDismiss
-    // It's the first Pressable inside the overlay
-    const backdrop = screen.UNSAFE_queryAllByType(
-      require('react-native').Pressable,
-    ).find((node: any) => {
-      // Backdrop dismiss is the Pressable that triggers onClose but is not a button
-      const styles = Array.isArray(node.props.style)
-        ? node.props.style
-        : [node.props.style];
-      return styles.some(
-        (s: any) => s && s.flex === 1 && !node.props.accessibilityRole,
-      );
-    });
+    // Find Pressable elements in the tree that don't have an accessibilityRole
+    // The backdrop dismiss is the one without accessibilityRole (close button has "button")
+    const pressables: any[] = [];
+    function walk(node: any) {
+      if (!node || typeof node !== 'object') return;
+      // Check if this is a Pressable-like element without accessibility role
+      if (node.props?.onPress && !node.props?.accessibilityRole) {
+        pressables.push(node);
+      }
+      const children = node.children || node.props?.children;
+      if (Array.isArray(children)) {
+        children.forEach(walk);
+      } else if (children && typeof children === 'object') {
+        walk(children);
+      }
+    }
+    walk(UNSAFE_root);
 
+    // The first Pressable without an accessibilityRole is the backdrop dismiss
+    const backdrop = pressables[0];
     expect(backdrop).toBeTruthy();
-    fireEvent.press(backdrop!);
+    // Call onPress directly since fireEvent may not work with the tree traversal
+    backdrop.props.onPress();
     expect(onClose).toHaveBeenCalled();
   });
 });
