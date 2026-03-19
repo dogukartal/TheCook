@@ -136,7 +136,15 @@ All profile changes take effect on next feed load. No real-time re-filtering of 
 
 ### Active
 
-(None yet — define with `/gsd:new-milestone`)
+## Current Milestone: v1.1 Visual Polish & Content Ready
+
+**Goal:** Make the app visually rich with real recipe images, improve discoverability with "See All" navigation, add Cookbook tabs with rating history, and polish UI interactions across the board.
+
+**Target features:**
+- Recipe image system (local storage, YAML wiring, cloud-ready architecture)
+- Feed "See All" button → vertical recipe list per section
+- Cookbook Saved/Cooked tabs with editable star ratings
+- UI polish: card peek hints, swipe animations, section headings, dark mode contrast, feedback animations, sheet fade transitions, filter chip images, cookbook row layout, card contrast
 
 ### Out of Scope
 
@@ -189,4 +197,4 @@ All profile changes take effect on next feed load. No real-time re-filtering of 
 | Steps JSON column (not normalized table) | sefimQA, checkpoint, warning travel with steps — no migrations needed | ✓ Good |
 
 ---
-*Last updated: 2026-03-19 after v1.0 milestone*
+*Last updated: 2026-03-19 after v1.1 milestone started*
