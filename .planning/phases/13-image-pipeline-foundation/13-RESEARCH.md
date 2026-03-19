@@ -1,0 +1,374 @@
+# Phase 13: Image Pipeline Foundation - Research
+
+**Researched:** 2026-03-19
+**Domain:** Build-time image processing, static asset bundling for React Native / Expo
+**Confidence:** HIGH
+
+## Summary
+
+Phase 13 creates a build-time pipeline that converts source recipe images (1024x1024 PNGs, ~1.7MB each) into optimized WebP files under 100KB, then generates a TypeScript image registry that maps recipe IDs to `require()` calls so Metro can statically resolve them in production builds.
+
+The existing codebase already has a YAML-to-JSON build pipeline (`scripts/build-recipes.ts` run via `npm run build-recipes` as a prebuild step), 30 recipe YAML files with `coverImage` and `stepImage` fields (currently all `null`), and source images in `content/images/MENEMEN/` (6 PNG files at ~1.7MB each, 1024x1024). The project uses Expo 54, expo-image 3.0.11, and Metro bundler. The `app.json` already includes `assetBundlePatterns: ["assets/**", "app/assets/**"]`.
+
+The critical constraint is that Metro requires `require()` paths to be static string literals known at compile time. Dynamic `require('./' + name + '.webp')` will NOT work. The solution is a build script that generates a TypeScript file containing a map of recipe IDs to `require('./path/to/image.webp')` calls -- one per image. This file is auto-generated and should be treated as a build artifact (but committed to git so Metro can resolve the paths).
+
+**Primary recommendation:** Use `sharp` (devDependency) in a Node.js build script to convert PNG/JPG source images to WebP, resize to 800px wide, quality 75. Generate `app/assets/image-registry.ts` with static `require()` calls. Wire YAML `coverImage` fields to standardized filenames (`{recipe-id}-cover.webp`). Validate image existence as part of the build.
+
+<phase_requirements>
+## Phase Requirements
+
+| ID | Description | Research Support |
+|----|-------------|-----------------|
+| IMG-04 | Recipe images are optimized (WebP, <100KB) and bundled via build pipeline with static registry | Sharp for WebP conversion (resize + quality tuning), auto-generated TS registry with static require() calls, YAML coverImage field validation in build script, production build verification via EAS or expo export |
+</phase_requirements>
+
+## Standard Stack
+
+### Core
+| Library | Version | Purpose | Why Standard |
+|---------|---------|---------|--------------|
+| sharp | ^0.33 | Build-time image conversion (PNG/JPG to WebP), resize, quality control | Industry standard Node.js image processing; 4-5x faster than ImageMagick; used in production by millions of projects |
+| yaml | ^2.8.2 | Parse recipe YAML files during build | Already installed in project |
+| tsx | ^4.21.0 | Run TypeScript build scripts directly | Already installed in project |
+| expo-image | ~3.0.11 | Runtime image display (Phase 15 will consume registry) | Already installed; supports `require()` sources, caching, blurhash |
+
+### Supporting
+| Library | Version | Purpose | When to Use |
+|---------|---------|---------|-------------|
+| zod | ^4.3.6 | Validate recipe schema including image paths | Already installed; used by existing build-recipes.ts |
+| fs/path (Node built-in) | N/A | File system operations in build script | Always in build scripts |
+
+### Alternatives Considered
+| Instead of | Could Use | Tradeoff |
+|------------|-----------|----------|
+| sharp | sips (macOS built-in) | sips is macOS-only, no cross-platform CI support, limited format control |
+| sharp | cwebp (Google CLI) | Requires separate binary install, not npm-native, harder to integrate |
+| sharp | jimp (pure JS) | 10x slower than sharp, no native bindings, fine for tiny batches but unnecessary |
+
+**Installation:**
+```bash
+npm install --save-dev sharp @types/sharp
+```
+
+Note: `sharp` must be a devDependency since it is only used at build time, not at runtime in the React Native app. Metro should never try to bundle sharp.
+
+## Architecture Patterns
+
+### Recommended Project Structure
+```
+content/
+  images/
+    raw/                      # Source images (PNG/JPG, any size) -- gitignored
+      menemen-cover.png
+      menemen-step-01.png
+    .gitkeep
+  recipes/
+    menemen.yaml              # coverImage: menemen-cover.webp
+app/
+  assets/
+    images/                   # Build output: optimized WebP files
+      menemen-cover.webp
+      menemen-step-01.webp
+    image-registry.ts         # Auto-generated: recipe ID -> require() map
+    recipes.json              # Existing: recipe data
+scripts/
+  build-images.ts             # NEW: image optimization + registry generation
+  build-recipes.ts            # EXISTING: YAML -> JSON (add image validation)
+  validate-recipes.ts         # EXISTING: YAML validation (add image validation)
+```
+
+### Pattern 1: Static Image Registry (the require() map)
+**What:** A TypeScript file that maps recipe IDs to statically-resolved `require()` calls
+**When to use:** Always -- Metro requires compile-time constant paths for `require()`
+**Example:**
+```typescript
+// Source: Auto-generated by scripts/build-images.ts -- DO NOT EDIT
+// Generated: 2026-03-19T16:00:00Z
+
+export type ImageSource = ReturnType<typeof require>;
+
+export interface RecipeImages {
+  cover: ImageSource | null;
+  steps: (ImageSource | null)[];
+}
+
+const registry: Record<string, RecipeImages> = {
+  "menemen": {
+    cover: require("./images/menemen-cover.webp"),
+    steps: [
+      null,
+      require("./images/menemen-step-02.webp"),
+      null,
+      null,
+      null,
+    ],
+  },
+  "mercimek-corbasi": {
+    cover: null,
+    steps: [],
+  },
+  // ... all 30 recipes
+};
+
+export function getRecipeImages(recipeId: string): RecipeImages {
+  return registry[recipeId] ?? { cover: null, steps: [] };
+}
+```
+
+### Pattern 2: Build Script Image Pipeline
+**What:** A Node.js script that reads source images, converts to WebP, writes to output directory, and generates the registry file
+**When to use:** Run as part of the prebuild step, before `build-recipes.ts`
+
+### Pattern 3: YAML Image Path Convention
+**What:** Standardized naming convention linking recipe IDs to image filenames
+**When to use:** Always -- the naming convention IS the contract between content creators and the build pipeline
+**Convention:**
+- Cover image: `{recipe-id}-cover.{ext}` (e.g., `menemen-cover.png`)
+- Step image: `{recipe-id}-step-{NN}.{ext}` (e.g., `menemen-step-01.png`)
+- Output: same base name with `.webp` extension
+
+### Pattern 4: Source Image Organization
+**What:** Source images stored in `content/images/raw/` with a flat structure, organized by naming convention rather than subdirectories
+**Why:** The current `MENEMEN/` subfolder approach with ChatGPT-generated filenames is messy. Standardize to flat files with the `{recipe-id}-{type}.{ext}` naming convention. The build script discovers images by filename pattern, not by directory.
+
+**Current state (needs migration):**
+```
+content/images/MENEMEN/ChatGPT Image Mar 14, 2026 at 05_58_11 PM.png  # 1.9MB, 1024x1024
+```
+
+**Target state:**
+```
+content/images/raw/menemen-cover.png  # renamed from one of the ChatGPT images
+```
+
+### Anti-Patterns to Avoid
+- **Dynamic require():** `require('./images/' + id + '-cover.webp')` will FAIL in production. Metro cannot resolve dynamic paths. The entire point of the registry is to avoid this.
+- **Storing optimized images in git alongside raw:** Keep raw in `content/images/raw/` (can be gitignored if large) and optimized output in `app/assets/images/` (committed, since Metro needs them at bundle time).
+- **Runtime image conversion:** Never convert images at app runtime. All conversion happens at build time.
+- **Putting sharp in dependencies:** It must be devDependencies only. Metro will crash trying to bundle native Node.js bindings.
+- **Manual registry editing:** The registry file must be auto-generated. Manual edits will be overwritten and will drift from actual images on disk.
+
+## Don't Hand-Roll
+
+| Problem | Don't Build | Use Instead | Why |
+|---------|-------------|-------------|-----|
+| Image format conversion | Custom FFI bindings or shell exec to sips/cwebp | sharp npm package | Cross-platform, fast, reliable quality control, handles resize+format in one call |
+| Image dimension calculation | Manual pixel math | sharp metadata API (`sharp(input).metadata()`) | Returns width, height, format, size in one call |
+| WebP quality tuning | Trial-and-error loops | sharp `.webp({ quality: 75, effort: 4 })` with size check | Built-in options produce predictable results |
+| YAML parsing | Custom parser or regex | `yaml` package (already installed) | Already used by build-recipes.ts |
+| Schema validation | Manual checks | Zod (already installed) | Already used for recipe validation |
+
+**Key insight:** The build script is ~80 lines of straightforward Node.js. The complexity is not in the code but in getting the Metro bundling contract right (static require paths, correct output location, correct asset bundle patterns).
+
+## Common Pitfalls
+
+### Pitfall 1: Dynamic require() in React Native
+**What goes wrong:** Code like `require('./images/' + recipeId + '.webp')` silently fails -- Metro evaluates require() paths at bundle time and cannot resolve variable expressions. The app shows no image (or crashes) in production.
+**Why it happens:** Web developers expect webpack-style dynamic requires. Metro is fundamentally different.
+**How to avoid:** Generate a TypeScript file where every require() call uses a string literal. The registry pattern solves this.
+**Warning signs:** Images work in dev but break in production builds.
+
+### Pitfall 2: sharp in runtime dependencies
+**What goes wrong:** Adding sharp to `dependencies` (not `devDependencies`) causes Metro to try bundling it. sharp has native C++ bindings (libvips) that cannot be bundled into a React Native app.
+**Why it happens:** Default `npm install sharp` adds to dependencies.
+**How to avoid:** Always `npm install --save-dev sharp`. Verify it appears in devDependencies.
+**Warning signs:** Metro bundler errors about native modules, missing bindings.
+
+### Pitfall 3: Images not in assetBundlePatterns
+**What goes wrong:** Images exist on disk but are not included in the production binary. EAS build or expo export silently skips them.
+**Why it happens:** `app.json` `assetBundlePatterns` must cover the output directory.
+**How to avoid:** The existing `app.json` already has `"app/assets/**"` which will cover `app/assets/images/*.webp`. Verify this after adding images.
+**Warning signs:** Works in dev (Metro serves from disk), breaks in production (binary missing assets).
+
+### Pitfall 4: WebP files too large
+**What goes wrong:** Converting a 1024x1024 PNG to WebP at quality 80 may still exceed 100KB depending on image complexity.
+**Why it happens:** Food photography with lots of detail and color variation compresses less than simple graphics.
+**How to avoid:** Resize to max 800px width FIRST, then apply WebP quality 75. Add a size check in the build script that warns (or errors) if any output exceeds 100KB.
+**Warning signs:** Build script should report file sizes.
+
+### Pitfall 5: Forgetting to re-run the build script after adding images
+**What goes wrong:** New images are added to `content/images/raw/` but the registry is stale. The app shows null for new recipes.
+**Why it happens:** The build script is not automatically triggered on image changes.
+**How to avoid:** The `prebuild` npm script already runs `build-recipes`. Chain `build-images` before it: `"prebuild": "npm run build-images && npm run build-recipes"`.
+**Warning signs:** Registry file has stale date, missing entries.
+
+### Pitfall 6: Source images with spaces in filenames
+**What goes wrong:** The current MENEMEN images have names like `"ChatGPT Image Mar 14, 2026 at 05_58_11 PM.png"` with spaces and commas. Shell scripts and some tools choke on these.
+**Why it happens:** AI image generators use descriptive filenames.
+**How to avoid:** The standardized naming convention (`{recipe-id}-cover.png`) eliminates this. The initial migration from ChatGPT filenames to standardized names is a one-time manual step.
+**Warning signs:** Build script file not found errors.
+
+## Code Examples
+
+### Build Script: Image Optimization
+```typescript
+// scripts/build-images.ts
+import sharp from "sharp";
+import * as fs from "fs";
+import * as path from "path";
+import { parse } from "yaml";
+
+const RAW_DIR = path.join(process.cwd(), "content", "images", "raw");
+const OUT_DIR = path.join(process.cwd(), "app", "assets", "images");
+const REGISTRY_PATH = path.join(process.cwd(), "app", "assets", "image-registry.ts");
+const RECIPES_DIR = path.join(process.cwd(), "content", "recipes");
+
+const MAX_WIDTH = 800;
+const WEBP_QUALITY = 75;
+const MAX_SIZE_BYTES = 100 * 1024; // 100KB
+
+async function processImage(inputPath: string, outputPath: string): Promise<number> {
+  const result = await sharp(inputPath)
+    .resize({ width: MAX_WIDTH, withoutEnlargement: true })
+    .webp({ quality: WEBP_QUALITY, effort: 4 })
+    .toFile(outputPath);
+  return result.size;
+}
+
+// ... registry generation logic
+```
+
+### Registry File: Generated Output
+```typescript
+// app/assets/image-registry.ts -- AUTO-GENERATED, DO NOT EDIT
+// Generated: 2026-03-19T16:30:00Z
+// Source: scripts/build-images.ts
+
+export type ImageSource = number; // Metro require() returns a number (asset ID)
+
+export interface RecipeImages {
+  cover: ImageSource | null;
+  steps: (ImageSource | null)[];
+}
+
+const registry: Record<string, RecipeImages> = {
+  "menemen": {
+    cover: require("./images/menemen-cover.webp"),
+    steps: [null, null, null, null, null],
+  },
+};
+
+export function getRecipeImages(recipeId: string): RecipeImages {
+  return registry[recipeId] ?? { cover: null, steps: [] };
+}
+```
+
+### YAML Image Validation in Build Script
+```typescript
+// Addition to scripts/build-recipes.ts or scripts/validate-recipes.ts
+function validateImageReferences(recipe: any, imagesDir: string): string[] {
+  const errors: string[] = [];
+  if (recipe.coverImage) {
+    const expected = path.join(imagesDir, recipe.coverImage);
+    if (!fs.existsSync(expected)) {
+      errors.push(`coverImage "${recipe.coverImage}" not found at ${expected}`);
+    }
+  }
+  for (let i = 0; i < (recipe.steps?.length ?? 0); i++) {
+    const step = recipe.steps[i];
+    if (step.stepImage) {
+      const expected = path.join(imagesDir, step.stepImage);
+      if (!fs.existsSync(expected)) {
+        errors.push(`steps[${i}].stepImage "${step.stepImage}" not found at ${expected}`);
+      }
+    }
+  }
+  return errors;
+}
+```
+
+### Using the Registry at Runtime (Phase 15 preview)
+```typescript
+// In a component (Phase 15 will implement this)
+import { getRecipeImages } from "@/app/assets/image-registry";
+import { Image } from "expo-image";
+
+function RecipeCardImage({ recipeId }: { recipeId: string }) {
+  const images = getRecipeImages(recipeId);
+  if (!images.cover) return <GradientFallback />;
+  return <Image source={images.cover} style={styles.cover} />;
+}
+```
+
+## State of the Art
+
+| Old Approach | Current Approach | When Changed | Impact |
+|--------------|------------------|--------------|--------|
+| `<Image source={{ uri: 'https://...' }}>` | Bundled local assets via `require()` + `expo-image` | Expo SDK 50+ (2024) | Faster load, no network dependency, offline-first |
+| Manual image optimization | Build-time sharp pipeline | 2023+ | Consistent quality, automated, reproducible |
+| PNG/JPG in app bundle | WebP format | Android 4.0+ / iOS 14+ support | 25-35% smaller files, same visual quality |
+| React Native `<Image>` | `expo-image` | Expo SDK 49+ (2023) | Better caching, placeholder support, memory management |
+
+**Deprecated/outdated:**
+- `react-native-fast-image`: Superseded by `expo-image` for Expo projects. expo-image provides equivalent functionality (caching, priority, headers) built into the Expo ecosystem.
+
+## Open Questions
+
+1. **Which MENEMEN image should be the cover?**
+   - What we know: There are 6 ChatGPT-generated images in `content/images/MENEMEN/`, all 1024x1024 PNGs. None are mapped to the YAML yet.
+   - What's unclear: Which image is the best cover photo. This is a content decision, not a technical one.
+   - Recommendation: Pick one during implementation and set `coverImage: menemen-cover.webp` in the YAML. The build script handles the rest.
+
+2. **Should raw source images be committed to git?**
+   - What we know: The 6 MENEMEN PNGs total ~10MB. With 30 recipes, raw images could be 50-100MB.
+   - What's unclear: Whether the repo should carry raw source images or only optimized output.
+   - Recommendation: Keep `content/images/raw/` in `.gitignore` for large source files. Commit only the optimized `app/assets/images/*.webp` files (under 100KB each). Source images can be stored externally (Google Drive, etc.) per content workflow.
+
+3. **How many recipes will have images in this phase?**
+   - What we know: Only MENEMEN has source images currently. 29 other recipes have `coverImage: null`.
+   - What's unclear: Whether more images will arrive during this phase.
+   - Recommendation: Build the pipeline to handle all 30 recipes but ship with however many images exist. The registry gracefully returns `null` for missing images. The pipeline is the deliverable, not the images.
+
+## Validation Architecture
+
+### Test Framework
+| Property | Value |
+|----------|-------|
+| Framework | jest 29.7.0 (jest-expo preset) |
+| Config file | package.json `"jest"` section |
+| Quick run command | `npx jest --testPathPattern="image" -x` |
+| Full suite command | `npx jest` |
+
+### Phase Requirements -> Test Map
+| Req ID | Behavior | Test Type | Automated Command | File Exists? |
+|--------|----------|-----------|-------------------|-------------|
+| IMG-04a | Build script produces WebP under 100KB | unit | `npx jest __tests__/build-images.test.ts -x` | No -- Wave 0 |
+| IMG-04b | Registry maps recipe IDs to require() calls | unit | `npx jest __tests__/image-registry.test.ts -x` | No -- Wave 0 |
+| IMG-04c | YAML coverImage validated against disk | unit | `npx jest __tests__/build-images.test.ts -x` | No -- Wave 0 |
+| IMG-04d | Production build resolves images | smoke | `npx expo export --platform ios && ls dist/assets/` | No -- manual verification |
+
+### Sampling Rate
+- **Per task commit:** `npx jest --testPathPattern="image" -x`
+- **Per wave merge:** `npx jest`
+- **Phase gate:** Full suite green + manual expo export verification
+
+### Wave 0 Gaps
+- [ ] `__tests__/build-images.test.ts` -- covers IMG-04a, IMG-04c (build script tests)
+- [ ] `__tests__/image-registry.test.ts` -- covers IMG-04b (registry generation and lookup)
+- [ ] Framework install: `npm install --save-dev sharp @types/sharp` -- sharp not yet installed
+
+## Sources
+
+### Primary (HIGH confidence)
+- [React Native Images documentation](https://reactnative.dev/docs/images) -- static require() contract, no dynamic requires
+- [Sharp official docs](https://sharp.pixelplumbing.com/) -- WebP API, resize API, quality options
+- [Sharp output API](https://sharp.pixelplumbing.com/api-output/) -- WebP quality defaults (80), effort (4), preset options
+- [Expo Assets documentation](https://docs.expo.dev/develop/user-interface/assets/) -- how assets are bundled, assetBundlePatterns
+
+### Secondary (MEDIUM confidence)
+- [Expo Image SDK docs](https://docs.expo.dev/versions/latest/sdk/image/) -- expo-image 3.x source types, caching
+- [Metro bundler docs](https://metrobundler.dev/docs/configuration/) -- resolver.assetExts, static analysis
+
+### Tertiary (LOW confidence)
+- None -- all findings verified against official documentation
+
+## Metadata
+
+**Confidence breakdown:**
+- Standard stack: HIGH -- sharp is the undisputed standard for Node.js image processing; expo-image already installed
+- Architecture: HIGH -- the static require() registry pattern is the only way to resolve images in Metro production builds; well documented
+- Pitfalls: HIGH -- dynamic require() failure is the most commonly reported React Native image issue; sharp-in-dependencies is a known trap
+- Build pipeline: HIGH -- existing build-recipes.ts provides a proven template; same tools (tsx, yaml, zod) reused
+
+**Research date:** 2026-03-19
+**Valid until:** 2026-04-19 (stable domain, sharp and Metro APIs are mature)
