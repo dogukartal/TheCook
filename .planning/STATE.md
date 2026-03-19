@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Visual Polish & Content Ready
-status: executing
-stopped_at: Completed 15-01-PLAN.md
-last_updated: "2026-03-19T16:09:46Z"
-last_activity: 2026-03-19 -- Phase 15 plan 01 complete (blurhash pipeline and registry schema)
+status: completed
+stopped_at: Completed 15-02-PLAN.md
+last_updated: "2026-03-19T16:18:07.505Z"
+last_activity: 2026-03-19 -- Phase 15 plan 03 complete (step content registry images)
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 8
-  completed_plans: 6
-  percent: 75
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -26,18 +26,18 @@ See: .planning/PROJECT.md (updated 2026-03-19)
 ## Current Position
 
 Phase: 15 of 18 (Card Image Rendering) -- third of 6 phases in v1.1
-Plan: 1 of 3 complete
-Status: Executing
-Last activity: 2026-03-19 -- Phase 15 plan 01 complete (blurhash pipeline and registry schema)
+Plan: 3 of 3 complete
+Status: Phase Complete
+Last activity: 2026-03-19 -- Phase 15 plan 03 complete (step content registry images)
 
-Progress: [████████░░] 75%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 47 (v1.0)
-- v1.1 plans completed: 6
-- Total execution time: 33min (v1.1)
+- v1.1 plans completed: 8
+- Total execution time: 43min (v1.1)
 
 **By Phase:**
 
@@ -45,7 +45,7 @@ Progress: [████████░░] 75%
 |-------|-------|-------|----------|
 | 13 Image Pipeline | 2/2 | 6min | 3min |
 | 14 Color Token Sweep | 3/3 | 23min | 8min |
-| 15 Card Image Rendering | 1/3 | 4min | 4min |
+| 15 Card Image Rendering | 3/3 | 14min | 5min |
 
 ## Accumulated Context
 
@@ -67,6 +67,11 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Phase 14-03: Zero audit violations achieved (302 baseline -> 0), Phase 14 SC-1 complete
 - Phase 15-01: Blurhash generated at build time (32x32 resize, 4x3 components) to avoid runtime cost
 - Phase 15-01: expo-image mocked as View for jest (Image and ImageBackground both map to View)
+- Phase 15-03: AsyncStorage mock added to step-content tests to fix pre-existing import chain crash
+- Phase 15-03: Registry lookup done at render time via getRecipeImages(recipeId) -- static object, no caching needed
+- [Phase 15]: Dark scrim gradient on grid card covers bottom 50% for title readability over photos
+- [Phase 15]: Hero scrim uses rgba(0,0,0,0.15) to rgba(0,0,0,0.65) for text readability
+- [Phase 15]: No scrim on row thumbnail since title is beside the image, not overlaid
 
 ### Pending Todos
 
@@ -78,6 +83,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-19T16:09:46Z
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-03-19T16:18:07.503Z
+Stopped at: Completed 15-02-PLAN.md
 Resume file: None

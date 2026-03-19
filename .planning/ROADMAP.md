@@ -31,7 +31,7 @@
 
 - [x] **Phase 13: Image Pipeline Foundation** - Build-time image registry, WebP compression, and YAML wiring so recipe images resolve safely in production builds (completed 2026-03-19)
 - [x] **Phase 14: Color Token Sweep** - Replace all hardcoded hex values with theme tokens and fix dark mode card contrast (completed 2026-03-19)
-- [ ] **Phase 15: Card Image Rendering** - Show recipe images on cards, recipe detail, and cooking mode with blurhash placeholders
+- [x] **Phase 15: Card Image Rendering** - Show recipe images on cards, recipe detail, and cooking mode with blurhash placeholders (completed 2026-03-19)
 - [ ] **Phase 16: Feed "See All" + Discovery Polish** - "See All" vertical list route, card peek hint, swipe animation, and section heading polish
 - [ ] **Phase 17: Cookbook Saved/Cooked Tabs** - Two-tab Cookbook with star ratings, re-rating, cook count, and row layout
 - [ ] **Phase 18: UI Polish** - Haptics, press feedback, sheet transitions, filter chip icons, progress bar animation, and button feedback
@@ -77,7 +77,7 @@ Plans:
   2. Each cooking mode step displays its step-specific image (or gradient fallback) above the step text
   3. A blurhash placeholder appears briefly while images load, instead of a blank space or layout jump
   4. Recipe detail screen shows the cover image as a hero at the top of the page
-**Plans:** 1/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [ ] 15-01-PLAN.md — Blurhash pipeline: install blurhash, update build-images.ts, extend registry schema, add expo-image mock
@@ -141,7 +141,7 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 12. Sef'im AI | v1.0 | 4/4 | Complete | 2026-03-17 |
 | 13. Image Pipeline Foundation | 2/2 | Complete    | 2026-03-19 | - |
 | 14. Color Token Sweep | 3/3 | Complete    | 2026-03-19 | - |
-| 15. Card Image Rendering | 1/3 | In Progress|  | - |
+| 15. Card Image Rendering | 3/3 | Complete   | 2026-03-19 | - |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 0/0 | Not started | - |
 | 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/0 | Not started | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |

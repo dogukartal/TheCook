@@ -9,7 +9,7 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 
 ### Images
 
-- [ ] **IMG-01**: User sees cover image on every recipe card across feed, search, and cookbook
+- [x] **IMG-01**: User sees cover image on every recipe card across feed, search, and cookbook
 - [ ] **IMG-02**: User sees step-specific image during cooking mode for each step
 - [x] **IMG-03**: User sees smooth blurhash placeholder while images load
 - [x] **IMG-04**: Recipe images are optimized (WebP, <100KB) and bundled via build pipeline with static registry
@@ -69,7 +69,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| IMG-01 | Phase 15 | Pending |
+| IMG-01 | Phase 15 | Complete |
 | IMG-02 | Phase 15 | Pending |
 | IMG-03 | Phase 15 | Complete |
 | IMG-04 | Phase 13 | Complete |
