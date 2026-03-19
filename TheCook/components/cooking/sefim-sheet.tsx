@@ -18,6 +18,7 @@ import {
   useSpeechRecognitionEvent,
 } from '@jamsch/expo-speech-recognition';
 
+import { useAppTheme } from '@/contexts/ThemeContext';
 import type { SefimQA } from '@/src/types/recipe';
 import type { SefimMessage } from '@/src/hooks/useSefim';
 
@@ -51,6 +52,7 @@ export function SefimSheet({
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+  const { isDark, colors } = useAppTheme();
 
   // -------------------------------------------------------------------------
   // Auto-scroll to bottom when messages change
@@ -145,17 +147,22 @@ export function SefimSheet({
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <Pressable style={styles.overlayDismiss} onPress={onClose} />
-        <View style={styles.sheetContainer}>
+        <View style={[styles.sheetContainer, { backgroundColor: isDark ? '#161614' : '#FFFFFF' }]}>
+          {/* Handle bar */}
+          <View style={styles.handleBarRow}>
+            <View style={[styles.handleBar, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)' }]} />
+          </View>
+
           {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Sef'im</Text>
+          <View style={[styles.header, { borderBottomColor: colors.border }]}>
+            <Text style={[styles.headerTitle, { color: colors.text }]}>Sef'im</Text>
             <Pressable
               onPress={onClose}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
               accessibilityRole="button"
               accessibilityLabel="Kapat"
             >
-              <MaterialCommunityIcons name="close" size={24} color="#374151" />
+              <MaterialCommunityIcons name="close" size={24} color={colors.textSub} />
             </Pressable>
           </View>
 
@@ -164,13 +171,13 @@ export function SefimSheet({
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              style={styles.chipsRow}
+              style={[styles.chipsRow, { borderBottomColor: colors.border }]}
               contentContainerStyle={styles.chipsContent}
             >
               {availableChips.map((qa, idx) => (
                 <Pressable
                   key={idx}
-                  style={styles.chip}
+                  style={[styles.chip, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
                   onPress={() => handleChipPress(qa)}
                   accessibilityRole="button"
                 >
@@ -194,12 +201,13 @@ export function SefimSheet({
                   styles.messageBubble,
                   msg.role === 'user'
                     ? styles.userBubble
-                    : styles.assistantBubble,
+                    : [styles.assistantBubble, { backgroundColor: isDark ? colors.card : '#F0EDE8' }],
                 ]}
               >
                 <Text
                   style={[
                     styles.messageText,
+                    { color: colors.text },
                     msg.role === 'user' && styles.userMessageText,
                   ]}
                 >
@@ -208,8 +216,8 @@ export function SefimSheet({
               </View>
             ))}
             {isLoading && (
-              <View style={[styles.messageBubble, styles.assistantBubble]}>
-                <Text style={styles.loadingText}>Sef'im dusunuyor...</Text>
+              <View style={[styles.messageBubble, styles.assistantBubble, { backgroundColor: isDark ? colors.card : '#F0EDE8' }]}>
+                <Text style={[styles.loadingText, { color: colors.textSub }]}>Sef'im dusunuyor...</Text>
               </View>
             )}
           </ScrollView>
@@ -217,11 +225,11 @@ export function SefimSheet({
           {/* Input row */}
           <View style={styles.inputRow}>
             <TextInput
-              style={styles.textInput}
+              style={[styles.textInput, { backgroundColor: isDark ? colors.surface : '#F0EDE8', borderColor: colors.border, color: colors.text }]}
               value={text}
               onChangeText={setText}
               placeholder="Bir soru sor..."
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={colors.textMuted}
               returnKeyType="send"
               onSubmitEditing={handleSend}
             />
@@ -231,7 +239,7 @@ export function SefimSheet({
               accessibilityRole="button"
               accessibilityLabel="Gonder"
             >
-              <MaterialCommunityIcons name="send" size={22} color="#E07B39" />
+              <MaterialCommunityIcons name="send" size={22} color="#E8834A" />
             </Pressable>
             <Pressable
               style={[styles.micButton, isRecording && styles.micButtonActive]}
@@ -242,7 +250,7 @@ export function SefimSheet({
               <MaterialCommunityIcons
                 name="microphone"
                 size={22}
-                color={isRecording ? '#FFFFFF' : '#E07B39'}
+                color={isRecording ? '#FFFFFF' : '#E8834A'}
               />
             </Pressable>
           </View>
@@ -266,26 +274,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheetContainer: {
-    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: '80%',
     paddingBottom: 20,
+  },
+  handleBarRow: {
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 4,
+  },
+  handleBar: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 8,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
   },
 
   // Chips
@@ -293,7 +308,6 @@ const styles = StyleSheet.create({
     height: 56,
     flexShrink: 0,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
   },
   chipsContent: {
     paddingHorizontal: 16,
@@ -301,16 +315,15 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   chip: {
-    backgroundColor: '#FEF3EC',
     borderWidth: 1,
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     borderRadius: 16,
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
   chipText: {
     fontSize: 13,
-    color: '#E07B39',
+    color: '#E8834A',
     fontWeight: '500',
   },
 
@@ -332,15 +345,13 @@ const styles = StyleSheet.create({
   },
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
   },
   assistantBubble: {
     alignSelf: 'flex-start',
-    backgroundColor: '#F3F4F6',
   },
   messageText: {
     fontSize: 14,
-    color: '#111827',
     lineHeight: 20,
   },
   userMessageText: {
@@ -348,7 +359,6 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 14,
-    color: '#6B7280',
     fontStyle: 'italic',
   },
 
@@ -362,14 +372,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
     borderWidth: 1,
-    borderColor: '#E5E7EB',
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 14,
-    color: '#111827',
   },
   sendButton: {
     padding: 8,

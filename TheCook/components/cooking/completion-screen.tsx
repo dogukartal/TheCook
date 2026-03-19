@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { useAppTheme } from '@/contexts/ThemeContext';
+
 // ---------------------------------------------------------------------------
 // Props
 // ---------------------------------------------------------------------------
@@ -17,6 +19,7 @@ export interface CompletionScreenProps {
 // ---------------------------------------------------------------------------
 
 function StarRating({ value, onChange }: { value: number; onChange: (n: number) => void }) {
+  const { isDark } = useAppTheme();
   return (
     <View style={styles.starRow}>
       {[1, 2, 3, 4, 5].map((star) => (
@@ -24,7 +27,7 @@ function StarRating({ value, onChange }: { value: number; onChange: (n: number) 
           <MaterialCommunityIcons
             name={star <= value ? 'star' : 'star-outline'}
             size={36}
-            color={star <= value ? '#F59E0B' : '#D1D5DB'}
+            color={star <= value ? '#F59E0B' : (isDark ? 'rgba(255,255,255,0.2)' : '#D1D5DB')}
           />
         </Pressable>
       ))}
@@ -42,23 +45,24 @@ export function CompletionScreen({
   onComplete,
 }: CompletionScreenProps) {
   const [rating, setRating] = useState<number>(0);
+  const { colors } = useAppTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Celebration icon */}
-      <MaterialCommunityIcons name="party-popper" size={72} color="#E07B39" />
+      <MaterialCommunityIcons name="party-popper" size={72} color="#E8834A" />
 
       {/* Title */}
       <Text style={styles.title}>Afiyet olsun!</Text>
 
       {/* Recipe name */}
-      <Text style={styles.recipeName}>{recipeName}</Text>
+      <Text style={[styles.recipeName, { color: colors.textSub }]}>{recipeName}</Text>
 
       {/* Cooking time */}
-      <Text style={styles.cookingTime}>{totalCookingTime} dakika</Text>
+      <Text style={[styles.cookingTime, { color: colors.textMuted }]}>{totalCookingTime} dakika</Text>
 
       {/* Rating */}
-      <Text style={styles.ratingLabel}>Bu tarifi degerlendir</Text>
+      <Text style={[styles.ratingLabel, { color: colors.textSub }]}>Bu tarifi degerlendir</Text>
       <StarRating value={rating} onChange={setRating} />
 
       {/* Back to recipes button */}
@@ -83,30 +87,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
     padding: 32,
   },
   title: {
     fontSize: 32,
     fontWeight: '800',
-    color: '#E07B39',
+    color: '#E8834A',
     marginTop: 20,
     marginBottom: 8,
   },
   recipeName: {
     fontSize: 18,
-    color: '#6B7280',
     textAlign: 'center',
     marginBottom: 8,
   },
   cookingTime: {
     fontSize: 15,
-    color: '#9CA3AF',
     marginBottom: 8,
   },
   ratingLabel: {
     fontSize: 15,
-    color: '#6B7280',
     marginTop: 24,
     marginBottom: 12,
   },
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   button: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     paddingHorizontal: 32,
     paddingVertical: 14,
     borderRadius: 12,

@@ -4,13 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RecipeListItem } from '@/src/types/discovery';
 import type { Category, SkillLevel } from '@/src/types/recipe';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 // ---------------------------------------------------------------------------
-// Gradient palette — category-based, anchored to brand terracotta #E07B39
+// Gradient palette — category-based, anchored to brand terracotta #E8834A
 // ---------------------------------------------------------------------------
 
 const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
-  'ana yemek': ['#E07B39', '#C05F20'],
+  'ana yemek': ['#E8834A', '#D4572A'],
   'kahvaltı':  ['#F59E0B', '#D97706'],
   'çorba':     ['#0891B2', '#0E7490'],
   'tatlı':     ['#EC4899', '#DB2777'],
@@ -48,6 +49,7 @@ export function RecipeCardGrid({
   onPress,
   userEquipment = [],
 }: RecipeCardGridProps) {
+  const { isDark, colors } = useAppTheme();
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
   const totalTime = recipe.prepTime + recipe.cookTime;
 
@@ -57,7 +59,7 @@ export function RecipeCardGrid({
 
   return (
     <Pressable
-      style={styles.card}
+      style={[styles.card, { backgroundColor: colors.background }]}
       onPress={() => onPress(recipe.id)}
       accessibilityRole="button"
       accessibilityLabel={recipe.title}
@@ -87,7 +89,7 @@ export function RecipeCardGrid({
 
       {/* Meta row — skill badge + equipment warning + cook time */}
       <View style={styles.metaRow}>
-        <View style={styles.skillBadge}>
+        <View style={[styles.skillBadge, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
           <Text style={styles.skillText}>{SKILL_LABELS[recipe.skillLevel]}</Text>
         </View>
         {hasMissingEquipment && (
@@ -96,7 +98,7 @@ export function RecipeCardGrid({
             <Text style={styles.equipmentWarningText}>Ekipman eksik</Text>
           </View>
         )}
-        <Text style={styles.cookTimeText}>{totalTime} dk</Text>
+        <Text style={[styles.cookTimeText, { color: colors.textSub }]}>{totalTime} dk</Text>
       </View>
     </Pressable>
   );
@@ -109,7 +111,7 @@ export function RecipeCardGrid({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 14,
     overflow: 'hidden',
     flex: 1,
     // Shadow (iOS)
@@ -153,12 +155,12 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   skillText: {
-    color: '#E07B39',
+    color: '#E8834A',
     fontSize: 11,
     fontWeight: '600',
   },
   cookTimeText: {
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     fontSize: 11,
   },
   equipmentWarning: {

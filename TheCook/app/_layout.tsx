@@ -7,6 +7,7 @@ import { seedIfNeeded } from '../src/db/seed';
 import { initAuthListener } from '../src/auth/sync';
 import { SessionProvider } from '../src/auth/useSession';
 import { useProfileDb } from '../src/db/profile';
+import { ThemeProvider } from '../contexts/ThemeContext';
 
 // Configure Google Sign In at module level — must happen before any sign-in attempt
 GoogleSignin.configure({
@@ -48,7 +49,9 @@ export default function RootLayout() {
       }}
     >
       <SessionProvider>
-        <RootNavigator />
+        <ThemeProvider>
+          <RootNavigator />
+        </ThemeProvider>
       </SessionProvider>
     </SQLiteProvider>
   );

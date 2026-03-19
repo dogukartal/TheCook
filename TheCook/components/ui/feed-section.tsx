@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import type { RecipeListItem } from '@/src/types/discovery';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -28,9 +29,11 @@ export function FeedSection({
   onRecipePress,
   onBookmarkToggle,
 }: FeedSectionProps) {
+  const { colors } = useAppTheme();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       <FlatList
         data={data}
         horizontal
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1F2937',
+    color: '#1A1A18',
     marginBottom: 12,
     paddingHorizontal: 16,
   },

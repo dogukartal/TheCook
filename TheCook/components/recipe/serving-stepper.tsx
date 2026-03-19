@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAppTheme } from "@/contexts/ThemeContext";
 
 // ---------------------------------------------------------------------------
 // Props
@@ -25,14 +26,16 @@ export function ServingStepper({
   max = 20,
   onChange,
 }: ServingStepperProps) {
+  const { isDark, colors } = useAppTheme();
   const isModified = value !== originalValue;
   const canDecrease = value > min;
   const canIncrease = value < max;
+  const disabledColor = isDark ? 'rgba(255,255,255,0.15)' : '#D1D5DB';
 
   return (
     <View style={styles.container}>
       <Pressable
-        style={[styles.button, !canDecrease && styles.buttonDisabled]}
+        style={[styles.button, !canDecrease && [styles.buttonDisabled, { borderColor: disabledColor }]]}
         onPress={() => canDecrease && onChange(Math.max(min, value - 1))}
         disabled={!canDecrease}
         accessibilityRole="button"
@@ -41,16 +44,16 @@ export function ServingStepper({
         <MaterialCommunityIcons
           name="minus"
           size={18}
-          color={canDecrease ? "#E07B39" : "#D1D5DB"}
+          color={canDecrease ? "#E8834A" : disabledColor}
         />
       </Pressable>
 
-      <Text style={[styles.valueText, isModified && styles.valueTextModified]}>
+      <Text style={[styles.valueText, { color: colors.text }, isModified && styles.valueTextModified]}>
         {value} kisi
       </Text>
 
       <Pressable
-        style={[styles.button, !canIncrease && styles.buttonDisabled]}
+        style={[styles.button, !canIncrease && [styles.buttonDisabled, { borderColor: disabledColor }]]}
         onPress={() => canIncrease && onChange(Math.min(max, value + 1))}
         disabled={!canIncrease}
         accessibilityRole="button"
@@ -59,7 +62,7 @@ export function ServingStepper({
         <MaterialCommunityIcons
           name="plus"
           size={18}
-          color={canIncrease ? "#E07B39" : "#D1D5DB"}
+          color={canIncrease ? "#E8834A" : disabledColor}
         />
       </Pressable>
     </View>
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#E07B39",
+    borderColor: "#E8834A",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -91,9 +94,9 @@ const styles = StyleSheet.create({
   valueText: {
     fontSize: 15,
     fontWeight: "600",
-    color: "#374151",
+    color: "#1A1A18",
   },
   valueTextModified: {
-    color: "#E07B39",
+    color: "#E8834A",
   },
 });

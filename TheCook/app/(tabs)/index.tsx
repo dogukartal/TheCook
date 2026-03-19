@@ -9,6 +9,7 @@ import {
   RefreshControl,
 } from 'react-native';
 
+import { useAppTheme } from '@/contexts/ThemeContext';
 import { useFeedScreen } from '@/src/hooks/useFeedScreen';
 import { FeedSection } from '@/components/ui/feed-section';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
@@ -20,6 +21,8 @@ import { router } from 'expo-router';
 // ---------------------------------------------------------------------------
 
 export default function FeedScreen() {
+  const { isDark, colors } = useAppTheme();
+
   const {
     profile,
     profileLoaded,
@@ -41,11 +44,11 @@ export default function FeedScreen() {
   // Don't render until profile is loaded (prevents allergen flash)
   if (!profileLoaded) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.scrollContent}>
           {[0, 1].map((i) => (
             <View key={i} style={styles.sectionSkeleton}>
-              <View style={styles.skeletonTitleBar} />
+              <View style={[styles.skeletonTitleBar, { backgroundColor: isDark ? '#1E1E1B' : '#E8E4DC' }]} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
                 {[0, 1, 2].map((j) => (
                   <View key={j} style={styles.skeletonCardWrapper}>
@@ -61,14 +64,17 @@ export default function FeedScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.header, { backgroundColor: colors.background, borderBottomColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)' }]}>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>The Cook</Text>
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            tintColor="#E07B39"
+            tintColor="#E8834A"
           />
         }
       >
@@ -87,7 +93,7 @@ export default function FeedScreen() {
         {loading ? (
           [0, 1].map((i) => (
             <View key={i} style={styles.sectionSkeleton}>
-              <View style={styles.skeletonTitleBar} />
+              <View style={[styles.skeletonTitleBar, { backgroundColor: isDark ? '#1E1E1B' : '#E8E4DC' }]} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
                 {[0, 1, 2].map((j) => (
                   <View key={j} style={styles.skeletonCardWrapper}>
@@ -100,8 +106,8 @@ export default function FeedScreen() {
         ) : allEmpty ? (
           /* All sections empty — suggest profile update */
           <View style={styles.emptyState}>
-            <Text style={styles.emptyTitle}>Henüz tarif bulunamadı</Text>
-            <Text style={styles.emptyText}>
+            <Text style={[styles.emptyTitle, { color: colors.text }]}>Henüz tarif bulunamadı</Text>
+            <Text style={[styles.emptyText, { color: colors.textSub }]}>
               Alerjen, ekipman ve beceri seviyeni Profil sekmesinden güncelleyerek sana özel tarifler keşfedebilirsin.
             </Text>
             <Pressable
@@ -139,7 +145,17 @@ export default function FeedScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+  },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 14,
+    borderBottomWidth: 1,
+  },
+  headerTitle: {
+    fontSize: 30,
+    fontWeight: '700',
+    letterSpacing: -1,
   },
   scrollContent: {
     paddingTop: 16,
@@ -155,22 +171,20 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1F2937',
     textAlign: 'center',
     marginBottom: 8,
   },
   emptyText: {
     fontSize: 15,
-    color: '#6B7280',
     textAlign: 'center',
     marginBottom: 16,
     lineHeight: 22,
   },
   profileButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 8,
+    borderRadius: 14,
   },
   profileButtonText: {
     color: '#FFFFFF',
@@ -184,7 +198,6 @@ const styles = StyleSheet.create({
   skeletonTitleBar: {
     width: 140,
     height: 18,
-    backgroundColor: '#E5E7EB',
     borderRadius: 6,
     marginBottom: 12,
     marginHorizontal: 16,

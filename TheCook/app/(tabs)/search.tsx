@@ -11,6 +11,7 @@ import {
 import { FlashList } from '@shopify/flash-list';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { useAppTheme } from '@/contexts/ThemeContext';
 import { useSearchScreen } from '@/src/hooks/useSearchScreen';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { RecipeCardRow } from '@/components/ui/recipe-card-row';
@@ -23,6 +24,8 @@ import { FilterPanel } from '@/src/components/search/FilterPanel';
 // ---------------------------------------------------------------------------
 
 export default function SearchScreen() {
+  const { isDark, colors } = useAppTheme();
+
   const {
     profile,
     recentViews,
@@ -49,14 +52,17 @@ export default function SearchScreen() {
   } = useSearchScreen();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={styles.screenHeader}>
+        <Text style={[styles.screenHeaderTitle, { color: colors.text }]}>Ara</Text>
+      </View>
       {/* Search bar */}
       <View style={styles.searchBarWrapper}>
         <View style={styles.searchBarRow}>
           <TextInput
-            style={styles.searchBar}
+            style={[styles.searchBar, { backgroundColor: isDark ? '#1E1E1C' : '#F5F4F0', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)', color: colors.text }]}
             placeholder={hasChips ? 'Tarif adı ile filtrele...' : 'Malzeme veya tarif ara...'}
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor={isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)'}
             value={query}
             onChangeText={handleQueryChange}
             returnKeyType="search"
@@ -69,7 +75,7 @@ export default function SearchScreen() {
               onPress={() => handleQueryChange('')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              <Text style={styles.clearButtonText}>{'\u2715'}</Text>
+              <Text style={[styles.clearButtonText, { color: isDark ? 'rgba(240,237,230,0.35)' : 'rgba(26,26,24,0.35)' }]}>{'\u2715'}</Text>
             </Pressable>
           )}
         </View>
@@ -95,7 +101,7 @@ export default function SearchScreen() {
             <MaterialCommunityIcons
               name="filter-variant"
               size={18}
-              color={showFilters ? '#FFFFFF' : '#E07B39'}
+              color={showFilters ? '#FFFFFF' : '#E8834A'}
             />
             <Text style={[styles.filterButtonText, showFilters && styles.filterButtonTextActive]}>
               Filtrele
@@ -119,7 +125,7 @@ export default function SearchScreen() {
         // Idle state: no category, no query, no chips — show recent views
         recentViews.length > 0 ? (
           <View style={styles.resultsArea}>
-            <Text style={styles.sectionLabel}>Son Görüntülenenler</Text>
+            <Text style={[styles.sectionLabel, { color: colors.textSub }]}>Son Görüntülenenler</Text>
             <FlatList
               data={recentViews}
               keyExtractor={(item) => item.id}
@@ -132,14 +138,14 @@ export default function SearchScreen() {
           </View>
         ) : (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>
+            <Text style={[styles.emptyText, { color: colors.textSub }]}>
               Malzeme veya tarif adı arayın
             </Text>
           </View>
         )
       ) : searchLoading ? (
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>Aranıyor...</Text>
+          <Text style={[styles.emptyText, { color: colors.textSub }]}>Aranıyor...</Text>
         </View>
       ) : displayResults.length > 0 ? (
         <FlashList
@@ -163,13 +169,13 @@ export default function SearchScreen() {
         />
       ) : selectedCategory && !searchLoading ? (
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>
+          <Text style={[styles.emptyText, { color: colors.textSub }]}>
             Bu kategoride tarif bulunamadı.
           </Text>
         </View>
       ) : (
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>
+          <Text style={[styles.emptyText, { color: colors.textSub }]}>
             {query.length > 0
               ? `"${query}" ile eşleşen tarif bulunamadı.`
               : 'Eşleşen tarif bulunamadı. Başka malzemeler dene.'}
@@ -187,7 +193,16 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+  },
+  screenHeader: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 4,
+  },
+  screenHeaderTitle: {
+    fontSize: 30,
+    fontWeight: '700',
+    letterSpacing: -1,
   },
   searchBarWrapper: {
     paddingHorizontal: 16,
@@ -198,14 +213,11 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   searchBar: {
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
     padding: 12,
     paddingRight: 40,
     fontSize: 15,
-    backgroundColor: '#F9FAFB',
-    color: '#111827',
   },
   clearButton: {
     position: 'absolute',
@@ -216,7 +228,6 @@ const styles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 16,
-    color: '#9CA3AF',
     fontWeight: '600',
   },
   chipsContainer: {
@@ -238,16 +249,16 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     backgroundColor: '#FFFFFF',
   },
   filterButtonActive: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
   },
   filterButtonText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#E07B39',
+    color: '#E8834A',
   },
   filterButtonTextActive: {
     color: '#FFFFFF',
@@ -259,7 +270,6 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#6B7280',
     paddingHorizontal: 16,
     paddingBottom: 8,
     textTransform: 'uppercase',
@@ -281,7 +291,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 15,
-    color: '#6B7280',
     textAlign: 'center',
   },
 });

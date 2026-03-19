@@ -10,6 +10,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { CircularTimer } from './circular-timer';
+import { useAppTheme } from '@/contexts/ThemeContext';
 import type { RecipeStep } from '@/src/types/recipe';
 
 // ---------------------------------------------------------------------------
@@ -60,13 +61,14 @@ export function StepContent({
   onTimerResume,
 }: StepContentProps) {
   const [whyExpanded, setWhyExpanded] = useState(false);
+  const { isDark, colors } = useAppTheme();
 
-  const bgColor = STEP_PASTEL_COLORS[stepIndex % STEP_PASTEL_COLORS.length];
+  const bgColor = isDark ? colors.card : STEP_PASTEL_COLORS[stepIndex % STEP_PASTEL_COLORS.length];
 
   const hasTimer = step.timerSeconds != null;
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
       {/* Step image or pastel color placeholder with overlapping timer */}
       <View style={styles.imageWrapper}>
         {step.stepImage ? (
@@ -75,7 +77,7 @@ export function StepContent({
           <View style={[styles.imagePlaceholder, { backgroundColor: bgColor }]} />
         )}
         {hasTimer && (
-          <View style={styles.timerOverlap} testID="circular-timer">
+          <View style={[styles.timerOverlap, { backgroundColor: colors.background }]} testID="circular-timer">
             <CircularTimer
               totalSeconds={step.timerSeconds!}
               displaySeconds={timerDisplaySeconds || step.timerSeconds!}
@@ -91,17 +93,17 @@ export function StepContent({
       {/* Step title */}
       <View style={[styles.titleRow, hasTimer && styles.titleRowWithTimer]}>
         <View>
-          <Text style={styles.stepLabel}>Adım {stepIndex + 1}</Text>
-          {step.title ? <Text style={styles.stepTitle}>{step.title}</Text> : null}
+          <Text style={[styles.stepLabel, { color: colors.textSub }]}>Adım {stepIndex + 1}</Text>
+          {step.title ? <Text style={[styles.stepTitle, { color: colors.text }]}>{step.title}</Text> : null}
         </View>
       </View>
 
       {/* Instruction text */}
-      <Text style={styles.instruction}>{step.instruction}</Text>
+      <Text style={[styles.instruction, { color: colors.text }]}>{step.instruction}</Text>
 
       {/* Checkpoint callout (green) */}
       {step.checkpoint ? (
-        <View style={styles.checkpointCallout} testID="checkpoint-callout">
+        <View style={[styles.checkpointCallout, { backgroundColor: isDark ? 'rgba(22,163,74,0.12)' : '#F0FDF4' }]} testID="checkpoint-callout">
           <MaterialCommunityIcons name="check-circle" size={16} color="#16A34A" />
           <Text style={styles.checkpointText}>{step.checkpoint}</Text>
         </View>
@@ -109,15 +111,15 @@ export function StepContent({
 
       {/* Warning callout (amber) */}
       {step.warning ? (
-        <View style={styles.warningCallout} testID="warning-callout">
+        <View style={[styles.warningCallout, { backgroundColor: isDark ? 'rgba(217,119,6,0.12)' : '#FFFBEB' }]} testID="warning-callout">
           <MaterialCommunityIcons name="alert" size={16} color="#D97706" />
-          <Text style={styles.warningText}>{step.warning}</Text>
+          <Text style={[styles.warningText, { color: isDark ? '#FBBF24' : '#92400E' }]}>{step.warning}</Text>
         </View>
       ) : null}
 
       {/* Gormeli section */}
       <View style={styles.gormeliSection}>
-        <Text style={styles.gormeliLabel}>Gormeli (You should see)</Text>
+        <Text style={[styles.gormeliLabel, { color: colors.textSub }]}>Gormeli (You should see)</Text>
         <Text style={styles.gormeliText}>{step.looksLikeWhenDone}</Text>
       </View>
 
@@ -126,18 +128,18 @@ export function StepContent({
         <Text style={styles.nedenLink}>Neden?</Text>
       </Pressable>
       {whyExpanded && (
-        <Text style={styles.whyText}>{step.why}</Text>
+        <Text style={[styles.whyText, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{step.why}</Text>
       )}
 
       {/* Dikkat section */}
-      <View style={styles.dikkatSection}>
+      <View style={[styles.dikkatSection, { backgroundColor: isDark ? 'rgba(239,68,68,0.1)' : '#FEF2F2' }]}>
         <View style={styles.dikkatHeader}>
           <MaterialCommunityIcons name="alert-circle" size={18} color="#DC2626" />
           <Text style={styles.dikkatTitle}>Dikkat!</Text>
         </View>
-        <Text style={styles.dikkatBody}>{step.commonMistake}</Text>
-        <Text style={styles.recoveryLabel}>Ne yapmaliyim?</Text>
-        <Text style={styles.recoveryText}>{step.recovery}</Text>
+        <Text style={[styles.dikkatBody, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{step.commonMistake}</Text>
+        <Text style={[styles.recoveryLabel, { color: colors.textSub }]}>Ne yapmaliyim?</Text>
+        <Text style={[styles.recoveryText, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{step.recovery}</Text>
       </View>
 
       {/* Bottom spacing */}
@@ -153,7 +155,6 @@ export function StepContent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   imageWrapper: {
     position: 'relative',
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
     bottom: -48,
     right: 16,
     zIndex: 10,
-    backgroundColor: '#FFFFFF',
     borderRadius: 50,
     padding: 2,
   },
@@ -186,17 +186,14 @@ const styles = StyleSheet.create({
   stepLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#6B7280',
     marginBottom: 2,
   },
   stepTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
   },
   instruction: {
     fontSize: 16,
-    color: '#111827',
     lineHeight: 24,
     paddingHorizontal: 16,
     marginBottom: 16,
@@ -207,7 +204,6 @@ const styles = StyleSheet.create({
     gap: 6,
     marginHorizontal: 16,
     marginBottom: 8,
-    backgroundColor: '#F0FDF4',
     borderRadius: 8,
     padding: 10,
   },
@@ -222,13 +218,11 @@ const styles = StyleSheet.create({
     gap: 6,
     marginHorizontal: 16,
     marginBottom: 8,
-    backgroundColor: '#FFFBEB',
     borderRadius: 8,
     padding: 10,
   },
   warningText: {
     fontSize: 14,
-    color: '#92400E',
     flex: 1,
   },
   gormeliSection: {
@@ -237,7 +231,6 @@ const styles = StyleSheet.create({
   },
   gormeliLabel: {
     fontSize: 13,
-    color: '#6B7280',
     marginBottom: 4,
   },
   gormeliText: {
@@ -248,14 +241,13 @@ const styles = StyleSheet.create({
   },
   nedenLink: {
     fontSize: 15,
-    color: '#E07B39',
+    color: '#E8834A',
     fontWeight: '600',
     paddingHorizontal: 16,
     marginBottom: 8,
   },
   whyText: {
     fontSize: 14,
-    color: '#374151',
     lineHeight: 21,
     paddingHorizontal: 16,
     marginBottom: 12,
@@ -263,7 +255,6 @@ const styles = StyleSheet.create({
   dikkatSection: {
     marginHorizontal: 16,
     marginTop: 8,
-    backgroundColor: '#FEF2F2',
     borderLeftWidth: 4,
     borderLeftColor: '#EF4444',
     borderRadius: 8,
@@ -282,19 +273,16 @@ const styles = StyleSheet.create({
   },
   dikkatBody: {
     fontSize: 14,
-    color: '#374151',
     lineHeight: 21,
     marginBottom: 8,
   },
   recoveryLabel: {
     fontSize: 13,
-    color: '#6B7280',
     fontWeight: '600',
     marginBottom: 2,
   },
   recoveryText: {
     fontSize: 14,
-    color: '#374151',
     lineHeight: 21,
   },
   bottomPad: {

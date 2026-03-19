@@ -25,6 +25,7 @@ import { useCookingTimer } from '@/src/hooks/useCookingTimer';
 import { useRecipeAdaptation } from '@/src/hooks/useRecipeAdaptation';
 import { useSefim } from '@/src/hooks/useSefim';
 import { useProfileDb } from '@/src/db/profile';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 import { StepContent } from '@/components/cooking/step-content';
 import { SegmentedProgressBar } from '@/components/cooking/progress-bar';
@@ -43,6 +44,7 @@ import type { Recipe } from '@/src/types/recipe';
 export default function CookingScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const db = useSQLiteContext();
+  const { isDark, colors } = useAppTheme();
 
   // ---------------------------------------------------------------------------
   // State
@@ -393,9 +395,9 @@ export default function CookingScreen() {
 
   if (!ready || !recipe) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Yukleniyor...</Text>
+          <Text style={[styles.loadingText, { color: colors.textSub }]}>Yukleniyor...</Text>
         </View>
       </SafeAreaView>
     );
@@ -411,7 +413,7 @@ export default function CookingScreen() {
     const elapsedMinutes = Math.round(elapsedMs / 60000);
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <CompletionScreen
           recipeName={recipe.title}
           totalCookingTime={elapsedMinutes}
@@ -434,9 +436,9 @@ export default function CookingScreen() {
   // ---------------------------------------------------------------------------
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Top bar */}
-      <View style={styles.topBar}>
+      <View style={[styles.topBar, { backgroundColor: colors.background }]}>
         <View style={styles.topBarButtons}>
           <Pressable
             onPress={handleExitPress}
@@ -444,7 +446,7 @@ export default function CookingScreen() {
             accessibilityRole="button"
             accessibilityLabel="Kapat"
           >
-            <MaterialCommunityIcons name="close" size={24} color="#111827" />
+            <MaterialCommunityIcons name="close" size={24} color={colors.text} />
           </Pressable>
 
           <Pressable
@@ -454,7 +456,7 @@ export default function CookingScreen() {
             accessibilityLabel="Sef'im"
           >
             <SefimPulse active={sefim.lingerActive}>
-              <MaterialCommunityIcons name="chef-hat" size={24} color="#E07B39" />
+              <MaterialCommunityIcons name="chef-hat" size={24} color="#E8834A" />
             </SefimPulse>
           </Pressable>
         </View>
@@ -538,9 +540,9 @@ export default function CookingScreen() {
       />
 
       {/* Bottom navigation bar */}
-      <View style={styles.bottomBar}>
+      <View style={[styles.bottomBar, { backgroundColor: colors.background, borderTopColor: colors.border }]}>
         <Pressable
-          style={styles.ingredientsButton}
+          style={[styles.ingredientsButton, { borderColor: colors.border }]}
           onPress={() => setShowIngredients(true)}
           accessibilityRole="button"
           accessibilityLabel="Malzemeler"
@@ -548,7 +550,7 @@ export default function CookingScreen() {
           <MaterialCommunityIcons
             name="format-list-checks"
             size={20}
-            color="#E07B39"
+            color="#E8834A"
           />
           <Text style={styles.ingredientsButtonText}>Malzemeler</Text>
         </Pressable>
@@ -561,7 +563,7 @@ export default function CookingScreen() {
               accessibilityRole="button"
               accessibilityLabel="Geri"
             >
-              <Text style={styles.prevButtonText}>Geri</Text>
+              <Text style={[styles.prevButtonText, { color: colors.textSub }]}>Geri</Text>
             </Pressable>
           )}
 
@@ -586,7 +588,6 @@ export default function CookingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   loadingContainer: {
     flex: 1,
@@ -595,14 +596,12 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: '#6B7280',
   },
 
   // Top bar
   topBar: {
     paddingHorizontal: 16,
     paddingTop: 8,
-    backgroundColor: '#FFFFFF',
   },
   topBarButtons: {
     flexDirection: 'row',
@@ -626,9 +625,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: '#F3F4F6',
   },
   ingredientsButton: {
     flexDirection: 'row',
@@ -637,12 +634,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
     borderRadius: 8,
   },
   ingredientsButtonText: {
     fontSize: 14,
-    color: '#E07B39',
+    color: '#E8834A',
     fontWeight: '600',
   },
   navButtons: {
@@ -656,11 +652,10 @@ const styles = StyleSheet.create({
   },
   prevButtonText: {
     fontSize: 14,
-    color: '#6B7280',
     fontWeight: '500',
   },
   nextButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 10,

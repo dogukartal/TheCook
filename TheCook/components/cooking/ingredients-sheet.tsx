@@ -11,6 +11,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { formatAmount } from '@/src/hooks/useRecipeAdaptation';
+import { useAppTheme } from '@/contexts/ThemeContext';
 import type { IngredientGroup } from '@/src/types/recipe';
 
 // ---------------------------------------------------------------------------
@@ -42,6 +43,8 @@ export function IngredientsSheet({
   onResetSwap,
   swaps = {},
 }: IngredientsSheetProps) {
+  const { isDark, colors } = useAppTheme();
+
   // Flatten all ingredients with their group labels
   type FlatItem =
     | { type: 'header'; label: string }
@@ -113,17 +116,22 @@ export function IngredientsSheet({
     >
       <View style={styles.overlay}>
         <Pressable style={styles.overlayDismiss} onPress={onClose} />
-        <View style={styles.sheetContainer}>
+        <View style={[styles.sheetContainer, { backgroundColor: isDark ? '#161614' : '#FFFFFF' }]}>
+          {/* Handle bar */}
+          <View style={styles.handleBarRow}>
+            <View style={[styles.handleBar, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)' }]} />
+          </View>
+
           {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Malzemeler</Text>
+          <View style={[styles.header, { borderBottomColor: colors.border }]}>
+            <Text style={[styles.headerTitle, { color: colors.text }]}>Malzemeler</Text>
             <Pressable
               onPress={onClose}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
               accessibilityRole="button"
               accessibilityLabel="Kapat"
             >
-              <MaterialCommunityIcons name="close" size={24} color="#374151" />
+              <MaterialCommunityIcons name="close" size={24} color={colors.textSub} />
             </Pressable>
           </View>
 
@@ -132,7 +140,7 @@ export function IngredientsSheet({
             {flatItems.map((item, idx) => {
               if (item.type === 'header') {
                 return (
-                  <Text key={`h-${idx}`} style={styles.groupLabel}>
+                  <Text key={`h-${idx}`} style={[styles.groupLabel, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>
                     {item.label}
                   </Text>
                 );
@@ -141,7 +149,7 @@ export function IngredientsSheet({
               const checked = checkedIndices.includes(item.flatIndex);
 
               return (
-                <View key={`i-${item.flatIndex}`} style={styles.ingredientRow}>
+                <View key={`i-${item.flatIndex}`} style={[styles.ingredientRow, { borderBottomColor: colors.border }]}>
                   {/* Checkbox */}
                   <Pressable
                     onPress={() => onToggleCheck(item.flatIndex)}
@@ -152,7 +160,7 @@ export function IngredientsSheet({
                     <MaterialCommunityIcons
                       name={checked ? 'checkbox-marked' : 'checkbox-blank-outline'}
                       size={22}
-                      color={checked ? '#9CA3AF' : '#E07B39'}
+                      color={checked ? colors.textMuted : '#E8834A'}
                     />
                   </Pressable>
 
@@ -160,7 +168,8 @@ export function IngredientsSheet({
                   <Text
                     style={[
                       styles.ingredientText,
-                      checked && styles.ingredientTextChecked,
+                      { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' },
+                      checked && { color: colors.textMuted, textDecorationLine: 'line-through' },
                     ]}
                     numberOfLines={2}
                   >
@@ -181,11 +190,11 @@ export function IngredientsSheet({
                   {item.isSwapped && item.originalName && onResetSwap && (
                     <Pressable
                       onPress={() => onResetSwap(item.originalName!)}
-                      style={[styles.swapButton, styles.swapButtonActive]}
+                      style={[styles.swapButton, styles.swapButtonActive, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
                       accessibilityRole="button"
                       accessibilityLabel="Geri al"
                     >
-                      <Text style={styles.swapButtonActiveText}>Geri al</Text>
+                      <Text style={[styles.swapButtonActiveText, { color: colors.textSub }]}>Geri al</Text>
                     </Pressable>
                   )}
                 </View>
@@ -213,26 +222,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheetContainer: {
-    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: '80%',
     paddingBottom: 20,
+  },
+  handleBarRow: {
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 4,
+  },
+  handleBar: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 8,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
   },
   list: {
     paddingHorizontal: 16,
@@ -241,7 +257,6 @@ const styles = StyleSheet.create({
   groupLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#374151',
     marginTop: 12,
     marginBottom: 8,
   },
@@ -250,7 +265,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#F9FAFB',
   },
   checkbox: {
     marginRight: 10,
@@ -258,33 +272,26 @@ const styles = StyleSheet.create({
   ingredientText: {
     flex: 1,
     fontSize: 14,
-    color: '#374151',
     lineHeight: 20,
-  },
-  ingredientTextChecked: {
-    color: '#9CA3AF',
-    textDecorationLine: 'line-through',
   },
   swapButton: {
     marginLeft: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     borderRadius: 6,
   },
   swapButtonText: {
     fontSize: 12,
-    color: '#E07B39',
+    color: '#E8834A',
     fontWeight: '500',
   },
   swapButtonActive: {
-    backgroundColor: '#FEF3EC',
-    borderColor: '#9CA3AF',
+    borderColor: 'rgba(26,26,24,0.35)',
   },
   swapButtonActiveText: {
     fontSize: 12,
-    color: '#6B7280',
     fontWeight: '500',
   },
   listBottomPad: {

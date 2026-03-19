@@ -8,10 +8,12 @@ import {
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useProfileDb } from '@/src/db/profile';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 export default function AccountNudgeScreen() {
   const router = useRouter();
   const { saveProfile } = useProfileDb();
+  const { isDark, colors } = useAppTheme();
 
   useEffect(() => {
     // Mark this nudge as shown and onboarding as complete on mount.
@@ -30,21 +32,21 @@ export default function AccountNudgeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
-        <View style={styles.iconContainer}>
-          <MaterialCommunityIcons name="cloud-sync-outline" size={64} color="#E07B39" />
+        <View style={[styles.iconContainer, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
+          <MaterialCommunityIcons name="cloud-sync-outline" size={64} color="#E8834A" />
         </View>
 
-        <Text style={styles.title}>Your profile is saved.</Text>
-        <Text style={styles.body}>
+        <Text style={[styles.title, { color: colors.text }]}>Your profile is saved.</Text>
+        <Text style={[styles.body, { color: colors.textSub }]}>
           Create a free account to sync your preferences, bookmarks, and cooking history across all your devices.
         </Text>
 
         <View style={styles.benefitList}>
-          <BenefitRow icon="bookmark-multiple-outline" text="Keep your saved recipes anywhere" />
-          <BenefitRow icon="sync" text="Sync profile changes instantly" />
-          <BenefitRow icon="shield-check-outline" text="Your data stays private" />
+          <BenefitRow icon="bookmark-multiple-outline" text="Keep your saved recipes anywhere" textColor={colors.textSub} />
+          <BenefitRow icon="sync" text="Sync profile changes instantly" textColor={colors.textSub} />
+          <BenefitRow icon="shield-check-outline" text="Your data stays private" textColor={colors.textSub} />
         </View>
       </View>
 
@@ -53,18 +55,18 @@ export default function AccountNudgeScreen() {
           <Text style={styles.createText}>Create free account</Text>
         </Pressable>
         <Pressable style={styles.skipButton} onPress={handleNotNow}>
-          <Text style={styles.skipText}>Not now</Text>
+          <Text style={[styles.skipText, { color: colors.textMuted }]}>Not now</Text>
         </Pressable>
       </View>
     </View>
   );
 }
 
-function BenefitRow({ icon, text }: { icon: React.ComponentProps<typeof MaterialCommunityIcons>['name']; text: string }) {
+function BenefitRow({ icon, text, textColor }: { icon: React.ComponentProps<typeof MaterialCommunityIcons>['name']; text: string; textColor?: string }) {
   return (
     <View style={styles.benefitRow}>
-      <MaterialCommunityIcons name={icon} size={20} color="#E07B39" />
-      <Text style={styles.benefitText}>{text}</Text>
+      <MaterialCommunityIcons name={icon} size={20} color="#E8834A" />
+      <Text style={[styles.benefitText, textColor ? { color: textColor } : undefined]}>{text}</Text>
     </View>
   );
 }
@@ -92,13 +94,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1A1A18',
     textAlign: 'center',
     marginBottom: 16,
   },
   body: {
     fontSize: 16,
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 36,
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
   },
   benefitText: {
     fontSize: 15,
-    color: '#374151',
+    color: 'rgba(26,26,24,0.65)',
     fontWeight: '500',
   },
   footer: {
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   createButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -139,6 +141,6 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: '#9CA3AF',
+    color: 'rgba(26,26,24,0.35)',
   },
 });

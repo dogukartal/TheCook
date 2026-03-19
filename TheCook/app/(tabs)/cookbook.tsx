@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { useAppTheme } from '@/contexts/ThemeContext';
 import { useCookbookScreen } from '@/src/hooks/useCookbookScreen';
 import { RecipeCardGrid } from '@/components/ui/recipe-card-grid';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
@@ -17,6 +18,8 @@ import { SkeletonCard } from '@/components/ui/skeleton-card';
 // ---------------------------------------------------------------------------
 
 export default function CookbookScreen() {
+  const { colors } = useAppTheme();
+
   const {
     profile,
     bookmarkedIds,
@@ -27,15 +30,15 @@ export default function CookbookScreen() {
   } = useCookbookScreen();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContent} stickyHeaderIndices={[0]}>
         {/* Header row */}
-        <View style={styles.headerRow}>
-          <Text style={styles.screenTitle}>Yemek Defterim</Text>
+        <View style={[styles.headerRow, { backgroundColor: colors.background }]}>
+          <Text style={[styles.screenTitle, { color: colors.text }]}>Yemek Defterim</Text>
         </View>
 
         {/* Saved recipes section header */}
-        <Text style={styles.sectionHeader}>Kaydedilen Tarifler</Text>
+        <Text style={[styles.sectionHeader, { color: colors.text }]}>Kaydedilen Tarifler</Text>
 
         {/* Saved recipes content */}
         {loading ? (
@@ -48,8 +51,8 @@ export default function CookbookScreen() {
           </View>
         ) : savedRecipes.length === 0 ? (
           <View style={styles.emptyState}>
-            <MaterialCommunityIcons name="heart-outline" size={48} color="#E07B39" />
-            <Text style={styles.emptyText}>
+            <MaterialCommunityIcons name="heart-outline" size={48} color="#E8834A" />
+            <Text style={[styles.emptyText, { color: colors.textSub }]}>
               {'Hen\u00FCz kaydedilmi\u015F tarifiniz yok.\nTariflerin \u00FCzerindeki \u2661 ikonuna bas\u0131n.'}
             </Text>
           </View>
@@ -80,7 +83,6 @@ export default function CookbookScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   scrollContent: {
     flexGrow: 1,
@@ -91,17 +93,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    backgroundColor: '#FFFFFF',
   },
   screenTitle: {
     fontSize: 30,
     fontWeight: '700',
-    color: '#111827',
+    letterSpacing: -1,
   },
   sectionHeader: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
     marginHorizontal: 16,
     marginBottom: 12,
   },
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 15,
-    color: '#6B7280',
     textAlign: 'center',
     marginTop: 16,
     lineHeight: 22,

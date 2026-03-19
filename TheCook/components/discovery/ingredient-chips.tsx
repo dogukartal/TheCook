@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -16,6 +17,8 @@ interface IngredientChipsProps {
 // ---------------------------------------------------------------------------
 
 export function IngredientChips({ chips, onRemove }: IngredientChipsProps) {
+  const { isDark } = useAppTheme();
+
   if (chips.length === 0) {
     return null;
   }
@@ -27,8 +30,14 @@ export function IngredientChips({ chips, onRemove }: IngredientChipsProps) {
       contentContainerStyle={styles.container}
     >
       {chips.map((name) => (
-        <View key={name} style={styles.chip}>
-          <Text style={styles.chipText}>{name}</Text>
+        <View
+          key={name}
+          style={[
+            styles.chip,
+            { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+          ]}
+        >
+          <Text style={[styles.chipText, { color: isDark ? '#E8834A' : '#D4572A' }]}>{name}</Text>
           <Pressable
             onPress={() => onRemove(name)}
             hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
@@ -38,7 +47,7 @@ export function IngredientChips({ chips, onRemove }: IngredientChipsProps) {
             <MaterialCommunityIcons
               name="close-circle"
               size={16}
-              color="#C05F20"
+              color="#D4572A"
             />
           </Pressable>
         </View>
@@ -61,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FEF3EC',
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     borderWidth: 1,
     borderRadius: 16,
     paddingHorizontal: 10,
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   chipText: {
-    color: '#C05F20',
+    color: '#D4572A',
     fontSize: 13,
     marginRight: 4,
   },

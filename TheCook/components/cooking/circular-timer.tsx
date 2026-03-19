@@ -10,6 +10,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { useAppTheme } from '@/contexts/ThemeContext';
+
 // ---------------------------------------------------------------------------
 // Props
 // ---------------------------------------------------------------------------
@@ -61,6 +63,7 @@ export function CircularTimer({
   onPause,
   onResume,
 }: CircularTimerProps) {
+  const { isDark, colors } = useAppTheme();
   const progress = totalSeconds > 0 ? displaySeconds / totalSeconds : 0;
   const strokeDashoffset = CIRCUMFERENCE * (1 - progress);
 
@@ -94,7 +97,9 @@ export function CircularTimer({
     ? 'pause'
     : 'play';
 
-  const buttonColor = isComplete ? '#15803D' : '#E07B39';
+  const buttonColor = isComplete ? '#15803D' : '#E8834A';
+
+  const trackColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
 
   return (
     <View style={styles.container}>
@@ -105,7 +110,7 @@ export function CircularTimer({
             cx={CENTER}
             cy={CENTER}
             r={RADIUS}
-            stroke="#E5E7EB"
+            stroke={trackColor}
             strokeWidth={STROKE_WIDTH}
             fill="none"
           />
@@ -114,7 +119,7 @@ export function CircularTimer({
             cx={CENTER}
             cy={CENTER}
             r={RADIUS}
-            stroke="#E07B39"
+            stroke="#E8834A"
             strokeWidth={STROKE_WIDTH}
             fill="none"
             strokeDasharray={CIRCUMFERENCE}
@@ -126,7 +131,7 @@ export function CircularTimer({
 
       {/* Center text */}
       <View style={styles.centerOverlay}>
-        <Text style={styles.timeText}>{formatTime(displaySeconds)}</Text>
+        <Text style={[styles.timeText, { color: colors.text }]}>{formatTime(displaySeconds)}</Text>
       </View>
 
       {/* Play/pause button */}
@@ -170,7 +175,6 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
   },
   controlButton: {
     marginTop: 4,

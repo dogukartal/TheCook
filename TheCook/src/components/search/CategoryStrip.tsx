@@ -7,13 +7,14 @@ import {
   View,
 } from 'react-native';
 import type { Category } from '../../types/recipe';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 // ---------------------------------------------------------------------------
 // Category palette
 // ---------------------------------------------------------------------------
 
 const CATEGORIES: { key: Category; label: string; color: string }[] = [
-  { key: 'ana yemek', label: 'Ana Yemek', color: '#E07B39' },
+  { key: 'ana yemek', label: 'Ana Yemek', color: '#E8834A' },
   { key: 'kahvaltı', label: 'Kahvaltı', color: '#D97706' },
   { key: 'çorba', label: 'Çorbalar', color: '#0E7490' },
   { key: 'tatlı', label: 'Tatlılar', color: '#DB2777' },
@@ -35,6 +36,8 @@ interface CategoryStripProps {
 // ---------------------------------------------------------------------------
 
 export function CategoryStrip({ selected, onSelect }: CategoryStripProps) {
+  const { isDark, colors } = useAppTheme();
+
   return (
     <ScrollView
       horizontal
@@ -53,13 +56,16 @@ export function CategoryStrip({ selected, onSelect }: CategoryStripProps) {
               styles.chip,
               isSelected
                 ? { backgroundColor: cat.color, borderColor: cat.color }
-                : { backgroundColor: '#F3F4F6', borderColor: '#E5E7EB' },
+                : {
+                    backgroundColor: isDark ? '#161614' : '#F0EDE8',
+                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                  },
             ]}
           >
             <Text
               style={[
                 styles.label,
-                { color: isSelected ? '#FFFFFF' : '#374151' },
+                { color: isSelected ? '#FFFFFF' : colors.textSub },
               ]}
             >
               {cat.label}

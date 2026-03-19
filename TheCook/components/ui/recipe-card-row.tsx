@@ -4,13 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RecipeListItem } from '@/src/types/discovery';
 import type { Category, SkillLevel } from '@/src/types/recipe';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 // ---------------------------------------------------------------------------
-// Gradient palette — category-based, anchored to brand terracotta #E07B39
+// Gradient palette — category-based, anchored to brand terracotta #E8834A
 // ---------------------------------------------------------------------------
 
 const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
-  'ana yemek': ['#E07B39', '#C05F20'],
+  'ana yemek': ['#E8834A', '#D4572A'],
   'kahvaltı':  ['#F59E0B', '#D97706'],
   'çorba':     ['#0891B2', '#0E7490'],
   'tatlı':     ['#EC4899', '#DB2777'],
@@ -40,6 +41,7 @@ interface RecipeCardRowProps {
 // ---------------------------------------------------------------------------
 
 export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCardRowProps) {
+  const { isDark, colors } = useAppTheme();
   const gradient = CATEGORY_GRADIENTS[recipe.category as Category] ?? DEFAULT_GRADIENT;
   const totalTime = recipe.prepTime + recipe.cookTime;
 
@@ -49,7 +51,7 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
 
   return (
     <Pressable
-      style={styles.card}
+      style={[styles.card, { backgroundColor: colors.background }]}
       onPress={() => onPress(recipe.id)}
       accessibilityRole="button"
       accessibilityLabel={recipe.title}
@@ -61,11 +63,11 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
 
       {/* Right: title + meta */}
       <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={2}>
+        <Text style={[styles.title, { color: colors.text }]} numberOfLines={2}>
           {recipe.title}
         </Text>
         <View style={styles.metaRow}>
-          <View style={styles.skillBadge}>
+          <View style={[styles.skillBadge, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
             <Text style={styles.skillText}>{SKILL_LABELS[recipe.skillLevel]}</Text>
           </View>
           {hasMissingEquipment && (
@@ -74,7 +76,7 @@ export function RecipeCardRow({ recipe, onPress, userEquipment = [] }: RecipeCar
               <Text style={styles.equipmentWarningText}>Ekipman eksik</Text>
             </View>
           )}
-          <Text style={styles.cookTimeText}>{totalTime} dk</Text>
+          <Text style={[styles.cookTimeText, { color: colors.textSub }]}>{totalTime} dk</Text>
         </View>
       </View>
     </Pressable>
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 80,
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 14,
     overflow: 'hidden',
     // Shadow (iOS)
     shadowColor: '#000000',
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: '#1A1A18',
     lineHeight: 20,
   },
   metaRow: {
@@ -131,12 +133,12 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   skillText: {
-    color: '#E07B39',
+    color: '#E8834A',
     fontSize: 11,
     fontWeight: '600',
   },
   cookTimeText: {
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     fontSize: 11,
   },
   equipmentWarning: {

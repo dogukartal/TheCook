@@ -14,6 +14,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useProfileDb } from '@/src/db/profile';
 import { useSession } from '@/src/auth/useSession';
 import { Chip } from '@/components/ui/chip';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 import { AllergenTagEnum, SkillLevelEnum, EquipmentEnum } from '@/src/types/recipe';
 import type { AllergenTag, SkillLevel, Equipment } from '@/src/types/recipe';
@@ -97,6 +98,7 @@ const EQUIPMENT_ICONS: Record<Equipment, MCIconName> = {
 export default function SettingsScreen() {
   const { getProfile, saveProfile } = useProfileDb();
   const { session, signOut } = useSession();
+  const { isDark, colors } = useAppTheme();
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -146,21 +148,21 @@ export default function SettingsScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headerRow}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+        <View style={[styles.headerRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
           <Pressable
             onPress={() => router.back()}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             accessibilityRole="button"
             accessibilityLabel="Geri"
           >
-            <MaterialCommunityIcons name="arrow-left" size={24} color="#111827" />
+            <MaterialCommunityIcons name="arrow-left" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Ayarlar</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>Ayarlar</Text>
           <View style={styles.headerSpacer} />
         </View>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#E07B39" />
+          <ActivityIndicator size="large" color="#E8834A" />
         </View>
       </SafeAreaView>
     );
@@ -171,18 +173,18 @@ export default function SettingsScreen() {
   // ---------------------------------------------------------------------------
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header with back button */}
-      <View style={styles.headerRow}>
+      <View style={[styles.headerRow, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
         <Pressable
           onPress={() => router.back()}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           accessibilityRole="button"
           accessibilityLabel="Geri"
         >
-          <MaterialCommunityIcons name="arrow-left" size={24} color="#111827" />
+          <MaterialCommunityIcons name="arrow-left" size={24} color={colors.text} />
         </Pressable>
-        <Text style={styles.headerTitle}>Ayarlar</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>Ayarlar</Text>
         <View style={styles.headerSpacer} />
       </View>
 
@@ -190,22 +192,22 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Account section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={styles.sectionTitle}>Hesap</Text>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Hesap</Text>
         {session ? (
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }]}>
             <View style={styles.accountInfo}>
-              <MaterialCommunityIcons name="account-circle" size={40} color="#E07B39" />
+              <MaterialCommunityIcons name="account-circle" size={40} color="#E8834A" />
               <View style={styles.accountText}>
-                <Text style={styles.accountEmail} numberOfLines={1}>
+                <Text style={[styles.accountEmail, { color: colors.text }]} numberOfLines={1}>
                   {session.user.email ?? 'Giriş yapıldı'}
                 </Text>
-                <Text style={styles.accountProvider}>
+                <Text style={[styles.accountProvider, { color: colors.textSub }]}>
                   {session.user.app_metadata?.provider ?? 'email'}
                 </Text>
               </View>
             </View>
             <Pressable
-              style={styles.signOutButton}
+              style={[styles.signOutButton, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
               onPress={signOut}
               accessibilityRole="button"
             >
@@ -213,12 +215,12 @@ export default function SettingsScreen() {
             </Pressable>
           </View>
         ) : (
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }]}>
             <View style={styles.accountInfo}>
-              <MaterialCommunityIcons name="account-circle-outline" size={40} color="#9CA3AF" />
+              <MaterialCommunityIcons name="account-circle-outline" size={40} color={colors.textMuted} />
               <View style={styles.accountText}>
-                <Text style={styles.accountEmail}>Hesap oluşturulmadı</Text>
-                <Text style={styles.accountProvider}>Tarif geçmişinizi kaydedin</Text>
+                <Text style={[styles.accountEmail, { color: colors.text }]}>Hesap oluşturulmadı</Text>
+                <Text style={[styles.accountProvider, { color: colors.textSub }]}>Tarif geçmişinizi kaydedin</Text>
               </View>
             </View>
             <Pressable
@@ -234,8 +236,8 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Allergen chips section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={styles.sectionTitle}>Alerjenler</Text>
-        <Text style={styles.sectionSubtitle}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Alerjenler</Text>
+        <Text style={[styles.sectionSubtitle, { color: colors.textSub }]}>
           Seçili alerjenler içeren tarifler görünmez.
         </Text>
         <View style={styles.chipGrid}>
@@ -252,28 +254,32 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Skill level chips section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={styles.sectionTitle}>Pişirme Seviyesi</Text>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Pişirme Seviyesi</Text>
         <View style={styles.skillOptionList}>
           {ALL_SKILL_LEVELS.map((level) => {
             const isSelected = profile?.skillLevel === level;
             return (
               <Pressable
                 key={level}
-                style={[styles.skillOptionCard, isSelected && styles.skillOptionCardSelected]}
+                style={[
+                  styles.skillOptionCard,
+                  { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
+                  isSelected && { borderColor: '#E8834A', backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+                ]}
                 onPress={() => selectSkillLevel(level)}
                 accessibilityRole="radio"
                 accessibilityState={{ checked: isSelected }}
               >
                 <View style={styles.skillOptionLeft}>
-                  <Text style={[styles.skillOptionLabel, isSelected && styles.skillOptionLabelSelected]}>
+                  <Text style={[styles.skillOptionLabel, { color: colors.textSub }, isSelected && styles.skillOptionLabelSelected]}>
                     {SKILL_LEVEL_LABELS[level]}
                   </Text>
-                  <Text style={[styles.skillOptionDesc, isSelected && styles.skillOptionDescSelected]}>
+                  <Text style={[styles.skillOptionDesc, { color: colors.textMuted }, isSelected && styles.skillOptionDescSelected]}>
                     {SKILL_LEVEL_DESCRIPTIONS[level]}
                   </Text>
                 </View>
                 {isSelected && (
-                  <MaterialCommunityIcons name="check-circle" size={20} color="#E07B39" />
+                  <MaterialCommunityIcons name="check-circle" size={20} color="#E8834A" />
                 )}
               </Pressable>
             );
@@ -283,8 +289,8 @@ export default function SettingsScreen() {
         {/* ------------------------------------------------------------------ */}
         {/* Equipment grid section */}
         {/* ------------------------------------------------------------------ */}
-        <Text style={styles.sectionTitle}>Mutfak Ekipmanlarım</Text>
-        <Text style={styles.sectionSubtitle}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Mutfak Ekipmanlarım</Text>
+        <Text style={[styles.sectionSubtitle, { color: colors.textSub }]}>
           Sahip olmadığınız ekipmanı seçimi kaldırın.
         </Text>
         <View style={styles.equipmentGrid}>
@@ -293,7 +299,11 @@ export default function SettingsScreen() {
             return (
               <Pressable
                 key={item}
-                style={[styles.equipmentItem, isSelected && styles.equipmentItemSelected]}
+                style={[
+                  styles.equipmentItem,
+                  { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
+                  isSelected && { borderColor: '#E8834A', backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+                ]}
                 onPress={() => toggleEquipment(item)}
                 accessibilityRole="checkbox"
                 accessibilityState={{ checked: isSelected }}
@@ -301,9 +311,9 @@ export default function SettingsScreen() {
                 <MaterialCommunityIcons
                   name={EQUIPMENT_ICONS[item]}
                   size={28}
-                  color={isSelected ? '#C05F20' : '#9CA3AF'}
+                  color={isSelected ? '#D4572A' : colors.textMuted}
                 />
-                <Text style={[styles.equipmentLabel, isSelected && styles.equipmentLabelSelected]}>
+                <Text style={[styles.equipmentLabel, { color: colors.textSub }, isSelected && styles.equipmentLabelSelected]}>
                   {EQUIPMENT_LABELS[item]}
                 </Text>
               </Pressable>
@@ -332,14 +342,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: '#F0EDE8',
     backgroundColor: '#FFFFFF',
   },
   headerTitle: {
     flex: 1,
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1A1A18',
     textAlign: 'center',
   },
   headerSpacer: {
@@ -357,22 +367,22 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1A1A18',
     marginBottom: 8,
     marginTop: 20,
   },
   sectionSubtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     marginBottom: 12,
     lineHeight: 18,
   },
   card: {
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#F0EDE8',
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(0,0,0,0.08)',
     marginBottom: 4,
   },
   accountInfo: {
@@ -387,11 +397,11 @@ const styles = StyleSheet.create({
   accountEmail: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#111827',
+    color: '#1A1A18',
   },
   accountProvider: {
     fontSize: 13,
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     marginTop: 2,
     textTransform: 'capitalize',
   },
@@ -402,12 +412,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signOutText: {
-    color: '#E07B39',
+    color: '#E8834A',
     fontSize: 14,
     fontWeight: '600',
   },
   createAccountButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     borderRadius: 8,
     paddingVertical: 10,
     alignItems: 'center',
@@ -432,11 +442,11 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#F9FAFB',
+    borderColor: 'rgba(0,0,0,0.08)',
+    backgroundColor: '#F0EDE8',
   },
   skillOptionCardSelected: {
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     backgroundColor: '#FEF3EC',
   },
   skillOptionLeft: {
@@ -445,7 +455,7 @@ const styles = StyleSheet.create({
   skillOptionLabel: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#374151',
+    color: 'rgba(26,26,24,0.65)',
     marginBottom: 2,
   },
   skillOptionLabelSelected: {
@@ -453,7 +463,7 @@ const styles = StyleSheet.create({
   },
   skillOptionDesc: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: 'rgba(26,26,24,0.35)',
     lineHeight: 16,
   },
   skillOptionDescSelected: {
@@ -470,25 +480,25 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#F9FAFB',
+    borderColor: 'rgba(0,0,0,0.08)',
+    backgroundColor: '#F0EDE8',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
     gap: 6,
   },
   equipmentItemSelected: {
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     backgroundColor: '#FEF3EC',
   },
   equipmentLabel: {
     fontSize: 11,
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     textAlign: 'center',
     fontWeight: '500',
   },
   equipmentLabelSelected: {
-    color: '#C05F20',
+    color: '#D4572A',
     fontWeight: '600',
   },
   bottomPad: {

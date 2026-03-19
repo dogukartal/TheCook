@@ -10,6 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import { Chip } from '@/components/ui/chip';
 import { useProfileDb } from '@/src/db/profile';
+import { useAppTheme } from '@/contexts/ThemeContext';
 import { AllergenTagEnum } from '@/src/types/recipe';
 import type { AllergenTag } from '@/src/types/recipe';
 
@@ -36,6 +37,7 @@ const ALLERGEN_LABELS: Record<AllergenTag, string> = {
 export default function AllergensScreen() {
   const router = useRouter();
   const { getProfile, saveProfile } = useProfileDb();
+  const { isDark, colors } = useAppTheme();
   const [selected, setSelected] = useState<AllergenTag[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,18 +68,18 @@ export default function AllergensScreen() {
 
   if (loading) {
     return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color="#E07B39" />
+      <View style={[styles.loading, { backgroundColor: colors.background }]}>
+        <ActivityIndicator size="large" color="#E8834A" />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.step}>Step 1 of 3</Text>
-        <Text style={styles.title}>Do you have any food allergies?</Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.step, { color: colors.textMuted }]}>Step 1 of 3</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Do you have any food allergies?</Text>
+        <Text style={[styles.subtitle, { color: colors.textSub }]}>
           Select all that apply. This helps us keep unsafe recipes out of your feed.
         </Text>
 
@@ -93,12 +95,12 @@ export default function AllergensScreen() {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { backgroundColor: colors.background, borderTopColor: colors.border }]}>
         <Pressable style={styles.continueButton} onPress={handleContinue}>
           <Text style={styles.continueText}>Continue</Text>
         </Pressable>
         <Pressable style={styles.skipButton} onPress={handleSkip}>
-          <Text style={styles.skipText}>Skip for now</Text>
+          <Text style={[styles.skipText, { color: colors.textMuted }]}>Skip for now</Text>
         </Pressable>
       </View>
     </View>
@@ -123,19 +125,19 @@ const styles = StyleSheet.create({
   },
   step: {
     fontSize: 13,
-    color: '#9CA3AF',
+    color: 'rgba(26,26,24,0.35)',
     fontWeight: '500',
     marginBottom: 12,
   },
   title: {
     fontSize: 26,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1A1A18',
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 15,
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     lineHeight: 22,
     marginBottom: 28,
   },
@@ -147,11 +149,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 24,
     borderTopWidth: 1,
-    borderTopColor: '#F3F4F6',
+    borderTopColor: '#F0EDE8',
     backgroundColor: '#FFFFFF',
   },
   continueButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -168,6 +170,6 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: '#9CA3AF',
+    color: 'rgba(26,26,24,0.35)',
   },
 });

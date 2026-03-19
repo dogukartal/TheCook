@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -24,10 +25,12 @@ export function ResumeBanner({
   onResume,
   onDismiss,
 }: ResumeBannerProps) {
+  const { isDark, colors } = useAppTheme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.prompt}>Yarim kalan tarifin var - devam et?</Text>
-      <Text style={styles.detail}>
+    <View style={[styles.container, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
+      <Text style={[styles.prompt, { color: colors.text }]}>Yarim kalan tarifin var - devam et?</Text>
+      <Text style={[styles.detail, { color: colors.textSub }]}>
         {recipeName} ({currentStep + 1}/{totalSteps})
       </Text>
       <View style={styles.buttonRow}>
@@ -44,7 +47,7 @@ export function ResumeBanner({
           accessibilityRole="button"
           accessibilityLabel="Kapat"
         >
-          <Text style={styles.dismissText}>Kapat</Text>
+          <Text style={[styles.dismissText, { color: colors.textSub }]}>Kapat</Text>
         </Pressable>
       </View>
     </View>
@@ -58,7 +61,7 @@ export function ResumeBanner({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FEF3EC',
-    borderRadius: 12,
+    borderRadius: 14,
     padding: 16,
     marginHorizontal: 16,
     marginVertical: 8,
@@ -71,12 +74,12 @@ const styles = StyleSheet.create({
   prompt: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#111827',
+    color: '#1A1A18',
     marginBottom: 4,
   },
   detail: {
     fontSize: 13,
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     marginBottom: 12,
   },
   buttonRow: {
@@ -85,10 +88,10 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   resumeButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     paddingHorizontal: 20,
     paddingVertical: 8,
-    borderRadius: 8,
+    borderRadius: 14,
   },
   resumeButtonText: {
     color: '#FFFFFF',
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   dismissText: {
-    color: '#6B7280',
+    color: 'rgba(26,26,24,0.5)',
     fontSize: 14,
   },
 });

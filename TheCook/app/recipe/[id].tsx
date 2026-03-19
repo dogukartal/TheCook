@@ -16,6 +16,7 @@ import { useRecipeDetailScreen } from '@/src/hooks/useRecipeDetailScreen';
 import { ServingStepper } from '@/components/recipe/serving-stepper';
 import { formatAmount } from '@/src/hooks/useRecipeAdaptation';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 import type { SkillLevel, Category, Ingredient } from '@/src/types/recipe';
 
@@ -24,14 +25,14 @@ import type { SkillLevel, Category, Ingredient } from '@/src/types/recipe';
 // ---------------------------------------------------------------------------
 
 const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
-  'ana yemek': ['#E07B39', '#C05F20'],
+  'ana yemek': ['#E8834A', '#D4572A'],
   'kahvaltı':  ['#F59E0B', '#D97706'],
   'çorba':     ['#0891B2', '#0E7490'],
   'tatlı':     ['#EC4899', '#DB2777'],
   'salata':    ['#16A34A', '#15803D'],
   'aperatif':  ['#7C3AED', '#6D28D9'],
 };
-const DEFAULT_GRADIENT: [string, string] = ['#9CA3AF', '#6B7280'];
+const DEFAULT_GRADIENT: [string, string] = ['rgba(26,26,24,0.35)', 'rgba(26,26,24,0.5)'];
 
 // ---------------------------------------------------------------------------
 // Label maps
@@ -112,6 +113,7 @@ function showSwapPicker(
 
 export default function RecipeDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { isDark, colors } = useAppTheme();
 
   const {
     recipe,
@@ -128,7 +130,7 @@ export default function RecipeDetailScreen() {
 
   if (recipe === undefined) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.backRow}>
           <Pressable
             onPress={() => router.back()}
@@ -136,7 +138,7 @@ export default function RecipeDetailScreen() {
             accessibilityRole="button"
             accessibilityLabel="Geri"
           >
-            <MaterialCommunityIcons name="arrow-left" size={24} color="#111827" />
+            <MaterialCommunityIcons name="arrow-left" size={24} color={colors.text} />
           </Pressable>
         </View>
         <View style={styles.skeletonContainer}>
@@ -152,7 +154,7 @@ export default function RecipeDetailScreen() {
 
   if (recipe === null) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.backRow}>
           <Pressable
             onPress={() => router.back()}
@@ -160,12 +162,12 @@ export default function RecipeDetailScreen() {
             accessibilityRole="button"
             accessibilityLabel="Geri"
           >
-            <MaterialCommunityIcons name="arrow-left" size={24} color="#111827" />
+            <MaterialCommunityIcons name="arrow-left" size={24} color={colors.text} />
           </Pressable>
         </View>
         <View style={styles.notFoundContainer}>
-          <MaterialCommunityIcons name="file-question-outline" size={48} color="#9CA3AF" />
-          <Text style={styles.notFoundText}>Tarif bulunamadi</Text>
+          <MaterialCommunityIcons name="file-question-outline" size={48} color={colors.textMuted} />
+          <Text style={[styles.notFoundText, { color: colors.textSub }]}>Tarif bulunamadi</Text>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
             <Text style={styles.backButtonText}>Geri Don</Text>
           </Pressable>
@@ -182,7 +184,7 @@ export default function RecipeDetailScreen() {
   // ---------------------------------------------------------------------------
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero gradient with back + bookmark buttons */}
         <View style={styles.heroContainer}>
@@ -221,15 +223,15 @@ export default function RecipeDetailScreen() {
         <View style={styles.contentContainer}>
           {/* Metadata row */}
           <View style={styles.metaRow}>
-            <View style={styles.badge}>
+            <View style={[styles.badge, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
               <Text style={styles.badgeText}>{SKILL_LABELS[recipe.skillLevel]}</Text>
             </View>
-            <View style={[styles.badge, styles.cuisineBadge]}>
-              <Text style={styles.cuisineBadgeText}>{recipe.cuisine}</Text>
+            <View style={[styles.badge, { backgroundColor: colors.card }]}>
+              <Text style={[styles.cuisineBadgeText, { color: colors.textSub }]}>{recipe.cuisine}</Text>
             </View>
             <View style={styles.metaItem}>
-              <MaterialCommunityIcons name="clock-outline" size={14} color="#6B7280" />
-              <Text style={styles.metaText}>{totalTime} dk</Text>
+              <MaterialCommunityIcons name="clock-outline" size={14} color={colors.textSub} />
+              <Text style={[styles.metaText, { color: colors.textSub }]}>{totalTime} dk</Text>
             </View>
             <ServingStepper
               value={adaptation.servings}
@@ -252,11 +254,11 @@ export default function RecipeDetailScreen() {
           )}
 
           {/* Ingredients section */}
-          <Text style={styles.sectionHeader}>Malzemeler</Text>
+          <Text style={[styles.sectionHeader, { color: colors.text }]}>Malzemeler</Text>
           {adaptation.adaptedGroups.map((group, groupIdx) => (
             <View key={groupIdx} style={styles.ingredientGroup}>
               {group.label && (
-                <Text style={styles.ingredientGroupLabel}>{group.label}</Text>
+                <Text style={[styles.ingredientGroupLabel, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>{group.label}</Text>
               )}
               {group.items.map((item, itemIdx) => {
                 const hasAlts = item.alternatives && item.alternatives.length > 0;
@@ -270,13 +272,13 @@ export default function RecipeDetailScreen() {
                 return (
                   <View key={itemIdx} style={styles.ingredientRow}>
                     <View style={styles.ingredientDot} />
-                    <Text style={styles.ingredientText}>
-                      <Text style={styles.ingredientAmount}>
+                    <Text style={[styles.ingredientText, { color: isDark ? 'rgba(240,237,230,0.65)' : 'rgba(26,26,24,0.65)' }]}>
+                      <Text style={[styles.ingredientAmount, { color: colors.text }]}>
                         {formatAmount(item.amount)} {item.unit}{' '}
                       </Text>
                       {item.name}
                       {item.optional && (
-                        <Text style={styles.optionalLabel}> (opsiyonel)</Text>
+                        <Text style={[styles.optionalLabel, { color: colors.textMuted }]}> (opsiyonel)</Text>
                       )}
                     </Text>
                     {hasAlts && !isSwapped && (
@@ -291,12 +293,12 @@ export default function RecipeDetailScreen() {
                     )}
                     {isSwapped && originalName && (
                       <Pressable
-                        style={[styles.swapButton, styles.swapButtonActive]}
+                        style={[styles.swapButton, styles.swapButtonActive, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}
                         onPress={() => adaptation.resetSwap(originalName)}
                         accessibilityRole="button"
                         accessibilityLabel="Geri al"
                       >
-                        <Text style={styles.swapButtonActiveText}>Geri al</Text>
+                        <Text style={[styles.swapButtonActiveText, { color: colors.textSub }]}>Geri al</Text>
                       </Pressable>
                     )}
                   </View>
@@ -306,14 +308,14 @@ export default function RecipeDetailScreen() {
           ))}
 
           {/* Steps Preview section */}
-          <Text style={styles.sectionHeader}>Adimlar</Text>
+          <Text style={[styles.sectionHeader, { color: colors.text }]}>Adimlar</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.stepsHorizontalContainer}
           >
             {adaptation.adaptedSteps.map((step, idx) => {
-              const bgColor = STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
+              const bgColor = isDark ? colors.card : STEP_PASTEL_COLORS[idx % STEP_PASTEL_COLORS.length];
 
               return (
                 <View
@@ -321,23 +323,23 @@ export default function RecipeDetailScreen() {
                   style={[styles.stepPreviewBox, { backgroundColor: bgColor }]}
                 >
                   <View style={styles.stepPreviewHeader}>
-                    <View style={styles.stepPreviewNumberBadge}>
-                      <Text style={styles.stepPreviewNumber}>{idx + 1}</Text>
+                    <View style={[styles.stepPreviewNumberBadge, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)' }]}>
+                      <Text style={[styles.stepPreviewNumber, { color: colors.text }]}>{idx + 1}</Text>
                     </View>
                     {step.timerSeconds != null && (
                       <View style={styles.stepPreviewTimer}>
                         <MaterialCommunityIcons
                           name="clock-outline"
                           size={13}
-                          color="#6B7280"
+                          color={colors.textSub}
                         />
-                        <Text style={styles.stepPreviewTimerText}>
+                        <Text style={[styles.stepPreviewTimerText, { color: colors.textSub }]}>
                           {formatDuration(step.timerSeconds)}
                         </Text>
                       </View>
                     )}
                   </View>
-                  <Text style={styles.stepPreviewTitle} numberOfLines={3}>
+                  <Text style={[styles.stepPreviewTitle, { color: isDark ? colors.textSub : 'rgba(26,26,24,0.65)' }]} numberOfLines={3}>
                     {step.title || step.instruction.slice(0, 80) + (step.instruction.length > 80 ? '...' : '')}
                   </Text>
                 </View>
@@ -351,7 +353,7 @@ export default function RecipeDetailScreen() {
       </ScrollView>
 
       {/* Start Cooking button — fixed at bottom */}
-      <View style={styles.startCookingContainer}>
+      <View style={[styles.startCookingContainer, { backgroundColor: colors.background, borderTopColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)' }]}>
         <Pressable
           style={styles.startCookingButton}
           onPress={startCooking}
@@ -374,7 +376,6 @@ export default function RecipeDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
 
   // Loading state
@@ -397,15 +398,14 @@ const styles = StyleSheet.create({
   },
   notFoundText: {
     fontSize: 18,
-    color: '#6B7280',
     marginTop: 16,
     marginBottom: 24,
   },
   backButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     paddingHorizontal: 24,
     paddingVertical: 12,
-    borderRadius: 8,
+    borderRadius: 14,
   },
   backButtonText: {
     color: '#FFFFFF',
@@ -428,8 +428,10 @@ const styles = StyleSheet.create({
     left: 16,
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    borderRadius: 12,
+    backgroundColor: 'rgba(12,12,10,0.55)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.14)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -439,15 +441,18 @@ const styles = StyleSheet.create({
     right: 16,
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    borderRadius: 12,
+    backgroundColor: 'rgba(12,12,10,0.55)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.14)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   heroTitle: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '700',
     color: '#FFFFFF',
+    letterSpacing: -1,
   },
 
   // Content
@@ -465,21 +470,17 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   badge: {
-    backgroundColor: '#FEF3EC',
-    borderRadius: 12,
+    borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   badgeText: {
-    color: '#E07B39',
+    color: '#E8834A',
     fontSize: 12,
     fontWeight: '600',
-  },
-  cuisineBadge: {
-    backgroundColor: '#F3F4F6',
+    letterSpacing: 0.5,
   },
   cuisineBadgeText: {
-    color: '#374151',
     fontSize: 12,
     fontWeight: '500',
   },
@@ -490,7 +491,6 @@ const styles = StyleSheet.create({
   },
   metaText: {
     fontSize: 13,
-    color: '#6B7280',
   },
 
   // Allergen tags
@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
   allergenTag: {
     borderWidth: 1,
     borderColor: '#EF4444',
-    borderRadius: 8,
+    borderRadius: 10,
     paddingHorizontal: 8,
     paddingVertical: 3,
   },
@@ -517,7 +517,6 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
     marginTop: 20,
     marginBottom: 12,
   },
@@ -529,7 +528,6 @@ const styles = StyleSheet.create({
   ingredientGroupLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#374151',
     marginBottom: 8,
   },
   ingredientRow: {
@@ -541,22 +539,19 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     marginTop: 0,
     marginRight: 10,
   },
   ingredientText: {
     flex: 1,
     fontSize: 14,
-    color: '#374151',
     lineHeight: 20,
   },
   ingredientAmount: {
     fontWeight: '600',
-    color: '#111827',
   },
   optionalLabel: {
-    color: '#9CA3AF',
     fontStyle: 'italic',
   },
 
@@ -566,21 +561,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: '#E07B39',
+    borderColor: '#E8834A',
     borderRadius: 6,
   },
   swapButtonText: {
     fontSize: 12,
-    color: '#E07B39',
+    color: '#E8834A',
     fontWeight: '500',
   },
   swapButtonActive: {
-    backgroundColor: '#FEF3EC',
-    borderColor: '#9CA3AF',
+    borderColor: 'rgba(26,26,24,0.35)',
   },
   swapButtonActiveText: {
     fontSize: 12,
-    color: '#6B7280',
     fontWeight: '500',
   },
 
@@ -590,7 +583,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   stepPreviewBox: {
-    borderRadius: 12,
+    borderRadius: 14,
     padding: 14,
     width: 180,
   },
@@ -604,12 +597,10 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     borderRadius: 13,
-    backgroundColor: 'rgba(0,0,0,0.12)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   stepPreviewNumber: {
-    color: '#374151',
     fontSize: 13,
     fontWeight: '700',
   },
@@ -620,12 +611,10 @@ const styles = StyleSheet.create({
   },
   stepPreviewTimerText: {
     fontSize: 12,
-    color: '#6B7280',
     fontWeight: '500',
   },
   stepPreviewTitle: {
     fontSize: 14,
-    color: '#374151',
     lineHeight: 20,
   },
 
@@ -633,14 +622,12 @@ const styles = StyleSheet.create({
   startCookingContainer: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: '#F3F4F6',
   },
   startCookingButton: {
-    backgroundColor: '#E07B39',
+    backgroundColor: '#E8834A',
     height: 52,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
