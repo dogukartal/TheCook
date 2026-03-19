@@ -15,13 +15,12 @@ jest.mock('expo-sqlite', () => ({
   useSQLiteContext: () => mockDb,
 }));
 
-// Mock expo-router
-const mockUseFocusEffect = jest.fn((cb: () => (() => void) | void) => {
-  // Call the callback immediately to simulate focus
-  cb();
-});
+// Capture useFocusEffect callbacks to call them inside act()
+let mockFocusCallbacks: Array<() => (() => void) | void> = [];
 jest.mock('expo-router', () => ({
-  useFocusEffect: mockUseFocusEffect,
+  useFocusEffect: jest.fn((cb: () => (() => void) | void) => {
+    mockFocusCallbacks.push(cb);
+  }),
   useLocalSearchParams: jest.fn(() => ({})),
   router: { push: jest.fn(), back: jest.fn() },
 }));
@@ -102,8 +101,7 @@ jest.mock('@/src/db/profile', () => ({
   }),
 }));
 
-// We do NOT mock buildFeedSections — it is a pure function
-// Import it real from useFeedScreen
+// We do NOT mock buildFeedSections -- it is a pure function
 import { buildFeedSections } from '@/src/hooks/useFeedScreen';
 import { useSeeAllScreen } from '@/src/hooks/useSeeAllScreen';
 import { renderHook, act, waitFor } from '@testing-library/react-native';
@@ -115,18 +113,20 @@ import { renderHook, act, waitFor } from '@testing-library/react-native';
 describe('useSeeAllScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockFocusCallbacks = [];
     mockGetAllRecipesForFeed.mockResolvedValue(testRecipes);
     mockGetCookedRecipeIds.mockResolvedValue(new Set<string>());
     mockGetProfile.mockResolvedValue(testProfile);
     mockGetBookmarks.mockResolvedValue(testBookmarks);
-    // Reset useFocusEffect to call callback immediately
-    mockUseFocusEffect.mockImplementation((cb: () => (() => void) | void) => {
-      cb();
-    });
   });
 
   test('useSeeAllScreen("trending") returns all recipes matching trending section from buildFeedSections', async () => {
     const { result } = renderHook(() => useSeeAllScreen('trending'));
+
+    // Fire focus effect inside act
+    await act(async () => {
+      for (const cb of mockFocusCallbacks) cb();
+    });
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
@@ -143,6 +143,10 @@ describe('useSeeAllScreen', () => {
 
   test('useSeeAllScreen("quick") returns only recipes with totalTime <= 30', async () => {
     const { result } = renderHook(() => useSeeAllScreen('quick'));
+
+    await act(async () => {
+      for (const cb of mockFocusCallbacks) cb();
+    });
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
@@ -167,6 +171,10 @@ describe('useSeeAllScreen', () => {
 
   test('bookmark toggle adds/removes from bookmarkedIds set', async () => {
     const { result } = renderHook(() => useSeeAllScreen('trending'));
+
+    await act(async () => {
+      for (const cb of mockFocusCallbacks) cb();
+    });
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
