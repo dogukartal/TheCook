@@ -33,7 +33,7 @@
 - [x] **Phase 14: Color Token Sweep** - Replace all hardcoded hex values with theme tokens and fix dark mode card contrast (completed 2026-03-19)
 - [x] **Phase 15: Card Image Rendering** - Show recipe images on cards, recipe detail, and cooking mode with blurhash placeholders (completed 2026-03-19)
 - [x] **Phase 16: Feed "See All" + Discovery Polish** - "See All" vertical list route, card peek hint, swipe animation, and section heading polish (completed 2026-03-19)
-- [ ] **Phase 17: Cookbook Saved/Cooked Tabs** - Two-tab Cookbook with star ratings, re-rating, cook count, and row layout
+- [x] **Phase 17: Cookbook Saved/Cooked Tabs** - Two-tab Cookbook with star ratings, re-rating, cook count, and row layout (completed 2026-03-19)
 - [ ] **Phase 18: UI Polish** - Haptics, press feedback, sheet transitions, filter chip icons, progress bar animation, and button feedback
 
 ## Phase Details
@@ -109,7 +109,7 @@ Plans:
   3. User can tap a rating in the Cooked tab to change it and the new rating persists across app restarts
   4. Cooked recipes display a cook count (e.g., "3 kez pisirdin") when cooked more than once
   5. Cookbook uses a single-recipe-per-row layout with thumbnail, title, and metadata on each row
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 17-01-PLAN.md — Data layer: CookedRecipeMeta type, DB query functions, StarRatingInline and RecipeCardRowCooked components
@@ -151,5 +151,5 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 14. Color Token Sweep | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 2/2 | Complete | 2026-03-19 |
-| 17. Cookbook Saved/Cooked Tabs | v1.1 | 1/2 | In Progress | - |
+| 17. Cookbook Saved/Cooked Tabs | 2/2 | Complete   | 2026-03-19 | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |

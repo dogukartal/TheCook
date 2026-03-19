@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Visual Polish & Content Ready
 status: in-progress
-stopped_at: Completed 17-01-PLAN.md
-last_updated: "2026-03-19T19:15:55Z"
-last_activity: 2026-03-19 -- Phase 17 plan 01 complete (cookbook data layer + UI components)
+stopped_at: Completed 17-02-PLAN.md
+last_updated: "2026-03-19T19:23:26Z"
+last_activity: 2026-03-19 -- Phase 17 complete (cookbook saved/cooked tabs fully wired)
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 12
-  completed_plans: 11
-  percent: 92
+  completed_plans: 12
+  percent: 100
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-19)
 
 **Core value:** The shortest path between "I want to make something different tonight" and a finished meal you are proud of.
-**Current focus:** Phase 17 in progress -- cookbook saved/cooked tabs
+**Current focus:** Phase 17 complete -- ready for Phase 18
 
 ## Current Position
 
 Phase: 17 of 18 (Cookbook Saved/Cooked Tabs) -- fifth of 6 phases in v1.1
-Plan: 1 of 2 complete
-Status: In Progress
-Last activity: 2026-03-19 -- Phase 17 plan 01 complete (cookbook data layer + UI components)
+Plan: 2 of 2 complete
+Status: Phase Complete
+Last activity: 2026-03-19 -- Phase 17 complete (cookbook saved/cooked tabs fully wired)
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 47 (v1.0)
-- v1.1 plans completed: 11
-- Total execution time: 54min (v1.1)
+- v1.1 plans completed: 12
+- Total execution time: 58min (v1.1)
 
 **By Phase:**
 
@@ -47,7 +47,7 @@ Progress: [█████████░] 92%
 | 14 Color Token Sweep | 3/3 | 23min | 8min |
 | 15 Card Image Rendering | 3/3 | 14min | 5min |
 | 16 Feed See All + Discovery | 2/2 | 8min | 4min |
-| 17 Cookbook Saved/Cooked | 1/2 | 3min | 3min |
+| 17 Cookbook Saved/Cooked | 2/2 | 7min | 4min |
 
 ## Accumulated Context
 
@@ -82,6 +82,9 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Phase 17-01: StarRatingInline default size 20 (vs 36 in completion-screen) for inline row card use
 - Phase 17-01: Separate Pressable zone for star rating to prevent card navigation on star tap
 - Phase 17-01: Cook count text only shown when cookCount > 1 (single cook is implied)
+- Phase 17-02: getRecipesByIds added to recipes.ts for cooked tab (no hard filters -- user already cooked these)
+- Phase 17-02: Parallel loading of saved + cooked data on focus (single loadData call fetches both)
+- Phase 17-02: ActivityIndicator used for loading state instead of skeleton rows (simpler, consistent)
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-19T19:15:55Z
-Stopped at: Completed 17-01-PLAN.md
+Last session: 2026-03-19T19:23:26Z
+Stopped at: Completed 17-02-PLAN.md
 Resume file: None

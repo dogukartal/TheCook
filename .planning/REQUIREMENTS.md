@@ -23,7 +23,7 @@ Requirements for Visual Polish & Content Ready milestone. Each maps to roadmap p
 
 ### Cookbook
 
-- [ ] **BOOK-01**: User sees two tabs in Cookbook: Saved (bookmarked) and Cooked (cooking history)
+- [x] **BOOK-01**: User sees two tabs in Cookbook: Saved (bookmarked) and Cooked (cooking history)
 - [x] **BOOK-02**: User sees star rating on each recipe in the Cooked tab
 - [x] **BOOK-03**: User can tap to re-rate a recipe directly from the Cooked tab
 - [x] **BOOK-04**: User sees cook count on cooked recipes (e.g. "3 kez pisirdin")
@@ -77,7 +77,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DISC-07 | Phase 16 | Complete |
 | DISC-08 | Phase 16 | Complete |
 | DISC-09 | Phase 16 | Complete |
-| BOOK-01 | Phase 17 | Pending |
+| BOOK-01 | Phase 17 | Complete |
 | BOOK-02 | Phase 17 | Complete |
 | BOOK-03 | Phase 17 | Complete |
 | BOOK-04 | Phase 17 | Complete |
