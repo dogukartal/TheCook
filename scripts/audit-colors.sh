@@ -31,8 +31,8 @@ violations=$(
     ! -path "*/constants/palette.ts" \
     -print0 \
   | xargs -0 grep -nE "'#[0-9a-fA-F]{3,8}'|\"#[0-9a-fA-F]{3,8}\"" \
-  | grep -v '// palette-exempt' \
-  | grep -v '// theme-exempt' \
+  | grep -v 'palette-exempt' \
+  | grep -v 'theme-exempt' \
   | grep -v '^[^:]*:[0-9]*:import ' \
   || true
 )

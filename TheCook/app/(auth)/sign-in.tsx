@@ -15,10 +15,13 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { supabase } from '../../src/auth/supabase';
+import { useAppTheme } from '@/contexts/ThemeContext';
+import { GOOGLE_BRAND_BLUE } from '@/constants/palette';
 
 export default function SignInScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { colors } = useAppTheme();
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -136,21 +139,21 @@ export default function SignInScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.appName}>TheCook</Text>
-        <Text style={styles.tagline}>Your kitchen companion</Text>
+        <Text style={[styles.appName, { color: colors.text }]}>TheCook</Text>
+        <Text style={[styles.tagline, { color: colors.textSub }]}>Your kitchen companion</Text>
       </View>
 
       {loading && (
         <ActivityIndicator
           size="large"
-          color="#E8612C"
+          color={colors.tint}
           style={styles.spinner}
         />
       )}
 
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error ? <Text style={[styles.errorText, { color: colors.error }]}>{error}</Text> : null}
 
       <View style={styles.authButtons}>
         {/* Apple Sign In — iOS only */}
@@ -172,29 +175,31 @@ export default function SignInScreen() {
         <Pressable
           style={({ pressed }) => [
             styles.googleButton,
-            pressed && styles.googleButtonPressed,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+            pressed && { backgroundColor: colors.card },
           ]}
           onPress={handleGoogleSignIn}
           disabled={loading}
           accessibilityLabel="Sign in with Google"
           accessibilityRole="button"
         >
-          <Text style={styles.googleIcon}>G</Text>
-          <Text style={styles.googleButtonText}>Sign in with Google</Text>
+          <Text style={[styles.googleIcon, { color: GOOGLE_BRAND_BLUE }]}>G</Text>
+          <Text style={[styles.googleButtonText, { color: colors.text }]}>Sign in with Google</Text>
         </Pressable>
 
         {/* Email */}
         <Pressable
           style={({ pressed }) => [
             styles.emailButton,
-            pressed && styles.emailButtonPressed,
+            { backgroundColor: colors.tint },
+            pressed && !loading && { opacity: 0.85 },
           ]}
           onPress={handleEmailPress}
           disabled={loading}
           accessibilityLabel="Sign in with email"
           accessibilityRole="button"
         >
-          <Text style={styles.emailButtonText}>Sign in with email</Text>
+          <Text style={[styles.emailButtonText, { color: colors.onTint }]}>Sign in with email</Text>
         </Pressable>
       </View>
 
@@ -206,7 +211,7 @@ export default function SignInScreen() {
         accessibilityLabel="Continue without account"
         accessibilityRole="button"
       >
-        <Text style={styles.skipText}>Continue without account</Text>
+        <Text style={[styles.skipText, { color: colors.textSub }]}>Continue without account</Text>
       </Pressable>
     </View>
   );
@@ -215,7 +220,6 @@ export default function SignInScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAFAF8',
     paddingHorizontal: 24,
     justifyContent: 'center',
   },
@@ -226,19 +230,16 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 36,
     fontWeight: '700',
-    color: '#1A1A1A',
     letterSpacing: -0.5,
   },
   tagline: {
     fontSize: 16,
-    color: '#6B6B6B',
     marginTop: 8,
   },
   spinner: {
     marginBottom: 16,
   },
   errorText: {
-    color: '#D32F2F',
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 16,
@@ -254,40 +255,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     height: 52,
     borderWidth: 1,
-    borderColor: '#DADCE0',
     gap: 10,
-  },
-  googleButtonPressed: {
-    backgroundColor: '#F5F5F5',
   },
   googleIcon: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#4285F4',
   },
   googleButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#3C4043',
   },
   emailButton: {
     alignItems: 'center',
     justifyContent: 'center',
     height: 52,
     borderRadius: 8,
-    backgroundColor: '#E8612C',
-  },
-  emailButtonPressed: {
-    backgroundColor: '#D4551F',
   },
   emailButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFFFFF',
   },
   skipButton: {
     alignItems: 'center',
@@ -296,7 +285,6 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: '#6B6B6B',
     textDecorationLine: 'underline',
   },
 });

@@ -169,7 +169,7 @@ export default function RecipeDetailScreen() {
               accessibilityRole="button"
               accessibilityLabel="Geri"
             >
-              <MaterialCommunityIcons name="arrow-left" size={24} color="#FFFFFF" />
+              <MaterialCommunityIcons name="arrow-left" size={24} color="#FFFFFF" />{/* palette-exempt */}
             </Pressable>
 
             {/* Bookmark button */}
@@ -183,7 +183,7 @@ export default function RecipeDetailScreen() {
               <MaterialCommunityIcons
                 name={isBookmarked ? 'heart' : 'heart-outline'}
                 size={24}
-                color="#FFFFFF"
+                color="#FFFFFF" // palette-exempt
               />
             </Pressable>
 
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
   heroTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#FFFFFF', // on-gradient
+    color: '#FFFFFF', // on-gradient // palette-exempt
     letterSpacing: -1,
   },
 

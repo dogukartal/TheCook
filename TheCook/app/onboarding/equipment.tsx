@@ -88,7 +88,7 @@ export default function EquipmentScreen() {
   if (loading) {
     return (
       <View style={[styles.loading, { backgroundColor: colors.background }]}>
-        <ActivityIndicator size="large" color="#E8834A" />
+        <ActivityIndicator size="large" color={colors.tint} />
       </View>
     );
   }
@@ -110,8 +110,8 @@ export default function EquipmentScreen() {
                 key={item}
                 style={[
                   styles.gridItem,
-                  { backgroundColor: colors.card, borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
-                  isSelected && { borderColor: '#E8834A', backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' },
+                  { backgroundColor: colors.card, borderColor: colors.border },
+                  isSelected && { borderColor: colors.tint, backgroundColor: colors.tintBg },
                 ]}
                 onPress={() => toggleEquipment(item)}
                 accessibilityRole="checkbox"
@@ -120,9 +120,9 @@ export default function EquipmentScreen() {
                 <MaterialCommunityIcons
                   name={EQUIPMENT_ICONS[item]}
                   size={28}
-                  color={isSelected ? '#D4572A' : colors.textMuted}
+                  color={isSelected ? colors.tint : colors.textMuted}
                 />
-                <Text style={[styles.itemLabel, { color: colors.textSub }, isSelected && styles.itemLabelSelected]}>
+                <Text style={[styles.itemLabel, { color: colors.textSub }, isSelected && { color: colors.tint, fontWeight: '600' }]}>
                   {EQUIPMENT_LABELS[item]}
                 </Text>
               </Pressable>
@@ -132,8 +132,8 @@ export default function EquipmentScreen() {
       </ScrollView>
 
       <View style={[styles.footer, { backgroundColor: colors.background, borderTopColor: colors.border }]}>
-        <Pressable style={styles.continueButton} onPress={handleContinue}>
-          <Text style={styles.continueText}>Continue</Text>
+        <Pressable style={[styles.continueButton, { backgroundColor: colors.tint }]} onPress={handleContinue}>
+          <Text style={[styles.continueText, { color: colors.onTint }]}>Continue</Text>
         </Pressable>
         <Pressable style={styles.skipButton} onPress={handleSkip}>
           <Text style={[styles.skipText, { color: colors.textMuted }]}>Skip for now</Text>
@@ -146,13 +146,11 @@ export default function EquipmentScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   loading: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
   },
   scrollContent: {
     paddingHorizontal: 24,
@@ -161,19 +159,16 @@ const styles = StyleSheet.create({
   },
   step: {
     fontSize: 13,
-    color: 'rgba(26,26,24,0.35)',
     fontWeight: '500',
     marginBottom: 12,
   },
   title: {
     fontSize: 26,
     fontWeight: '700',
-    color: '#1A1A18',
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 15,
-    color: 'rgba(26,26,24,0.5)',
     lineHeight: 22,
     marginBottom: 28,
   },
@@ -187,36 +182,22 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: 'rgba(0,0,0,0.08)',
-    backgroundColor: '#F0EDE8',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
     gap: 6,
   },
-  gridItemSelected: {
-    borderColor: '#E8834A',
-    backgroundColor: '#FEF3EC',
-  },
   itemLabel: {
     fontSize: 11,
-    color: 'rgba(26,26,24,0.5)',
     textAlign: 'center',
     fontWeight: '500',
-  },
-  itemLabelSelected: {
-    color: '#D4572A',
-    fontWeight: '600',
   },
   footer: {
     paddingHorizontal: 24,
     paddingVertical: 24,
     borderTopWidth: 1,
-    borderTopColor: '#F0EDE8',
-    backgroundColor: '#FFFFFF',
   },
   continueButton: {
-    backgroundColor: '#E8834A',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -225,7 +206,6 @@ const styles = StyleSheet.create({
   continueText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FFFFFF',
   },
   skipButton: {
     alignItems: 'center',
@@ -233,6 +213,5 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: 'rgba(26,26,24,0.35)',
   },
 });

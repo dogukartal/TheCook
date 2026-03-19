@@ -34,8 +34,8 @@ export default function AccountNudgeScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
-        <View style={[styles.iconContainer, { backgroundColor: isDark ? 'rgba(232,131,74,0.15)' : '#FEF3EC' }]}>
-          <MaterialCommunityIcons name="cloud-sync-outline" size={64} color="#E8834A" />
+        <View style={[styles.iconContainer, { backgroundColor: colors.tintBg }]}>
+          <MaterialCommunityIcons name="cloud-sync-outline" size={64} color={colors.tint} />
         </View>
 
         <Text style={[styles.title, { color: colors.text }]}>Your profile is saved.</Text>
@@ -44,15 +44,15 @@ export default function AccountNudgeScreen() {
         </Text>
 
         <View style={styles.benefitList}>
-          <BenefitRow icon="bookmark-multiple-outline" text="Keep your saved recipes anywhere" textColor={colors.textSub} />
-          <BenefitRow icon="sync" text="Sync profile changes instantly" textColor={colors.textSub} />
-          <BenefitRow icon="shield-check-outline" text="Your data stays private" textColor={colors.textSub} />
+          <BenefitRow icon="bookmark-multiple-outline" text="Keep your saved recipes anywhere" colors={colors} />
+          <BenefitRow icon="sync" text="Sync profile changes instantly" colors={colors} />
+          <BenefitRow icon="shield-check-outline" text="Your data stays private" colors={colors} />
         </View>
       </View>
 
       <View style={styles.footer}>
-        <Pressable style={styles.createButton} onPress={handleCreateAccount}>
-          <Text style={styles.createText}>Create free account</Text>
+        <Pressable style={[styles.createButton, { backgroundColor: colors.tint }]} onPress={handleCreateAccount}>
+          <Text style={[styles.createText, { color: colors.onTint }]}>Create free account</Text>
         </Pressable>
         <Pressable style={styles.skipButton} onPress={handleNotNow}>
           <Text style={[styles.skipText, { color: colors.textMuted }]}>Not now</Text>
@@ -62,11 +62,11 @@ export default function AccountNudgeScreen() {
   );
 }
 
-function BenefitRow({ icon, text, textColor }: { icon: React.ComponentProps<typeof MaterialCommunityIcons>['name']; text: string; textColor?: string }) {
+function BenefitRow({ icon, text, colors }: { icon: React.ComponentProps<typeof MaterialCommunityIcons>['name']; text: string; colors: any }) {
   return (
     <View style={styles.benefitRow}>
-      <MaterialCommunityIcons name={icon} size={20} color="#E8834A" />
-      <Text style={[styles.benefitText, textColor ? { color: textColor } : undefined]}>{text}</Text>
+      <MaterialCommunityIcons name={icon} size={20} color={colors.tint} />
+      <Text style={[styles.benefitText, { color: colors.textSecondary }]}>{text}</Text>
     </View>
   );
 }
@@ -74,7 +74,6 @@ function BenefitRow({ icon, text, textColor }: { icon: React.ComponentProps<type
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   content: {
     flex: 1,
@@ -86,7 +85,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#FEF3EC',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 32,
@@ -94,13 +92,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1A1A18',
     textAlign: 'center',
     marginBottom: 16,
   },
   body: {
     fontSize: 16,
-    color: 'rgba(26,26,24,0.5)',
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 36,
@@ -116,7 +112,6 @@ const styles = StyleSheet.create({
   },
   benefitText: {
     fontSize: 15,
-    color: 'rgba(26,26,24,0.65)',
     fontWeight: '500',
   },
   footer: {
@@ -125,7 +120,6 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   createButton: {
-    backgroundColor: '#E8834A',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -133,7 +127,6 @@ const styles = StyleSheet.create({
   createText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FFFFFF',
   },
   skipButton: {
     alignItems: 'center',
@@ -141,6 +134,5 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: 'rgba(26,26,24,0.35)',
   },
 });

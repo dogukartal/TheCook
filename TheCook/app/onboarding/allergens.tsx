@@ -69,7 +69,7 @@ export default function AllergensScreen() {
   if (loading) {
     return (
       <View style={[styles.loading, { backgroundColor: colors.background }]}>
-        <ActivityIndicator size="large" color="#E8834A" />
+        <ActivityIndicator size="large" color={colors.tint} />
       </View>
     );
   }
@@ -96,8 +96,8 @@ export default function AllergensScreen() {
       </ScrollView>
 
       <View style={[styles.footer, { backgroundColor: colors.background, borderTopColor: colors.border }]}>
-        <Pressable style={styles.continueButton} onPress={handleContinue}>
-          <Text style={styles.continueText}>Continue</Text>
+        <Pressable style={[styles.continueButton, { backgroundColor: colors.tint }]} onPress={handleContinue}>
+          <Text style={[styles.continueText, { color: colors.onTint }]}>Continue</Text>
         </Pressable>
         <Pressable style={styles.skipButton} onPress={handleSkip}>
           <Text style={[styles.skipText, { color: colors.textMuted }]}>Skip for now</Text>
@@ -110,13 +110,11 @@ export default function AllergensScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   loading: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
   },
   scrollContent: {
     paddingHorizontal: 24,
@@ -125,19 +123,16 @@ const styles = StyleSheet.create({
   },
   step: {
     fontSize: 13,
-    color: 'rgba(26,26,24,0.35)',
     fontWeight: '500',
     marginBottom: 12,
   },
   title: {
     fontSize: 26,
     fontWeight: '700',
-    color: '#1A1A18',
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 15,
-    color: 'rgba(26,26,24,0.5)',
     lineHeight: 22,
     marginBottom: 28,
   },
@@ -149,11 +144,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 24,
     borderTopWidth: 1,
-    borderTopColor: '#F0EDE8',
-    backgroundColor: '#FFFFFF',
   },
   continueButton: {
-    backgroundColor: '#E8834A',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -162,7 +154,6 @@ const styles = StyleSheet.create({
   continueText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FFFFFF',
   },
   skipButton: {
     alignItems: 'center',
@@ -170,6 +161,5 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: 'rgba(26,26,24,0.35)',
   },
 });

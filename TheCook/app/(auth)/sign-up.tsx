@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { supabase } from '../../src/auth/supabase';
+import { useAppTheme } from '@/contexts/ThemeContext';
 
 type Mode = 'signup' | 'signin';
 
@@ -23,6 +24,7 @@ export default function SignUpScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const { colors } = useAppTheme();
 
   function clearMessages() {
     setError(null);
@@ -99,7 +101,7 @@ export default function SignUpScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.keyboardView}
+      style={[styles.keyboardView, { backgroundColor: colors.background }]}
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -112,16 +114,16 @@ export default function SignUpScreen() {
           accessibilityLabel="Back"
           accessibilityRole="button"
         >
-          <Text style={styles.backText}>← Back</Text>
+          <Text style={[styles.backText, { color: colors.tint }]}>← Back</Text>
         </Pressable>
 
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
 
         {/* Email */}
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>Email</Text>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>Email</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
             value={email}
             onChangeText={(v) => { clearMessages(); setEmail(v); }}
             keyboardType="email-address"
@@ -130,16 +132,16 @@ export default function SignUpScreen() {
             autoComplete="email"
             textContentType="emailAddress"
             placeholder="you@example.com"
-            placeholderTextColor="#AAAAAA"
+            placeholderTextColor={colors.placeholder}
             editable={!loading}
           />
         </View>
 
         {/* Password */}
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>Password</Text>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>Password</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
             value={password}
             onChangeText={(v) => { clearMessages(); setPassword(v); }}
             secureTextEntry
@@ -148,7 +150,7 @@ export default function SignUpScreen() {
             autoComplete={isSignUp ? 'new-password' : 'current-password'}
             textContentType={isSignUp ? 'newPassword' : 'password'}
             placeholder="Min 8 characters"
-            placeholderTextColor="#AAAAAA"
+            placeholderTextColor={colors.placeholder}
             editable={!loading}
           />
         </View>
@@ -156,9 +158,9 @@ export default function SignUpScreen() {
         {/* Confirm Password — sign-up mode only */}
         {isSignUp && (
           <View style={styles.fieldGroup}>
-            <Text style={styles.label}>Confirm password</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Confirm password</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { backgroundColor: colors.inputBg, borderColor: colors.border, color: colors.text }]}
               value={confirmPassword}
               onChangeText={(v) => { clearMessages(); setConfirmPassword(v); }}
               secureTextEntry
@@ -167,24 +169,25 @@ export default function SignUpScreen() {
               autoComplete="new-password"
               textContentType="newPassword"
               placeholder="Repeat password"
-              placeholderTextColor="#AAAAAA"
+              placeholderTextColor={colors.placeholder}
               editable={!loading}
             />
           </View>
         )}
 
         {/* Error / Success messages */}
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        {error ? <Text style={[styles.errorText, { color: colors.error }]}>{error}</Text> : null}
         {successMessage ? (
-          <Text style={styles.successText}>{successMessage}</Text>
+          <Text style={[styles.successText, { color: colors.success }]}>{successMessage}</Text>
         ) : null}
 
         {/* Submit */}
         <Pressable
           style={({ pressed }) => [
             styles.submitButton,
-            (loading || !!successMessage) && styles.submitButtonDisabled,
-            pressed && !loading && styles.submitButtonPressed,
+            { backgroundColor: colors.tint },
+            (loading || !!successMessage) && { opacity: 0.5 },
+            pressed && !loading && { opacity: 0.85 },
           ]}
           onPress={handleSubmit}
           disabled={loading || !!successMessage}
@@ -192,9 +195,9 @@ export default function SignUpScreen() {
           accessibilityRole="button"
         >
           {loading ? (
-            <ActivityIndicator color="#FFFFFF" />
+            <ActivityIndicator color={colors.onTint} />
           ) : (
-            <Text style={styles.submitText}>{submitLabel}</Text>
+            <Text style={[styles.submitText, { color: colors.onTint }]}>{submitLabel}</Text>
           )}
         </Pressable>
 
@@ -205,7 +208,7 @@ export default function SignUpScreen() {
           style={styles.toggleButton}
           accessibilityRole="button"
         >
-          <Text style={styles.toggleText}>{toggleLabel}</Text>
+          <Text style={[styles.toggleText, { color: colors.textSub }]}>{toggleLabel}</Text>
         </Pressable>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -215,7 +218,6 @@ export default function SignUpScreen() {
 const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
-    backgroundColor: '#FAFAF8',
   },
   scrollContent: {
     flexGrow: 1,
@@ -228,12 +230,10 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontSize: 16,
-    color: '#E8612C',
   },
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1A1A1A',
     marginBottom: 32,
   },
   fieldGroup: {
@@ -242,47 +242,33 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#3C3C3C',
     marginBottom: 6,
   },
   input: {
     height: 52,
     borderWidth: 1,
-    borderColor: '#DADCE0',
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: '#1A1A1A',
-    backgroundColor: '#FFFFFF',
   },
   errorText: {
-    color: '#D32F2F',
     fontSize: 14,
     marginBottom: 16,
   },
   successText: {
-    color: '#2E7D32',
     fontSize: 14,
     marginBottom: 16,
   },
   submitButton: {
     height: 52,
-    backgroundColor: '#E8612C',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 8,
   },
-  submitButtonDisabled: {
-    backgroundColor: '#F5B89A',
-  },
-  submitButtonPressed: {
-    backgroundColor: '#D4551F',
-  },
   submitText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFFFFF',
   },
   toggleButton: {
     alignItems: 'center',
@@ -291,7 +277,6 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     fontSize: 15,
-    color: '#6B6B6B',
     textDecorationLine: 'underline',
   },
 });

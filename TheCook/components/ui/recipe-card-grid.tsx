@@ -77,7 +77,7 @@ export function RecipeCardGrid({
           <MaterialCommunityIcons
             name={isBookmarked ? 'heart' : 'heart-outline'}
             size={20}
-            color="#FFFFFF" // on-gradient
+            color="#FFFFFF" // on-gradient // palette-exempt
           />
         </Pressable>
       </View>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 40, // leave room for bookmark icon
-    color: '#FFFFFF', // on-gradient
+    color: '#FFFFFF', // on-gradient // palette-exempt
     fontSize: 13,
     fontWeight: '600',
     padding: 8,
