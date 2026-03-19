@@ -7,14 +7,16 @@ import {
   SafeAreaView,
   ScrollView,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
-
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { useFeedScreen } from '@/src/hooks/useFeedScreen';
-import { FeedSection } from '@/components/ui/feed-section';
+import { FeedSection, calculateCardWidth } from '@/components/ui/feed-section';
 import { SkeletonCard } from '@/components/ui/skeleton-card';
 import { ResumeBanner } from '@/components/cooking/resume-banner';
 import { router } from 'expo-router';
+
+const SKELETON_CARD_WIDTH = calculateCardWidth(Dimensions.get('window').width);
 
 // ---------------------------------------------------------------------------
 // Feed screen — horizontal sections feed (redesigned)
@@ -51,7 +53,7 @@ export default function FeedScreen() {
               <View style={[styles.skeletonTitleBar, { backgroundColor: colors.skeleton }]} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
                 {[0, 1, 2].map((j) => (
-                  <View key={j} style={styles.skeletonCardWrapper}>
+                  <View key={j} style={[styles.skeletonCardWrapper, { width: SKELETON_CARD_WIDTH }]}>
                     <SkeletonCard variant="grid" />
                   </View>
                 ))}
@@ -96,7 +98,7 @@ export default function FeedScreen() {
               <View style={[styles.skeletonTitleBar, { backgroundColor: colors.skeleton }]} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.skeletonRow}>
                 {[0, 1, 2].map((j) => (
-                  <View key={j} style={styles.skeletonCardWrapper}>
+                  <View key={j} style={[styles.skeletonCardWrapper, { width: SKELETON_CARD_WIDTH }]}>
                     <SkeletonCard variant="grid" />
                   </View>
                 ))}
@@ -121,15 +123,18 @@ export default function FeedScreen() {
           </View>
         ) : (
           /* Feed sections */
-          sections.map((section) => (
+          sections.map((section, index) => (
             <FeedSection
               key={section.key}
+              sectionKey={section.key}
+              sectionIndex={index}
               title={section.title}
               data={section.data}
               bookmarkedIds={bookmarkedIds}
               userEquipment={profile?.equipment ?? []}
               onRecipePress={handleRecipePress}
               onBookmarkToggle={handleBookmarkToggle}
+              isLast={index === sections.length - 1}
             />
           ))
         )}
@@ -204,7 +209,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   skeletonCardWrapper: {
-    width: 180,
     marginRight: 12,
   },
 });
