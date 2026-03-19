@@ -141,7 +141,7 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 12. Sef'im AI | v1.0 | 4/4 | Complete | 2026-03-17 |
 | 13. Image Pipeline Foundation | 2/2 | Complete    | 2026-03-19 | - |
 | 14. Color Token Sweep | 3/3 | Complete    | 2026-03-19 | - |
-| 15. Card Image Rendering | 3/3 | Complete   | 2026-03-19 | - |
+| 15. Card Image Rendering | 3/3 | Complete    | 2026-03-19 | - |
 | 16. Feed "See All" + Discovery Polish | v1.1 | 0/0 | Not started | - |
 | 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/0 | Not started | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |
