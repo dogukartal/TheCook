@@ -32,7 +32,7 @@
 - [x] **Phase 13: Image Pipeline Foundation** - Build-time image registry, WebP compression, and YAML wiring so recipe images resolve safely in production builds (completed 2026-03-19)
 - [x] **Phase 14: Color Token Sweep** - Replace all hardcoded hex values with theme tokens and fix dark mode card contrast (completed 2026-03-19)
 - [x] **Phase 15: Card Image Rendering** - Show recipe images on cards, recipe detail, and cooking mode with blurhash placeholders (completed 2026-03-19)
-- [ ] **Phase 16: Feed "See All" + Discovery Polish** - "See All" vertical list route, card peek hint, swipe animation, and section heading polish
+- [x] **Phase 16: Feed "See All" + Discovery Polish** - "See All" vertical list route, card peek hint, swipe animation, and section heading polish (completed 2026-03-19)
 - [ ] **Phase 17: Cookbook Saved/Cooked Tabs** - Two-tab Cookbook with star ratings, re-rating, cook count, and row layout
 - [ ] **Phase 18: UI Polish** - Haptics, press feedback, sheet transitions, filter chip icons, progress bar animation, and button feedback
 
@@ -93,7 +93,7 @@ Plans:
   2. A partial third card is visible at the right edge of each feed section, hinting that more content exists
   3. Feed sections show a subtle animation on first appearance that suggests horizontal scrolling
   4. Each feed section heading displays the recipe count (e.g., "Sana Ozel (8)") with a visual separator between sections
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 16-01-PLAN.md — FeedSection polish: card peek width, scroll hint animation, heading count, separator, See All button
@@ -146,6 +146,6 @@ Phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 13. Image Pipeline Foundation | v1.1 | 2/2 | Complete | 2026-03-19 |
 | 14. Color Token Sweep | v1.1 | 3/3 | Complete | 2026-03-19 |
 | 15. Card Image Rendering | v1.1 | 3/3 | Complete | 2026-03-19 |
-| 16. Feed "See All" + Discovery Polish | 1/2 | In Progress|  | - |
+| 16. Feed "See All" + Discovery Polish | 2/2 | Complete   | 2026-03-19 | - |
 | 17. Cookbook Saved/Cooked Tabs | v1.1 | 0/0 | Not started | - |
 | 18. UI Polish | v1.1 | 0/0 | Not started | - |
