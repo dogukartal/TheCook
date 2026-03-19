@@ -85,11 +85,11 @@ const mockAddBookmark = jest.fn(() => Promise.resolve());
 const mockRemoveBookmark = jest.fn(() => Promise.resolve());
 
 jest.mock('@/src/db/recipes', () => ({
-  getAllRecipesForFeed: (...args: unknown[]) => mockGetAllRecipesForFeed(...args),
+  getAllRecipesForFeed: () => mockGetAllRecipesForFeed(),
 }));
 
 jest.mock('@/src/db/cooking-history', () => ({
-  getCookedRecipeIds: (...args: unknown[]) => mockGetCookedRecipeIds(...args),
+  getCookedRecipeIds: () => mockGetCookedRecipeIds(),
 }));
 
 jest.mock('@/src/db/profile', () => ({
