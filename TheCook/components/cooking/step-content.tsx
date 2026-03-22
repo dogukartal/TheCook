@@ -54,7 +54,7 @@ export function StepContent({
 
   const bgColor = isDark ? colors.card : STEP_PASTEL_BACKGROUNDS[stepIndex % STEP_PASTEL_BACKGROUNDS.length];
 
-  const images = getRecipeImages(recipeId);
+  const images = getRecipeImages(recipeId, totalSteps);
   const stepImage = images.steps[stepIndex] ?? null;
   const stepBlurhash = images.stepBlurhashes[stepIndex] ?? null;
 

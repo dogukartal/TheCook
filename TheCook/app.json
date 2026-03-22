@@ -21,8 +21,16 @@
             "CFBundleURLSchemes": [
               "com.googleusercontent.apps.230547724005-4ejkhcv0hfsaekdj9d8knqek7lfa1cdl"
             ]
+          },
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.230547724005-4ejkhcv0hfsaekdj9d8knqek7lfa1cdl"
+            ]
           }
-        ]
+        ],
+        "NSSpeechRecognitionUsageDescription": "Sesli soru sormak icin konusma tanima izni gerekiyor",
+        "NSMicrophoneUsageDescription": "Sef'im'e sesli soru sormak icin mikrofon izni gerekiyor",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -33,7 +41,10 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "output": "static",
@@ -56,14 +67,26 @@
       "expo-sqlite",
       "expo-notifications",
       "@react-native-google-signin/google-signin",
-      ["@jamsch/expo-speech-recognition", {
-        "microphonePermission": "Sef'im'e sesli soru sormak icin mikrofon izni gerekiyor",
-        "speechRecognitionPermission": "Sesli soru sormak icin konusma tanima izni gerekiyor"
-      }]
+      [
+        "@jamsch/expo-speech-recognition",
+        {
+          "microphonePermission": "Sef'im'e sesli soru sormak icin mikrofon izni gerekiyor",
+          "speechRecognitionPermission": "Sesli soru sormak icin konusma tanima izni gerekiyor"
+        }
+      ],
+      "react-native-iap",
+      "expo-dev-client"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c92c033c-d94d-4647-8527-07dfc50bac15"
+      }
+    },
+    "owner": "omerozaltan"
   }
 }

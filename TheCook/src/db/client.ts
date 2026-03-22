@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-const DB_VERSION = 7;
+const DB_VERSION = 8;
 
 export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const result = await db.getFirstAsync<{ user_version: number }>(
@@ -118,6 +118,16 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
     try {
       await db.execAsync(
         `ALTER TABLE cooking_sessions ADD COLUMN ingredient_swaps TEXT DEFAULT '{}'`
+      );
+    } catch {
+      // Column already exists
+    }
+  }
+
+  if (currentVersion < 8) {
+    try {
+      await db.execAsync(
+        `ALTER TABLE profile ADD COLUMN is_premium INTEGER NOT NULL DEFAULT 0`
       );
     } catch {
       // Column already exists

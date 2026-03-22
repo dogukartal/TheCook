@@ -27,6 +27,7 @@ export async function pullCloudProfile(
       allergens: cloudProfile.allergens ?? [],
       skillLevel: cloudProfile.skill_level ?? null,
       equipment: cloudProfile.equipment ?? [],
+      isPremium: cloudProfile.is_premium ?? false,
     });
   }
 

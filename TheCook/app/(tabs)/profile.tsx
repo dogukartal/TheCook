@@ -7,6 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -15,6 +16,15 @@ import { useAppTheme } from '@/contexts/ThemeContext';
 import { useProfileDb } from '@/src/db/profile';
 import { useSession } from '@/src/auth/useSession';
 import { Chip } from '@/components/ui/chip';
+import {
+  initIAP,
+  closeIAP,
+  fetchSubscriptions,
+  purchaseSubscription,
+  setupPurchaseListeners,
+  getSubscriptionStatus,
+  SUBSCRIPTION_PRODUCT_ID,
+} from '@/src/services/iap';
 
 import { AllergenTagEnum, SkillLevelEnum, EquipmentEnum } from '@/src/types/recipe';
 import type { AllergenTag, SkillLevel, Equipment } from '@/src/types/recipe';
@@ -102,12 +112,90 @@ export default function ProfileScreen() {
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [purchasing, setPurchasing] = useState(false);
+  const [subscriptionPrice, setSubscriptionPrice] = useState<string | null>(null);
+  const [iapReady, setIapReady] = useState(false);
 
   useEffect(() => {
     getProfile()
       .then((p) => setProfile(p))
       .finally(() => setLoading(false));
   }, []);
+
+  // IAP setup
+  useEffect(() => {
+    initIAP()
+      .then(() => {
+        console.log('IAP connected, fetching subs...');
+        setIapReady(true);
+        return fetchSubscriptions();
+      })
+      .then((subs) => {
+        console.log('Subs result:', subs.length, JSON.stringify(subs));
+        if (subs.length > 0) {
+          const sub = subs[0];
+          setSubscriptionPrice(sub.localizedPrice ?? '₺2,99');
+        } else {
+          console.warn('No subscriptions found for SKUs - Apple may need time to propagate');
+        }
+      })
+      .catch((err) => {
+        console.warn('IAP setup error:', err);
+      });
+
+    const removePurchaseListeners = setupPurchaseListeners(
+      (isPremium) => {
+        setPurchasing(false);
+        persistProfileChange({ isPremium });
+        Alert.alert('Başarılı', 'Premium aboneliğiniz aktif!');
+      },
+      (error) => {
+        setPurchasing(false);
+        Alert.alert('Hata', error);
+      }
+    );
+
+    return () => {
+      removePurchaseListeners();
+      closeIAP();
+    };
+  }, []);
+
+  // Check subscription status on mount (for returning users)
+  useEffect(() => {
+    if (session) {
+      getSubscriptionStatus().then(({ isPremium }) => {
+        if (profile && profile.isPremium !== isPremium) {
+          persistProfileChange({ isPremium });
+        }
+      });
+    }
+  }, [session]);
+
+  async function handlePurchase() {
+    if (!session) {
+      Alert.alert('Giriş Gerekli', 'Abonelik için önce hesabınıza giriş yapın.');
+      return;
+    }
+    if (!iapReady) {
+      // IAP henüz hazır değilse tekrar init et
+      try {
+        await initIAP();
+        setIapReady(true);
+      } catch (err) {
+        Alert.alert('IAP Hatası', 'Mağaza bağlantısı kurulamadı. Lütfen tekrar deneyin.');
+        return;
+      }
+    }
+    setPurchasing(true);
+    try {
+      await purchaseSubscription();
+    } catch (err) {
+      console.warn('handlePurchase error:', err);
+      Alert.alert('Satın Alma Hatası', String(err));
+      setPurchasing(false);
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // Immediate-save logic -- saves a partial profile update on every toggle
@@ -246,6 +334,48 @@ export default function ProfileScreen() {
             </Pressable>
           </View>
         )}
+
+        {/* ------------------------------------------------------------------ */}
+        {/* Subscription section */}
+        {/* ------------------------------------------------------------------ */}
+        <Text style={[styles.sectionTitle, { color: colors.textSub }]}>Abonelik</Text>
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.cardBorder }]}>
+          {profile?.isPremium ? (
+            <View style={styles.accountInfo}>
+              <MaterialCommunityIcons name="crown" size={32} color="#F5A623" />
+              <View style={styles.accountText}>
+                <Text style={[styles.accountEmail, { color: colors.text }]}>Premium Üye</Text>
+                <Text style={[styles.accountProvider, { color: colors.textSub }]}>
+                  Aboneliğiniz aktif
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <>
+              <View style={styles.accountInfo}>
+                <MaterialCommunityIcons name="crown-outline" size={32} color={colors.placeholder} />
+                <View style={styles.accountText}>
+                  <Text style={[styles.accountEmail, { color: colors.text }]}>Premium'a Geç</Text>
+                  <Text style={[styles.accountProvider, { color: colors.textSub }]}>
+                    Aylık {subscriptionPrice ?? '₺2,99'}
+                  </Text>
+                </View>
+              </View>
+              <Pressable
+                style={[styles.createAccountButton, { backgroundColor: '#F5A623' }]}
+                onPress={handlePurchase}
+                disabled={purchasing}
+                accessibilityRole="button"
+              >
+                {purchasing ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <Text style={[styles.createAccountText, { color: '#fff' }]}>Abone Ol</Text>
+                )}
+              </Pressable>
+            </>
+          )}
+        </View>
 
         {/* ------------------------------------------------------------------ */}
         {/* Allergen chips section */}

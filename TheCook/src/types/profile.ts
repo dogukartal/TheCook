@@ -9,6 +9,7 @@ export const ProfileSchema = z.object({
   accountNudgeShown: z.boolean().default(false),
   cuisinePreferences: z.string().nullable().default(null),
   appGoals: z.string().nullable().default(null),
+  isPremium: z.boolean().default(false),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { migrateDb } from '../src/db/client';
 import { seedIfNeeded } from '../src/db/seed';
+import { syncRecipesFromCloud } from '../src/services/recipe-sync';
 import { initAuthListener } from '../src/auth/sync';
 import { SessionProvider } from '../src/auth/useSession';
 import { useProfileDb } from '../src/db/profile';
@@ -45,7 +46,9 @@ export default function RootLayout() {
       onInit={async (db) => {
         await migrateDb(db);
         await seedIfNeeded(db);
-        initAuthListener(db); // start auth → cloud sync listener after DB is ready
+        initAuthListener(db);
+        // Cloud sync: arka planda tarifleri güncelle (offline'da sessizce atlar)
+        syncRecipesFromCloud(db);
       }}
     >
       <SessionProvider>

@@ -27,6 +27,7 @@ export function useProfileDb() {
       accountNudgeShown: Boolean(row.account_nudge_shown),
       cuisinePreferences: row.cuisine_preferences ?? null,
       appGoals: row.app_goals ?? null,
+      isPremium: Boolean(row.is_premium),
     });
   }
 
@@ -60,6 +61,10 @@ export function useProfileDb() {
     if (profile.appGoals !== undefined) {
       fields.push("app_goals = ?");
       values.push(profile.appGoals);
+    }
+    if (profile.isPremium !== undefined) {
+      fields.push("is_premium = ?");
+      values.push(profile.isPremium ? 1 : 0);
     }
     if (fields.length === 0) return;
     await db.runAsync(
@@ -142,6 +147,10 @@ export async function saveProfileToDb(
   if (profile.appGoals !== undefined) {
     fields.push("app_goals = ?");
     values.push(profile.appGoals);
+  }
+  if (profile.isPremium !== undefined) {
+    fields.push("is_premium = ?");
+    values.push(profile.isPremium ? 1 : 0);
   }
   if (fields.length === 0) return;
   await db.runAsync(
