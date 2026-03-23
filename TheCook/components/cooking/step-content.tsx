@@ -132,16 +132,22 @@ export function StepContent({
         <Text style={[styles.whyText, { color: colors.textSecondary }]}>{step.why}</Text>
       )}
 
-      {/* Dikkat section */}
-      <View style={[styles.dikkatSection, { backgroundColor: colors.errorBg, borderLeftColor: colors.error }]}>
-        <View style={styles.dikkatHeader}>
-          <MaterialCommunityIcons name="alert-circle" size={18} color={colors.error} />
-          <Text style={[styles.dikkatTitle, { color: colors.error }]}>Dikkat!</Text>
+      {/* Dikkat section — only shown when there's a real tip */}
+      {step.commonMistake ? (
+        <View style={[styles.dikkatSection, { backgroundColor: colors.errorBg, borderLeftColor: colors.error }]}>
+          <View style={styles.dikkatHeader}>
+            <MaterialCommunityIcons name="alert-circle" size={18} color={colors.error} />
+            <Text style={[styles.dikkatTitle, { color: colors.error }]}>Dikkat!</Text>
+          </View>
+          <Text style={[styles.dikkatBody, { color: colors.textSecondary }]}>{step.commonMistake}</Text>
+          {step.recovery ? (
+            <>
+              <Text style={[styles.recoveryLabel, { color: colors.textSub }]}>Ne yapmaliyim?</Text>
+              <Text style={[styles.recoveryText, { color: colors.textSecondary }]}>{step.recovery}</Text>
+            </>
+          ) : null}
         </View>
-        <Text style={[styles.dikkatBody, { color: colors.textSecondary }]}>{step.commonMistake}</Text>
-        <Text style={[styles.recoveryLabel, { color: colors.textSub }]}>Ne yapmaliyim?</Text>
-        <Text style={[styles.recoveryText, { color: colors.textSecondary }]}>{step.recovery}</Text>
-      </View>
+      ) : null}
 
       {/* Bottom spacing */}
       <View style={styles.bottomPad} />

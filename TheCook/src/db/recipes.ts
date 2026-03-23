@@ -541,8 +541,8 @@ export async function getRecipeById(
     step.instruction = step.instruction || 'Tarifi takip edin.';
     step.why = step.why || 'Bu adım önemlidir.';
     step.looksLikeWhenDone = step.looksLikeWhenDone || 'Hazır görünmeli.';
-    step.commonMistake = step.commonMistake || 'Dikkatli olun.';
-    step.recovery = step.recovery || 'Devam edin.';
+    step.commonMistake = step.commonMistake ?? '';
+    step.recovery = step.recovery ?? '';
     step.stepImage = step.stepImage ?? null;
     step.timerSeconds = (typeof step.timerSeconds === 'number' && step.timerSeconds > 0) ? step.timerSeconds : null;
     step.checkpoint = step.checkpoint ?? null;

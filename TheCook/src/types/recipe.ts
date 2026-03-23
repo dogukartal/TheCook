@@ -115,8 +115,8 @@ export const StepSchema = z.object({
   instruction: z.string().min(1),
   why: z.string().min(1),
   looksLikeWhenDone: z.string().min(1),
-  commonMistake: z.string().min(1),
-  recovery: z.string().min(1),
+  commonMistake: z.string(),
+  recovery: z.string(),
   stepImage: z.string().nullable().default(null),
   // positive() ensures non-zero timers; null means no timer (Hira can leave null; Phase 5 uses it)
   timerSeconds: z.number().int().positive().nullable().default(null),
