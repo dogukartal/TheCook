@@ -30,6 +30,7 @@
         ],
         "NSSpeechRecognitionUsageDescription": "Sesli soru sormak icin konusma tanima izni gerekiyor",
         "NSMicrophoneUsageDescription": "Sef'im'e sesli soru sormak icin mikrofon izni gerekiyor",
+        "NSPhotoLibraryUsageDescription": "Tariflerdeki gorselleri kaydetmek icin fotograf kitapligi izni gerekiyor",
         "ITSAppUsesNonExemptEncryption": false,
         "NSAppTransportSecurity": {
           "NSAllowsLocalNetworking": true
