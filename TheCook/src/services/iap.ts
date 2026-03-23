@@ -2,27 +2,36 @@ import { Platform } from 'react-native';
 import {
   initConnection,
   endConnection,
-  getSubscriptions,
+  fetchProducts,
   requestPurchase,
   purchaseUpdatedListener,
   purchaseErrorListener,
   finishTransaction,
-  type ProductPurchase,
-  type SubscriptionPurchase,
+  getPendingTransactionsIOS,
+  getActiveSubscriptions,
+  type Purchase,
   type PurchaseError,
 } from 'react-native-iap';
-import { supabase } from '../auth/supabase';
 
-// Apple App Store Connect'te tanımlayacağın product ID
 export const SUBSCRIPTION_PRODUCT_ID = 'com.thecook.app.premium.monthly';
 
-const subscriptionSkus = [SUBSCRIPTION_PRODUCT_ID];
-
-/** IAP bağlantısını başlat */
+/** IAP bağlantısını başlat ve bekleyen transaction'ları temizle */
 export async function initIAP(): Promise<void> {
   try {
     const result = await initConnection();
     console.log('IAP init success:', result);
+
+    if (Platform.OS === 'ios') {
+      try {
+        const pending = await getPendingTransactionsIOS();
+        console.log('Pending transactions:', pending.length);
+        for (const p of pending) {
+          await finishTransaction({ purchase: p, isConsumable: false });
+        }
+      } catch (e) {
+        console.warn('Could not clear pending transactions:', e);
+      }
+    }
   } catch (err) {
     console.warn('IAP init failed:', err);
     throw err;
@@ -39,14 +48,15 @@ export async function closeIAP(): Promise<void> {
 }
 
 /** Mevcut abonelik ürünlerini getir */
-export async function fetchSubscriptions() {
+export async function fetchSubscriptionProducts() {
   try {
-    console.log('Fetching subscriptions for SKUs:', subscriptionSkus);
-    const subs = await getSubscriptions({ skus: subscriptionSkus });
-    console.log('Subscriptions fetched:', JSON.stringify(subs));
-    return subs;
+    const products = await fetchProducts({
+      skus: [SUBSCRIPTION_PRODUCT_ID],
+      type: 'subs',
+    });
+    return products;
   } catch (err) {
-    console.warn('Failed to fetch subscriptions:', err);
+    console.warn('Failed to fetch products:', err);
     return [];
   }
 }
@@ -66,43 +76,23 @@ export async function purchaseSubscription(): Promise<void> {
   }
 }
 
-/** Receipt'i backend'e gönderip doğrulat */
-export async function verifyReceipt(
-  receipt: string,
-  productId: string
-): Promise<{ valid: boolean; status: string; expiresAt: string | null }> {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Not authenticated');
-
-  const { data, error } = await supabase.functions.invoke('verify-receipt', {
-    body: {
-      receipt,
-      platform: Platform.OS as 'ios' | 'android',
-      productId,
-    },
-  });
-
-  if (error) throw error;
-  return data;
-}
-
-/** Purchase listener'ları kur — başarılı satın almada receipt doğrula */
+/** Purchase listener'ları kur */
 export function setupPurchaseListeners(
-  onSuccess: (isPremium: boolean) => void,
+  onPurchaseComplete: () => void,
   onError: (error: string) => void
 ): () => void {
   const purchaseListener = purchaseUpdatedListener(
-    async (purchase: ProductPurchase | SubscriptionPurchase) => {
-      const receipt = purchase.transactionReceipt;
-      if (!receipt) return;
-
+    async (purchase: Purchase) => {
+      console.log('purchaseUpdatedListener fired:', purchase.transactionId);
       try {
-        const result = await verifyReceipt(receipt, purchase.productId);
         await finishTransaction({ purchase, isConsumable: false });
-        onSuccess(result.valid);
       } catch (err) {
-        onError(err instanceof Error ? err.message : 'Doğrulama başarısız');
+        console.warn('finishTransaction error:', err);
       }
+      // Notify caller that a purchase completed — caller should re-check
+      // subscription status via checkSubscriptionStatus() instead of
+      // blindly setting isPremium=true
+      onPurchaseComplete();
     }
   );
 
@@ -118,24 +108,29 @@ export function setupPurchaseListeners(
   };
 }
 
-/** Kullanıcının mevcut abonelik durumunu Supabase'den al */
-export async function getSubscriptionStatus(): Promise<{
+/**
+ * Apple StoreKit'ten aktif abonelik durumunu kontrol et.
+ * Supabase'e bağımlı değil — doğrudan cihazdan sorgular.
+ */
+export async function checkSubscriptionStatus(): Promise<{
   isPremium: boolean;
   expiresAt: string | null;
 }> {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) return { isPremium: false, expiresAt: null };
+  try {
+    const activeSubs = await getActiveSubscriptions([SUBSCRIPTION_PRODUCT_ID]);
+    console.log('Active subscriptions:', JSON.stringify(activeSubs));
 
-  const { data } = await supabase
-    .from('subscriptions')
-    .select('status, expires_at')
-    .eq('user_id', session.user.id)
-    .single();
+    const sub = activeSubs.find(s => s.productId === SUBSCRIPTION_PRODUCT_ID);
+    if (sub && sub.isActive) {
+      const expiresAt = sub.expirationDateIOS
+        ? new Date(sub.expirationDateIOS * 1000).toISOString()
+        : null;
+      return { isPremium: true, expiresAt };
+    }
 
-  if (!data) return { isPremium: false, expiresAt: null };
-
-  return {
-    isPremium: data.status === 'active',
-    expiresAt: data.expires_at,
-  };
+    return { isPremium: false, expiresAt: null };
+  } catch (err) {
+    console.warn('checkSubscriptionStatus error:', err);
+    return { isPremium: false, expiresAt: null };
+  }
 }

@@ -33,6 +33,7 @@ function RootNavigator() {
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="onboarding" />
       <Stack.Screen name="(auth)" />
+      <Stack.Screen name="discover" />
       <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       {!onboardingDone && <Redirect href="/onboarding/allergens" />}
     </Stack>

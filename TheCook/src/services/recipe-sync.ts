@@ -20,6 +20,21 @@ export async function syncRecipesFromCloud(db: SQLiteDatabase): Promise<void> {
       return;
     }
 
+    // Helper: ensure a value is a proper JSON string (not double-encoded)
+    const toJsonStr = (val: unknown): string => {
+      if (typeof val === 'string') {
+        // Check if it's already a JSON string — if parsing yields a string, it's double-encoded
+        try {
+          const parsed = JSON.parse(val);
+          if (typeof parsed === 'string') return parsed; // was double-encoded
+          return val; // was a proper JSON string
+        } catch {
+          return JSON.stringify(val);
+        }
+      }
+      return JSON.stringify(val ?? []);
+    };
+
     await db.withTransactionAsync(async () => {
       for (const r of data) {
         await db.runAsync(
@@ -38,8 +53,8 @@ export async function syncRecipesFromCloud(db: SQLiteDatabase): Promise<void> {
           r.cook_time,
           r.servings,
           r.cover_image ?? null,
-          typeof r.allergens === 'string' ? r.allergens : JSON.stringify(r.allergens),
-          typeof r.equipment === 'string' ? r.equipment : JSON.stringify(r.equipment),
+          toJsonStr(r.allergens),
+          toJsonStr(r.equipment),
           typeof r.ingredient_groups === 'string'
             ? r.ingredient_groups
             : JSON.stringify(r.ingredient_groups),

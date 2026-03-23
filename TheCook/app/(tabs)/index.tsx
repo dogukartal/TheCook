@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Dimensions,
 } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAppTheme } from '@/contexts/ThemeContext';
 import { useFeedScreen } from '@/src/hooks/useFeedScreen';
 import { FeedSection, calculateCardWidth } from '@/components/ui/feed-section';
@@ -123,20 +124,41 @@ export default function FeedScreen() {
           </View>
         ) : (
           /* Feed sections */
-          sections.map((section, index) => (
-            <FeedSection
-              key={section.key}
-              sectionKey={section.key}
-              sectionIndex={index}
-              title={section.title}
-              data={section.data}
-              bookmarkedIds={bookmarkedIds}
-              userEquipment={profile?.equipment ?? []}
-              onRecipePress={handleRecipePress}
-              onBookmarkToggle={handleBookmarkToggle}
-              isLast={index === sections.length - 1}
-            />
-          ))
+          <>
+            {sections.map((section, index) => (
+              <FeedSection
+                key={section.key}
+                sectionKey={section.key}
+                sectionIndex={index}
+                title={section.title}
+                data={section.data}
+                bookmarkedIds={bookmarkedIds}
+                userEquipment={profile?.equipment ?? []}
+                onRecipePress={handleRecipePress}
+                onBookmarkToggle={handleBookmarkToggle}
+                isLast={false}
+              />
+            ))}
+
+            {/* Community recipes banner */}
+            <Pressable
+              style={[styles.communityBanner, { backgroundColor: colors.tint }]}
+              onPress={() => router.push('/discover')}
+            >
+              <View style={styles.communityBannerContent}>
+                <MaterialCommunityIcons name="chef-hat" size={28} color={colors.onTint} />
+                <View style={styles.communityBannerText}>
+                  <Text style={[styles.communityBannerTitle, { color: colors.onTint }]}>
+                    Topluluk Tarifleri
+                  </Text>
+                  <Text style={[styles.communityBannerSub, { color: colors.onTint }]}>
+                    8.700+ tarif — yapay zeka ile hazırlanır
+                  </Text>
+                </View>
+                <MaterialCommunityIcons name="chevron-right" size={24} color={colors.onTint} />
+              </View>
+            </Pressable>
+          </>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -210,5 +232,30 @@ const styles = StyleSheet.create({
   },
   skeletonCardWrapper: {
     marginRight: 12,
+  },
+  // Community banner
+  communityBanner: {
+    marginHorizontal: 16,
+    marginTop: 8,
+    marginBottom: 16,
+    borderRadius: 16,
+    padding: 16,
+  },
+  communityBannerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  communityBannerText: {
+    flex: 1,
+  },
+  communityBannerTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  communityBannerSub: {
+    fontSize: 13,
+    opacity: 0.85,
+    marginTop: 2,
   },
 });

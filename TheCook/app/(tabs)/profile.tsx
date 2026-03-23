@@ -19,10 +19,10 @@ import { Chip } from '@/components/ui/chip';
 import {
   initIAP,
   closeIAP,
-  fetchSubscriptions,
+  fetchSubscriptionProducts,
   purchaseSubscription,
   setupPurchaseListeners,
-  getSubscriptionStatus,
+  checkSubscriptionStatus,
   SUBSCRIPTION_PRODUCT_ID,
 } from '@/src/services/iap';
 
@@ -128,7 +128,7 @@ export default function ProfileScreen() {
       .then(() => {
         console.log('IAP connected, fetching subs...');
         setIapReady(true);
-        return fetchSubscriptions();
+        return fetchSubscriptionProducts();
       })
       .then((subs) => {
         console.log('Subs result:', subs.length, JSON.stringify(subs));
@@ -144,10 +144,18 @@ export default function ProfileScreen() {
       });
 
     const removePurchaseListeners = setupPurchaseListeners(
-      (isPremium) => {
-        setPurchasing(false);
-        persistProfileChange({ isPremium });
-        Alert.alert('Başarılı', 'Premium aboneliğiniz aktif!');
+      async () => {
+        // A purchase was completed — verify with Apple before setting premium
+        try {
+          const { isPremium } = await checkSubscriptionStatus();
+          setPurchasing(false);
+          if (isPremium) {
+            persistProfileChange({ isPremium: true });
+            Alert.alert('Başarılı', 'Premium aboneliğiniz aktif!');
+          }
+        } catch {
+          setPurchasing(false);
+        }
       },
       (error) => {
         setPurchasing(false);
@@ -161,16 +169,17 @@ export default function ProfileScreen() {
     };
   }, []);
 
-  // Check subscription status on mount (for returning users)
+  // Apple StoreKit'ten gerçek abonelik durumunu kontrol et
   useEffect(() => {
-    if (session) {
-      getSubscriptionStatus().then(({ isPremium }) => {
+    if (iapReady) {
+      checkSubscriptionStatus().then(({ isPremium }) => {
+        console.log('Subscription check — isPremium:', isPremium);
         if (profile && profile.isPremium !== isPremium) {
           persistProfileChange({ isPremium });
         }
       });
     }
-  }, [session]);
+  }, [iapReady]);
 
   async function handlePurchase() {
     if (!session) {
@@ -189,7 +198,16 @@ export default function ProfileScreen() {
     }
     setPurchasing(true);
     try {
+      console.log('Attempting purchase, iapReady:', iapReady);
+      const subs = await fetchSubscriptionProducts();
+      console.log('Available subs before purchase:', subs.length, JSON.stringify(subs.map(s => s.productId)));
+      if (subs.length === 0) {
+        Alert.alert('Ürün Bulunamadı', 'Apple henüz abonelik ürününü tanımıyor. Biraz sonra tekrar deneyin.');
+        setPurchasing(false);
+        return;
+      }
       await purchaseSubscription();
+      console.log('purchaseSubscription resolved');
     } catch (err) {
       console.warn('handlePurchase error:', err);
       Alert.alert('Satın Alma Hatası', String(err));

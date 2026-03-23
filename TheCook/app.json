@@ -30,7 +30,10 @@
         ],
         "NSSpeechRecognitionUsageDescription": "Sesli soru sormak icin konusma tanima izni gerekiyor",
         "NSMicrophoneUsageDescription": "Sef'im'e sesli soru sormak icin mikrofon izni gerekiyor",
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        }
       }
     },
     "android": {

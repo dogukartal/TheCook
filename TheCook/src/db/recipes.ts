@@ -507,6 +507,49 @@ export async function getRecipeById(
     [id]
   );
   if (!row) return null;
+
+  // Parse JSON fields
+  const allergens = JSON.parse(row.allergens as string);
+  const equipment = JSON.parse(row.equipment as string);
+  const ingredientGroups = JSON.parse(row.ingredient_groups as string);
+  const steps = JSON.parse(row.steps as string);
+
+  // Filter invalid enum values that may come from LLM-generated recipes
+  const VALID_EQUIPMENT = new Set(["fırın","blender","döküm tava","stand mixer","wok","su ısıtıcı","çırpıcı","tencere","tava","mikser","rende","bıçak seti","kesme tahtası"]);
+  const VALID_UNITS = new Set(["gr","ml","adet","yemek kaşığı","tatlı kaşığı","su bardağı","demet","dilim","tutam"]);
+  const VALID_ALLERGENS = new Set(["gluten","dairy","egg","nuts","peanuts","shellfish","fish","soy","sesame","mustard","celery","lupin","molluscs","sulphites"]);
+
+  const sanitizedEquipment = (equipment || []).filter((e: string) => VALID_EQUIPMENT.has(e));
+  const sanitizedAllergens = (allergens || []).filter((a: string) => VALID_ALLERGENS.has(a));
+
+  // Sanitize ingredient units
+  for (const group of (ingredientGroups || [])) {
+    for (const item of (group.items || [])) {
+      if (!VALID_UNITS.has(item.unit)) {
+        item.unit = 'adet';
+      }
+      if (typeof item.amount !== 'number' || item.amount <= 0) item.amount = 1;
+      if (item.optional === undefined) item.optional = false;
+      if (!Array.isArray(item.alternatives)) item.alternatives = [];
+      if (item.scalable === undefined) item.scalable = true;
+    }
+  }
+
+  // Sanitize steps
+  for (const step of (steps || [])) {
+    step.title = step.title ?? '';
+    step.instruction = step.instruction || 'Tarifi takip edin.';
+    step.why = step.why || 'Bu adım önemlidir.';
+    step.looksLikeWhenDone = step.looksLikeWhenDone || 'Hazır görünmeli.';
+    step.commonMistake = step.commonMistake || 'Dikkatli olun.';
+    step.recovery = step.recovery || 'Devam edin.';
+    step.stepImage = step.stepImage ?? null;
+    step.timerSeconds = (typeof step.timerSeconds === 'number' && step.timerSeconds > 0) ? step.timerSeconds : null;
+    step.checkpoint = step.checkpoint ?? null;
+    step.warning = step.warning ?? null;
+    step.sefimQA = Array.isArray(step.sefimQA) ? step.sefimQA : [];
+  }
+
   return RecipeSchema.parse({
     id: row.id,
     title: row.title,
@@ -518,10 +561,10 @@ export async function getRecipeById(
     cookTime: row.cook_time,
     servings: row.servings,
     coverImage: row.cover_image ?? null,
-    allergens: JSON.parse(row.allergens as string),
-    equipment: JSON.parse(row.equipment as string),
-    ingredientGroups: JSON.parse(row.ingredient_groups as string),
-    steps: JSON.parse(row.steps as string),
+    allergens: sanitizedAllergens,
+    equipment: sanitizedEquipment,
+    ingredientGroups,
+    steps,
   });
 }
 
