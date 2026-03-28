@@ -2,8 +2,8 @@ import { SQLiteDatabase } from 'expo-sqlite';
 import { supabase } from '../auth/supabase';
 
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
-const OLLAMA_URL = process.env.EXPO_PUBLIC_OLLAMA_URL ?? 'http://192.168.1.170:11435';
-const OLLAMA_MODEL = 'qwen3:8b';
+const OLLAMA_URL = process.env.EXPO_PUBLIC_OLLAMA_URL ?? 'https://ollama.thecook.cc';
+const OLLAMA_MODEL = 'qwen2.5:7b';
 
 export interface RawRecipeListItem {
   id: number;
@@ -339,29 +339,55 @@ export async function transformRawRecipe(
   // 2. Call Ollama
   const userPrompt = `Başlık: ${rawRecipe.title}\n\nMalzemeler:\n${rawRecipe.ingredients_raw}\n\nYapılış:\n${rawRecipe.instructions_raw}`;
 
-  console.log('Calling Ollama for recipe:', rawRecipe.title);
-  const ollamaResponse = await fetch(`${OLLAMA_URL}/api/chat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: OLLAMA_MODEL,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-      stream: false,
-      options: { temperature: 0.3, num_predict: 8192 },
-      format: 'json',
-    }),
-  });
+  console.log('[Transform] Calling Ollama:', OLLAMA_URL, 'model:', OLLAMA_MODEL);
+  console.log('[Transform] Recipe:', rawRecipe.title);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 300_000); // 5 min timeout
 
-  if (!ollamaResponse.ok) {
-    const errText = await ollamaResponse.text();
-    throw new Error(`Ollama call failed (${ollamaResponse.status}): ${errText}`);
+  let rawJson = '';
+  try {
+    // Use streaming to avoid Cloudflare's 100s proxy timeout
+    const ollamaResponse = await fetch(`${OLLAMA_URL}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'User-Agent': 'TheCook/1.0' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: OLLAMA_MODEL,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
+        stream: true,
+        options: { temperature: 0.3, num_predict: 8192 },
+        format: 'json',
+      }),
+    });
+
+    console.log('[Transform] Response status:', ollamaResponse.status);
+
+    if (!ollamaResponse.ok) {
+      const errText = await ollamaResponse.text();
+      console.error('[Transform] Ollama error body:', errText.substring(0, 500));
+      throw new Error(`Ollama call failed (${ollamaResponse.status}): ${errText.substring(0, 200)}`);
+    }
+
+    // Read streaming NDJSON and concatenate message content
+    const text = await ollamaResponse.text();
+    console.log('[Transform] Raw response length:', text.length, 'first 200:', text.substring(0, 200));
+    for (const line of text.split('\n')) {
+      if (!line.trim()) continue;
+      try {
+        const chunk = JSON.parse(line);
+        rawJson += chunk.message?.content ?? '';
+      } catch { /* skip malformed lines */ }
+    }
+    console.log('[Transform] Parsed JSON length:', rawJson.length);
+  } catch (err: any) {
+    console.error('[Transform] Fetch error:', err.message || err);
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  const ollamaResult = await ollamaResponse.json();
-  const rawJson = ollamaResult.message?.content ?? '';
 
   // 3. Parse & sanitize
   let recipeData;
